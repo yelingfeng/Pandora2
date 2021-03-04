@@ -1,0 +1,67 @@
+{
+  "name": "pandora2",
+  "version": "0.0.1",
+  "files": ["dist"],
+  "main": "./dist/pandora2.umd.js",
+  "module": "./dist/pandora2.es.js",
+  "exports": {
+    ".": {
+      "import": "./dist/pandora2.es.js",
+      "require": "./dist/pandora2.umd.js"
+    }
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "serve": "vite preview",
+    "commit": "git-cz",
+    "version": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0 && git add CHANGELOG.md",
+    "reinstall": "rimraf yarn.lock && rimraf package.lock.json && rimraf node_modules && yarn install"
+  },
+  "dependencies": {
+    "element-plus": "^1.0.2-beta.33",
+    "lodash": "^4.17.21",
+    "vue": "^3.0.5",
+    "vue-router": "^4.0.4"
+  },
+  "devDependencies": {
+    "@types/jest": "^25.2.1",
+    "@types/lodash": "^4.14.168",
+    "@types/node": "^14.14.31",
+    "@typescript-eslint/eslint-plugin": "^4.16.1",
+    "@typescript-eslint/parser": "^4.16.1",
+    "@vitejs/plugin-vue": "^1.1.5",
+    "@vitejs/plugin-vue-jsx": "^1.1.2",
+    "@vue/compiler-sfc": "^3.0.5",
+    "commitizen": "^4.0.3",
+    "cz-conventional-changelog": "^3.1.0",
+    "eslint": "^7.21.0",
+    "eslint-config-prettier": "^8.1.0",
+    "eslint-plugin-prettier": "^3.3.1",
+    "eslint-plugin-vue": "^7.7.0",
+    "jest": "^25.2.7",
+    "less": "^4.1.1",
+    "less-loader": "^8.0.0",
+    "prettier": "^2.2.1",
+    "rimraf": "^3.0.2",
+    "ts-jest": "^25.3.1",
+    "typescript": "^4.1.3",
+    "vite": "^2.0.5"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,ts?(x),json,md}": [
+      "prettier --write",
+      "git add"
+    ]
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  }
+}
