@@ -1,4 +1,10 @@
 module.exports = {
+  root: true,
+  env: {
+    browser: true,
+    jest: true,
+    node: true,
+  },
   parser: 'vue-eslint-parser',
   parserOptions: {
     parser: '@typescript-eslint/parser',

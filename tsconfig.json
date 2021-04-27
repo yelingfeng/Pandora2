@@ -11,7 +11,8 @@
     "esModuleInterop": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["src/*"],
+      "pandora2/*":["src/*"]
     },
     "lib": ["esnext", "dom"],
     "types": ["vite/client","node"]
