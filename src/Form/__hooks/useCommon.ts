@@ -1,5 +1,5 @@
 import { ref, onBeforeMount, computed } from 'vue'
-import { IFormItemCompOpt } from '../types/form'
+import { IFormItemCompOpt } from '../../types/form'
 import { isFunction } from '../../utils/is'
 /**
  * formItem 通用方法 hooks
