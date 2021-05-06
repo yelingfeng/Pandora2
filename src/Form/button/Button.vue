@@ -1,24 +1,29 @@
 <template>
-  <el-button
+  <ElButton
     :type="type"
     :icon="icon"
     :size="size"
     :disabled="disabled"
     @click="onClickHandler"
-    >{{ renderText() }}</el-button
+    >{{ renderText() }}</ElButton
   >
 </template>
 
 <script lang="ts">
 import { defineComponent, toRefs } from 'vue'
 import { createNamespace } from '../../utils/create'
+import { isFunction } from '../../utils/is'
 import { propTypes } from '../../utils/propTypes'
+import { ElButton } from 'element-plus'
 
 const [name] = createNamespace('button')
 
 export default defineComponent({
   name,
   inheritAttrs: false,
+  components:{
+    ElButton
+  },
   props: {
     value: propTypes.string,
     icon: propTypes.string,
@@ -41,7 +46,7 @@ export default defineComponent({
       }
     }
     const onClickHandler = (event: MouseEvent) => {
-      if (!props.disabled) {
+      if (!props.disabled && isFunction(props.click)) {
         props.click(event)
       }
     }

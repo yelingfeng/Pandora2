@@ -16,7 +16,7 @@
   },
   "scripts": {
     "dev": "vitepress-fc dev --root=docs",
-    "build": "vite build && yarn type",
+    "build": "vite build",
     "serve": "vite preview",
     "docs-build": "rimraf docs/dist && cross-env NODE_ENV=production vitepress-fc build --root=docs",
     "docs-serve": "cross-env NODE_ENV=production vitepress-fc serve --root=docs",

@@ -11,7 +11,7 @@ import { resolve } from 'path'
   optimizeDeps: {
     include: [
       'vitepress-for-component/dist/client/theme-default',
-      'element-plus'
+      // 'element-plus'
     ],
   },
 };
