@@ -1,6 +1,6 @@
 import { ref, onBeforeMount, computed } from 'vue'
-import { IFormItemCompOpt } from '../../types/form'
-import { isFunction } from '../../utils/is'
+import { IFormItemCompOpt } from '../types/form'
+import { isFunction } from '../_utils/is'
 /**
  * formItem 通用方法 hooks
  * @param option
@@ -22,9 +22,9 @@ export function useFormItemMethod(option: IFormItemCompOpt) {
     return { width: option.width + 'px' }
   })
 
-  const clickHandler = (val: string) => {
+  const clickHandler = (...args:any) => {
     if (option.click && isFunction(option.click)) {
-      option.click(val)
+      option.click(args)
     }
   }
 

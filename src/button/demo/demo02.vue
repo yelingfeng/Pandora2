@@ -18,7 +18,7 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
-import Button from 'pandora2/Form/button/index'
+import Button from 'pandora2/button/src/index.vue'
 export default defineComponent({
   components: {
     Button

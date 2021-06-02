@@ -1,5 +1,6 @@
 const Router = {
   Form: ['button', 'select'],
+  Table:['table']
 };
 
 function getRouterConfig(langPrefix = '/') {

@@ -11,9 +11,9 @@
 
 <script lang="ts">
 import { defineComponent, toRefs } from 'vue'
-import { createNamespace } from '../../utils/create'
-import { isFunction } from '../../utils/is'
-import { propTypes } from '../../utils/propTypes'
+import { createNamespace } from '../../_utils/create'
+import { isFunction } from '../../_utils/is'
+import { propTypes } from '../../_utils/propTypes'
 import { ElButton } from 'element-plus'
 
 const [name] = createNamespace('button')

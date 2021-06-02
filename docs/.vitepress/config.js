@@ -9,6 +9,7 @@ module.exports = {
   alias: {
     // 为了能在demo中正确的使用  import { X } from 'pandora2'
    'pandora2' : resolve('./src/'),
+   '@': resolve('./src/')
   },
   base,
   themeConfig: {

@@ -1,16 +1,16 @@
 <template>
   <img alt="Vue logo" src="./assets/logo.png" />
-  <Button></Button>
+  <VTable></VTable>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import Button from './components/Button.vue'
+import VTable from './components/Table.vue'
 
 export default defineComponent({
   name: 'App',
   components: {
-    Button
+    VTable
   }
 })
 </script>
