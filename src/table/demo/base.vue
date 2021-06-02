@@ -1,7 +1,6 @@
 <template>
   <div>
     <VTable/>
-    <el-divider></el-divider>
     <el-row type="flex" justify="center">
       <el-col :span="12">
         <el-form label-position="right" label-width="80px" :model="formConfig">
@@ -56,11 +55,8 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
 import VTable from 'pandora2/table/src/index.vue'
-import 'element-plus/lib/theme-chalk/index.css'
-import { ElTableColumn ,ElTable } from 'element-plus'
 export default defineComponent({
   components: {
-    ElTableColumn ,ElTable,
     VTable
   },
   setup() {

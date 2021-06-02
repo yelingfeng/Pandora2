@@ -6,7 +6,9 @@ import styleImport from 'vite-plugin-style-import'
 export default defineConfig({
   plugins: [
     vue(),
-    vueJsx(),
+    vueJsx({
+      optimize:true
+    }),
     styleImport({
       libs: [
         {

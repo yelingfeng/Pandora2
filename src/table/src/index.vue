@@ -1,6 +1,6 @@
 
 <script lang="tsx">
-import { defineComponent} from 'vue'
+import { defineComponent } from 'vue'
 import { createNamespace } from '../../_utils/create'
 // import { isFunction } from '../../_utils/is'
 import { propTypes } from '../../_utils/propTypes'
@@ -13,10 +13,10 @@ export default defineComponent({
   props: {
     options: propTypes.object
   },
-  setup() {
-    
+  components: {
+    ElTable, ElTableColumn
   },
-  render(){
+  setup() {
     const tableData = [{
       date: '2016-05-02',
       name: '王小虎',
@@ -41,23 +41,27 @@ export default defineComponent({
       { prop: 'address', label: '地址', width: '180' },
     ]
     const columns = columnProps.map(item=>{
-      const props = {
+      const columnProps = {
         prop :item.prop,
         label : item.label,
         width : item.width
       }
-      return (<ElTableColumn {...props}></ElTableColumn>)
+      return <ElTableColumn {...columnProps}></ElTableColumn>
     })
-
     const tableProps = {
-      data :tableData
+        data :tableData
     }
-         
-    return (
-      <ElTable {...tableProps}>
+    return ()=> {
+      return (
+        <ElTable {...tableProps}>
           {columns}
        </ElTable>
-    )
+      )
+    }
+    // return {
+    //   columnProps,
+    //   tableData
+    // }
   }
 })
 </script>

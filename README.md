@@ -6,8 +6,8 @@ Vue-pandora 2.0
 # TODO LIST
 
 ## 1. 工程化Task 
+- [-] VitePress-Components for Demo 支持 
 - [ ] Github Actions Workflow 支持
-- [ ] VitePress-Components for Demo 支持 
 - [ ] Jest Test 
 - [ ] npm publish
 - [ ] ChangeLog 优化
