@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container">
     <VTable/>
     <el-row type="flex" justify="center">
       <el-col :span="12">
@@ -118,4 +118,8 @@ export default defineComponent({
 </script>
 
 <style scoped>
+  .container {
+    width:1000px;
+    margin:auto 10px;
+  }
 </style>

@@ -1,4 +1,5 @@
 import { resolve } from 'path'
+import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 /**
  * @type {import('vite').UserConfig}
@@ -14,5 +15,8 @@ import vueJsx from '@vitejs/plugin-vue-jsx'
       'vitepress-for-component/dist/client/theme-default',
     ],
   },
-  plugins: [vueJsx()]
+  plugins: [
+    // vue(),
+    vueJsx()
+  ]
 };

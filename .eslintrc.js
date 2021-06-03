@@ -40,13 +40,7 @@ module.exports = {
         varsIgnorePattern: '^h$'
       }
     ],
-    'no-unused-vars': [
-      'error',
-      {
-        argsIgnorePattern: '^h$',
-        varsIgnorePattern: '^h$'
-      }
-    ],
+    'no-unused-vars': 'off',
     'space-before-function-paren': 'off',
     quotes: ['error', 'single'],
     'comma-dangle': ['error', 'never']

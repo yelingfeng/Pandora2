@@ -1,5 +1,6 @@
-import DefaultTheme from 'vitepress/dist/client/theme-default'
+import DefaultTheme from 'vitepress-for-component/dist/client/theme-default'
 import 'element-plus/lib/theme-chalk/index.css';
+import './css/table.css'
 import ElementPlus from 'element-plus'
 export default {
   ...DefaultTheme,

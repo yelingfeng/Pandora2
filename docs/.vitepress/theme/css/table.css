@@ -1,0 +1,97 @@
+
+/*
+table 表单override
+*/
+
+.el-table{
+  color: #76838f;
+  font-size: 14px;
+}
+
+.el-table__fixed::before,
+.el-table__fixed-right::before {
+  background-color: transparent;
+}
+
+.el-table__empty-text {
+  line-height: 150px;
+}
+
+.el-table--border,
+.el-table--group {
+  border: none;
+}
+
+.el-table::before,
+.el-table--group::after,
+.el-table--border::after {
+  background-color: transparent;
+}
+.el-table thead {
+  color: #666666;
+}
+
+.el-table thead.is-group th {
+  background: #f2f2f2;
+}
+
+.el-table th {
+  background: rgba(0, 98, 255, 0.05);
+}
+
+.el-table thead {
+  color: rgba(0, 0, 0, 0.8);
+}
+
+.el-table__body tr.current-row > td {
+  color: #efb414;
+}
+
+
+.el-table th > .cell {
+  font-weight: 500;
+}
+.el-table th.is-leaf,
+.el-table td {
+  border-bottom: none;
+}
+.el-table .el-button:hover {
+  background: #fff;
+  color: rgba(37, 147, 242, 0.8);
+}
+.el-table th.is-leaf {
+  background: #f5f7fa;
+  color: #606266;
+  padding: 5px 0;
+}
+
+.el-table th,
+.el-table td {
+  padding: 4px 0;
+}
+
+.el-table thead.is-group th {
+  background: #f5f7fa;
+  color: #606266;
+}
+
+
+.el-table__body tr.hover-row > td,
+.el-table__body tr.hover-row.current-row > td,
+.el-table__body tr.hover-row.el-table__row > td,
+.el-table__body tr.hover-row.el-table__row--striped > td,
+.el-table__body tr.hover-row.el-table__row--striped.current-row > td {
+  background-color: #f5f7fa;
+}
+
+.el-table--enable-row-hover .el-table__body tr:hover > td {
+  background: #f5f7fa !important;
+}
+
+.el-table--scrollable-x .el-table__body-wrapper::-webkit-scrollbar-thumb {
+  background-color: transparent;
+}
+
+.el-table--scrollable-x .el-table__body-wrapper:hover::-webkit-scrollbar-thumb {
+  background-color: #ccc5c5;
+}
