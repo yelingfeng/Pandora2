@@ -1,12 +1,32 @@
 <template>
   <div>
-    <VTable :rowsData="testData" :columns="columns"></VTable>
+    <VTable
+      :data="testData"
+      :sortConfig="sortConfig"
+      :tableConfig="tableConfig"
+      :columns="columns"
+    ></VTable>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from "vue";
 import VTable from "../../../../src/table/src/index.vue";
+
+const tableConfig = {};
+
+const sortConfig = {
+  sortMode: "multi",
+  // 排序回调事件
+  sortChange: (row: any) => {
+    console.log(row);
+  },
+  // 排序
+  defaultSorts: [
+    { prop: "date", order: "descending" },
+    { prop: "address", order: "ascending" },
+  ],
+};
 
 const testData = [
   {
@@ -32,9 +52,9 @@ const testData = [
 ];
 
 const columns = [
-  { prop: "name", label: "姓名", width: "180" },
-  { prop: "date", label: "日期", width: "180" },
-  { prop: "address", label: "地址", width: "180" },
+  { value: "name", name: "姓名", width: "180" },
+  { value: "date", name: "日期", width: "180", sortable: true },
+  { value: "address", label: "地址", width: "200", sortable: true },
 ];
 </script>
 
