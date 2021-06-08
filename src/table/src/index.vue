@@ -1,5 +1,17 @@
 <script lang="tsx">
-import { defineComponent, PropType, toRaw, ref, Ref, onMounted } from "vue";
+import {
+  defineComponent,
+  PropType,
+  toRaw,
+  ref,
+  Ref,
+  unref,
+  toRefs,
+  onMounted,
+  watch,
+  nextTick,
+  reactive,
+} from "vue";
 import { createNamespace } from "../../_utils/create";
 import { propTypes } from "../../_utils/propTypes";
 import { ElTable, ElTableColumn } from "element-plus";
@@ -42,18 +54,6 @@ const useSort = (
 };
 
 /**
- * 基础组件 属性配置
- * 封装不变的一些固定配置
- */
-const defineBaseCompCfg = (n: string) => {
-  const [name] = createNamespace(n);
-  return {
-    name,
-    inheritAttrs: false,
-  };
-};
-
-/**
  *
  */
 const renderColumnProp = (item: IPandoraTableColumn<unknown>, $sortService: any) => {
@@ -91,6 +91,17 @@ const renderColumnProp = (item: IPandoraTableColumn<unknown>, $sortService: any)
   return { columnProps, slots };
 };
 
+/**
+ * 基础组件 属性配置
+ * 封装不变的一些固定配置
+ */
+const defineBaseCompCfg = (n: string) => {
+  const [name] = createNamespace(n);
+  return {
+    name,
+    inheritAttrs: false,
+  };
+};
 export default defineComponent({
   ...defineBaseCompCfg("VTable"),
   props: {
@@ -104,17 +115,31 @@ export default defineComponent({
     ElTableColumn,
   },
   setup(props) {
-    const tableInstance = ref<Table<unknown>>(null);
-    const tableData = props.data;
-    const columnProps = props.columns as IPandoraTableColumn<unknown>[];
-
+    const tableInstance = ref<Table<unknown>>();
+    const columnProps = toRaw(props.columns) as IPandoraTableColumn<unknown>[];
     const sortConfig = toRaw(props.sortConfig) as IPandoraTableSort<ISortChangeCb>;
-
     const $sortService = useSort(sortConfig, columnProps, tableInstance);
+    // const rowData = toRefs(props.data);
 
     onMounted(() => {
       $sortService.init();
     });
+
+    watch(
+      () => props.data,
+      (newVal, oldVal) => {
+        // rowData.value = toRaw(newVal);
+        tableConfig.data = newVal;
+        $sortService.initIconSort();
+      },
+      {
+        deep: true,
+      }
+    );
+
+    const handleHeaderClick = (column: any, e: any) => {
+      $sortService.executeHeaderClick(column, e);
+    };
 
     const columns = columnProps.map((item) => {
       const { columnProps, slots } = renderColumnProp(item, $sortService);
@@ -126,11 +151,16 @@ export default defineComponent({
     });
     const tableConfig = {
       ref: tableInstance,
-      data: tableData,
+      data: toRefs(props.data),
     };
 
     return () => {
-      return <ElTable {...tableConfig}>{columns}</ElTable>;
+      return (
+        // @ts-ignore
+        <ElTable {...tableConfig} onHeaderClick={handleHeaderClick}>
+          {columns}
+        </ElTable>
+      );
     };
   },
 });

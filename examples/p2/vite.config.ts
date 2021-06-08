@@ -1,14 +1,15 @@
-import { defineConfig } from 'vite'
+import { UserConfigExport, ConfigEnv,Plugin } from 'vite';
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 import styleImport from 'vite-plugin-style-import'
+// import { viteMockServe } from 'vite-plugin-mock';
 // https://vitejs.dev/config/
-export default defineConfig({
-  plugins: [
+export default ({ command }: ConfigEnv): UserConfigExport => {
+  const vitePlugins: (Plugin | Plugin[])[] = [
+    // have to
     vue(),
-    vueJsx({
-      optimize:true
-    }),
+    // have to
+    vueJsx(),
     styleImport({
       libs: [
         {
@@ -24,5 +25,9 @@ export default defineConfig({
         }
       ]
     })
-  ]
-})
+  ];
+
+  return {
+    plugins:vitePlugins
+  }
+}

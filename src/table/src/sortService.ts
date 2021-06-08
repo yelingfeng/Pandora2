@@ -2,18 +2,18 @@ import { Ref } from 'vue'
 import { removeClass, addClass, trim } from "../../_utils/helper";
 import { isFunction } from '../../_utils/is'
 import { Table } from "element-plus/packages/table/src/table/defaults"
-const ASC = "ascending";
-const DESC = "descending";
-const DEFAULT_SORT = "descending";
-const SINGLE = "single";
-const MULTI = "multi";
+export const ASC = "ascending";
+export const DESC = "descending";
+export const DEFAULT_SORT = "descending";
+export const SINGLE = "single";
+export const MULTI = "multi";
 // 排序字段集合
-const SORT_ARR: string[] = [ASC, DESC];
+export const SORT_ARR: string[] = [ASC, DESC];
 type Dictionary<T> = Record<string, T>
 
 
 // 排序配置类型
-export interface SortType {
+export interface ISortType {
   prop: string;
   order: "ascending" | "descending";
 }
@@ -32,11 +32,13 @@ export interface IPandoraTableSort<T = any> {
   // 排序回调事件
   sortChange?: (row: T) => void;
   // 排序
-  defaultSorts?: SortType[];
+  defaultSorts?: ISortType[];
+  // 默认升序还是降序
+  defaultOrder ?:"ascending" | "descending";
   // 用户定义的列
-  userColumnOrder?:Dictionary<String>,
+  userColumnOrder?: Dictionary<String>,
   // elementplus table实例
-  tableInstance? :Ref<Table<any>>
+  tableInstance?: Ref<Table<any>>
 }
 
 
@@ -52,10 +54,9 @@ export class SortService {
   }
   constructor(opt: IPandoraTableSort<ISortChangeCb>) {
     this.option = opt
-    console.log(this)
   }
   init() {
-    const userColumnOrder = this.option.userColumnOrder 
+    const userColumnOrder = this.option.userColumnOrder
 
     this._initDefSortObj();
 
@@ -73,6 +74,13 @@ export class SortService {
     this.initIconSort();
   }
 
+  // 初始化sort
+  initSort() {
+    this._clearSortOrderService()
+    this._initDefSortObj()
+    this.sortChange()
+  }
+
   // 初始化 装载默认得排序对象
   _initDefSortObj() {
     if (this.option.defaultSorts) {
@@ -81,12 +89,22 @@ export class SortService {
       })
     }
   }
+  // 获取默认列的order 如果有默认值 取默认 没有默认返回降序
+  _getDefaultOrder(prop: string) {
+    let order = ''
+    if (this._oldActiveSort[prop]) {
+      order = this._oldActiveSort[prop]
+    } else {
+      order = this.option.defaultOrder || DEFAULT_SORT
+    }
+    return order
+  }
 
   /**
    * 获取当前排序列的th Dom
    */
   getSortColDom(order: string) {
-    const tableInstance = this.option.tableInstance.value as Table<any>
+    const tableInstance = this.option.tableInstance?.value as Table<any>
     const tableEl = tableInstance.$el
     return tableEl.querySelectorAll(`div[relid=${order}]`)
   }
@@ -203,6 +221,7 @@ export class SortService {
     this.removeAllSortOrderCls(node)
     addClass(node, order)
   }
+
   /**
   * 移除所有排序cls样式
   *
@@ -212,7 +231,6 @@ export class SortService {
       removeClass(node, item)
     })
   }
-
 
   /**
  * icon click事件
@@ -236,8 +254,8 @@ export class SortService {
   }
 
   /**
- * 排序回调
- */
+  * 排序回调
+  */
   sortChange() {
     if (this.option.sortChange && isFunction(this.option.sortChange)) {
       // 判断数组curThead中是否存在当前节点的prop
@@ -246,7 +264,10 @@ export class SortService {
     }
   }
 
-  // 获取需要返给用户端的 排序值
+  /**
+   * 获取需要返给用户端的 排序值
+   * @returns { key1:'desc',key2:'asc'}
+   */
   getActiveSortValue() {
     const obj = Object.create(null)
     for (const prop in this.activeSort) {
@@ -255,5 +276,37 @@ export class SortService {
       }
     }
     return obj
+  }
+
+  /**
+   * 执行header Click处理
+   */
+  executeHeaderClick(column: any, e: any) {
+    const prop = column.property
+    if (!this.isNeedOrderChange(prop)) return
+
+    const thNode = this.getTargetNode(e)
+    const currentOrder = this.getCurrentSortKey(thNode.classList)
+
+    let order = ''
+    // 如果是单排模式
+    if (this._isSingleModel(this.option.sortMode)) {
+      // 先清空所有activeSort
+      this._clearSortOrderService()
+      // console.log(currentOrder, this.activeSort)
+    }
+
+    // 如果已经存在一个排序状态
+    if (currentOrder !== '') {
+      order = this.getTargetSortKey(currentOrder)
+    } else {
+      order = this._getDefaultOrder(prop)
+    }
+    // 去改变排序样式
+    this.changeSortOrderClass(thNode, order)
+    // 添加状态
+    this.sortOrderService(prop, order)
+    // 触发回调事件
+    this.sortChange()
   }
 }
