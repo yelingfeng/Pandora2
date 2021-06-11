@@ -2,15 +2,14 @@
   <div>
     <VTable
       :data="testData"
+      :columns="columns"
       :sortConfig="sortConfig"
       :tableConfig="tableConfig"
-      :columns="columns"
     ></VTable>
   </div>
 </template>
 
 <script setup lang="ts">
-import axios from "axios";
 import { ref, onMounted } from "vue";
 import VTable from "../../../../src/table/src/index.vue";
 
