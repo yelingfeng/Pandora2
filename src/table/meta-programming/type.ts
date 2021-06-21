@@ -1,4 +1,4 @@
-import { CreateProperDecorator } from "@/_utils";
+import { CreateProperDecorator } from "./../../_utils/";
 
 // 类装饰器的约束: 可以根据业务 给类不同的数据
 export interface ClassConfig {

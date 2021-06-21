@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 import { TableBase, Column } from "./type";
-import { getConfigMap } from "@/_utils/";
+import { getConfigMap } from "./../../_utils/";
 import { getPersonListFromServer } from "./service";
 import { ColumnPropertyConfig, columnConfig, TableColumu, ClassConfig, Paginabale } from './type';
 
