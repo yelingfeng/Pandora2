@@ -16,14 +16,13 @@ map:
 </demo>
 
 
-### 元编程
-> AntDesignTable
+<!-- ### 元编程
 
 <demo src="./demo/aTable.vue"
   language="vue"
   title="ATable表格"
   desc="元编程方式编写的AntDesignTable实例">
-</demo>
+</demo> -->
 
 
 ### 事件处理
