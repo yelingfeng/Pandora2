@@ -15,6 +15,17 @@ map:
   desc="这是一个基础表格渲染示例">
 </demo>
 
+
+### 元编程
+> AntDesignTable
+
+<demo src="./demo/aTable.vue"
+  language="vue"
+  title="ATable表格"
+  desc="元编程方式编写的AntDesignTable实例">
+</demo>
+
+
 ### 事件处理
 
 ### API

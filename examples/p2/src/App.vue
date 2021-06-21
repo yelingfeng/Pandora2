@@ -5,16 +5,17 @@
         <VTable></VTable>
       </el-col>
     </el-row>
+    <PropsHelp :state="state" />
 
     <div class="results">
       <pre>
-Test results:
-    Number : {{ testNumber }}
-    Boolean: {{ testBoolean }}
-    Text   : {{ testString }}
-    Select : {{ testSelect }} -> {{ findSelectedValue() }}
-    Color  : {{ testColor }}
-</pre
+        Test results:
+            Number : {{ testNumber }}
+            Boolean: {{ testBoolean }}
+            Text   : {{ testString }}
+            Select : {{ testSelect }} -> {{ findSelectedValue() }}
+            Color  : {{ testColor }}
+        </pre
       >
       <span
         class="results-color"
@@ -22,7 +23,11 @@ Test results:
         >&nbsp;&nbsp;{{ testColor }}&nbsp;&nbsp;</span
       >
     </div>
+    <!--
 
+     
+    </div>
+   
     <DatGui foldPosition="top">
       <RowTitle
         label="Title"
@@ -58,7 +63,7 @@ Test results:
         @clicked="buttonClicked"
       />
       <RowFolder label="Folder" closed>
-        <!-- <RowColor label="Color" v-model:color="testColor" /> -->
+       <RowColor label="Color" v-model:color="testColor" />
         <RowNumber
           v-model:value="testNumber"
           label="Number slider"
@@ -113,35 +118,29 @@ Test results:
         </RowFolder>
       </RowFolder>
     </DatGui>
+    -->
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, reactive, toRefs } from "vue";
 import VTable from "./components/Table.vue";
-import DatGui from "./gui/DatGui.vue";
-import RowTitle from "./gui/components/RowTitle.vue";
-import RowFolder from "./gui/components/RowFolder.vue";
-import RowNumber from "./gui/components/RowNumber.vue";
-import RowString from "./gui/components/RowString.vue";
-import RowBoolean from "./gui/components/RowBoolean.vue";
-import RowButton from "./gui/components/RowButton.vue";
-import RowSelect from "./gui/components/RowSelect.vue";
-import RowColor from "./gui/components/RowColor.vue";
+import PropsHelp from "./gui/PandoraPropsHelp.vue";
 import { color4Background } from "./gui/utils/colors";
 export default defineComponent({
   name: "App",
   components: {
     VTable,
-    DatGui,
-    RowTitle,
-    RowFolder,
-    RowNumber,
-    RowString,
-    RowBoolean,
-    RowButton,
-    RowSelect,
-    RowColor,
+    // DatGui,
+    // RowTitle,
+    // RowFolder,
+    // RowNumber,
+    // RowString,
+    // RowBoolean,
+    // RowButton,
+    // RowSelect,
+    // RowColor,
+    PropsHelp,
   },
   setup() {
     const state = reactive({
@@ -170,6 +169,7 @@ export default defineComponent({
     }
     return {
       ...toRefs(state),
+      state,
       buttonClicked,
       findSelectedValue,
       color4Background,

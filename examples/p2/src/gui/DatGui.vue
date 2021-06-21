@@ -16,7 +16,7 @@
 
 <script lang="ts">
 import { computed, defineComponent, provide, readonly, ref } from "vue";
-import { HidePickerFn } from "./RowColor.vue";
+import { HidePickerFn } from "./components/RowColor.vue";
 export default defineComponent({
   name: "DatGui",
   props: {
