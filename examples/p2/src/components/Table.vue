@@ -13,7 +13,9 @@
 import { ref, onMounted } from "vue";
 import VTable from "../../../../src/table/src/index.vue";
 
-const tableConfig = {};
+const tableConfig = {
+  pagination: true,
+};
 
 const sortConfig = {
   sortMode: "multi",

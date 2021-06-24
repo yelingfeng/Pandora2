@@ -5,11 +5,11 @@
         <VTable></VTable>
       </el-col>
     </el-row>
-    <el-row type="flex" justify="center">
+    <!-- <el-row type="flex" justify="center">
       <el-col :span="20">
         <ATable />
       </el-col>
-    </el-row>
+    </el-row> -->
     <PropsHelp :state="state" />
 
     <div class="results">
