@@ -46,6 +46,10 @@ export abstract class TableBase {
     return {total: 0, list:[]}
   }
 
+  static async getDataList<T>(): Promise<Paginabale<T>> {
+    return {total: 0, list:[]}
+  }
+
   static getConfig: () => ClassConfig;
 
   static change: (page:number, pageSize:number) => void;

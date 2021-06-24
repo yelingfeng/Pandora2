@@ -17,3 +17,19 @@ export const getPersonListFromServer: any = async (): Promise<any> => {
     }, 500);
   });
 }
+
+export const getOutManListFromServer: any = async (): Promise<any> => {
+  return new Promise(resolve => {
+    setTimeout(() => {
+      resolve({
+        data: [
+          { key: 1, id: 1, name: 'veloma', age: 122, sex: 'male', address: '奥特之星',light:'f1' },
+          { key: 2, id: 2, name: '泰罗', age: 44, sex: 'female', address: '奥特之星',light:'f2'  },
+          { key: 3, id: 3, name: '奥罗', age: 55, sex: 'female', address: '奥特之星',light:'f3'  },
+          { key: 4, id: 4, name: '雷加', age: 66, sex: 'female', address: '奥特之星',light:'f4'  },
+        ],
+        count: 2
+      })
+    }, 200);
+  });
+}

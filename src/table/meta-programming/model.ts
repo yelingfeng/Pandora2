@@ -1,7 +1,8 @@
 import 'reflect-metadata';
+import { ref } from 'vue'
 import { TableBase, Column } from "./type";
 import { getConfigMap } from "./../../_utils/";
-import { getPersonListFromServer } from "./service";
+import { getPersonListFromServer,getOutManListFromServer } from "./service";
 import { ColumnPropertyConfig, columnConfig, TableColumu, ClassConfig, Paginabale } from './type';
 
 
@@ -14,6 +15,7 @@ export function EnhancedTableClass(config: ClassConfig) {
 
       constructor(data:any) {
         super(data);
+        Reflect.defineMetadata(tableConfigKey,ref<ClassConfig>(config),Target)
       }
 
       // 获取列上的元数据
@@ -38,13 +40,36 @@ export function EnhancedTableClass(config: ClassConfig) {
         }
       }
 
+      static async getDataList<T>():Promise<Paginabale<T>>{
+        const result = await  getOutManListFromServer()
+        return {
+          total : result.count,
+          list: result.data.map((item:T)=> new EnhancedTableClass(item))
+        }
+      }
+
+      // 获取类上的元数据
+      static getConfig():ClassConfig{
+        const config = Reflect.getMetadata(tableConfigKey,Target)
+        return config
+      }
+
     }
   }
 }
 
 
 // @ts-ignore
-@EnhancedTableClass({})
+@EnhancedTableClass({
+  size:'small',
+  bordered:true,
+  pagination:{
+    'show-less-items':true,
+    pageSize:5,
+    total:8,
+    current:1
+  }
+})
 export class Person extends TableBase {
 
   @Column({
@@ -98,5 +123,32 @@ export class Person extends TableBase {
     this.sex = sex;
     this.address = address;
   }
+}
+
+
+// @ts-ignore
+@EnhancedTableClass({
+  size:'small',
+  bordered:true,
+  pagination:{
+    'show-less-items':true,
+    pageSize:5,
+    total:8,
+    current:1
+  }
+})
+export class OuterMan extends Person {
+  @Column({
+    title: 'light',
+    dataIndex: 'light',
+    key: '6'
+  })
+  light: string ='';
+
+  constructor(option:any){
+    super(option)
+    this.light = option.light
+  }
+
 
 }
