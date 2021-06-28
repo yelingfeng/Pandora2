@@ -1,30 +1,31 @@
 <template>
-  <div class="container">
-    <el-row type="flex" justify="center">
-      <el-col :span="20">
-        <VTable></VTable>
+  <div>
+    <el-row>
+      <el-col :span="4">
+        <Menu></Menu>
       </el-col>
+      <div class="container">
+        <el-col :span="20">
+          <VTable></VTable>
+        </el-col>
+      </div>
     </el-row>
-    <!-- <el-row type="flex" justify="center">
-      <el-col :span="20">
-        <ATable />
-      </el-col>
-    </el-row> -->
     <PropsHelp :state="state" />
-
     <div class="results">
       <pre>
         Test results:
-            Number : {{ testNumber }}
-            Boolean: {{ testBoolean }}
-            Text   : {{ testString }}
-            Select : {{ testSelect }} -> {{ findSelectedValue() }}
-            Color  : {{ testColor }}
-        </pre
-      >
+          Number : {{ testNumber }}
+          Boolean: {{ testBoolean }}
+          Text   : {{ testString }}
+          Select : {{ testSelect }} -> {{ findSelectedValue() }}
+          Color  : {{ testColor }}
+      </pre>
       <span
         class="results-color"
-        :style="{ color: color4Background(testColor), 'background-color': testColor }"
+        :style="{
+          color: color4Background(testColor),
+          'background-color': testColor
+        }"
         >&nbsp;&nbsp;{{ testColor }}&nbsp;&nbsp;</span
       >
     </div>
@@ -128,14 +129,16 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, toRefs } from "vue";
-import VTable from "./components/Table.vue";
-import ATable from "./components/AntDTable.vue";
-import PropsHelp from "./gui/PandoraPropsHelp.vue";
-import { color4Background } from "./gui/utils/colors";
+import { defineComponent, reactive, toRefs } from 'vue'
+import Menu from './components/menu.vue'
+import VTable from './components/Table.vue'
+import ATable from './components/AntDTable.vue'
+import PropsHelp from './gui/PandoraPropsHelp.vue'
+import { color4Background } from './gui/utils/colors'
 export default defineComponent({
-  name: "App",
+  name: 'App',
   components: {
+    Menu,
     VTable,
     ATable,
     // DatGui,
@@ -147,32 +150,32 @@ export default defineComponent({
     // RowButton,
     // RowSelect,
     // RowColor,
-    PropsHelp,
+    PropsHelp
   },
   setup() {
     const state = reactive({
       testNumber: 70,
       testBoolean: true,
-      testString: "ABC",
-      testSelect: "one",
+      testString: 'ABC',
+      testSelect: 'one',
       testItems: [
-        { name: "First option", value: "one" },
-        { name: "Second option", value: "two" },
+        { name: 'First option', value: 'one' },
+        { name: 'Second option', value: 'two' }
       ],
-      testColor: "",
-    });
+      testColor: ''
+    })
     function buttonClicked(evt: MouseEvent) {
       console.log(
         `buttonClicked: What to do with trusted(${evt.isTrusted}) click event`,
         evt
-      );
+      )
     }
     function findSelectedValue() {
-      let item = state.testItems.find((_) => _.value === state.testSelect);
-      return item?.name || "none";
+      let item = state.testItems.find((_) => _.value === state.testSelect)
+      return item?.name || 'none'
     }
     function selectColor(...args: any[]) {
-      console.log("select", ...args);
+      console.log('select', ...args)
     }
     return {
       ...toRefs(state),
@@ -180,10 +183,10 @@ export default defineComponent({
       buttonClicked,
       findSelectedValue,
       color4Background,
-      selectColor,
-    };
-  },
-});
+      selectColor
+    }
+  }
+})
 </script>
 
 <style>
