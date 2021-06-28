@@ -18,23 +18,31 @@
 
   <el-menu router unique-opened :collapse="isCollapse" ref="navMenu">
     <template v-for="(menu, index) in menuData">
-      <template v-if="menu.sonmenu && menu.sonmenu.length > 0">
-        {{ menu.name }}
-        <el-submenu :index="index">
-          <template>
-            <span slot="title">{{ menu.name }}</span>
-          </template>
-          <template v-for="(cMenu, cIndex) in menu.sonmenu">
-            <template>
-              <el-menu-item
-                :index="`/${cMenu.url}`"
-                :key="cIndex"
-                @click="handleOpen(cIndex, $event, menu.id)"
-                >{{ cMenu.name }}</el-menu-item
-              >
+      <template v-if="menu.sonmenu">
+        <el-menu router unique-opened :collapse="isCollapse" ref="navMenu">
+          <template v-for="(menu, index) in menuData">
+            <template v-if="menu.sonmenu && menu.sonmenu.length > 0">
+              <el-submenu :index="index" :key="index">
+                <template #title>
+                  <span>{{ menu.name }}</span>
+                </template>
+                <div v-for="(cMenu, cIndex) in menu.sonmenu">
+                  <el-menu-item
+                    :index="`/${cMenu.url}`"
+                    :key="cIndex"
+                    @click="handleOpen(cIndex, $event, menu.id)"
+                    >{{ cMenu.name }}</el-menu-item
+                  >
+                </div>
+              </el-submenu>
+            </template>
+            <template v-else>
+              <el-menu-item :index="`/${menu.url}`" :key="index">
+                <span slot="title">{{ menu.name }}</span>
+              </el-menu-item>
             </template>
           </template>
-        </el-submenu>
+        </el-menu>
       </template>
       <template v-else>
         <el-menu-item :index="`/${menu.url}`" :key="index">
