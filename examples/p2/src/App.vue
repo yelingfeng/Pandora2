@@ -12,7 +12,7 @@
     </el-row> -->
     <PropsHelp :state="state" />
 
-    <div class="results">
+    <!-- <div class="results">
       <pre>
         Test results:
             Number : {{ testNumber }}
@@ -27,7 +27,7 @@
         :style="{ color: color4Background(testColor), 'background-color': testColor }"
         >&nbsp;&nbsp;{{ testColor }}&nbsp;&nbsp;</span
       >
-    </div>
+    </div> -->
     <!--
 
      

@@ -167,9 +167,8 @@ export default defineComponent({
     const columnProps = toRaw(props.columns) as IPandoraTableColumn<unknown>[];
     const sortConfig = toRaw(props.sortConfig) as IPandoraTableSort<ISortChangeCb>;
     const $sortService = useSort(sortConfig, columnProps, tableInstance);
-    // const rowData = toRefs(props.data);
-
     const tableConfig = toRaw(props.tableConfig) as IPandoraTable<unknown>;
+    const currentData = ref(props.data);
     onMounted(() => {
       $sortService.init();
     });
@@ -178,7 +177,7 @@ export default defineComponent({
       () => props.data,
       (newVal, oldVal) => {
         // rowData.value = toRaw(newVal);
-        tableConfig.data = newVal;
+        currentData.value = newVal.value;
         $sortService.initIconSort();
       },
       {
@@ -209,7 +208,7 @@ export default defineComponent({
     });
     const tablePropsConfig = {
       ref: tableInstance,
-      data: toRefs(props.data),
+      data: currentData.value,
     };
 
     const pageRef = ref(null);
@@ -231,7 +230,6 @@ export default defineComponent({
     return () => {
       return (
         <div class="vpandora-table">
-          // @ts-ignore
           <ElTable {...tablePropsConfig} onHeaderClick={handleHeaderClick}>
             {columns}
           </ElTable>
