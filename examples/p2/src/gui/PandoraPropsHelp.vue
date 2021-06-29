@@ -1,14 +1,14 @@
 <script lang="tsx">
-import DatGui from "./DatGui.vue";
-import RowTitle from "./components/RowTitle.vue";
-import RowFolder from "./components/RowFolder.vue";
-import RowNumber from "./components/RowNumber.vue";
-import RowString from "./components/RowString.vue";
-import RowBoolean from "./components/RowBoolean.vue";
-import RowButton from "./components/RowButton.vue";
-import RowSelect from "./components/RowSelect.vue";
-import RowColor from "./components/RowColor.vue";
-import { defineComponent, toRefs, withModifiers } from "vue";
+import DatGui from './DatGui.vue'
+import RowTitle from './components/RowTitle.vue'
+import RowFolder from './components/RowFolder.vue'
+import RowNumber from './components/RowNumber.vue'
+import RowString from './components/RowString.vue'
+import RowBoolean from './components/RowBoolean.vue'
+import RowButton from './components/RowButton.vue'
+import RowSelect from './components/RowSelect.vue'
+import RowColor from './components/RowColor.vue'
+import { defineComponent, toRefs, withModifiers } from 'vue'
 
 export default defineComponent({
   components: {
@@ -20,44 +20,58 @@ export default defineComponent({
     RowBoolean,
     RowButton,
     RowSelect,
-    RowColor,
+    RowColor
   },
   props: {
-    state: Object,
+    state: Object
   },
   setup(props) {
     const DGProps = {
-      foldPosition: "top",
-    };
+      foldPosition: 'top'
+    }
     function selectColor(...args: any[]) {
-      console.log("select", ...args);
+      console.log('select', ...args)
     }
 
-    const { testBoolean, testColor, testItems, testSelect } = toRefs<any>(props.state);
+    const {
+      testBoolean,
+      testColor,
+      testItems,
+      testSelect,
+      testString
+    } = toRefs<any>(props.state)
 
     const titleComp = (
       <RowTitle
         label="Title"
         background="olivedrab"
-        color={testBoolean.value ? "#f5dd05" : testColor}
+        color={testBoolean.value ? '#f5dd05' : testColor}
       />
-    );
+    )
     const colorComp = (
       <RowColor
         label="Color"
-        v-model={[testColor.value, "color"]}
-        onUpdate={withModifiers(selectColor.value, ["selectColor"])}
+        v-model={[testColor.value, 'color']}
+        onUpdate={withModifiers(selectColor.value, ['selectColor'])}
         color="#f29305"
       />
-    );
+    )
 
     const selectComp = (
       <RowSelect
         label="Select"
         items={testItems.value}
-        v-model={[testSelect.value, "value"]}
+        v-model={[testSelect.value, 'value']}
       />
-    );
+    )
+
+    const stringComp = (
+      <RowString
+        v-model={[testString.value, 'value']}
+        label="Text"
+        title="... or not"
+      />
+    )
 
     // <RowColor
     //   label="Color"
@@ -149,11 +163,12 @@ export default defineComponent({
           {titleComp}
           {colorComp}
           {selectComp}
+          {stringComp}
         </DatGui>
-      );
-    };
-  },
-});
+      )
+    }
+  }
+})
 </script>
 
 <style scoped></style>

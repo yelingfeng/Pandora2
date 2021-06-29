@@ -125,44 +125,44 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, toRefs } from "vue";
-import Menu from "./components/menu.vue";
-import VTable from "./components/Table.vue";
-import ATable from "./components/AntDTable.vue";
-import PropsHelp from "./gui/PandoraPropsHelp.vue";
-import { color4Background } from "./gui/utils/colors";
+import { defineComponent, reactive } from 'vue'
+import Menu from './components/menu.vue'
+import VTable from './components/Table.vue'
+import ATable from './components/AntDTable.vue'
+import PropsHelp from './gui/PandoraPropsHelp.vue'
+import { color4Background } from './gui/utils/colors'
 export default defineComponent({
-  name: "App",
+  name: 'App',
   components: {
     Menu,
     VTable,
     ATable,
-    PropsHelp,
+    PropsHelp
   },
   setup() {
     const state = reactive({
       testNumber: 70,
       testBoolean: true,
-      testString: "ABC",
-      testSelect: "one",
+      testString: 'ABC',
+      testSelect: 'one',
       testItems: [
-        { name: "First option", value: "one" },
-        { name: "Second option", value: "two" },
+        { name: 'First option', value: 'one' },
+        { name: 'Second option', value: 'two' }
       ],
-      testColor: "",
-    });
+      testColor: ''
+    })
     function buttonClicked(evt: MouseEvent) {
       console.log(
         `buttonClicked: What to do with trusted(${evt.isTrusted}) click event`,
         evt
-      );
+      )
     }
     function findSelectedValue() {
-      let item = state.testItems.find((_) => _.value === state.testSelect);
-      return item?.name || "none";
+      let item = state.testItems.find((_) => _.value === state.testSelect)
+      return item?.name || 'none'
     }
     function selectColor(...args: any[]) {
-      console.log("select", ...args);
+      console.log('select', ...args)
     }
     return {
       // ...toRefs(state),
@@ -170,10 +170,10 @@ export default defineComponent({
       buttonClicked,
       findSelectedValue,
       color4Background,
-      selectColor,
-    };
-  },
-});
+      selectColor
+    }
+  }
+})
 </script>
 
 <style>
