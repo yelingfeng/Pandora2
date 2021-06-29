@@ -23,7 +23,7 @@ export default defineComponent({
     RowColor,
   },
   props: {
-    state: Object,
+    option: Object,
   },
   setup(props) {
     const DGProps = {
@@ -32,19 +32,20 @@ export default defineComponent({
     function selectColor(...args: any[]) {
       console.log("select", ...args);
     }
-    const state = toRefs(props.state);
+
+    const currentOption = toRefs(props.option);
 
     const titleComp = (
       <RowTitle
         label="Title"
         background="olivedrab"
-        color={state.testBoolean ? "#f5dd05" : state.testColor}
+        color={currentOption.testBoolean ? "#f5dd05" : currentOption.testColor}
       />
     );
     const colorComp = (
       <RowColor
         label="Color"
-        v-model={[state.testColor, "color"]}
+        v-model={[currentOption.testColor, "color"]}
         onUpdate={withModifiers(selectColor, ["selectColor"])}
         color="#f29305"
       />

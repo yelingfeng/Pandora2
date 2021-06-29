@@ -1,30 +1,32 @@
 <template>
-  <div class="container">
-    <el-row type="flex" justify="center">
-      <el-col :span="20">
-        <VTable></VTable>
+  <div>
+    <el-row>
+      <el-col :span="4">
+        <Menu></Menu>
       </el-col>
+      <div class="container">
+        <el-col :span="20">
+          <VTable></VTable>
+        </el-col>
+      </div>
     </el-row>
-    <!-- <el-row type="flex" justify="center">
-      <el-col :span="20">
-        <ATable />
-      </el-col>
-    </el-row> -->
     <PropsHelp :state="state" />
 
     <!-- <div class="results">
       <pre>
         Test results:
-            Number : {{ testNumber }}
-            Boolean: {{ testBoolean }}
-            Text   : {{ testString }}
-            Select : {{ testSelect }} -> {{ findSelectedValue() }}
-            Color  : {{ testColor }}
-        </pre
-      >
+          Number : {{ testNumber }}
+          Boolean: {{ testBoolean }}
+          Text   : {{ testString }}
+          Select : {{ testSelect }} -> {{ findSelectedValue() }}
+          Color  : {{ testColor }}
+      </pre>
       <span
         class="results-color"
-        :style="{ color: color4Background(testColor), 'background-color': testColor }"
+        :style="{
+          color: color4Background(testColor),
+          'background-color': testColor
+        }"
         >&nbsp;&nbsp;{{ testColor }}&nbsp;&nbsp;</span
       >
     </div> -->
@@ -129,6 +131,7 @@
 
 <script lang="ts">
 import { defineComponent, reactive, toRefs } from "vue";
+import Menu from "./components/menu.vue";
 import VTable from "./components/Table.vue";
 import ATable from "./components/AntDTable.vue";
 import PropsHelp from "./gui/PandoraPropsHelp.vue";
@@ -136,6 +139,7 @@ import { color4Background } from "./gui/utils/colors";
 export default defineComponent({
   name: "App",
   components: {
+    Menu,
     VTable,
     ATable,
     // DatGui,

@@ -34,7 +34,7 @@ export interface IPandoraTableSort<T = any> {
   // 排序
   defaultSorts?: ISortType[];
   // 默认升序还是降序
-  defaultOrder ?:"ascending" | "descending";
+  defaultOrder?:"ascending" | "descending";
   // 用户定义的列
   userColumnOrder?: Dictionary<String>,
   // elementplus table实例

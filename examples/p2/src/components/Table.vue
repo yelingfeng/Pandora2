@@ -9,65 +9,80 @@
   </div>
 </template>
 
-<script setup lang="ts">
-import { ref, onMounted } from "vue";
+<script lang="ts">
+import { defineComponent, ref, onMounted, reactive } from "vue";
 import VTable from "../../../../src/table/src/index.vue";
 
-const tableConfig = {
-  pagination: true,
-};
-
-const sortConfig = {
-  sortMode: "multi",
-  // 排序回调事件
-  sortChange: (row: any) => {
-    console.log(row);
+export default defineComponent({
+  components: {
+    VTable,
   },
-  defaultSort: "descending",
-  // 排序
-  defaultSorts: [
-    { prop: "date", order: "descending" },
-    { prop: "address", order: "ascending" },
-  ],
-};
+  setup() {
+    const tableConfig = reactive({
+      pagination: true,
+      stripe: true,
+    });
 
-const testData: any = ref([]);
+    const sortConfig = {
+      sortMode: "multi",
+      // 排序回调事件
+      sortChange: (row: any) => {
+        console.log(row);
+      },
+      defaultSort: "descending",
+      // 排序
+      defaultSorts: [
+        { prop: "date", order: "descending" },
+        { prop: "address", order: "ascending" },
+      ],
+    };
 
-const columns = [
-  { value: "name", name: "姓名", width: "180" },
-  { value: "date", name: "日期", width: "180", sortable: true },
-  { value: "address", label: "地址", width: "200", sortable: true },
-];
+    const testData: any = ref([]);
 
-const load = () => {
-  setTimeout(() => {
-    testData.value = [
-      {
-        date: "2016-05-02",
-        name: "王小虎",
-        address: "上海市普陀区金沙江路 1518 弄",
-      },
-      {
-        date: "2016-05-04",
-        name: "王小虎",
-        address: "上海市普陀区金沙江路 1517 弄",
-      },
-      {
-        date: "2016-05-01",
-        name: "王小虎",
-        address: "上海市普陀区金沙江路 1519 弄",
-      },
-      {
-        date: "2016-05-03",
-        name: "王小虎",
-        address: "上海市普陀区金沙江路 1516 弄",
-      },
+    const columns = [
+      { value: "name", name: "姓名", width: "180" },
+      { value: "date", name: "日期", width: "180", sortable: true },
+      { value: "address", label: "地址", width: "200", sortable: true },
     ];
-  }, 200);
-};
 
-onMounted(() => {
-  load();
+    const load = () => {
+      testData.value = [
+        {
+          date: "2016-05-02",
+          name: "王小虎",
+          address: "上海市普陀区金沙江路 1518 弄",
+        },
+        {
+          date: "2016-05-04",
+          name: "王小虎",
+          address: "上海市普陀区金沙江路 1517 弄",
+        },
+        {
+          date: "2016-05-01",
+          name: "王小虎",
+          address: "上海市普陀区金沙江路 1519 弄",
+        },
+        {
+          date: "2016-05-03",
+          name: "王小虎",
+          address: "上海市普陀区金沙江路 1516 弄",
+        },
+      ];
+    };
+
+    onMounted(() => {
+      setTimeout(() => {
+        load();
+      }, 500);
+    });
+
+    return {
+      sortConfig,
+      tableConfig,
+      columns,
+      testData,
+    };
+  },
 });
 </script>
 
