@@ -20,6 +20,7 @@ import { propTypes } from "../../_utils/propTypes";
 const [name] = createNamespace("Pagination");
 export default defineComponent({
   name,
+  inheritAttrs: false,
   props: {
     option: propTypes.object,
   },

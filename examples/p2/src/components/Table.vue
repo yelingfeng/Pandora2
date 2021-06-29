@@ -5,6 +5,7 @@
       :columns="columns"
       :sortConfig="sortConfig"
       :tableConfig="tableConfig"
+      @handleSizePageChange="handleSizePageChange"
     ></VTable>
   </div>
 </template>
@@ -76,11 +77,16 @@ export default defineComponent({
       }, 500);
     });
 
+    const handleSizePageChange = (val) => {
+      console.log(val);
+    };
+
     return {
       sortConfig,
       tableConfig,
       columns,
       testData,
+      handleSizePageChange,
     };
   },
 });

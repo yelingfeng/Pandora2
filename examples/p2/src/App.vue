@@ -12,7 +12,7 @@
     </el-row>
     <PropsHelp :state="state" />
 
-    <!-- <div class="results">
+    <div class="results">
       <pre>
         Test results:
           Number : {{ testNumber }}
@@ -21,20 +21,16 @@
           Select : {{ testSelect }} -> {{ findSelectedValue() }}
           Color  : {{ testColor }}
       </pre>
-      <span
+      <!-- <span
         class="results-color"
         :style="{
           color: color4Background(testColor),
-          'background-color': testColor
+          'background-color': testColor,
         }"
         >&nbsp;&nbsp;{{ testColor }}&nbsp;&nbsp;</span
-      >
-    </div> -->
-    <!--
-
-     
+      > -->
     </div>
-   
+    <!--     
     <DatGui foldPosition="top">
       <RowTitle
         label="Title"
@@ -70,7 +66,7 @@
         @clicked="buttonClicked"
       />
       <RowFolder label="Folder" closed>
-       <RowColor label="Color" v-model:color="testColor" />
+        <RowColor label="Color" v-model:color="testColor" />
         <RowNumber
           v-model:value="testNumber"
           label="Number slider"
@@ -124,8 +120,7 @@
           </RowFolder>
         </RowFolder>
       </RowFolder>
-    </DatGui>
-    -->
+    </DatGui> -->
   </div>
 </template>
 
@@ -142,15 +137,6 @@ export default defineComponent({
     Menu,
     VTable,
     ATable,
-    // DatGui,
-    // RowTitle,
-    // RowFolder,
-    // RowNumber,
-    // RowString,
-    // RowBoolean,
-    // RowButton,
-    // RowSelect,
-    // RowColor,
     PropsHelp,
   },
   setup() {
@@ -179,7 +165,7 @@ export default defineComponent({
       console.log("select", ...args);
     }
     return {
-      ...toRefs(state),
+      // ...toRefs(state),
       state,
       buttonClicked,
       findSelectedValue,

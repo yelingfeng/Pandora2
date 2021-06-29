@@ -61,7 +61,7 @@ export interface IPandoraTable {
 }
 
 // 对外table配置类型 剔除data和column
-export type PandoraTableOption<T> = Omit<TableProps<T>, "data" | "column"> &
+export type IPandoraTableOption<T> = Omit<TableProps<T>, "data" | "column"> &
   IPandoraTable;
 
 // 定义列接口
@@ -73,7 +73,7 @@ export interface IPandoraTableColumn<T> extends TableColumnCtx<T> {
 const useSort = (
   sortConfig: IPandoraTableSort<ISortChangeCb>,
   columns: IPandoraTableColumn<unknown>[],
-  tableInstance: Ref<Table<unknown>>
+  tableInstance?: Ref<Table<unknown>> | any
 ) => {
   /**
    * 获取默认配置sortable = true的列 对应的order属性
@@ -138,10 +138,11 @@ const PAGE_HEIGHT = 50;
 const defaultOption: IPageOpt = {
   height: PAGE_HEIGHT,
   currentPage: 1,
-  total: 0,
+  total: 200,
   pageCount: 7,
   pageSizes: [10, 20, 30, 40, 50],
   pageSize: 10,
+  layout: "total, sizes, prev, pager, next, jumper",
 };
 
 const [name] = createNamespace("VTable");
@@ -150,7 +151,7 @@ export default defineComponent({
   inheritAttrs: false,
   props: {
     sortConfig: Object as PropType<IPandoraTableSort<any>>,
-    tableConfig: Object as PropType<Partial<PandoraTableOption<any>>>,
+    tableConfig: Object as PropType<IPandoraTableOption<any>>,
     data: Array,
     columns: Array as PropType<Partial<IPandoraTableColumn<any>>>,
   },
@@ -165,10 +166,9 @@ export default defineComponent({
     const sortConfig = toRaw(props.sortConfig) as IPandoraTableSort<ISortChangeCb>;
     const $sortService = useSort(sortConfig, columnProps, tableInstance);
 
-    const { pageOpt, pagination, ...othersConfig } = toRefs(
-      props.tableConfig
-    ) as PandoraTableOption<any>;
-
+    const { pageOpt, pagination, ...othersConfig } = toRefs<
+      IPandoraTableOption<any> | any
+    >(props.tableConfig);
     const currentData = ref(props.data);
     onMounted(() => {
       $sortService.init();
@@ -209,6 +209,7 @@ export default defineComponent({
 
     const tablePropsConfig = {
       ref: tableInstance,
+      onHeaderClick: handleHeaderClick,
       // v-model={[currentData.value, "color"]}
       ...othersConfig,
     };
@@ -217,26 +218,18 @@ export default defineComponent({
     const PagerProps = {
       ref: pageRef,
       option: pageOpt || defaultOption,
+      onHandleSizeChange: handleSizeChange,
+      onHandleCurrentChange: handleCurrentChange,
     };
     let PageDom: any = null;
     if (pagination) {
-      PageDom = (
-        <Pagination
-          {...PagerProps}
-          onHandleSizeChange={handleSizeChange}
-          onHandleCurrentChange={handleCurrentChange}
-        ></Pagination>
-      );
+      PageDom = <Pagination {...PagerProps}></Pagination>;
     }
 
     return () => {
       return (
         <div class="vpandora-table">
-          <ElTable
-            data={currentData.value}
-            {...tablePropsConfig}
-            onHeaderClick={handleHeaderClick}
-          >
+          <ElTable data={currentData.value} {...tablePropsConfig}>
             {columns}
           </ElTable>
           {PageDom}

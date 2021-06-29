@@ -14,7 +14,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, watch } from "vue";
+import { defineComponent, ref, watch, toRefs } from "vue";
 export type SelectItem = {
   name: string;
   value: string | number;
@@ -37,6 +37,7 @@ export default defineComponent({
       () => props.value,
       () => (currentValue.value = props.value || "")
     );
+
     function handleChange(evt: any) {
       currentValue.value = evt.target.value;
       emit("update:value", currentValue.value);
