@@ -39,7 +39,7 @@ export interface CascadeOptionType {
 }
 
 export interface ButtonType {
-  size?: string,
+  size?: string
   icon?: string
 }
 
@@ -66,7 +66,7 @@ export interface IFormItemCompOpt {
   className?: string
 
   // 按钮类型
-  buttonOption?:ButtonType
+  buttonOption?: ButtonType
 
   // 日期option
   dateOption?: DateOptionType

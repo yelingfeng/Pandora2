@@ -23,7 +23,7 @@
     "docs-build-serve": "cross-env NODE_ENV=true yarn docs-build && yarn docs-serve",
     "docs-deploy": "gh-pages -d docs/dist -t true",
     "docs-build-deploy": "yarn docs-build && yarn docs-deploy",
-    "lint": "eslint  src/**/*.{vue,js,ts,tsx}",
+    "lint": "eslint  src/**/*.{vue,ts}",
     "lint-fix": "yarn lint -- --fix",
     "commit": "git-cz",
     "type": "tsc -d",

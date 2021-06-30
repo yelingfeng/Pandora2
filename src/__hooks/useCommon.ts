@@ -22,7 +22,7 @@ export function useFormItemMethod(option: IFormItemCompOpt) {
     return { width: option.width + 'px' }
   })
 
-  const clickHandler = (...args:any) => {
+  const clickHandler = (...args: any) => {
     if (option.click && isFunction(option.click)) {
       option.click(args)
     }

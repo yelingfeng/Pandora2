@@ -3,14 +3,14 @@
     <Button
       :type="formConfig.type"
       :value="formConfig.value"
-      :size ="formConfig.size"
+      :size="formConfig.size"
       :disabled="formConfig.disabled"
       :click="clickHandler"
     />
     <el-divider></el-divider>
     <el-row type="flex" justify="center">
       <el-col :span="12">
-          <p>{{clickValue}}</p> 
+        <p>{{ clickValue }}</p>
       </el-col>
     </el-row>
   </div>
@@ -32,7 +32,7 @@ export default defineComponent({
     })
     const clickValue = ref('')
 
-    const clickHandler = (e:any)=>{
+    const clickHandler = (e: any) => {
       console.log(e)
       clickValue.value = JSON.parse(JSON.stringify(e))
     }
@@ -46,5 +46,4 @@ export default defineComponent({
 })
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

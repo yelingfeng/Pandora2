@@ -3,7 +3,7 @@ module.exports = {
   env: {
     browser: true,
     jest: true,
-    node: true,
+    node: true
   },
   parser: 'vue-eslint-parser',
   parserOptions: {
@@ -17,7 +17,7 @@ module.exports = {
   extends: [
     'plugin:vue/vue3-essential',
     'plugin:@typescript-eslint/recommended',
-    'prettier/@typescript-eslint',
+    'prettier',
     'plugin:prettier/recommended'
   ],
   rules: {
@@ -43,6 +43,7 @@ module.exports = {
     'no-unused-vars': 'off',
     'space-before-function-paren': 'off',
     quotes: ['error', 'single'],
-    'comma-dangle': ['error', 'never']
+    'comma-dangle': ['error', 'never'],
+    'vue/no-mutating-props': 0
   }
 }

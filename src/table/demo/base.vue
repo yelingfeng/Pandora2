@@ -58,112 +58,112 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, onMounted } from "vue";
-import VTable from "pandora2/table/src/index.vue";
+import { defineComponent, ref, onMounted } from 'vue'
+import VTable from 'pandora2/table/src/index.vue'
 export default defineComponent({
   components: {
-    VTable,
+    VTable
   },
   setup() {
     const formConfig = ref({
-      type: "primary",
-      value: "Button Test",
+      type: 'primary',
+      value: 'Button Test',
       disabled: false,
-      size: "mini",
-    });
+      size: 'mini'
+    })
     const typeOptions = ref([
       {
-        value: "primary",
-        label: "primary",
+        value: 'primary',
+        label: 'primary'
       },
       {
-        value: "success",
-        label: "success",
+        value: 'success',
+        label: 'success'
       },
       {
-        value: "warning",
-        label: "warning",
+        value: 'warning',
+        label: 'warning'
       },
       {
-        value: "danger",
-        label: "danger",
+        value: 'danger',
+        label: 'danger'
       },
       {
-        value: "info",
-        label: "info",
+        value: 'info',
+        label: 'info'
       },
       {
-        value: "text",
-        label: "text",
-      },
-    ]);
+        value: 'text',
+        label: 'text'
+      }
+    ])
 
     const sizeOptions = ref([
-      { value: "medium", label: "medium" },
-      { value: "small", label: "small" },
-      { value: "mini", label: "mini" },
-    ]);
+      { value: 'medium', label: 'medium' },
+      { value: 'small', label: 'small' },
+      { value: 'mini', label: 'mini' }
+    ])
 
     const typeOnChange = (e: any) => {
-      formConfig.value.type = e;
-    };
+      formConfig.value.type = e
+    }
 
     const sizeOnChange = (e: any) => {
-      formConfig.value.size = e;
-    };
+      formConfig.value.size = e
+    }
 
-    const tableConfig = {};
+    const tableConfig = {}
 
     const sortConfig = {
-      sortMode: "multi",
+      sortMode: 'multi',
       // 排序回调事件
       sortChange: (row: any) => {
-        console.log(row);
+        console.log(row)
       },
-      defaultSort: "descending",
+      defaultSort: 'descending',
       // 排序
       defaultSorts: [
-        { prop: "date", order: "descending" },
-        { prop: "address", order: "ascending" },
-      ],
-    };
+        { prop: 'date', order: 'descending' },
+        { prop: 'address', order: 'ascending' }
+      ]
+    }
 
-    const testData: any = ref([]);
+    const testData: any = ref([])
 
     const columns = [
-      { value: "name", name: "姓名", width: "180" },
-      { value: "date", name: "日期", width: "180", sortable: true },
-      { value: "address", label: "地址", width: "200", sortable: true },
-    ];
+      { value: 'name', name: '姓名', width: '180' },
+      { value: 'date', name: '日期', width: '180', sortable: true },
+      { value: 'address', label: '地址', width: '200', sortable: true }
+    ]
 
     const load = () => {
       setTimeout(() => {
         testData.value = [
           {
-            date: "2016-05-02",
-            name: "王小虎",
-            address: "上海市普陀区金沙江路 1518 弄",
+            date: '2016-05-02',
+            name: '王小虎',
+            address: '上海市普陀区金沙江路 1518 弄'
           },
           {
-            date: "2016-05-04",
-            name: "王小虎",
-            address: "上海市普陀区金沙江路 1517 弄",
+            date: '2016-05-04',
+            name: '王小虎',
+            address: '上海市普陀区金沙江路 1517 弄'
           },
           {
-            date: "2016-05-01",
-            name: "王小虎",
-            address: "上海市普陀区金沙江路 1519 弄",
+            date: '2016-05-01',
+            name: '王小虎',
+            address: '上海市普陀区金沙江路 1519 弄'
           },
           {
-            date: "2016-05-03",
-            name: "王小虎",
-            address: "上海市普陀区金沙江路 1516 弄",
-          },
-        ];
-      }, 200);
-    };
+            date: '2016-05-03',
+            name: '王小虎',
+            address: '上海市普陀区金沙江路 1516 弄'
+          }
+        ]
+      }, 200)
+    }
 
-    onMounted(() => load());
+    onMounted(() => load())
 
     return {
       tableConfig,
@@ -174,10 +174,10 @@ export default defineComponent({
       typeOnChange,
       typeOptions,
       sizeOptions,
-      sizeOnChange,
-    };
-  },
-});
+      sizeOnChange
+    }
+  }
+})
 </script>
 
 <style scoped>

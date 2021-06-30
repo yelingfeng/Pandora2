@@ -7,34 +7,34 @@
 </template>
 
 <script lang="ts">
-import { ref, onMounted, defineComponent } from "vue";
-import { Person, OuterMan } from "../../../../src/table/meta-programming/model";
+import { ref, onMounted, defineComponent } from 'vue'
+import { Person, OuterMan } from '../../../../src/table/meta-programming/model'
 export default defineComponent({
   setup() {
-    const columns = Person.getColumns<Person>();
-    const data = ref<Array<Person>>([]);
+    const columns = Person.getColumns<Person>()
+    const data = ref<Array<Person>>([])
 
-    const columns2 = OuterMan.getColumns<OuterMan>();
-    const data2 = ref<Array<OuterMan>>([]);
+    const columns2 = OuterMan.getColumns<OuterMan>()
+    const data2 = ref<Array<OuterMan>>([])
 
     const getData = async () => {
-      const response = await Person.getList<Person>();
-      data.value = response.list;
+      const response = await Person.getList<Person>()
+      data.value = response.list
 
-      const { list } = await OuterMan.getDataList<OuterMan>();
-      data2.value = list;
-    };
+      const { list } = await OuterMan.getDataList<OuterMan>()
+      data2.value = list
+    }
     // const config = Person.getConfig();
 
     onMounted(() => {
-      getData();
-    });
+      getData()
+    })
     return {
       columns,
       columns2,
       data2,
-      data,
-    };
-  },
-});
+      data
+    }
+  }
+})
 </script>

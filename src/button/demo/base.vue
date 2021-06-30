@@ -3,7 +3,7 @@
     <Button
       :type="formConfig.type"
       :value="formConfig.value"
-      :size ="formConfig.size"
+      :size="formConfig.size"
       :disabled="formConfig.disabled"
     />
     <el-divider></el-divider>
@@ -123,5 +123,4 @@ export default defineComponent({
 })
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

@@ -21,7 +21,7 @@ const [name] = createNamespace('button')
 export default defineComponent({
   name,
   inheritAttrs: false,
-  components:{
+  components: {
     ElButton
   },
   props: {

@@ -15,14 +15,19 @@
 
 <script lang="ts">
 import { createNamespace } from '../../_utils/create'
-import { defineComponent } from 'vue'
-import { propTypes } from '../../_utils/propTypes'
+import { defineComponent, PropType } from 'vue'
+import { IPageOpt } from './index.vue'
 const [name] = createNamespace('Pagination')
 export default defineComponent({
   name,
   inheritAttrs: false,
   props: {
-    option: propTypes.object
+    option: {
+      type: Object as PropType<IPageOpt>,
+      default() {
+        return {}
+      }
+    }
   },
   setup(props, { emit }) {
     const handleSizeChange = (val: number) => {
