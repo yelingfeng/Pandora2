@@ -1,3 +1,81 @@
 {
-  "vue3snippets.enable-compile-vue-file-on-did-save-code": true
+  "eslint.options": {
+    "extensions": [".js", ".vue", ".ts", ".tsx"]
+  },
+  "eslint.validate": [
+    "vue",
+    "html",
+    "javascript",
+    "typescript",
+    "javascriptreact",
+    "typescriptreact"
+  ],
+  "vetur.format.options.tabSize": 2,
+  "vetur.format.options.useTabs": false,
+  "vetur.format.defaultFormatter.css": "prettier",
+  "vetur.format.defaultFormatter.scss": "prettier",
+  "vetur.format.defaultFormatter.postcss": "prettier",
+  "vetur.format.defaultFormatter.less": "prettier",
+  "vetur.format.defaultFormatter.js": "vscode-typescript",
+  "vetur.format.defaultFormatter.sass": "sass-formatter",
+  "vetur.format.defaultFormatter.ts": "prettier",
+  "vetur.format.defaultFormatter.html": "prettier",
+  "vetur.format.defaultFormatterOptions": {
+    // "js-beautify-html": {
+    //   "wrap_attributes": "aligned-multiple", // 超过150折行
+    //   "wrap-line-length": 150
+    // },
+    // #vue组件中html代码格式化样式
+    "prettier": {
+      // "printWidth": 80,
+      "tabWidth": 2,
+      "singleQuote": false,
+      "trailingComma": "none",
+      "semi": false,
+      // "wrap_line_length": 80,
+      // "wrap_attributes": "aligned-multiple", // 超过150折行
+      "proseWrap": "never",
+      "arrowParens": "avoid",
+      "bracketSpacing": true,
+      "jsxBracketSameLine": true,
+      "useTabs": false,
+      "overrides": [
+        {
+          "files": ".prettierrc",
+          "options": {
+            "parser": "json"
+          }
+        }
+      ]
+    }
+  },
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/bower_components": true
+  },
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "vetur.validation.template": false,
+  "html.format.enable": false,
+  "json.format.enable": false,
+  "javascript.format.enable": false,
+  "typescript.format.enable": false,
+  "javascript.format.insertSpaceAfterFunctionKeywordForAnonymousFunctions": false,
+  "[html]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[vue]": {
+    "editor.defaultFormatter": "octref.vetur"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
 }

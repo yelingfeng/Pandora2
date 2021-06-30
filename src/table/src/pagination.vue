@@ -14,27 +14,27 @@
 </template>
 
 <script lang="ts">
-import { createNamespace } from "../../_utils/create";
-import { defineComponent } from "vue";
-import { propTypes } from "../../_utils/propTypes";
-const [name] = createNamespace("Pagination");
+import { createNamespace } from '../../_utils/create'
+import { defineComponent } from 'vue'
+import { propTypes } from '../../_utils/propTypes'
+const [name] = createNamespace('Pagination')
 export default defineComponent({
   name,
   inheritAttrs: false,
   props: {
-    option: propTypes.object,
+    option: propTypes.object
   },
   setup(props, { emit }) {
     const handleSizeChange = (val: number) => {
-      emit("handleSizeChange", val);
-    };
+      emit('handleSizeChange', val)
+    }
     const handleCurrentChange = (val: number) => {
-      emit("handleCurrentChange", val);
-    };
+      emit('handleCurrentChange', val)
+    }
     return {
       handleSizeChange,
-      handleCurrentChange,
-    };
-  },
-});
+      handleCurrentChange
+    }
+  }
+})
 </script>

@@ -9,7 +9,7 @@ import Router from './router';
 const app =createApp(App)
 app.use(Elementplus)
 app.use(Router)
-app.use(Antd);
+app.use(Antd)
 app.mount('#app')
 
 
