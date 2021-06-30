@@ -33,14 +33,24 @@ export default defineComponent({
       console.log('select', ...args)
     }
 
-    const { testBoolean, testColor, testItems, testSelect, testString } =
-      toRefs<any>(props.state)
+    const {
+      testBoolean,
+      testColor,
+      testItems,
+      testSelect,
+      testString,
+      testNumber
+    } = toRefs<any>(props.state)
+
+    const minNumber = -100
+    const maxNumber = 100
+    const stepNumber = 1
 
     const titleComp = (
       <RowTitle
         label="Title"
         background="olivedrab"
-        color={testBoolean.value ? 'red' : testColor}
+        color={testBoolean.value ? '#f5dd05' : testColor}
       />
     )
     const colorComp = (
@@ -70,9 +80,20 @@ export default defineComponent({
 
     const booleanComp = (
       <RowBoolean
-        checked={testBoolean.value}
+        v-model={[testBoolean.value, 'checked']}
         label="Boolean"
         title="I can explain that"
+      />
+    )
+
+    const numberComp = (
+      <RowNumber
+        v-model={[testNumber.value, 'value']}
+        label="Number slider"
+        min={minNumber}
+        max={maxNumber}
+        step={stepNumber}
+        title="Here is how it works"
       />
     )
 
@@ -178,6 +199,7 @@ export default defineComponent({
           {selectComp}
           {stringComp}
           {booleanComp}
+          {numberComp}
         </DatGui>
       )
     }

@@ -26,59 +26,64 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, computed, watch } from "vue";
-import { clamp } from "../utils/colors";
-import Slider from "./RowNumberSlider.vue";
+import { defineComponent, ref, computed, watch } from 'vue'
+import { clamp } from '../utils/colors'
+import Slider from './RowNumberSlider.vue'
 export default defineComponent({
-  name: "RowNumber",
+  name: 'RowNumber',
   components: { Slider },
   props: {
     showSlider: {
       type: Boolean,
-      default: true,
+      default: true
     },
     min: Number,
     max: Number,
     step: Number,
     value: {
       type: [Number, String],
-      required: true,
+      required: true
     },
     label: String,
-    title: String,
+    title: String
   },
   setup(props, { emit }) {
-    let minValue = typeof props.min === "number" ? props.min : Number.NEGATIVE_INFINITY;
-    let maxValue = typeof props.max === "number" ? props.max : Number.POSITIVE_INFINITY;
+    let minValue =
+      typeof props.min === 'number' ? props.min : Number.NEGATIVE_INFINITY
+    let maxValue =
+      typeof props.max === 'number' ? props.max : Number.POSITIVE_INFINITY
     if (minValue > maxValue) {
-      [minValue, maxValue] = [maxValue, minValue];
+      ;[minValue, maxValue] = [maxValue, minValue]
     }
-    const currentValue = ref(+props.value || 0);
+    const currentValue = ref(+props.value || 0)
     watch(
       () => props.value,
       () => (currentValue.value = +props.value || 0)
-    ); // TODO: Do we need to sanitize this value?
+    ) // TODO: Do we need to sanitize this value?
     const hasSlider = computed(
-      () => props.showSlider && Number.isFinite(minValue) && Number.isFinite(maxValue)
-    );
+      () =>
+        props.showSlider &&
+        Number.isFinite(minValue) &&
+        Number.isFinite(maxValue)
+    )
     const stepValue = computed(() => {
       if (!props.step) {
-        const val = maxValue - minValue;
-        return 10 ** Math.floor(Math.log(Math.abs(val)) / Math.LN10) / 10;
+        const val = maxValue - minValue
+        return 10 ** Math.floor(Math.log(Math.abs(val)) / Math.LN10) / 10
       }
-      return props.step;
-    });
+      return props.step
+    })
     function sanitizeNumber(number: number) {
-      let safeNumber = clamp(+number || 0, minValue, maxValue);
-      const step: number = stepValue.value;
+      let safeNumber = clamp(+number || 0, minValue, maxValue)
+      const step: number = stepValue.value
       if (step !== 0 && Number.isFinite(step)) {
-        safeNumber = Math.round(safeNumber / step) * step;
+        safeNumber = Math.round(safeNumber / step) * step
       }
-      currentValue.value = safeNumber;
-      emit("update:value", safeNumber);
+      currentValue.value = safeNumber
+      emit('update:value', safeNumber)
     }
     function handleChange(evt: InputEvent) {
-      sanitizeNumber(+(evt.target as HTMLInputElement).value);
+      sanitizeNumber(+(evt.target as HTMLInputElement).value)
     }
     return {
       currentValue,
@@ -87,8 +92,8 @@ export default defineComponent({
       minValue,
       maxValue,
       sanitizeNumber,
-      handleChange,
-    };
-  },
-});
+      handleChange
+    }
+  }
+})
 </script>
