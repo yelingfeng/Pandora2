@@ -10,28 +10,28 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, watch } from "vue";
+import { defineComponent, ref, watch } from 'vue'
 export default defineComponent({
-  name: "RowBoolean",
+  name: 'RowBoolean',
   props: {
     checked: Boolean,
     label: String,
-    title: String,
+    title: String
   },
   setup(props, { emit }) {
-    const currentValue = ref(props.checked);
+    const currentValue = ref(props.checked)
     watch(
       () => props.checked,
       () => (currentValue.value = props.checked)
-    );
+    )
     function handleChange() {
-      currentValue.value = !currentValue.value;
-      emit("update:checked", currentValue.value);
+      currentValue.value = !currentValue.value
+      emit('update:checked', currentValue.value)
     }
     return {
       currentValue,
-      handleChange,
-    };
-  },
-});
+      handleChange
+    }
+  }
+})
 </script>

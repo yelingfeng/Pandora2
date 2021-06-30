@@ -142,7 +142,7 @@ export default defineComponent({
   setup() {
     const state = reactive({
       testNumber: 70,
-      testBoolean: true,
+      testBoolean: false,
       testString: 'ABC',
       testSelect: 'one',
       testItems: [

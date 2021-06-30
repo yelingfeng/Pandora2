@@ -15,28 +15,28 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, watch } from "vue";
+import { defineComponent, ref, watch } from 'vue'
 export default defineComponent({
-  name: "RowString",
+  name: 'RowString',
   props: {
     value: String,
     label: String,
-    title: String,
+    title: String
   },
   setup(props, { emit }) {
-    const currentValue = ref(props.value || "");
+    const currentValue = ref(props.value || '')
     watch(
       () => props.value,
       () => (currentValue.value = props.value)
-    );
+    )
     function handleChange(evt: InputEvent) {
-      currentValue.value = (evt.target as HTMLInputElement).value;
-      emit("update:value", currentValue.value);
+      currentValue.value = (evt.target as HTMLInputElement).value
+      emit('update:value', currentValue.value)
     }
     return {
       currentValue,
-      handleChange,
-    };
-  },
-});
+      handleChange
+    }
+  }
+})
 </script>
