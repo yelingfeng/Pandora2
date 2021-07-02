@@ -6,11 +6,12 @@
       </el-col>
       <div class="container">
         <el-col :span="20">
-          <VTable></VTable>
+          <!-- <VTable></VTable> -->
+          <GuiTable :option="tableConfig"></GuiTable>
         </el-col>
       </div>
     </el-row>
-    <PropsHelp :state="state" />
+    <!-- <PropsHelp :state="state" /> -->
 
     <div class="results">
       <pre>
@@ -30,97 +31,6 @@
         >&nbsp;&nbsp;{{ testColor }}&nbsp;&nbsp;</span
       >
     </div>
-    <!--     
-    <DatGui foldPosition="top">
-      <RowTitle
-        label="Title"
-        background="olivedrab"
-        :color="testBoolean ? '#f5dd05' : testColor"
-      />
-      <RowColor
-        label="Color"
-        v-model:color="testColor"
-        @update:selectColor="selectColor"
-        color="#f29305"
-      />
-      <RowColor label="Color" v-model:color="testColor" />
-      <RowSelect label="Select" :items="testItems" v-model:value="testSelect" />
-      <RowBoolean
-        v-model:checked="testBoolean"
-        label="Boolean"
-        title="I can explain that"
-      />
-      <RowString v-model:value="testString" label="Text" title="... or not" />
-      <RowNumber
-        v-model:value="testNumber"
-        label="Number slider slider"
-        :min="-100"
-        :max="100"
-        :step="1"
-        title="Here is how it works"
-      />
-      <RowNumber v-model:value="testNumber" label="Number" />
-      <RowButton
-        label="Button"
-        title="This handler invoked with isTrusted = true"
-        @clicked="buttonClicked"
-      />
-      <RowFolder label="Folder" closed>
-        <RowColor label="Color" v-model:color="testColor" />
-        <RowNumber
-          v-model:value="testNumber"
-          label="Number slider"
-          :min="-100"
-          :max="100"
-          :step="1"
-          title="Here is how it works"
-        />
-        <RowNumber
-          v-model:value="testNumber"
-          label="Number slider"
-          :min="-100"
-          :max="100"
-          :step="1"
-          title="Here is how it works"
-        />
-        <RowFolder label="Nested Folder" closed>
-          <RowNumber
-            v-model:value="testNumber"
-            label="Number slider"
-            :min="-100"
-            :max="100"
-            :step="1"
-            title="Here is how it works"
-          />
-          <RowNumber
-            v-model:value="testNumber"
-            label="Number slider"
-            :min="-100"
-            :max="100"
-            :step="1"
-            title="Here is how it works"
-          />
-          <RowFolder label="Nested Folder" closed>
-            <RowNumber
-              v-model:value="testNumber"
-              label="Number slider"
-              :min="-100"
-              :max="100"
-              :step="1"
-              title="Here is how it works"
-            />
-            <RowNumber
-              v-model:value="testNumber"
-              label="Number slider"
-              :min="-100"
-              :max="100"
-              :step="1"
-              title="Here is how it works"
-            />
-          </RowFolder>
-        </RowFolder>
-      </RowFolder>
-    </DatGui> -->
   </div>
 </template>
 
@@ -128,6 +38,7 @@
 import { defineComponent, reactive, ref, toRefs } from 'vue'
 import Menu from './components/menu.vue'
 import VTable from './components/Table.vue'
+import GuiTable from './components/GuiTable.vue'
 import ATable from './components/AntDTable.vue'
 import PropsHelp from './gui/PandoraPropsHelp.vue'
 import { color4Background } from './gui/utils/colors'
@@ -137,7 +48,8 @@ export default defineComponent({
     Menu,
     VTable,
     ATable,
-    PropsHelp
+    PropsHelp,
+    GuiTable
   },
   setup() {
     const state = reactive({
@@ -154,26 +66,45 @@ export default defineComponent({
 
     const stripeRef = ref('stripe')
     const HeightRef = ref(200)
+    const FontSizeRef = ref(12)
 
     // testConfig
-    const demoConfig = [
-      {
-        type: 'Folder',
-        label: 'Table Props',
-        components: [
-          {
-            type: 'Boolean',
-            label: 'stripe',
-            model: stripeRef
-          },
-          {
-            type: 'Text',
-            label: 'Height',
-            model: HeightRef
-          }
-        ]
-      }
-    ]
+    const tableConfig = {
+      type: 'Folder',
+      label: 'Table Props',
+      components: [
+        {
+          type: 'Boolean',
+          label: 'stripe',
+          model: stripeRef
+        },
+        {
+          type: 'Title',
+          label: '标题',
+          background: 'olivedrab',
+          color: '#fff'
+        },
+        {
+          type: 'String',
+          label: '文本',
+          title: 'String',
+          value: '请输入……'
+        },
+        {
+          type: 'Number',
+          value: 100,
+          minNumber: -100,
+          maxNumber: 100,
+          step: 2,
+          label: 'Number'
+        },
+        {
+          type: 'Color',
+          label: 'Color',
+          value: '#fff'
+        }
+      ]
+    }
 
     function buttonClicked(evt: MouseEvent) {
       console.log(
@@ -191,6 +122,8 @@ export default defineComponent({
     return {
       ...toRefs(state),
       state,
+      // ...toRefs(tableConfig),
+      tableConfig,
       buttonClicked,
       findSelectedValue,
       color4Background,
