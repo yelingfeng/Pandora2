@@ -6,8 +6,8 @@
       </el-col>
       <div class="container">
         <el-col :span="20">
-          <!-- <VTable></VTable> -->
-          <GuiTable :option="tableConfig"></GuiTable>
+          <VTable></VTable>
+          <GuiCom :option="tableConfig"></GuiCom>
         </el-col>
       </div>
     </el-row>
@@ -38,7 +38,7 @@
 import { defineComponent, reactive, ref, toRefs } from 'vue'
 import Menu from './components/menu.vue'
 import VTable from './components/Table.vue'
-import GuiTable from './components/GuiTable.vue'
+import GuiCom from './components/Gui.vue'
 import ATable from './components/AntDTable.vue'
 import PropsHelp from './gui/PandoraPropsHelp.vue'
 import { color4Background } from './gui/utils/colors'
@@ -49,7 +49,7 @@ export default defineComponent({
     VTable,
     ATable,
     PropsHelp,
-    GuiTable
+    GuiCom
   },
   setup() {
     const state = reactive({
