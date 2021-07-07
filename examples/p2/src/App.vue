@@ -6,7 +6,8 @@
       </el-col>
       <div class="container">
         <el-col :span="20">
-          <VTable :option="pandoraTablCfg"></VTable>
+          <router-view :key="key"></router-view>
+          <!-- <VTable :option="pandoraTablCfg"></VTable> -->
           <GuiCom :option="tableConfig"></GuiCom>
         </el-col>
       </div>
@@ -35,10 +36,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, ref, toRefs } from 'vue'
+import { defineComponent, reactive, ref, toRefs, computed, getCurrentInstance } from 'vue'
 import Menu from './components/menu.vue'
 import VTable from './components/Table.vue'
-import GuiCom from './gui/Gui.vue'
+import GuiCom from './components/Gui.vue'
 import ATable from './components/AntDTable.vue'
 import PropsHelp from './gui/PandoraPropsHelp.vue'
 import { color4Background } from './gui/utils/colors'
@@ -63,8 +64,8 @@ export default defineComponent({
       ],
       testColor: ''
     })
-
-    const stripeRef = ref(true)
+    
+    const stripeRef = ref(false)
     const HeightRef = ref(200)
     const FontSizeRef = ref(12)
     const pagerRef = ref(true)
@@ -132,6 +133,11 @@ export default defineComponent({
     function selectColor(...args: any[]) {
       console.log('select', ...args)
     }
+    const key = computed(() => {
+      const vm: any = getCurrentInstance()
+      return vm.proxy.$route.path
+    })
+    
     return {
       ...toRefs(state),
       pandoraTablCfg,
@@ -141,7 +147,8 @@ export default defineComponent({
       buttonClicked,
       findSelectedValue,
       color4Background,
-      selectColor
+      selectColor,
+      key
     }
   }
 })
