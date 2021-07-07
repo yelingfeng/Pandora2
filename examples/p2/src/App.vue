@@ -36,10 +36,17 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, ref, toRefs, computed, getCurrentInstance } from 'vue'
+import {
+  defineComponent,
+  reactive,
+  ref,
+  toRefs,
+  computed,
+  getCurrentInstance
+} from 'vue'
 import Menu from './components/menu.vue'
 import VTable from './components/Table.vue'
-import GuiCom from './components/Gui.vue'
+import GuiCom from './gui/Gui.vue'
 import ATable from './components/AntDTable.vue'
 import PropsHelp from './gui/PandoraPropsHelp.vue'
 import { color4Background } from './gui/utils/colors'
@@ -64,7 +71,7 @@ export default defineComponent({
       ],
       testColor: ''
     })
-    
+
     const stripeRef = ref(false)
     const HeightRef = ref(200)
     const FontSizeRef = ref(12)
@@ -137,7 +144,7 @@ export default defineComponent({
       const vm: any = getCurrentInstance()
       return vm.proxy.$route.path
     })
-    
+
     return {
       ...toRefs(state),
       pandoraTablCfg,
