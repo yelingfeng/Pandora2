@@ -1,19 +1,17 @@
 <script lang="tsx">
 import { defineComponent, withModifiers } from 'vue'
-import VTable from '../../../../src/table/src/index.vue'
-import DatGui from '../gui/DatGui.vue'
-import RowTitle from '../gui/components/RowTitle.vue'
-import RowFolder from '../gui/components/RowFolder.vue'
-import RowNumber from '../gui/components/RowNumber.vue'
-import RowString from '../gui/components/RowString.vue'
-import RowBoolean from '../gui/components/RowBoolean.vue'
-import RowButton from '../gui/components/RowButton.vue'
-import RowSelect from '../gui/components/RowSelect.vue'
-import RowColor from '../gui/components/RowColor.vue'
+import DatGui from './DatGui.vue'
+import RowTitle from './components/RowTitle.vue'
+import RowFolder from './components/RowFolder.vue'
+import RowNumber from './components/RowNumber.vue'
+import RowString from './components/RowString.vue'
+import RowBoolean from './components/RowBoolean.vue'
+import RowButton from './components/RowButton.vue'
+import RowSelect from './components/RowSelect.vue'
+import RowColor from './components/RowColor.vue'
 
 export default defineComponent({
   components: {
-    VTable,
     DatGui,
     RowTitle,
     RowFolder,

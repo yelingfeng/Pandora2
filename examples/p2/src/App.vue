@@ -38,7 +38,7 @@
 import { defineComponent, reactive, ref, toRefs } from 'vue'
 import Menu from './components/menu.vue'
 import VTable from './components/Table.vue'
-import GuiCom from './components/Gui.vue'
+import GuiCom from './gui/Gui.vue'
 import ATable from './components/AntDTable.vue'
 import PropsHelp from './gui/PandoraPropsHelp.vue'
 import { color4Background } from './gui/utils/colors'
@@ -64,7 +64,7 @@ export default defineComponent({
       testColor: ''
     })
 
-    const stripeRef = ref(false)
+    const stripeRef = ref(true)
     const HeightRef = ref(200)
     const FontSizeRef = ref(12)
     const pagerRef = ref(true)
