@@ -1,4 +1,3 @@
-<template></template>
 <script lang="tsx">
 import { defineComponent, withModifiers } from 'vue'
 import VTable from '../../../../src/table/src/index.vue'
@@ -85,6 +84,14 @@ export default defineComponent({
             />
           )
           break
+        case 'Boolean':
+          singleCom = (
+            <RowBoolean
+              v-model={[comp.model, 'checked']}
+              label={comp.label}
+              title={comp.title}
+            />
+          )
         default:
           break
       }
@@ -94,7 +101,7 @@ export default defineComponent({
     // 遍历渲染组件
     const GuiCom = props.option.components.map((it: any, index: number) => {
       const box = getGuiComp(it)
-      console.log('box0', box)
+      // console.log('box0', box)
       const boxArr: any = []
       boxArr.push(box)
       return boxArr

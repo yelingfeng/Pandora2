@@ -1,46 +1,14 @@
-import { Ref } from 'vue'
-import { removeClass, addClass, trim } from "../../_utils/helper";
-import { isFunction } from '../../_utils/is'
-import { Table } from "element-plus/packages/table/src/table/defaults"
-export const ASC = "ascending";
-export const DESC = "descending";
-export const DEFAULT_SORT = "descending";
-export const SINGLE = "single";
-export const MULTI = "multi";
+import { removeClass, addClass, trim } from '../../../_utils/helper'
+import { isFunction } from '../../../_utils/is'
+import { Table } from 'element-plus/packages/table/src/table/defaults'
+import { IPandoraTableSort, ISortChangeCb, Dictionary } from '../../types'
+export const ASC = 'ascending'
+export const DESC = 'descending'
+export const DEFAULT_SORT = 'descending'
+export const SINGLE = 'single'
+export const MULTI = 'multi'
 // 排序字段集合
-export const SORT_ARR: string[] = [ASC, DESC];
-type Dictionary<T> = Record<string, T>
-
-
-// 排序配置类型
-export interface ISortType {
-  prop: string;
-  order: "ascending" | "descending";
-}
-// 排序回调类型
-export interface ISortChangeCb {
-  column: object;
-  prop: string;
-  order: string | null;
-}
-/**
- * 定义table Sort配置接口
- */
-export interface IPandoraTableSort<T = any> {
-  // 排序模式 single 独立排序 ,multi 多项排序
-  sortMode: "single" | "multi";
-  // 排序回调事件
-  sortChange?: (row: T) => void;
-  // 排序
-  defaultSorts?: ISortType[];
-  // 默认升序还是降序
-  defaultOrder?:"ascending" | "descending";
-  // 用户定义的列
-  userColumnOrder?: Dictionary<String>,
-  // elementplus table实例
-  tableInstance?: Ref<Table<any>>
-}
-
+export const SORT_ARR: string[] = [ASC, DESC]
 
 /**
  * 排序服务类
@@ -50,7 +18,7 @@ export class SortService {
   private defaultSortObj: Dictionary<any> = {}
   private _oldActiveSort: Dictionary<any> = {}
   private option: IPandoraTableSort<ISortChangeCb> = {
-    sortMode: SINGLE,
+    sortMode: SINGLE
   }
   constructor(opt: IPandoraTableSort<ISortChangeCb>) {
     this.option = opt
@@ -58,20 +26,20 @@ export class SortService {
   init() {
     const userColumnOrder = this.option.userColumnOrder
 
-    this._initDefSortObj();
+    this._initDefSortObj()
 
     for (const column in userColumnOrder) {
       //  设置默认的排序
       if (this.defaultSortObj[column]) {
-        userColumnOrder[column] = this.defaultSortObj[column];
+        userColumnOrder[column] = this.defaultSortObj[column]
       }
     }
     // 存一份副本
-    this._oldActiveSort = Object.assign({}, userColumnOrder);
+    this._oldActiveSort = Object.assign({}, userColumnOrder)
     // 存当前排序
-    this.activeSort = Object.assign({}, userColumnOrder);
+    this.activeSort = Object.assign({}, userColumnOrder)
 
-    this.initIconSort();
+    this.initIconSort()
   }
 
   // 初始化sort
@@ -119,40 +87,39 @@ export class SortService {
     }
   }
 
-
   // 获取指定order的 非当前排序字段
   getTargetSortKey(order: string) {
-    const index = SORT_ARR.findIndex((value, index, arr) => {
-      return value !== order;
-    });
-    return SORT_ARR[index];
+    const index = SORT_ARR.findIndex((value) => {
+      return value !== order
+    })
+    return SORT_ARR[index]
   }
   /**
    * 取当前th上的className 排序order字段
    */
   getCurrentSortKey(classList: any) {
-    let currentOrder = "";
-    const reg = `${ASC}|${DESC}`;
+    let currentOrder = ''
+    const reg = `${ASC}|${DESC}`
     for (let i = 0; i < classList.length; i++) {
       if (new RegExp(reg).test(classList[i])) {
-        currentOrder = trim(classList[i]);
+        currentOrder = trim(classList[i])
       }
     }
-    return currentOrder;
+    return currentOrder
   }
   /**
    * 是否是单排模式
-   * @param sortMode  
-   * @returns 
+   * @param sortMode
+   * @returns
    */
   _isSingleModel(sortMode: string) {
     return SINGLE === sortMode
   }
 
   /**
-  * 获取目标dom节点
-  *
-  */
+   * 获取目标dom节点
+   *
+   */
   getTargetNode(e: any) {
     const target = e.target
     let node
@@ -165,7 +132,10 @@ export class SortService {
       node = target.parentNode.parentNode.parentNode.parentNode
     }
     // div rel header触发
-    else if (target.nodeName === 'DIV' && target.attributes.getNamedItem('relid')) {
+    else if (
+      target.nodeName === 'DIV' &&
+      target.attributes.getNamedItem('relid')
+    ) {
       node = target.parentNode.parentNode
     }
     // div cell
@@ -213,31 +183,31 @@ export class SortService {
   }
 
   /**
-  * 处理sort icon 样式方法
-  * @param {object} node dom节点对象
-  * @param {string} order 目标排序order
-  */
+   * 处理sort icon 样式方法
+   * @param {object} node dom节点对象
+   * @param {string} order 目标排序order
+   */
   changeSortOrderClass(node: any, order: string) {
     this.removeAllSortOrderCls(node)
     addClass(node, order)
   }
 
   /**
-  * 移除所有排序cls样式
-  *
-  * */
+   * 移除所有排序cls样式
+   *
+   * */
   removeAllSortOrderCls(node: any) {
-    SORT_ARR.forEach(item => {
+    SORT_ARR.forEach((item) => {
       removeClass(node, item)
     })
   }
 
   /**
- * icon click事件
- * @param {object} order 排序字段
- * @param {object} column 当前列对象
- * @param {any} e 当前事件
- */
+   * icon click事件
+   * @param {object} order 排序字段
+   * @param {object} column 当前列对象
+   * @param {any} e 当前事件
+   */
   sortIconClick(e: any, column: any, order: string) {
     const thNode = this.getTargetNode(e)
     // 如果是单排模式
@@ -254,8 +224,8 @@ export class SortService {
   }
 
   /**
-  * 排序回调
-  */
+   * 排序回调
+   */
   sortChange() {
     if (this.option.sortChange && isFunction(this.option.sortChange)) {
       // 判断数组curThead中是否存在当前节点的prop

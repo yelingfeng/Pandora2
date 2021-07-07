@@ -4,7 +4,6 @@ import {
   PropType,
   toRaw,
   ref,
-  Ref,
   toRefs,
   unref,
   onMounted,
@@ -12,90 +11,41 @@ import {
 } from 'vue'
 import { createNamespace } from '../../_utils/create'
 import { ElTable, ElTableColumn } from 'element-plus'
-import type { TableColumnCtx } from 'element-plus/packages/table/src/table-column/defaults'
+import type { Table } from 'element-plus/packages/table/src/table/defaults'
 import type {
-  TableProps,
-  Table
-} from 'element-plus/packages/table/src/table/defaults'
-import { IPandoraTableSort, ISortChangeCb, SortService } from './sortService'
-import Pagination from './pagination.vue'
+  IPandoraTableColumn,
+  IPandoraTableSort,
+  IPandoraTableOption,
+  ISortChangeCb
+} from './types'
+import { useSortService } from './sort'
+import Pagination from './pagination/index.vue'
 
-export interface IPageOpt {
-  // 分页高度
-  height?: number
-  // 当前页
-  currentPage?: number
-  // 总数
-  total?: number
-  // 每页显示条数选择数组
-  pageSizes?: number[]
-  // 最大页码按钮数
-  pageCount?: number
-  // 当前显示每页条数
-  pageSize?: number
-  // 分页功能 默认显示完整功能 （可不传）
-  layout?: string
-}
-
-/**
- * 自定义table类型
- */
-export interface IPandoraTable {
-  // 选择模式 单选还是多选
-  selectionMode?: string
-  // 复现框的位置 前后 top 和 end
-  selectionPos?: string
-  // 是否显示多选
-  selection?: boolean
-  // 是否可选中的回调
-  selectable?: (row: any, index: number) => void
-  // 排序模式
-  sortMode?: string
-  // 行点击事件
-  rowClick?: (row: object, column: object, event: any) => void
-  // 行改变事件
-  rowChange?: (row: object, index: number) => void
-  // 是否分页
-  pagination?: boolean
-  // 分页配置
-  pageOpt?: IPageOpt
-}
-
-// 对外table配置类型 剔除data和column
-export type IPandoraTableOption<T> = Omit<TableProps<T>, 'data' | 'column'> &
-  IPandoraTable
-
-// 定义列接口
-export interface IPandoraTableColumn<T> extends TableColumnCtx<T> {
-  name: string
-  value: string
-}
-
-const useSort = (
-  sortConfig: IPandoraTableSort<ISortChangeCb>,
-  columns: IPandoraTableColumn<unknown>[],
-  tableInstance?: Ref<Table<unknown>> | any
-) => {
-  /**
-   * 获取默认配置sortable = true的列 对应的order属性
-   * （ 列里定义的sortable=true ）
-   * return {object}
-   */
-  const initDefaultOrderColumn = () => {
-    const obj = Object.create([])
-    columns.map((item: any) => {
-      // 配置了开启排序模式
-      if (item.sortable && item.sortable !== undefined) {
-        obj[item.value] = ''
-      }
-    })
-    return obj
-  }
-  sortConfig.userColumnOrder = initDefaultOrderColumn()
-  sortConfig.tableInstance = tableInstance
-  const sortService = new SortService(sortConfig)
-  return sortService
-}
+// const useSort = (
+//   sortConfig: IPandoraTableSort<ISortChangeCb>,
+//   columns: IPandoraTableColumn<unknown>[],
+//   tableInstance?: Ref<Table<unknown>> | any
+// ) => {
+//   /**
+//    * 获取默认配置sortable = true的列 对应的order属性
+//    * （ 列里定义的sortable=true ）
+//    * return {object}
+//    */
+//   const initDefaultOrderColumn = () => {
+//     const obj = Object.create([])
+//     columns.map((item: any) => {
+//       // 配置了开启排序模式
+//       if (item.sortable && item.sortable !== undefined) {
+//         obj[item.value] = ''
+//       }
+//     })
+//     return obj
+//   }
+//   sortConfig.userColumnOrder = initDefaultOrderColumn()
+//   sortConfig.tableInstance = tableInstance
+//   const sortService = new SortService(sortConfig)
+//   return sortService
+// }
 
 /**
  *
@@ -142,17 +92,6 @@ const renderColumnProp = (
   return { columnProps, slots }
 }
 
-const PAGE_HEIGHT = 50
-const defaultOption: IPageOpt = {
-  height: PAGE_HEIGHT,
-  currentPage: 1,
-  total: 200,
-  pageCount: 7,
-  pageSizes: [10, 20, 30, 40, 50],
-  pageSize: 10,
-  layout: 'total, sizes, prev, pager, next, jumper'
-}
-
 const [name] = createNamespace('VTable')
 export default defineComponent({
   name,
@@ -174,11 +113,14 @@ export default defineComponent({
     const sortConfig = toRaw(
       props.sortConfig
     ) as IPandoraTableSort<ISortChangeCb>
-    const $sortService = useSort(sortConfig, columnProps, tableInstance)
+    const $sortService = useSortService(sortConfig, columnProps, tableInstance)
 
-    const { pageOpt, pagination, ...othersConfig } = toRefs<
-      IPandoraTableOption<any> | any
+    const { pageOpt, pagination, stripe, ...othersConfig } = toRefs<
+      IPandoraTableOption<any>
     >(props.tableConfig)
+
+    console.log(pagination)
+
     const currentData = ref(props.data)
     onMounted(() => {
       $sortService.init()
@@ -194,7 +136,7 @@ export default defineComponent({
         deep: true
       }
     )
-
+    // Header点击事件回调
     const handleHeaderClick = (column: any, e: any) => {
       $sortService.executeHeaderClick(column, e)
     }
@@ -220,6 +162,7 @@ export default defineComponent({
     const tablePropsConfig = {
       ref: tableInstance,
       onHeaderClick: handleHeaderClick,
+      stripe: stripe.value,
       // v-model={[currentData.value, "color"]}
       ...othersConfig
     }
@@ -227,7 +170,7 @@ export default defineComponent({
     const pageRef = ref(null)
     const PagerProps = {
       ref: pageRef,
-      option: pageOpt || defaultOption,
+      option: pageOpt,
       onHandleSizeChange: handleSizeChange,
       onHandleCurrentChange: handleCurrentChange
     }
@@ -235,6 +178,20 @@ export default defineComponent({
     if (pagination) {
       PageDom = <Pagination {...PagerProps}></Pagination>
     }
+
+    watch(
+      () => props.tableConfig,
+      (newVal) => {
+        // const tableOption = unref<IPandoraTableOption<unknown>>(newVal)
+        // pageOpt.value = unref(tableOption.pageOpt)
+        pagination.value = newVal.pagination
+        stripe.value = newVal.stripe
+        console.log(stripe.value)
+      },
+      {
+        deep: true
+      }
+    )
 
     return () => {
       return (

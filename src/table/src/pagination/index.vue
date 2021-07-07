@@ -14,21 +14,14 @@
 </template>
 
 <script lang="ts">
-import { createNamespace } from '../../_utils/create'
-import { defineComponent, PropType } from 'vue'
-import { IPageOpt } from './index.vue'
+import { createNamespace } from '../../../_utils/create'
+import { defineComponent } from 'vue'
+import { getPagerProps } from './config'
 const [name] = createNamespace('Pagination')
 export default defineComponent({
   name,
   inheritAttrs: false,
-  props: {
-    option: {
-      type: Object as PropType<IPageOpt>,
-      default() {
-        return {}
-      }
-    }
-  },
+  props: getPagerProps(),
   setup(props, { emit }) {
     const handleSizeChange = (val: number) => {
       emit('handleSizeChange', val)

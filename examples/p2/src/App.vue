@@ -6,7 +6,7 @@
       </el-col>
       <div class="container">
         <el-col :span="20">
-          <VTable></VTable>
+          <VTable :option="pandoraTablCfg"></VTable>
           <GuiCom :option="tableConfig"></GuiCom>
         </el-col>
       </div>
@@ -64,9 +64,15 @@ export default defineComponent({
       testColor: ''
     })
 
-    const stripeRef = ref('stripe')
+    const stripeRef = ref(false)
     const HeightRef = ref(200)
     const FontSizeRef = ref(12)
+    const pagerRef = ref(true)
+
+    const pandoraTablCfg = reactive({
+      stripe: stripeRef,
+      pagination: pagerRef
+    })
 
     // testConfig
     const tableConfig = {
@@ -75,8 +81,15 @@ export default defineComponent({
       components: [
         {
           type: 'Boolean',
+          title: '是否带斑马纹表格',
           label: 'stripe',
           model: stripeRef
+        },
+        {
+          type: 'Boolean',
+          title: '是否分页表格',
+          label: 'pagination',
+          model: pagerRef
         },
         {
           type: 'Title',
@@ -121,6 +134,7 @@ export default defineComponent({
     }
     return {
       ...toRefs(state),
+      pandoraTablCfg,
       state,
       // ...toRefs(tableConfig),
       tableConfig,

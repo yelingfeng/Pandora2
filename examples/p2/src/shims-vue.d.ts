@@ -4,7 +4,4 @@ declare module '*.vue' {
   export default component
 }
 
-
-declare module 'pure-color/*' {
-
-}
+declare module 'pure-color/*' {}

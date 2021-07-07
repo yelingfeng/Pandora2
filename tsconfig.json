@@ -6,8 +6,11 @@
     "strict": true,
     "jsx": "preserve",
     "sourceMap": false,
+    "forceConsistentCasingInFileNames": true,
+    "strictFunctionTypes": false,
     "noUnusedLocals": true,
     "strictNullChecks": true,
+    "skipLibCheck": true,
     "noImplicitAny": true,
     "noImplicitThis": true,
     "experimentalDecorators": true,
@@ -16,16 +19,23 @@
     "removeComments": false,
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
-    "declaration": true,
-    "declarationDir": "dist",
-    "baseUrl": "./",
+    // "declaration": false,
+    // "declarationDir": "dist",
+    "types": ["vite/client", "jest"],
+    "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"],
-      "pandora2/*":["src/*"]
+      "/@/*": ["src/*"]
     },
-    "lib": ["esnext", "dom"],
-    "types": ["vite/client","node","jest"]
+    "lib": ["esnext", "dom"]
   },
-  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.d.ts",
+    "src/**/*.tsx",
+    "src/**/*.vue",
+    "build/**/*.ts",
+    "build/**/*.d.ts",
+    "vite.config.ts"
+  ],
   "exclude": ["node_modules"]
 }
