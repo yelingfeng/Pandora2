@@ -34,14 +34,7 @@
 </template>
 
 <script lang="ts">
-import {
-  defineComponent,
-  reactive,
-  ref,
-  toRefs,
-  computed,
-  getCurrentInstance
-} from 'vue'
+import { defineComponent, computed, getCurrentInstance } from 'vue'
 import Menu from './components/menu.vue'
 // import VTable from './components/Table.vue'
 // import GuiCom from './gui/Gui.vue'
