@@ -24,6 +24,15 @@ const router = createRouter({
       meta: {
         index: 2
       }
+    },
+    {
+      path: '/guiTable',
+      name: 'guiTable',
+      component: () =>
+        import(/* webpackChunkName: "home" */ '../views/GuiTable.vue'),
+      meta: {
+        index: 3
+      }
     }
   ]
 })
