@@ -1,4 +1,4 @@
-import { UserConfigExport, ConfigEnv,Plugin } from 'vite';
+import { UserConfigExport, ConfigEnv, Plugin } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 import styleImport from 'vite-plugin-style-import'
@@ -25,9 +25,9 @@ export default ({ command }: ConfigEnv): UserConfigExport => {
         }
       ]
     })
-  ];
+  ]
 
   return {
-    plugins:vitePlugins
+    plugins: vitePlugins
   }
 }

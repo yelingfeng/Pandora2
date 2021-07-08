@@ -10,7 +10,8 @@ const router = createRouter({
     {
       path: '/button',
       name: 'button',
-      component: () => import(/* webpackChunkName: "home" */ '../components/Button.vue'),
+      component: () =>
+        import(/* webpackChunkName: "home" */ '../components/Button.vue'),
       meta: {
         index: 1
       }
@@ -18,9 +19,10 @@ const router = createRouter({
     {
       path: '/table',
       name: 'table',
-      component: () => import(/* webpackChunkName: "home" */ '../components/Table.vue'),
+      component: () =>
+        import(/* webpackChunkName: "home" */ '../components/Table.vue'),
       meta: {
-        index: 1
+        index: 2
       }
     }
   ]

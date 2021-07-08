@@ -5,14 +5,16 @@ import {
   toRaw,
   ref,
   toRefs,
-  unref,
   onMounted,
-  watch
+  watch,
+  withCtx,
+  createVNode
 } from 'vue'
 import { createNamespace } from '../../_utils/create'
 import { ElTable, ElTableColumn } from 'element-plus'
 import type { Table } from 'element-plus/packages/table/src/table/defaults'
 import type {
+  IPandoraTableProps,
   IPandoraTableColumn,
   IPandoraTableSort,
   IPandoraTableOption,
@@ -20,6 +22,10 @@ import type {
 } from './types'
 import { useSortService } from './sort'
 import Pagination from './pagination/index.vue'
+
+interface AnyObject {
+  [key: string]: any
+}
 
 // const useSort = (
 //   sortConfig: IPandoraTableSort<ISortChangeCb>,
@@ -97,10 +103,13 @@ export default defineComponent({
   name,
   inheritAttrs: false,
   props: {
-    sortConfig: Object as PropType<IPandoraTableSort<any>>,
-    tableConfig: Object as PropType<IPandoraTableOption<any>>,
-    data: Array,
-    columns: Array as PropType<Partial<IPandoraTableColumn<any>>>
+    options: {
+      type: Object as PropType<IPandoraTableProps<AnyObject>>
+    }
+    // sortConfig: Object as PropType<IPandoraTableSort<any>>,
+    // tableConfig: Object as PropType<IPandoraTableOption<any>>,
+    // data: Array,
+    // columns: Array as PropType<Partial<IPandoraTableColumn<any>>>
   },
   components: {
     Pagination,
@@ -109,33 +118,38 @@ export default defineComponent({
   },
   setup(props, { emit }) {
     const tableInstance = ref<Table<unknown>>()
-    const columnProps = toRaw(props.columns) as IPandoraTableColumn<any>[]
-    const sortConfig = toRaw(
-      props.sortConfig
+
+    const { columns, data, sortConfig, tableConfig } = toRefs<
+      IPandoraTableProps<AnyObject> | any
+    >(props.options)
+    const columnProps = toRaw(columns.value) as IPandoraTableColumn<any>[]
+    const sortRawConfig = toRaw(
+      sortConfig.value
     ) as IPandoraTableSort<ISortChangeCb>
-    const $sortService = useSortService(sortConfig, columnProps, tableInstance)
+    const $sortService = useSortService<AnyObject>(
+      sortRawConfig,
+      columnProps,
+      tableInstance
+    )
 
-    const { pageOpt, pagination, stripe, ...othersConfig } = toRefs<
-      IPandoraTableOption<any>
-    >(props.tableConfig)
+    const { pageOpt, pagination, stripe } = toRefs<
+      IPandoraTableOption<AnyObject>
+    >(tableConfig.value)
 
-    console.log(pagination)
-
-    const currentData = ref(props.data)
     onMounted(() => {
       $sortService.init()
     })
 
-    watch(
-      () => props.data,
-      (newVal) => {
-        currentData.value = unref(newVal)
-        $sortService.initIconSort()
-      },
-      {
-        deep: true
-      }
-    )
+    // watch(
+    //   () => props.data,
+    //   (newVal) => {
+    //     currentData.value = unref(newVal)
+    //     $sortService.initIconSort()
+    //   },
+    //   {
+    //     deep: true
+    //   }
+    // )
     // Header点击事件回调
     const handleHeaderClick = (column: any, e: any) => {
       $sortService.executeHeaderClick(column, e)
@@ -150,7 +164,7 @@ export default defineComponent({
       emit('handleCurrentPageChange', val)
     }
 
-    const columns = columnProps.map((item) => {
+    const columnsVNode = columnProps.map((item) => {
       const { columnProps, slots } = renderColumnProp(item, $sortService)
       if (slots && slots.header) {
         return <ElTableColumn {...columnProps}>{slots}</ElTableColumn>
@@ -159,13 +173,16 @@ export default defineComponent({
       }
     })
 
-    const tablePropsConfig = {
-      ref: tableInstance,
-      onHeaderClick: handleHeaderClick,
-      stripe: stripe.value,
-      // v-model={[currentData.value, "color"]}
-      ...othersConfig
-    }
+    // const tablePropsConfig = {
+    //   ref: tableInstance,
+    //   onHeaderClick: handleHeaderClick,
+    //   props: {
+    //     stripe: stripe.value,
+    //     ...othersConfig
+    //   }
+
+    //   // v-model={[currentData.value, "color"]}
+    // }
 
     const pageRef = ref(null)
     const PagerProps = {
@@ -179,26 +196,55 @@ export default defineComponent({
       PageDom = <Pagination {...PagerProps}></Pagination>
     }
 
-    watch(
-      () => props.tableConfig,
-      (newVal) => {
-        // const tableOption = unref<IPandoraTableOption<unknown>>(newVal)
-        // pageOpt.value = unref(tableOption.pageOpt)
-        pagination.value = newVal.pagination
-        stripe.value = newVal.stripe
-        console.log(stripe.value)
-      },
-      {
-        deep: true
-      }
-    )
+    // watch(
+    //   () => tableConfig,
+    //   (newVal) => {
+    //     const tableOption = unref<IPandoraTableOption<unknown>>(newVal)
+    //     // pageOpt.value = unref(tableOption.pageOpt)
+    //     stripe.value = unref(tableOption.stripe)
+    //   },
+    //   {
+    //     deep: true
+    //   }
+    // )
+    // const elTableVNode = console.log(elTableVNode)
 
     return () => {
       return (
         <div class="vpandora-table">
-          <ElTable data={currentData.value} {...tablePropsConfig}>
-            {columns}
-          </ElTable>
+          {createVNode(
+            ElTable,
+            {
+              ref: tableInstance,
+              onHeaderClick: handleHeaderClick,
+              stripe: stripe.value,
+              data: [
+                [
+                  {
+                    date: '2016-05-02',
+                    name: '王小虎',
+                    address: '上海市普陀区金沙江路 1518 弄'
+                  },
+                  {
+                    date: '2016-05-04',
+                    name: '王小虎',
+                    address: '上海市普陀区金沙江路 1517 弄'
+                  },
+                  {
+                    date: '2016-05-01',
+                    name: '王小虎',
+                    address: '上海市普陀区金沙江路 1519 弄'
+                  },
+                  {
+                    date: '2016-05-03',
+                    name: '王小虎',
+                    address: '上海市普陀区金沙江路 1516 弄'
+                  }
+                ]
+              ]
+            },
+            [columnsVNode]
+          )}
           {PageDom}
         </div>
       )

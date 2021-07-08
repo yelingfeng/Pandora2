@@ -1,10 +1,7 @@
 <template>
   <div>
     <VTable
-      :data="testData"
-      :columns="columns"
-      :sortConfig="sortConfig"
-      :tableConfig="tableConfig"
+      :options="tableOpts"
       @handleSizePageChange="handleSizePageChange"
     ></VTable>
   </div>
@@ -22,13 +19,13 @@ export default defineComponent({
     option: Object
   },
   setup(props) {
-    const { stripe, pagination } = toRefs(props.option)
+    // const { stripe, pagination } = toRefs<any>(props.option)
 
     // console.log(stripe)
 
     const tableConfig = reactive({
-      pagination,
-      stripe
+      pagination: true,
+      stripe: false
     })
 
     const sortConfig = {
@@ -79,20 +76,24 @@ export default defineComponent({
     }
 
     onMounted(() => {
-      setTimeout(() => {
-        load()
-      }, 500)
+      // setTimeout(() => {
+      //   load()
+      // }, 500)
     })
 
-    const handleSizePageChange = (val) => {
+    const handleSizePageChange = (val: any) => {
       console.log(val)
     }
 
-    return {
+    const tableOpts = reactive({
       sortConfig,
       tableConfig,
       columns,
-      testData,
+      data: testData
+    })
+
+    return {
+      tableOpts,
       handleSizePageChange
     }
   }

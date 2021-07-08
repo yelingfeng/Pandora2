@@ -1,7 +1,7 @@
 import { removeClass, addClass, trim } from '../../../_utils/helper'
 import { isFunction } from '../../../_utils/is'
 import { Table } from 'element-plus/packages/table/src/table/defaults'
-import { IPandoraTableSort, ISortChangeCb, Dictionary } from '../../types'
+import { IPandoraTableSort, ISortChangeCb, Dictionary } from '../types'
 export const ASC = 'ascending'
 export const DESC = 'descending'
 export const DEFAULT_SORT = 'descending'
@@ -73,6 +73,7 @@ export class SortService {
    */
   getSortColDom(order: string) {
     const tableInstance = this.option.tableInstance?.value as Table<any>
+    if (tableInstance === undefined) return null
     const tableEl = tableInstance.$el
     return tableEl.querySelectorAll(`div[relid=${order}]`)
   }

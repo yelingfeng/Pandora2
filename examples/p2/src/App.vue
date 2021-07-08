@@ -7,14 +7,14 @@
       <div class="container">
         <el-col :span="20">
           <router-view :key="key"></router-view>
-          <!-- <VTable :option="pandoraTablCfg"></VTable> -->
-          <GuiCom :option="tableConfig"></GuiCom>
+          <!-- <VTable :option="pandoraTablCfg"></VTable>
+          <GuiCom :option="tableConfig"></GuiCom> -->
         </el-col>
       </div>
     </el-row>
     <!-- <PropsHelp :state="state" /> -->
 
-    <div class="results">
+    <!-- <div class="results">
       <pre>
         Test results:
           Number : {{ testNumber }}
@@ -31,7 +31,7 @@
         }"
         >&nbsp;&nbsp;{{ testColor }}&nbsp;&nbsp;</span
       >
-    </div>
+    </div> -->
   </div>
 </template>
 

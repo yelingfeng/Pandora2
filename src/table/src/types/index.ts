@@ -46,13 +46,27 @@ export interface IPandoraTable {
   // 分页配置
   pageOpt?: IPageConfig
 }
+/**
+ *
+ * table 构建属性接口
+ */
+export interface IPandoraTableProps<T> extends IPandoraTable {
+  // 数据
+  data: T[]
+  // 列
+  columns: IPandoraTableColumn<T>[]
+  // 排序配置
+  sortConfig?: IPandoraTableSort<T>
+  // table本身配置（element-plus属性）
+  tableConfig?: IPandoraTableOption<T>
+}
 
 // 对外table配置类型 剔除data和column
-// export type IPandoraTableOption<T> = Partial<
-//   Omit<TableProps<T>, 'data' | 'column'> & IPandoraTable
-// >
+/**
+ *
+ */
 export type IPandoraTableOption<T> =
-  | Partial<Omit<TableProps<T>, 'data' | 'column'> & IPandoraTable>
+  | Partial<Omit<TableProps<T>, 'data' | 'column'>>
   | any
 
 // 定义列接口
