@@ -3,7 +3,7 @@
     <template v-for="(menu, index) in menuData">
       <!-- 二级 -->
       <template v-if="menu.sonmenu && menu.sonmenu.length > 0">
-        <el-submenu index="index" :key="index">
+        <el-submenu :index="index.toString()">
           <template #title>
             <span>{{ menu.name }}</span>
           </template>
@@ -17,19 +17,12 @@
           </div>
         </el-submenu>
       </template>
-      <template v-else>
-        <el-menu-item :index="`/${menu.index}`">
-          <span slot="title">{{ menu.name }}</span>
-        </el-menu-item>
-      </template>
       <!-- 一级 -->
-      <template v-else>
-        <el-menu-item :index="`/${menu.index}`">
-          <template>
-            <span slot="title">{{ menu.name }}</span>
-          </template>
-        </el-menu-item>
-      </template>
+      <el-menu-item :index="`/${menu.index}`" v-else>
+        <template>
+          <span slot="title">{{ menu.name }}</span>
+        </template>
+      </el-menu-item>
     </template>
   </el-menu>
 </template>
