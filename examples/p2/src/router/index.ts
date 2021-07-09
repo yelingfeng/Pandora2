@@ -13,7 +13,7 @@ const router = createRouter({
       component: () =>
         import(/* webpackChunkName: "home" */ '../components/Button.vue'),
       meta: {
-        index: 1
+        index: 0
       }
     },
     {
@@ -22,7 +22,7 @@ const router = createRouter({
       component: () =>
         import(/* webpackChunkName: "home" */ '../components/Table.vue'),
       meta: {
-        index: 2
+        index: 1
       }
     },
     {
@@ -31,7 +31,7 @@ const router = createRouter({
       component: () =>
         import(/* webpackChunkName: "home" */ '../views/GuiTable.vue'),
       meta: {
-        index: 3
+        index: 2
       }
     }
   ]
