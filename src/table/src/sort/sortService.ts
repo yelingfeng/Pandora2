@@ -9,7 +9,6 @@ export const SINGLE = 'single'
 export const MULTI = 'multi'
 // 排序字段集合
 export const SORT_ARR: string[] = [ASC, DESC]
-
 /**
  * 排序服务类
  */
@@ -73,7 +72,6 @@ export class SortService {
    */
   getSortColDom(order: string) {
     const tableInstance = this.option.tableInstance?.value as Table<any>
-    if (tableInstance === undefined) return null
     const tableEl = tableInstance.$el
     return tableEl.querySelectorAll(`div[relid=${order}]`)
   }
