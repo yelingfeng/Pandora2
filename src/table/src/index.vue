@@ -184,18 +184,6 @@ export default defineComponent({
     //   // v-model={[currentData.value, "color"]}
     // }
 
-    const pageRef = ref(null)
-    const PagerProps = {
-      ref: pageRef,
-      option: pageOpt,
-      onHandleSizeChange: handleSizeChange,
-      onHandleCurrentChange: handleCurrentChange
-    }
-    let PageDom: any = null
-    if (pagination) {
-      PageDom = <Pagination {...PagerProps}></Pagination>
-    }
-
     // watch(
     //   () => tableConfig,
     //   (newVal) => {
@@ -226,6 +214,17 @@ export default defineComponent({
         data: data.value
       }
       const elTableVNode = <ElTable {...Tprops}>{columnsVNode}</ElTable>
+      const pageRef = ref(null)
+      const PagerProps = {
+        ref: pageRef,
+        option: pageOpt,
+        onHandleSizeChange: handleSizeChange,
+        onHandleCurrentChange: handleCurrentChange
+      }
+      let PageDom: any = null
+      if (pagination.value) {
+        PageDom = <Pagination {...PagerProps}></Pagination>
+      }
       return (
         <div class="vpandora-table">
           {elTableVNode}

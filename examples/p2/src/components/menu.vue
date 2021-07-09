@@ -20,7 +20,7 @@
             </el-submenu>
           </template>
           <template v-else>
-            <el-menu-item :index="`/${menu.url}`" :key="index">
+            <el-menu-item :index="`/${menu.url}`">
               <span slot="title">{{ menu.name }}</span>
             </el-menu-item>
           </template>
@@ -28,7 +28,7 @@
       </template>
       <!-- 一级 -->
       <template v-else>
-        <el-menu-item :index="`/${menu.url}`" :key="index">
+        <el-menu-item :index="`/${menu.url}`">
           <template>
             <span slot="title">{{ menu.name }}</span>
           </template>
