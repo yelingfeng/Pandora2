@@ -1,39 +1,28 @@
 <template>
-  <el-menu router unique-opened :collapse="isCollapse" ref="navMenu">
+  <el-menu router unique-opened ref="navMenu">
     <template v-for="(menu, index) in menuData">
       <!-- 二级 -->
-      <template v-if="menu.sonmenu">
-        <el-menu router unique-opened :collapse="isCollapse" ref="navMenu">
-          <template v-if="menu.sonmenu && menu.sonmenu.length > 0">
-            <el-submenu :index="index" :key="index">
-              <template #title>
-                <span>{{ menu.name }}</span>
-              </template>
-              <div v-for="(cMenu, cIndex) in menu.sonmenu">
-                <el-menu-item
-                  :index="`/${cMenu.url}`"
-                  :key="cIndex"
-                  @click="handleOpen(cIndex, $event, menu.id)"
-                  >{{ cMenu.name }}</el-menu-item
-                >
-              </div>
-            </el-submenu>
+      <template v-if="menu.sonmenu && menu.sonmenu.length > 0">
+        <el-submenu :index="index.toString()">
+          <template #title>
+            <span>{{ menu.name }}</span>
           </template>
-          <template v-else>
-            <el-menu-item :index="`/${menu.url}`" :key="index">
-              <span slot="title">{{ menu.name }}</span>
-            </el-menu-item>
-          </template>
-        </el-menu>
+          <div v-for="(cMenu, cIndex) in menu.sonmenu">
+            <el-menu-item
+              :index="`/${cMenu.url}`"
+              :key="cIndex"
+              @click="handleOpen(cIndex, $event, menu.id)"
+              >{{ cMenu.name }}</el-menu-item
+            >
+          </div>
+        </el-submenu>
       </template>
       <!-- 一级 -->
-      <template v-else>
-        <el-menu-item :index="`/${menu.url}`" :key="index">
-          <template>
-            <span slot="title">{{ menu.name }}</span>
-          </template>
-        </el-menu-item>
-      </template>
+      <el-menu-item :index="`/${menu.index}`" v-else>
+        <template>
+          <span slot="title">{{ menu.name }}</span>
+        </template>
+      </el-menu-item>
     </template>
   </el-menu>
 </template>
