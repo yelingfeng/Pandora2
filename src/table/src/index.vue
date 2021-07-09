@@ -208,43 +208,27 @@ export default defineComponent({
     //   }
     // )
     // const elTableVNode = console.log(elTableVNode)
-
+    // const elTableVNode = createVNode(
+    //   ElTable,
+    //   {
+    //     ref: tableInstance,
+    //     onHeaderClick: handleHeaderClick,
+    //     stripe: stripe.value,
+    //     data: data.value
+    //   },
+    //   [columnsVNode]
+    // )
     return () => {
+      const Tprops = {
+        ref: tableInstance,
+        onHeaderClick: handleHeaderClick,
+        stripe: stripe.value,
+        data: data.value
+      }
+      const elTableVNode = <ElTable {...Tprops}>{columnsVNode}</ElTable>
       return (
         <div class="vpandora-table">
-          {createVNode(
-            ElTable,
-            {
-              ref: tableInstance,
-              onHeaderClick: handleHeaderClick,
-              stripe: stripe.value,
-              data: [
-                [
-                  {
-                    date: '2016-05-02',
-                    name: '王小虎',
-                    address: '上海市普陀区金沙江路 1518 弄'
-                  },
-                  {
-                    date: '2016-05-04',
-                    name: '王小虎',
-                    address: '上海市普陀区金沙江路 1517 弄'
-                  },
-                  {
-                    date: '2016-05-01',
-                    name: '王小虎',
-                    address: '上海市普陀区金沙江路 1519 弄'
-                  },
-                  {
-                    date: '2016-05-03',
-                    name: '王小虎',
-                    address: '上海市普陀区金沙江路 1516 弄'
-                  }
-                ]
-              ]
-            },
-            [columnsVNode]
-          )}
+          {elTableVNode}
           {PageDom}
         </div>
       )

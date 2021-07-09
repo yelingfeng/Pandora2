@@ -19,13 +19,13 @@ export default defineComponent({
     option: Object
   },
   setup(props) {
-    // const { stripe, pagination } = toRefs<any>(props.option)
+    const { stripe, pagination } = toRefs<any>(props.option)
 
     // console.log(stripe)
 
     const tableConfig = reactive({
-      pagination: true,
-      stripe: false
+      pagination,
+      stripe
     })
 
     const sortConfig = {
@@ -76,9 +76,9 @@ export default defineComponent({
     }
 
     onMounted(() => {
-      // setTimeout(() => {
-      //   load()
-      // }, 500)
+      setTimeout(() => {
+        load()
+      }, 500)
     })
 
     const handleSizePageChange = (val: any) => {
