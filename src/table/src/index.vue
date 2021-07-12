@@ -2,7 +2,8 @@
 import { defineComponent, PropType, toRaw, ref, toRefs, onMounted } from 'vue'
 import { createNamespace } from '../../_utils/create'
 import { useColumnRender } from './render/column'
-import { ElTable, ElTableColumn } from 'element-plus'
+import { usePagerRender } from './render/pager'
+import { ElTable } from 'element-plus'
 import type { Table } from 'element-plus/packages/table/src/table/defaults'
 import type {
   IPandoraTableProps,
@@ -12,8 +13,6 @@ import type {
   ISortChangeCb
 } from './types'
 import { useSortService } from './sort'
-import Pagination from './pagination/index.vue'
-
 interface AnyObject {
   [key: string]: any
 }
@@ -27,11 +26,6 @@ export default defineComponent({
       type: Object as PropType<IPandoraTableProps<AnyObject>>
     }
   },
-  components: {
-    Pagination,
-    ElTable,
-    ElTableColumn
-  },
   setup(props, { emit }) {
     const tableInstance = ref<Table<unknown>>()
 
@@ -42,15 +36,16 @@ export default defineComponent({
     const sortRawConfig = toRaw(
       sortConfig.value
     ) as IPandoraTableSort<ISortChangeCb>
+
+    const { pageOpt, pagination, stripe, ...otherProps } = toRefs<
+      IPandoraTableOption<AnyObject>
+    >(tableConfig.value)
+    // 排序service
     const $sortService = useSortService<AnyObject>(
       sortRawConfig,
       columnProps,
       tableInstance
     )
-
-    const { pageOpt, pagination, stripe, ...otherProps } = toRefs<
-      IPandoraTableOption<AnyObject>
-    >(tableConfig.value)
 
     onMounted(() => {
       $sortService.init()
@@ -78,26 +73,16 @@ export default defineComponent({
         ...otherProps
       }
       // 创建column
-      const columnsVNode = columnProps.map((item) => {
-        const { columnProps, slots } = useColumnRender(item, $sortService)
-        if (slots && slots.header) {
-          return <ElTableColumn {...columnProps}>{slots}</ElTableColumn>
-        } else {
-          return <ElTableColumn {...columnProps}></ElTableColumn>
-        }
-      })
+      const columnsVNode = useColumnRender(columnProps, $sortService)
 
       const elTableVNode = <ElTable {...tableProps}>{columnsVNode}</ElTable>
       let pageVNode: any = null
       if (pagination.value) {
-        const pageRef = ref(null)
-        const PagerProps = {
-          ref: pageRef,
-          option: pageOpt,
-          onHandleSizeChange: handleSizeChange,
-          onHandleCurrentChange: handleCurrentChange
-        }
-        pageVNode = <Pagination {...PagerProps}></Pagination>
+        pageVNode = usePagerRender(
+          pageOpt,
+          handleSizeChange,
+          handleCurrentChange
+        )
       }
       return (
         <div class="vpandora-table">

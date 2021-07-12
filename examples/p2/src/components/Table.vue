@@ -47,7 +47,7 @@ export default defineComponent({
     const columns = [
       { value: 'name', name: '姓名', width: '180' },
       { value: 'date', name: '日期', width: '180', sortable: true },
-      { value: 'address', label: '地址', width: '200', sortable: true }
+      { value: 'address', name: '地址', width: '200', sortable: true }
     ]
 
     const load = () => {

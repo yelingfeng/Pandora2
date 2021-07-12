@@ -19,12 +19,12 @@
     "removeComments": false,
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
-    // "declaration": false,
-    // "declarationDir": "dist",
+    "declaration": true,
+    "declarationDir": "dist/types",
     "types": ["vite/client", "jest"],
     "baseUrl": ".",
     "paths": {
-      "/@/*": ["src/*"]
+      "pandora/*": ["./src/*"]
     },
     "lib": ["esnext", "dom"]
   },
