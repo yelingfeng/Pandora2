@@ -5,7 +5,7 @@ import Pagination from '../pagination/index.vue'
  * 构建分页
  */
 export const usePagerRender = (
-  pageOpt: IPageConfig,
+  pageOpt: IPageConfig | any,
   handleSizeChange: Function,
   handleCurrentChange: Function
 ) => {

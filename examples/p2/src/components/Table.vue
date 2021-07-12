@@ -1,14 +1,17 @@
 <template>
   <div>
     <VTable
-      :options="tableOpts"
+      :data="testData"
+      :columns="columns"
+      :sortConfig="sortConfig"
+      :tableConfig="tableConfig"
       @handleSizePageChange="handleSizePageChange"
     ></VTable>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, toRefs, onMounted, reactive } from 'vue'
+import { defineComponent, toRefs, onMounted, reactive, ref } from 'vue'
 import VTable from '../../../../src/table/src/index.vue'
 
 export default defineComponent({
@@ -19,14 +22,10 @@ export default defineComponent({
     option: Object
   },
   setup(props) {
-    const { stripe, pagination } = toRefs<any>(props.option)
-
+    // const { stripe, pagination } = toRefs<any>(props.option)
     // console.log(stripe)
 
-    const tableConfig = reactive({
-      pagination,
-      stripe
-    })
+    const tableConfig = props.option
 
     const sortConfig = {
       sortMode: 'multi',
@@ -42,7 +41,7 @@ export default defineComponent({
       ]
     }
 
-    const testData: any = ref([])
+    let testData: any = ref([])
 
     const columns = [
       { value: 'name', name: '姓名', width: '180' },
@@ -85,15 +84,11 @@ export default defineComponent({
       console.log(val)
     }
 
-    const tableOpts = reactive({
+    return {
       sortConfig,
       tableConfig,
       columns,
-      data: testData
-    })
-
-    return {
-      tableOpts,
+      testData,
       handleSizePageChange
     }
   }

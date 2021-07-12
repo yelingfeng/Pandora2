@@ -1,7 +1,7 @@
 import { removeClass, addClass, trim } from '../../../_utils/helper'
 import { isFunction } from '../../../_utils/is'
 import { Table } from 'element-plus/packages/table/src/table/defaults'
-import { IPandoraTableSort, ISortChangeCb, Dictionary } from '../types'
+import { ISortService, ISortChangeCb, Dictionary } from '../types'
 export const ASC = 'ascending'
 export const DESC = 'descending'
 export const DEFAULT_SORT = 'descending'
@@ -9,6 +9,7 @@ export const SINGLE = 'single'
 export const MULTI = 'multi'
 // 排序字段集合
 export const SORT_ARR: string[] = [ASC, DESC]
+
 /**
  * 排序服务类
  */
@@ -16,10 +17,10 @@ export class SortService {
   private activeSort: Dictionary<any> = {}
   private defaultSortObj: Dictionary<any> = {}
   private _oldActiveSort: Dictionary<any> = {}
-  private option: IPandoraTableSort<ISortChangeCb> = {
+  private option: ISortService<ISortChangeCb> = {
     sortMode: SINGLE
   }
-  constructor(opt: IPandoraTableSort<ISortChangeCb>) {
+  constructor(opt: ISortService<ISortChangeCb>) {
     this.option = opt
   }
   init() {

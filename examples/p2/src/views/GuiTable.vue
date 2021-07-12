@@ -20,10 +20,10 @@ export default defineComponent({
     const FontSizeRef = ref(12)
     const pagerRef = ref(true)
 
-    const pandoraTablCfg = reactive({
+    const pandoraTablCfg = {
       stripe: stripeRef,
       pagination: pagerRef
-    })
+    }
 
     // testConfig
     const tableConfig = {

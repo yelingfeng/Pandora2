@@ -1,7 +1,6 @@
 import { SortService } from '../sort/sortService'
 import { ElTableColumn } from 'element-plus'
 import type { IPandoraTableColumn } from '../types'
-import { VNode } from 'vue'
 /**
  *
  */

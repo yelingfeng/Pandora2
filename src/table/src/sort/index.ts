@@ -1,11 +1,7 @@
 import { SortService } from './sortService'
 import type { Table } from 'element-plus/packages/table/src/table/defaults'
 import type { Ref } from 'vue'
-import type {
-  IPandoraTableColumn,
-  IPandoraTableSort,
-  ISortChangeCb
-} from '../types'
+import type { IPandoraTableColumn, ISortService, ISortChangeCb } from '../types'
 /**
  *
  * @param sortConfig
@@ -14,7 +10,7 @@ import type {
  * @returns
  */
 export function useSortService<T>(
-  sortConfig: IPandoraTableSort<ISortChangeCb>,
+  sortConfig: ISortService<ISortChangeCb>,
   columns: IPandoraTableColumn<T>[],
   tableInstance?: Ref<Table<T>> | any
 ) {

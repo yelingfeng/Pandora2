@@ -6,6 +6,10 @@ import type {
 import type { Ref } from 'vue'
 
 export type Dictionary<T> = Record<string, T>
+
+export interface AnyObject {
+  [key: string]: any
+}
 export interface IPageConfig {
   // 分页高度
   height?: number
@@ -24,33 +28,36 @@ export interface IPageConfig {
 }
 
 /**
- * 自定义table类型
+ * 选择列 类型 单选多选
  */
-export interface IPandoraTable {
+export interface ISelectionMode<T> {
   // 选择模式 单选还是多选
   selectionMode?: string
   // 复现框的位置 前后 top 和 end
   selectionPos?: string
-  // 是否显示多选
-  selection?: boolean
   // 是否可选中的回调
-  selectable?: (row: any, index: number) => void
-  // 排序模式
-  sortMode?: string
+  selectable?: (row: T, $index: number) => void
+}
+/**
+ * 自定义table类型
+ */
+export interface IPandoraTable<T> extends IPandoraTableOption<T> {
   // 行点击事件
-  rowClick?: (row: object, column: object, event: any) => void
+  rowClick?: (row: T, column: object, event: any) => void
   // 行改变事件
-  rowChange?: (row: object, index: number) => void
-  // 是否分页
-  pagination?: boolean
-  // 分页配置
+  rowChange?: (row: T, index: number) => void
+  // 选择器 模式是否显示多选
+  selection?: ISelectionMode<T>
+  // 分页
+  pagination?: IPageConfig
+  // 分页属性
   pageOpt?: IPageConfig
 }
 /**
  *
  * table 构建属性接口
  */
-export interface IPandoraTableProps<T> extends IPandoraTable {
+export interface IPandoraTableProps<T> {
   // 数据
   data: T[]
   // 列
@@ -65,9 +72,9 @@ export interface IPandoraTableProps<T> extends IPandoraTable {
 /**
  *
  */
-export type IPandoraTableOption<T> =
-  | Partial<Omit<TableProps<T>, 'data' | 'column'>>
-  | any
+export type IPandoraTableOption<T> = Partial<
+  Omit<TableProps<T>, 'data' | 'column'>
+>
 
 // 定义列接口
 export interface IPandoraTableColumn<T> extends TableColumnCtx<T> {
@@ -98,6 +105,11 @@ export interface IPandoraTableSort<T = any> {
   defaultSorts?: ISortType[]
   // 默认升序还是降序
   defaultOrder?: 'ascending' | 'descending'
+}
+/**
+ * 排序服务类内部接口
+ */
+export interface ISortService<T> extends IPandoraTableSort<T> {
   // 用户定义的列
   userColumnOrder?: Dictionary<String>
   // elementplus table实例
