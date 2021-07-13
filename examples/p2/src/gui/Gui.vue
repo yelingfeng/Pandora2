@@ -1,5 +1,5 @@
 <script lang="tsx">
-import { defineComponent, withModifiers } from 'vue'
+import { defineComponent, withModifiers, PropType, toRefs } from 'vue'
 import DatGui from './DatGui.vue'
 import RowTitle from './components/RowTitle.vue'
 import RowFolder from './components/RowFolder.vue'
@@ -10,22 +10,23 @@ import RowButton from './components/RowButton.vue'
 import RowSelect from './components/RowSelect.vue'
 import RowColor from './components/RowColor.vue'
 
-export default defineComponent({
-  components: {
-    DatGui,
-    RowTitle,
-    RowFolder,
-    RowNumber,
-    RowString,
-    RowBoolean,
-    RowButton,
-    RowSelect,
-    RowColor
-  },
-  props: {
-    option: Object
-  },
+interface IGuiProps {
+  label?: string
+  type?: string
+  title?: string
+  components?: []
+}
 
+export default defineComponent({
+  name: 'GuiPropsHelper',
+  props: {
+    state: {
+      type: Object as Partial<PropType<IGuiProps>>,
+      default() {
+        return {}
+      }
+    }
+  },
   setup(props) {
     function selectColor(...args: any[]) {
       console.log('select', ...args)
@@ -70,7 +71,12 @@ export default defineComponent({
           )
           break
         case 'Select':
-          singleCom = <RowTitle label="Title" background="olivedrab" />
+          singleCom = (
+            <RowSelect label={comp.label}
+                      items={comp.items}
+                     v-model={[comp.model, 'value']}
+                     />
+                     )
           break
         case 'Color':
           singleCom = (
@@ -96,29 +102,45 @@ export default defineComponent({
       return singleCom
     }
 
+    const getComponentsNode = (comps: Array<any>) => {
+      return comps.map((it: any) => {
+        return getGuiComp(it)
+      })
+    }
+    const { type, label, title, components } = toRefs(props.state) as IGuiProps
+
+    // const FolderNode = config.map((item: any) => {
+    //   const type = item.type
+    //   if (type === 'Folder') {
+    //     const f = <RowTitle label={item.label} background="#000" color="#FFF" />
+    //     const child = getComponentsNode(item.components)
+    //     return [f, child]
+    //   }
+    // })
+
     // 遍历渲染组件
-    const GuiCom = props.option.components.map((it: any, index: number) => {
-      const box = getGuiComp(it)
-      // console.log('box0', box)
-      const boxArr: any = []
-      boxArr.push(box)
-      return boxArr
-    })
+    // const GuiCom = props.option.components.map((it: any, index: number) => {
+    //   const box = getGuiComp(it)
+    //   // console.log('box0', box)
+    //   const boxArr: any = []
+    //   boxArr.push(box)
+    //   return boxArr
+    // })
     // 渲染页面
     return () => {
+      let folder
+      if (type.value === 'Folder') {
+        folder = (
+          <RowFolder label={label.value} title={title.value}>
+            {getComponentsNode(components.value)}
+          </RowFolder>
+        )
+      }
       return (
         // @ts-ignore
-        <DatGui {...DGProps}>{GuiCom}</DatGui>
+        <DatGui {...DGProps}>{folder}</DatGui>
       )
     }
-
-    // return {
-    //   sortConfig,
-    //   tableConfig,
-    //   columns,
-    //   testData,
-    //   handleSizePageChange
-    // }
   }
 })
 </script>

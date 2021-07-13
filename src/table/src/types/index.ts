@@ -115,3 +115,5 @@ export interface ISortService<T> extends IPandoraTableSort<T> {
   // elementplus table实例
   tableInstance?: Ref<Table<any>>
 }
+
+export type IPandoraTableKeys = keyof IPandoraTable<any>

@@ -12,7 +12,6 @@ export const useTableProps = (props: ExtractPropTypes<typeof tableProps>) => {
   const tableInstance = ref<Table<unknown>>()
   const currentData = ref(props.data)
   const tableConfig = props.tableConfig as IPandoraTable<AnyObject>
-  console.log(tableConfig)
   const columnsProps = ref(props.columns)
   const { sortConfig, columns } = props
   const $sortService = useSortService<AnyObject>(

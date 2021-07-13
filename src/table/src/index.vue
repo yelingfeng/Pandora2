@@ -1,5 +1,5 @@
 <script lang="tsx">
-import { defineComponent, onMounted, ref } from 'vue'
+import { defineComponent, onMounted, toRaw, unref, computed } from 'vue'
 import { createNamespace } from '../../_utils/create'
 import { useColumnRender } from './render/column'
 import { usePagerRender } from './render/pager'
@@ -22,8 +22,15 @@ export default defineComponent({
       handleHeaderClick
     } = useTableProps(props)
 
-    const { pagination, pageOpt, stripe } = tableConfig
-    console.log(pagination, stripe)
+    const { pagination, pageOpt, ...otherProps } = tableConfig
+    // console.log(pagination, stripe)
+    const unRefProps = computed(() => {
+      let obj: any = {}
+      for (let key in otherProps) {
+        obj[key] = unref(otherProps[key])
+      }
+      return obj
+    })
 
     onMounted(() => {
       $sortService.init()
@@ -39,19 +46,20 @@ export default defineComponent({
     }
 
     return () => {
-      const tableProps = {
-        ref: tableInstance,
-        onHeaderClick: handleHeaderClick,
-        stripe: stripe.value,
-        data: currentData.value
-        // ...otherProps
-      }
+      const tableProps = Object.assign(
+        {
+          ref: tableInstance,
+          onHeaderClick: handleHeaderClick,
+          data: currentData.value
+        },
+        unRefProps.value
+      )
+      console.log(tableProps)
+
       // 创建column
       const columnsVNode = useColumnRender(columnsProps.value, $sortService)
-
-      const elTableVNode = <ElTable {...tableProps}>{columnsVNode}</ElTable>
       let pageVNode: any = null
-      if (pagination.value) {
+      if (unref(pagination)) {
         pageVNode = usePagerRender(
           pageOpt,
           handleSizeChange,
@@ -60,7 +68,7 @@ export default defineComponent({
       }
       return (
         <div class="vpandora-table">
-          {elTableVNode}
+          <ElTable {...tableProps}>{columnsVNode}</ElTable>
           {pageVNode}
         </div>
       )

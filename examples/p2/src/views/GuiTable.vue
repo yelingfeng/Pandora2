@@ -1,10 +1,10 @@
 <template>
   <VTable :option="pandoraTablCfg"></VTable>
-  <GuiCom :option="tableConfig"></GuiCom>
+  <GuiCom :state="tableConfig"></GuiCom>
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, ref } from 'vue'
+import { defineComponent, ref } from 'vue'
 import VTable from '../components/Table.vue'
 import GuiCom from '../gui/Gui.vue'
 import { color4Background } from '../gui/utils/colors'
@@ -19,16 +19,21 @@ export default defineComponent({
     const HeightRef = ref(200)
     const FontSizeRef = ref(12)
     const pagerRef = ref(true)
+    const borderRef = ref(false)
+    const sizeRef = ref('medium')
 
     const pandoraTablCfg = {
       stripe: stripeRef,
-      pagination: pagerRef
+      pagination: pagerRef,
+      border: borderRef,
+      size : sizeRef
     }
 
     // testConfig
     const tableConfig = {
       type: 'Folder',
       label: 'Table Props',
+      title: 'This is Element Table Props',
       components: [
         {
           type: 'Boolean',
@@ -38,35 +43,51 @@ export default defineComponent({
         },
         {
           type: 'Boolean',
+          title: '是否带Border',
+          label: 'border',
+          model: borderRef
+        },
+        {
+          type: 'Boolean',
           title: '是否分页表格',
           label: 'pagination',
           model: pagerRef
         },
         {
-          type: 'Title',
-          label: '标题',
-          background: 'olivedrab',
-          color: '#fff'
+          type: 'Select',
+          label: 'size',
+          model: sizeRef,
+          items :[
+            {value:'medium',name:'medium'},
+            {value:'small',name:'small'},
+            {value:'mini',name:'mini'}
+          ]
         },
-        {
-          type: 'String',
-          label: '文本',
-          title: 'String',
-          value: '请输入……'
-        },
-        {
-          type: 'Number',
-          value: 100,
-          minNumber: -100,
-          maxNumber: 100,
-          step: 2,
-          label: 'Number'
-        },
-        {
-          type: 'Color',
-          label: 'Color',
-          value: '#fff'
-        }
+        // {
+        //   type: 'Title',
+        //   label: '标题',
+        //   background: 'olivedrab',
+        //   color: '#fff'
+        // },
+        // {
+        //   type: 'String',
+        //   label: '文本',
+        //   title: 'String',
+        //   value: '请输入……'
+        // },
+        // {
+        //   type: 'Number',
+        //   value: 100,
+        //   minNumber: -100,
+        //   maxNumber: 100,
+        //   step: 2,
+        //   label: 'Number'
+        // },
+        // {
+        //   type: 'Color',
+        //   label: 'Color',
+        //   value: '#fff'
+        // }
       ]
     }
 
