@@ -11,9 +11,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, toRefs, onMounted, reactive, ref } from 'vue'
+import { defineComponent, onMounted, ref } from 'vue'
 import VTable from '../../../../src/table/src/index.vue'
-
+import axios from 'axios'
 export default defineComponent({
   components: {
     VTable
@@ -36,48 +36,30 @@ export default defineComponent({
       defaultSort: 'descending',
       // 排序
       defaultSorts: [
-        { prop: 'date', order: 'descending' },
-        { prop: 'address', order: 'ascending' }
+        { prop: 'username', order: 'descending' },
+        { prop: 'createTime', order: 'ascending' }
       ]
     }
 
     let testData: any = ref([])
 
     const columns = [
-      { value: 'name', name: '姓名', width: '180' },
-      { value: 'date', name: '日期', width: '180', sortable: true },
-      { value: 'address', name: '地址', width: '200', sortable: true }
+      { value: 'id', name: '序号', width: '55', fixed: true },
+      { value: 'username', name: '姓名', width: '100', sortable: true },
+      { value: 'account', name: '账号', width: '180' },
+      { value: 'email', name: '邮箱', width: '200' },
+      { value: 'role', name: '权限', width: '60' },
+      { value: 'createTime', name: '创建时间', width: '200', sortable: true },
+      { value: 'remark', name: '备注', width: '200' },
+      { value: 'status', name: '状态', width: '50', fixed: 'right' }
     ]
 
-    const load = () => {
-      testData.value = [
-        {
-          date: '2016-05-02',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        },
-        {
-          date: '2016-05-04',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1517 弄'
-        },
-        {
-          date: '2016-05-01',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1519 弄'
-        },
-        {
-          date: '2016-05-03',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1516 弄'
-        }
-      ]
-    }
-
     onMounted(() => {
-      setTimeout(() => {
-        load()
-      }, 500)
+      axios.get('/api/getTableData').then((resp) => {
+        // console.log(resp)
+        const { data } = resp
+        testData.value = data.data
+      })
     })
 
     const handleSizePageChange = (val: any) => {

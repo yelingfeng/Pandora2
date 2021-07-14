@@ -1,5 +1,5 @@
 <script lang="tsx">
-import { defineComponent, onMounted, toRaw, unref, computed } from 'vue'
+import { defineComponent, onMounted, unref, computed } from 'vue'
 import { createNamespace } from '../../_utils/create'
 import { useColumnRender } from './render/column'
 import { usePagerRender } from './render/pager'
@@ -54,7 +54,7 @@ export default defineComponent({
         },
         unRefProps.value
       )
-      console.log(tableProps)
+      // console.log(tableProps)
 
       // 创建column
       const columnsVNode = useColumnRender(columnsProps.value, $sortService)
@@ -76,3 +76,40 @@ export default defineComponent({
   }
 })
 </script>
+<style>
+.vpandora-table {
+  width: 100%;
+  height: 100%;
+}
+
+.vpandora-table .combo-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.vpandora-table .combo-wrapper .el-image {
+  margin-right: 7px;
+}
+
+.vpandora-table >>> .active-thead .sort-caret.descending {
+  border-top-color: #409eff;
+}
+.vpandora-table >>> .active-thead .sort-caret.ascending {
+  border-top-color: #409eff;
+}
+
+.vpandora-table .column-wrapper {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  height: 34px;
+  width: 24px;
+  vertical-align: middle;
+  cursor: pointer;
+  overflow: initial;
+  position: relative;
+}
+.vpandora-table .el-radio__label {
+  display: none;
+}
+</style>

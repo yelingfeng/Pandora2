@@ -36,3 +36,8 @@ export default defineComponent({
   }
 })
 </script>
+<style>
+.vpandora-pagination {
+  margin-top: 10px;
+}
+</style>
