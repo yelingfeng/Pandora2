@@ -26,6 +26,15 @@ const router = createRouter({
       }
     },
     {
+      path: '/form',
+      name: 'form',
+      component: () =>
+        import(/* webpackChunkName: "home" */ '../components/Form.vue'),
+      meta: {
+        index: 1
+      }
+    },
+    {
       path: '/guiTable',
       name: 'guiTable',
       component: () =>

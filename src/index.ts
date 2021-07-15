@@ -1,3 +1,3 @@
-import Button from './button/index'
+import VTable from './table/index'
 
-export { Button }
+export { VTable }

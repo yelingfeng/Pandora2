@@ -50,8 +50,8 @@ const load = () => {
         url: 'table',
         sonmenu: [
           {
-            name: '按钮',
-            url: 'button'
+            name: '基础表单测试',
+            url: 'form'
           }
         ]
       }

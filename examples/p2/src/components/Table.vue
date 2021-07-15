@@ -12,7 +12,7 @@
 
 <script lang="tsx">
 import { defineComponent, onMounted, ref } from 'vue'
-import VTable from '../../../../src/table/src/index.vue'
+import { VTable } from '../../../../lib/pandora2.es'
 import { ElButton } from 'element-plus'
 import axios from 'axios'
 export default defineComponent({
