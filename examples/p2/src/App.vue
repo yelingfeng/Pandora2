@@ -4,11 +4,11 @@
       <el-col :span="4">
         <Menu></Menu>
       </el-col>
-      <div class="container">
-        <el-col :span="20">
+      <el-col :span="16">
+        <div class="container">
           <router-view :key="key"></router-view>
-        </el-col>
-      </div>
+        </div>
+      </el-col>
     </el-row>
     <!-- <PropsHelp :state="state" /> -->
 
@@ -107,7 +107,7 @@ export default defineComponent({
   margin-top: 60px;
 }
 .container {
-  width: 1000px;
-  margin: 10px auto;
+  width: 100%;
+  margin: 10px;
 }
 </style>

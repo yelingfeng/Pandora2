@@ -1,6 +1,10 @@
 <template>
   <div ref="root" :class="['dat-gui', { closed: folded }]">
-    <div v-if="foldPosition === 'top'" class="fold-ui" @click="folded = !folded">
+    <div
+      v-if="foldPosition === 'top'"
+      class="fold-ui"
+      @click="folded = !folded"
+    >
       {{ closeButtonText }}
     </div>
     <div class="group--main group">
@@ -8,58 +12,62 @@
         <slot></slot>
       </ul>
     </div>
-    <div v-if="foldPosition === 'bottom'" class="fold-ui" @click="folded = !folded">
+    <div
+      v-if="foldPosition === 'bottom'"
+      class="fold-ui"
+      @click="folded = !folded"
+    >
       {{ closeButtonText }}
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, provide, readonly, ref } from "vue";
-import { HidePickerFn } from "./components/RowColor.vue";
+import { computed, defineComponent, provide, readonly, ref } from 'vue'
+import { HidePickerFn } from './components/RowColor.vue'
 export default defineComponent({
-  name: "DatGui",
+  name: 'DatGui',
   props: {
     foldPosition: {
       type: String, // 'top' | buttom //TBD: add vertical 'right', 'left'.
-      default: "bottom",
-    },
+      default: 'bottom'
+    }
   },
   setup() {
-    const root = ref<HTMLElement>(null);
-    const folded = ref(false);
+    const root = ref<HTMLElement>(null)
+    const folded = ref(false)
     const closeButtonText = computed(() =>
-      folded.value ? "Show controls" : "Hide controls"
-    );
-    let activePicker: (() => void) | null = null;
+      folded.value ? 'Show controls' : 'Hide controls'
+    )
+    let activePicker: (() => void) | null = null
     function closeActive() {
       if (activePicker) {
-        console.log("GUI: activePicker() before");
-        activePicker();
-        console.log("GUI: activePicker() done");
-        activePicker = null;
+        console.log('GUI: activePicker() before')
+        activePicker()
+        console.log('GUI: activePicker() done')
+        activePicker = null
       }
     }
     const pickColor: HidePickerFn = (onHidePopup) => {
-      closeActive();
-      activePicker = onHidePopup;
-    };
-    provide("pickColor", pickColor);
-    provide("uiRoot", readonly(root));
+      closeActive()
+      activePicker = onHidePopup
+    }
+    provide('pickColor', pickColor)
+    provide('uiRoot', readonly(root))
     return {
       root,
       folded,
-      closeButtonText,
-    };
-  },
-});
+      closeButtonText
+    }
+  }
+})
 </script>
 <style>
 .dat-gui {
   position: fixed;
   top: 0;
   right: 1em;
-  width: 245px;
+  width: 200px;
   font-size: 0.8em;
   font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
   color: #ddd;
@@ -212,7 +220,7 @@ export default defineComponent({
   background-color: #003636;
 }
 
-.control-row.color .ctrl-value input[type="text"] {
+.control-row.color .ctrl-value input[type='text'] {
   text-align: center;
   flex: 3;
   color: #ddd;
@@ -237,15 +245,15 @@ export default defineComponent({
   cursor: ew-resize;
 }
 
-.control-row.number input[type="number"] {
+.control-row.number input[type='number'] {
   flex: 1;
   color: #2fa1d6;
   min-width: 0.1em;
   -moz-appearance: textfield;
 }
 
-.control-row.number input[type="number"]::-webkit-inner-spin-button,
-.control-row.number input[type="number"]::-webkit-outer-spin-button {
+.control-row.number input[type='number']::-webkit-inner-spin-button,
+.control-row.number input[type='number']::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
@@ -271,7 +279,7 @@ export default defineComponent({
   align-items: center;
 }
 
-.control-row.boolean .ctrl-value input[type="checkbox"] {
+.control-row.boolean .ctrl-value input[type='checkbox'] {
   margin-left: 0;
 }
 
