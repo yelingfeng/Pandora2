@@ -16,7 +16,7 @@ export default defineComponent({
   },
   setup() {
     const stripeRef = ref(false)
-    const HeightRef = ref(200)
+    const HeightRef = ref(400)
     const FontSizeRef = ref(12)
     const pagerRef = ref(true)
     const borderRef = ref(false)
@@ -26,7 +26,8 @@ export default defineComponent({
       stripe: stripeRef,
       pagination: pagerRef,
       border: borderRef,
-      size : sizeRef
+      size: sizeRef,
+      height: HeightRef
     }
 
     // testConfig
@@ -54,15 +55,21 @@ export default defineComponent({
           model: pagerRef
         },
         {
+          type: 'String',
+          label: '表格高度',
+          title: 'String',
+          model: HeightRef
+        },
+        {
           type: 'Select',
           label: 'size',
           model: sizeRef,
-          items :[
-            {value:'medium',name:'medium'},
-            {value:'small',name:'small'},
-            {value:'mini',name:'mini'}
+          items: [
+            { value: 'medium', name: 'medium' },
+            { value: 'small', name: 'small' },
+            { value: 'mini', name: 'mini' }
           ]
-        },
+        }
         // {
         //   type: 'Title',
         //   label: '标题',

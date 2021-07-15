@@ -16,7 +16,6 @@ export default defineComponent({
       const response = await Person.getList<Person>()
       data.value = response.list
     }
-
     onMounted(() => getData())
     return {
       columns,

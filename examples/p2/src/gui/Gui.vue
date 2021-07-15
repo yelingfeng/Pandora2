@@ -52,7 +52,7 @@ export default defineComponent({
         case 'Number':
           singleCom = (
             <RowNumber
-              v-model={[comp.value, 'value']}
+              v-model={[comp.model, 'value']}
               label={comp.label}
               min={comp.minNumber}
               max={comp.maxNumber}
@@ -64,7 +64,7 @@ export default defineComponent({
         case 'String':
           singleCom = (
             <RowString
-              v-model={[comp.value, 'value']}
+              v-model={[comp.model, 'value']}
               label={comp.label}
               title={comp.title}
             />
@@ -72,11 +72,12 @@ export default defineComponent({
           break
         case 'Select':
           singleCom = (
-            <RowSelect label={comp.label}
-                      items={comp.items}
-                     v-model={[comp.model, 'value']}
-                     />
-                     )
+            <RowSelect
+              label={comp.label}
+              items={comp.items}
+              v-model={[comp.model, 'value']}
+            />
+          )
           break
         case 'Color':
           singleCom = (

@@ -3,7 +3,7 @@ import type {
   TableProps,
   Table
 } from 'element-plus/packages/table/src/table/defaults'
-import type { Ref } from 'vue'
+import type { Ref, VNode } from 'vue'
 
 export type Dictionary<T> = Record<string, T>
 
@@ -78,8 +78,9 @@ export type IPandoraTableOption<T> = Partial<
 
 // 定义列接口
 export interface IPandoraTableColumn<T> extends TableColumnCtx<T> {
-  name: string
-  value: string
+  name?: string
+  value?: string
+  render?: (row: any, column: any, index: number) => VNode
 }
 
 // 排序配置类型

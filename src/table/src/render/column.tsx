@@ -1,6 +1,9 @@
 import { SortService } from '../sort/sortService'
 import { ElTableColumn } from 'element-plus'
 import type { IPandoraTableColumn } from '../types'
+import { isFunction } from '../../../_utils/is'
+import { toRaw } from 'vue'
+import { createVNode } from 'vue'
 /**
  *
  */
@@ -8,7 +11,7 @@ function renderColumnProp<T>(
   item: IPandoraTableColumn<T>,
   $sortService: SortService
 ) {
-  const { prop, value, label, name, sortable, ...others } = item
+  const { prop, value, label, name, sortable, render, ...others } = item
   // 兼容处理1.0的属性
   const columnProps: any = {
     prop: prop || value,
@@ -43,8 +46,19 @@ function renderColumnProp<T>(
       }
     }
   }
+
+  // 动态渲染
+  if (render && isFunction(render)) {
+    slots = {
+      default: (props: any) => {
+        return render(toRaw(props.row), props.column, props.$index)
+      }
+    }
+  }
+
   return { columnProps, slots }
 }
+
 /**
  *
  * @param columnProp
@@ -58,14 +72,11 @@ function getColumnVNode<T>(
   childNode = null
 ) {
   const { columnProps, slots } = renderColumnProp<T>(columnProp, sortService)
-  if (slots && slots.header) {
-    return <ElTableColumn {...columnProps}>{slots}</ElTableColumn>
-  } else {
-    if (childNode) {
-      return <ElTableColumn {...columnProps}>{childNode}</ElTableColumn>
-    }
-    return <ElTableColumn {...columnProps}></ElTableColumn>
+  if (childNode) {
+    return <ElTableColumn {...columnProps}>{childNode}</ElTableColumn>
   }
+  const _childSlots = slots && (slots.default || slots.header) ? slots : ''
+  return createVNode(ElTableColumn, { ...columnProps }, _childSlots)
 }
 
 /**
