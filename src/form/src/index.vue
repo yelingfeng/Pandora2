@@ -8,12 +8,6 @@ export default defineComponent({
   name,
   inheritAttrs: false,
   setup(props, { emit }) {
-    const formLabelAlign = ref({
-      name: '',
-      region: '',
-      type: ''
-    })
-
     const name = ref('123')
     const region = ref('xxxx')
     const type = ref('11')

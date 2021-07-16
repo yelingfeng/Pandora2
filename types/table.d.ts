@@ -5,8 +5,8 @@ import type {
 } from 'element-plus/packages/table/src/table/defaults'
 import type { Ref } from 'vue'
 
-export declare type Dictionary<T> = Record<string, T>
-export declare interface IPageConfig {
+export type Dictionary<T> = Record<string, T>
+export interface IPageConfig {
   // 分页高度
   height?: number
   // 当前页
@@ -26,7 +26,7 @@ export declare interface IPageConfig {
 /**
  * 自定义table类型
  */
-export declare interface IPandoraTable {
+export interface IPandoraTable {
   // 选择模式 单选还是多选
   selectionMode?: string
   // 复现框的位置 前后 top 和 end
@@ -48,25 +48,22 @@ export declare interface IPandoraTable {
 }
 
 // 对外table配置类型 剔除data和column
-export declare type IPandoraTableOption<T> = Omit<
-  TableProps<T>,
-  'data' | 'column'
-> &
+export type IPandoraTableOption<T> = Omit<TableProps<T>, 'data' | 'column'> &
   IPandoraTable
 
 // 定义列接口
-export declare interface IPandoraTableColumn<T> extends TableColumnCtx<T> {
+export interface IPandoraTableColumn<T> extends TableColumnCtx<T> {
   name: string
   value: string
 }
 
 // 排序配置类型
-export declare interface ISortType {
+export interface ISortType {
   prop: string
   order: 'ascending' | 'descending'
 }
 // 排序回调类型
-export declare interface ISortChangeCb {
+export interface ISortChangeCb {
   column: object
   prop: string
   order: string | null
@@ -74,7 +71,7 @@ export declare interface ISortChangeCb {
 /**
  * 定义table Sort配置接口
  */
-export declare interface IPandoraTableSort<T = any> {
+export interface IPandoraTableSort<T = any> {
   // 排序模式 single 独立排序 ,multi 多项排序
   sortMode: 'single' | 'multi'
   // 排序回调事件
