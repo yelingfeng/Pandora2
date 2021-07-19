@@ -4,13 +4,10 @@ import {
   IPandoraTableSort,
   IPandoraTableOption
 } from '../types'
-interface AnyObject {
-  [key: string]: any
-}
 export const tableProps = {
   // 数据
   data: {
-    type: Array as PropType<AnyObject>,
+    type: Array as PropType<any>,
     default() {
       return []
     }

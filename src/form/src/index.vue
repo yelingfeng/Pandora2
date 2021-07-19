@@ -1,7 +1,8 @@
 <script lang="tsx">
 import { defineComponent, ref } from 'vue'
 import { createNamespace } from '../../_utils/create'
-import { ElForm, ElFormItem, ElInput } from 'element-plus'
+import { ElForm } from 'element-plus'
+import FormItem from './components/FormItem.vue'
 
 const [name] = createNamespace('VForm')
 export default defineComponent({
@@ -16,17 +17,13 @@ export default defineComponent({
       'label-width': '100px'
     }
     const items = [
-      { label: '名称', value: name.value },
-      { label: '活动区域', value: region.value },
-      { label: '活动形式', value: type.value }
+      { component: 'Input', label: '名称', value: name.value },
+      { component: 'Input', label: '活动区域', value: region.value },
+      { component: 'Input', label: '活动形式', value: type.value }
     ]
     return () => {
       const elItems = items.map((item) => {
-        return (
-          <ElFormItem label={item.label}>
-            <ElInput v-model={item.value} />
-          </ElFormItem>
-        )
+        return <FormItem option={item}></FormItem>
       })
 
       return (
