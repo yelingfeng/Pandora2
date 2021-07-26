@@ -20,6 +20,7 @@ export default defineComponent({
     }
     const formProps = {
       ref: formRef,
+      // size: 'mini',
       'label-position': 'left',
       'label-width': '100px',
       model: formModel
@@ -41,26 +42,49 @@ export default defineComponent({
       },
       {
         field: 'type',
-        component: 'Input',
+        component: 'CheckboxGroup',
         label: '活动形式',
         model: formModel,
-        defaultValue: '3'
+        defaultValue: ['1'],
+        componentProps: {
+          options: [
+            {
+              label: '选项1',
+              value: '1'
+            },
+            {
+              label: '选项2',
+              value: '2'
+            },
+            {
+              label: '选项3',
+              value: '3'
+            },
+            {
+              label: '选项4',
+              value: '4'
+            }
+          ]
+        }
       }
     ] as any[]
     return () => {
-      const elItems = items.map(({ field, component, label, model }) => {
-        const schema = {
-          field,
-          component,
-          label
+      const elItems = items.map(
+        ({ field, component, label, model, ...args }) => {
+          const schema = {
+            field,
+            component,
+            label,
+            ...args
+          }
+          const itemAttr = {
+            schema,
+            model,
+            setFormModel
+          }
+          return <FormItem {...itemAttr}></FormItem>
         }
-        const itemAttr = {
-          schema,
-          model,
-          setFormModel
-        }
-        return <FormItem {...itemAttr}></FormItem>
-      })
+      )
 
       return (
         <div class="vpandora-form">

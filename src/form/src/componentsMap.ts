@@ -4,6 +4,7 @@ import {
   ElAutocomplete,
   ElButton,
   ElCheckbox,
+  ElCheckboxGroup,
   ElCascader,
   ElDatePicker,
   ElInput,
@@ -21,6 +22,7 @@ const componentMap = new Map<ComponentType, Component>()
 componentMap.set('Autocomplete', ElAutocomplete)
 componentMap.set('Button', ElButton)
 componentMap.set('Checkbox', ElCheckbox)
+componentMap.set('CheckboxGroup', ElCheckboxGroup)
 componentMap.set('Cascader', ElCascader)
 componentMap.set('DatePicker', ElDatePicker)
 componentMap.set('Input', ElInput)

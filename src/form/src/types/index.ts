@@ -3,7 +3,7 @@ export type ComponentType =
   | 'Button'
   | 'Checkbox'
   | 'Cascader'
-  | 'CheckboxButton'
+  | 'CheckboxGroup'
   | 'DatePicker'
   | 'Input'
   | 'InputNumber'
@@ -16,8 +16,10 @@ export type ComponentType =
   | 'Rate'
 
 export interface IFormProps {
-  labelPosition: 'left' | 'right' | 'top'
-  labelWidth: string | number
+  labelPosition?: 'left' | 'right' | 'top'
+  labelWidth?: string | number
+  // Internal component size of the form
+  size?: 'medium' | 'small' | 'mini'
 }
 
 /**
@@ -30,17 +32,16 @@ export interface IFormSchema {
   label: string
   // value 默认值
   defaultValue?: string
+
+  // Event name triggered by internal value change, default change
+  changeEvent?: string
   //  render component
   component: ComponentType
-}
-
-/**
- * FormItem Prop接口
- */
-export interface FormItemProps {
-  schema?: IFormSchema
-  formProps?: IFormProps
-  model?: Recordable
+  // component props
+  componentProps?: (opt: {
+    schema: IFormSchema
+    formModel: Recordable
+  }) => Recordable | object
 }
 
 export interface IFormActionType {
