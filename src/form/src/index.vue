@@ -10,9 +10,9 @@ export default defineComponent({
   inheritAttrs: false,
   setup(props, { emit }) {
     const formModel = reactive<Recordable>({
-      name: '战三',
-      region: '北京',
-      type: '1'
+      name: '',
+      region: '',
+      type: []
     })
     const formRef = ref<Nullable<IFormActionType>>(null)
     function setFormModel(key: string, value: any) {
@@ -21,8 +21,8 @@ export default defineComponent({
     const formProps = {
       ref: formRef,
       // size: 'mini',
-      'label-position': 'left',
-      'label-width': '100px',
+      labelPosition: 'left',
+      labelWidth: '100px',
       model: formModel
     }
     const items = [
@@ -31,21 +31,21 @@ export default defineComponent({
         component: 'Input',
         label: '名称',
         model: formModel,
-        defaultValue: '1'
+        defaultValue: '斗罗大陆'
       },
       {
         field: 'region',
         component: 'Input',
         label: '活动区域',
         model: formModel,
-        defaultValue: '2'
+        defaultValue: '海神岛'
       },
       {
         field: 'type',
         component: 'CheckboxGroup',
         label: '活动形式',
         model: formModel,
-        defaultValue: ['1'],
+        defaultValue: ['1', '2'],
         componentProps: {
           options: [
             {
@@ -88,9 +88,7 @@ export default defineComponent({
 
       return (
         <div class="vpandora-form">
-          <div class="vpandora-form-items">
-            <ElForm {...formProps}>{elItems}</ElForm>
-          </div>
+          <ElForm {...formProps}>{elItems}</ElForm>
         </div>
       )
     }

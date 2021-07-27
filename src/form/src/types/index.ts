@@ -22,6 +22,9 @@ export interface IFormProps {
   size?: 'medium' | 'small' | 'mini'
 }
 
+// formItem 属性
+export interface IFormItemProps {}
+
 /**
  * Form Schema
  */

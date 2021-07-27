@@ -1,5 +1,12 @@
 <script lang="tsx">
-import { defineComponent, PropType, toRefs, unref, computed } from 'vue'
+import {
+  defineComponent,
+  PropType,
+  toRefs,
+  unref,
+  computed,
+  onMounted
+} from 'vue'
 import { ElFormItem } from 'element-plus'
 import { componentMap } from '../componentsMap'
 import type { IFormSchema, IFormProps } from '../types'
@@ -28,48 +35,65 @@ export default defineComponent({
     }
   },
   setup(props, { slots }) {
-    return () => {
-      const { schema } = toRefs(props)
+    const { schema } = toRefs(props)
 
-      const { component, label, field, changeEvent = 'change' } = unref(
-        schema
-      ) as IFormSchema
-      if (!componentMap.has(component)) {
-        console.error(
-          `FormItem component:${component} is an unregistered component Key`
-        )
-        return null
+    const {
+      component,
+      label,
+      field,
+      changeEvent = 'change',
+      defaultValue = ''
+    } = unref(schema) as IFormSchema
+    if (!componentMap.has(component)) {
+      console.error(
+        `FormItem component:${component} is an unregistered component Key`
+      )
+      return null
+    }
+    onMounted(() => {
+      props.setFormModel(field, defaultValue)
+    })
+    const getComponentsProps = computed(() => {
+      const { schema, model } = props
+      const { componentProps = {} } = schema
+      if (!isFunction(componentProps)) {
+        return componentProps
       }
+      return componentProps({ schema, model }) ?? {}
+    })
 
-      const getComponentsProps = computed(() => {
-        const { schema, model } = props
-        const { componentProps = {} } = schema
-        if (!isFunction(componentProps)) {
-          return componentProps
-        }
-        return componentProps({ schema, model }) ?? {}
-      })
-
-      const getComponentsChild = () => {
-        let childNode
-        if (component === 'CheckboxGroup') {
-          const { componentProps = {} } = unref(schema)
-          childNode = componentProps.options.map((item: Recordable) => {
-            const Check = componentMap.get('Checkbox') as ReturnType<
+    const getComponentsChild = () => {
+      let childNode
+      if (component === 'CheckboxGroup') {
+        const { componentProps = {} } = unref(schema)
+        childNode = componentProps.options.map(
+          ({ label, value }: Recordable) => {
+            const CheckNode = componentMap.get('Checkbox') as ReturnType<
               typeof defineComponent
             >
-            return <Check label={item.label} key={item.value} />
-          })
-          return childNode
-        }
+            return (
+              <CheckNode label={value} key={value}>
+                {label}
+              </CheckNode>
+            )
+          }
+        )
         return childNode
       }
+      return childNode
+    }
+    // props.setFormModel(field, defaultValue)
+    const isCheck = component && ['Switch', 'Checkbox'].includes(component)
 
-      // props.setFormModel(field, defaultValue)
-      const isCheck = component && ['Switch', 'Checkbox'].includes(component)
+    const eventKey = `on${upperFirst(changeEvent)}`
 
-      const eventKey = `on${upperFirst(changeEvent)}`
+    return () => {
+      const { size } = props.formProps
 
+      const propsData: Recordable = {
+        size,
+        ...unref(getComponentsProps)
+      }
       const on = {
         [eventKey]: (...args: Nullable<Recordable>[]) => {
           const [e] = args
@@ -81,30 +105,16 @@ export default defineComponent({
           props.setFormModel(field, value)
         }
       }
-      const { size } = props.formProps
-
-      const propsData: Recordable = {
-        // allowClear: true,
-        // getPopupContainer: (trigger: Element) => trigger.parentNode,
-        size,
-        ...unref(getComponentsProps)
-        // disabled: false
-      }
-
       const Comp = componentMap.get(component) as ReturnType<
         typeof defineComponent
       >
-      // const isCheck = component && ['Switch', 'Checkbox'].includes(component)
-      const bindValue: Recordable = {
-        [isCheck ? 'checked' : 'value']: props.model[field]
-      }
 
       const compAttr = {
-        ...bindValue,
+        // ...bindValue,
         ...propsData,
         ...on
       }
-      console.log(compAttr)
+      // console.log(compAttr)
       return (
         <ElFormItem label={label}>
           <Comp v-model={props.model[field]} {...compAttr}>
