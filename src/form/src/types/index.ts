@@ -11,6 +11,7 @@ export type ComponentType =
   | 'TimeSelect'
   | 'Slider'
   | 'Select'
+  | 'SelectOption'
   | 'Radio'
   | 'Switch'
   | 'Rate'
@@ -20,6 +21,7 @@ export interface IFormProps {
   labelWidth?: string | number
   // Internal component size of the form
   size?: 'medium' | 'small' | 'mini'
+  inline?: false
 }
 
 // formItem 属性

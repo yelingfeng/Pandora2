@@ -21,7 +21,7 @@ export default defineComponent({
       type: Object as PropType<IFormSchema>,
       default: () => ({})
     },
-    model: {
+    formModel: {
       type: Object as PropType<Recordable>,
       default: () => ({})
     },
@@ -54,12 +54,12 @@ export default defineComponent({
       props.setFormModel(field, defaultValue)
     })
     const getComponentsProps = computed(() => {
-      const { schema, model } = props
+      const { schema, formModel } = props
       const { componentProps = {} } = schema
       if (!isFunction(componentProps)) {
         return componentProps
       }
-      return componentProps({ schema, model }) ?? {}
+      return componentProps({ schema, formModel }) ?? {}
     })
 
     const getComponentsChild = () => {
@@ -79,6 +79,20 @@ export default defineComponent({
           }
         )
         return childNode
+      } else if (component === 'Select') {
+        const { componentProps = {} } = unref(schema)
+        childNode = componentProps.options.map(
+          ({ label, value }: Recordable) => {
+            const OptionNode = componentMap.get('SelectOption') as ReturnType<
+              typeof defineComponent
+            >
+            return (
+              <OptionNode label={label} value={value} key={value}>
+                {label}
+              </OptionNode>
+            )
+          }
+        )
       }
       return childNode
     }
@@ -117,7 +131,7 @@ export default defineComponent({
       // console.log(compAttr)
       return (
         <ElFormItem label={label}>
-          <Comp v-model={props.model[field]} {...compAttr}>
+          <Comp v-model={props.formModel[field]} {...compAttr}>
             {getComponentsChild()}
           </Comp>
         </ElFormItem>

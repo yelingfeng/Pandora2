@@ -1,4 +1,4 @@
-export const trim = function(string: string) {
+export const trim = function (string: string) {
   return (string || '').replace(/^[\s\uFEFF]+|[\s\uFEFF]+$/g, '')
 }
 
@@ -13,6 +13,9 @@ export function addClass(elements: any, cls: string) {
 }
 export function removeClass(elements: any, cls: string) {
   if (hasClass(elements, cls)) {
-    elements.className = elements.className.replace(new RegExp('(\\s|^)' + cls + '(\\s|$)'), ' ')
+    elements.className = elements.className.replace(
+      new RegExp('(\\s|^)' + cls + '(\\s|$)'),
+      ' '
+    )
   }
 }

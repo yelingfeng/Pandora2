@@ -13,6 +13,7 @@ import {
   ElTimeSelect,
   ElSlider,
   ElSelect,
+  ElOption,
   ElRadio,
   ElSwitch,
   ElRate
@@ -31,6 +32,7 @@ componentMap.set('TimePicker', ElTimePicker)
 componentMap.set('TimeSelect', ElTimeSelect)
 componentMap.set('Slider', ElSlider)
 componentMap.set('Select', ElSelect)
+componentMap.set('SelectOption', ElOption)
 componentMap.set('Switch', ElSwitch)
 componentMap.set('Radio', ElRadio)
 componentMap.set('Rate', ElRate)

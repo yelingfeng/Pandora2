@@ -8,15 +8,6 @@ const router = createRouter({
       redirect: '/home'
     },
     {
-      path: '/button',
-      name: 'button',
-      component: () =>
-        import(/* webpackChunkName: "home" */ '../components/Button.vue'),
-      meta: {
-        index: 0
-      }
-    },
-    {
       path: '/table',
       name: 'table',
       component: () =>
@@ -31,7 +22,7 @@ const router = createRouter({
       component: () =>
         import(/* webpackChunkName: "home" */ '../components/Form.vue'),
       meta: {
-        index: 1
+        index: 2
       }
     },
     {
@@ -40,7 +31,7 @@ const router = createRouter({
       component: () =>
         import(/* webpackChunkName: "home" */ '../views/GuiTable.vue'),
       meta: {
-        index: 2
+        index: 3
       }
     }
   ]

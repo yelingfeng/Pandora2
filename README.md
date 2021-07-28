@@ -2,7 +2,7 @@
 
 Vue-pandora 2.0
 
-> 基于 Vue3.0 、 Vite2 、 Typescript 、 element-plus
+> 基于 Vue3.0 、 Vite2 、 Typescript 、 Ant Design Vue
 
 # TODO LIST
 
@@ -32,7 +32,7 @@ Vue-pandora 2.0
 - [ ] 基础代码 80%
   - [x] 自定义排序功能
   - [x] 分页器
-  - [x] element-plus 基础 table column 属性封装
+  - [x] Ant Design Vue 基础 table column 属性封装
   - [ ] Jest 测试
 
 ### VForm
@@ -43,7 +43,7 @@ Vue-pandora 2.0
 - [ ] 基础代码
   - [x] 基础`components`组件定义 -> componentsMap
   - [ ] 自定义构建 、布局
-  - [ ] `element-plus` 基础`Form` `FormItem`属性封装
+  - [ ] `Ant Design Vue` 基础`Form` `FormItem`属性封装
   - [ ] `Rules` 表单验证封装
   - [ ] 通用方法封装`setValue` ,`getValue`等
   - [ ] `Jest` 测试
