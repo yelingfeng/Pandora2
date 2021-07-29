@@ -30,8 +30,8 @@ export function useFormAction({
       await resetFunc()
       return
     }
-
     const formEl = unref(formElRef)
+    console.log(formEl)
     if (!formEl) return
 
     formEl?.resetFields()

@@ -1,3 +1,4 @@
+import type { ComputedRef, Ref } from 'vue'
 export type ComponentType =
   | 'Autocomplete'
   | 'Button'
@@ -28,9 +29,6 @@ export interface IFormProps {
   submitFunc?: () => Promise<void>
 }
 
-// formItem 属性
-export interface IFormItemProps {}
-
 /**
  * Form Schema
  */
@@ -40,17 +38,16 @@ export interface IFormSchema {
   // label
   label: string
   // value 默认值
-  defaultValue?: string
+  defaultValue?: string | string[] | number
 
   // Event name triggered by internal value change, default change
   changeEvent?: string
   //  render component
   component: ComponentType
   // component props
-  componentProps?: (opt: {
-    schema: IFormSchema
-    formModel: Recordable
-  }) => Recordable | object
+  componentProps?:
+    | ((opt: { schema: IFormSchema; formModel: Recordable }) => Recordable)
+    | object
 }
 
 interface Callback {
@@ -59,9 +56,10 @@ interface Callback {
 
 export interface IFormActionType {
   submit: () => Promise<void>
-  setFieldsValue: <T>(values: T) => Promise<void>
   resetFields: () => Promise<void>
   validate: (cb: Callback) => Promise<void>
+
+  setFieldsValue: <T>(values: T) => Promise<void>
   getFieldsValue: () => Recordable
   clearValidate: (name?: string | string[]) => Promise<void>
   updateSchema: (
@@ -78,3 +76,11 @@ export interface IFormActionType {
     first?: boolean | undefined
   ) => Promise<void>
 }
+
+export type DynamicProps<T> = {
+  [P in keyof T]: Ref<T[P]> | T[P] | ComputedRef<T[P]>
+}
+
+export type RegisterFn = (formInstance: IFormActionType) => void
+
+export type UseFormReturnType = [RegisterFn, IFormActionType]

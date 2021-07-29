@@ -10,13 +10,14 @@ import {
   onBeforeMount,
   onMounted
 } from 'vue'
-import { createNamespace } from '../../_utils/create'
+import type { IFormActionType, IFormSchema, IFormProps } from './types'
 import { ElForm } from 'element-plus'
+import FormItem from './components/FormItem.vue'
+import { createNamespace } from '../../_utils/create'
+import { deepMerge } from '../../_utils/'
 import { useFormValues } from './hooks/useFormValues'
 import { useFormAction } from './hooks/useFormAction'
 import { createFormContext } from './hooks/useFormContext'
-import type { IFormActionType, IFormSchema, IFormProps } from './types'
-import FormItem from './components/FormItem.vue'
 const [name] = createNamespace('VForm')
 export default defineComponent({
   name,
@@ -45,7 +46,12 @@ export default defineComponent({
 
     const getProps = computed(
       (): IFormProps => {
-        return { ...props.formProps, ...unref(propsRef) } as IFormProps
+        return {
+          ...props.formProps,
+          ...unref(propsRef),
+          ref: formRef,
+          model: unref(formModel)
+        } as IFormProps
       }
     )
     const getSchema = computed((): IFormSchema[] => {
@@ -85,10 +91,14 @@ export default defineComponent({
       initDefault()
     })
 
-    const formActionType: Partial<IFormActionType> = {
-      resetFields
+    async function setProps(formProps: Partial<IFormProps>): Promise<void> {
+      propsRef.value = deepMerge(unref(propsRef) || {}, formProps)
     }
 
+    const formActionType: Partial<IFormActionType> = {
+      resetFields,
+      setProps
+    }
     onMounted(() => {
       emit('register', formActionType)
     })
@@ -109,86 +119,6 @@ export default defineComponent({
         return <FormItem {...itemAttr}></FormItem>
       }
     )
-    // const formProps = {
-    //   ref: formRef,
-    //   // size: 'mini',
-    //   inline: true,
-    //   labelPosition: 'right',
-    //   labelWidth: '100px',
-    //   model: formModel
-    // }
-    // const items = [
-    //   {
-    //     field: 'name',
-    //     component: 'Input',
-    //     label: '名称',
-    //     model: formModel,
-    //     defaultValue: '斗罗大陆'
-    //   },
-    //   {
-    //     field: 'region',
-    //     component: 'Input',
-    //     label: '活动区域',
-    //     model: formModel,
-    //     defaultValue: '海神岛'
-    //   },
-    //   {
-    //     field: 'city',
-    //     component: 'Select',
-    //     label: '活动城市',
-    //     model: formModel,
-    //     defaultValue: 'beijing',
-    //     componentProps: {
-    //       placeholder: '请选择城市',
-    //       clearable: true,
-    //       options: [
-    //         {
-    //           label: '北京',
-    //           value: 'beijing'
-    //         },
-    //         {
-    //           label: '上海',
-    //           value: 'shanghai'
-    //         },
-    //         {
-    //           label: '沈阳',
-    //           value: 'shenyang'
-    //         },
-    //         {
-    //           label: '广州',
-    //           value: 'guangzhou'
-    //         }
-    //       ]
-    //     }
-    //   },
-    //   {
-    //     field: 'type',
-    //     component: 'CheckboxGroup',
-    //     label: '活动形式',
-    //     model: formModel,
-    //     defaultValue: ['1', '2'],
-    //     componentProps: {
-    //       options: [
-    //         {
-    //           label: '选项1',
-    //           value: '1'
-    //         },
-    //         {
-    //           label: '选项2',
-    //           value: '2'
-    //         },
-    //         {
-    //           label: '选项3',
-    //           value: '3'
-    //         },
-    //         {
-    //           label: '选项4',
-    //           value: '4'
-    //         }
-    //       ]
-    //     }
-    //   }
-    // ] as any[]
     return () => {
       return (
         <div class="vpandora-form">

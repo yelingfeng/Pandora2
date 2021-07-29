@@ -1,13 +1,23 @@
 <template>
   <div>
-    <VForm :schemas="schemas" :formProps="getProps"></VForm>
+    <el-row>
+      <el-col :span="20">
+        <VForm
+          @register="register"
+          :schemas="schemas"
+          :formProps="getProps"
+        ></VForm>
+        <el-button @click="resetFields">重置表单</el-button>
+      </el-col>
+    </el-row>
     <GuiCom :state="GuiConfig"></GuiCom>
   </div>
 </template>
 
 <script lang="tsx">
 import { defineComponent, onMounted, ref, computed } from 'vue'
-import VForm from '../../../../src/form/src/index.vue'
+import { VForm, IFormSchema, useForm } from '../../../../src/form/index'
+// import { VForm, IFormSchema, useForm } from '../../../../lib/pandora2.es'
 import GuiCom from '../gui/Gui.vue'
 export default defineComponent({
   components: {
@@ -96,27 +106,27 @@ export default defineComponent({
       ]
     }
 
-    const schemas = [
+    const schemas: IFormSchema[] = [
       {
         field: 'name',
         component: 'Input',
         label: '名称',
         // model: formModel,
-        defaultValue: '斗罗大陆'
+        defaultValue: ''
       },
       {
         field: 'region',
         component: 'Input',
         label: '活动区域',
         // model: formModel,
-        defaultValue: '海神岛'
+        defaultValue: ''
       },
       {
         field: 'city',
         component: 'Select',
         label: '活动城市',
         // model: formModel,
-        defaultValue: 'beijing',
+        defaultValue: '',
         componentProps: {
           placeholder: '请选择城市',
           clearable: true,
@@ -167,12 +177,18 @@ export default defineComponent({
           ]
         }
       }
-    ] as any[]
+    ]
     onMounted(() => {})
 
+    const [register, { resetFields }] = useForm({
+      schemas
+    })
+
     return {
+      register,
       schemas,
       getProps,
+      resetFields,
       GuiConfig
     }
   }

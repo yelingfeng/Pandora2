@@ -49,6 +49,7 @@ export function useFormValues({
         formModel[item.field] = defaultValue
       }
     })
+    console.log(formModel)
     defaultValueRef.value = obj
   }
 
