@@ -67,7 +67,7 @@ export default defineComponent({
   position: fixed;
   top: 0;
   right: 1em;
-  width: 200px;
+  width: 300px;
   font-size: 0.8em;
   font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
   color: #ddd;

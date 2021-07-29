@@ -3,15 +3,18 @@ import {
   defineComponent,
   reactive,
   ref,
+  Ref,
   PropType,
   computed,
   unref,
   onBeforeMount,
-  watch
+  onMounted
 } from 'vue'
 import { createNamespace } from '../../_utils/create'
 import { ElForm } from 'element-plus'
 import { useFormValues } from './hooks/useFormValues'
+import { useFormAction } from './hooks/useFormAction'
+import { createFormContext } from './hooks/useFormContext'
 import type { IFormActionType, IFormSchema, IFormProps } from './types'
 import FormItem from './components/FormItem.vue'
 const [name] = createNamespace('VForm')
@@ -50,27 +53,46 @@ export default defineComponent({
       return schemas as IFormSchema[]
     })
 
-    const { handleFormValues, initDefault } = useFormValues({
+    // 初始化Form values
+    const { initDefault, handleFormValues } = useFormValues({
       getProps,
       defaultValueRef,
       getSchema,
       formModel
     })
 
+    const { resetFields, handleSubmit } = useFormAction({
+      emit,
+      getProps,
+      formModel,
+      getSchema,
+      defaultValueRef,
+      formElRef: formRef as Ref<IFormActionType>,
+      schemaRef: schemaRef as Ref<IFormSchema[]>,
+      handleFormValues
+    })
+
+    createFormContext({
+      resetAction: resetFields,
+      submitAction: handleSubmit
+    })
+
     function setFormModel(key: string, value: any) {
       formModel[key] = value
     }
 
-    watch(
-      () => props.formProps,
-      (formProps) => {
-        console.log(formProps)
-      }
-    )
-
     onBeforeMount(() => {
       initDefault()
     })
+
+    const formActionType: Partial<IFormActionType> = {
+      resetFields
+    }
+
+    onMounted(() => {
+      emit('register', formActionType)
+    })
+
     const elItems = unref(getSchema).map(
       ({ field, component, label, ...args }) => {
         const schema = {

@@ -34,7 +34,7 @@ export default defineComponent({
       default: null
     }
   },
-  setup(props, { slots }) {
+  setup(props) {
     const { schema } = toRefs(props)
 
     const {
@@ -130,7 +130,7 @@ export default defineComponent({
       }
       // console.log(compAttr)
       return (
-        <ElFormItem label={label}>
+        <ElFormItem label={label} prop={field}>
           <Comp v-model={props.formModel[field]} {...compAttr}>
             {getComponentsChild()}
           </Comp>

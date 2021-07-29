@@ -22,6 +22,10 @@ export interface IFormProps {
   // Internal component size of the form
   size?: 'medium' | 'small' | 'mini'
   inline?: false
+  rules?: any[]
+
+  resetFunc?: () => Promise<void>
+  submitFunc?: () => Promise<void>
 }
 
 // formItem 属性
@@ -49,10 +53,15 @@ export interface IFormSchema {
   }) => Recordable | object
 }
 
+interface Callback {
+  (isValid?: boolean, invalidFields?: any): void
+}
+
 export interface IFormActionType {
   submit: () => Promise<void>
   setFieldsValue: <T>(values: T) => Promise<void>
   resetFields: () => Promise<void>
+  validate: (cb: Callback) => Promise<void>
   getFieldsValue: () => Recordable
   clearValidate: (name?: string | string[]) => Promise<void>
   updateSchema: (
