@@ -42,7 +42,8 @@ export default defineComponent({
       label,
       field,
       changeEvent = 'change',
-      defaultValue = ''
+      defaultValue = '',
+      colProps = { span: '', offset: '' }
     } = unref(schema) as IFormSchema
     if (!componentMap.has(component)) {
       console.error(
@@ -130,11 +131,13 @@ export default defineComponent({
       }
       // console.log(compAttr)
       return (
-        <ElFormItem label={label} prop={field}>
-          <Comp v-model={props.formModel[field]} {...compAttr}>
-            {getComponentsChild()}
-          </Comp>
-        </ElFormItem>
+        <el-col span={colProps.span} offset={colProps.offset}>
+          <ElFormItem label={label} prop={field}>
+            <Comp v-model={props.formModel[field]} {...compAttr}>
+              {getComponentsChild()}
+            </Comp>
+          </ElFormItem>
+        </el-col>
       )
     }
   }

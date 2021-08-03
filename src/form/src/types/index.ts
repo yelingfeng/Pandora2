@@ -29,6 +29,10 @@ export interface IFormProps {
   submitFunc?: () => Promise<void>
 }
 
+export interface IColProps {
+  span?: number
+  offset?: number
+}
 /**
  * Form Schema
  */
@@ -39,7 +43,7 @@ export interface IFormSchema {
   label: string
   // value 默认值
   defaultValue?: string | string[] | number
-
+  colProps?: IColProps
   // Event name triggered by internal value change, default change
   changeEvent?: string
   //  render component

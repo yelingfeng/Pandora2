@@ -112,14 +112,20 @@ export default defineComponent({
         component: 'Input',
         label: '名称',
         // model: formModel,
-        defaultValue: ''
+        defaultValue: '',
+        colProps: {
+          span: 12
+        }
       },
       {
         field: 'region',
         component: 'Input',
         label: '活动区域',
         // model: formModel,
-        defaultValue: ''
+        defaultValue: '',
+        colProps: {
+          span: 12
+        }
       },
       {
         field: 'city',
@@ -127,6 +133,9 @@ export default defineComponent({
         label: '活动城市',
         // model: formModel,
         defaultValue: '',
+        colProps: {
+          span: 24
+        },
         componentProps: {
           placeholder: '请选择城市',
           clearable: true,
@@ -156,6 +165,9 @@ export default defineComponent({
         label: '活动形式',
         // model: formModel,
         defaultValue: ['1', '2'],
+        colProps: {
+          span: 24
+        },
         componentProps: {
           options: [
             {

@@ -122,7 +122,9 @@ export default defineComponent({
     return () => {
       return (
         <div class="vpandora-form">
-          <ElForm {...getProps.value}>{elItems}</ElForm>
+          <ElForm {...getProps.value}>
+            <el-row>{elItems}</el-row>
+          </ElForm>
         </div>
       )
     }
