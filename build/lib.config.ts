@@ -3,6 +3,10 @@ import { defineConfig } from 'vite'
 import { resolve } from 'path'
 import dts from 'vite-plugin-dts'
 import vue from '@vitejs/plugin-vue'
+import vueJsx from '@vitejs/plugin-vue-jsx'
+// import AutoImport from 'unplugin-auto-import/vite'
+// import Components from 'unplugin-vue-components/vite'
+// import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 
 export default defineConfig({
   ...baseConfig,
@@ -10,8 +14,8 @@ export default defineConfig({
     outDir: 'dist',
     lib: {
       entry: resolve(__dirname, '../src/components/index.js'),
-      name: 'Pandora2',
-      fileName: (format) => `Pandora2.${format}.js`
+      name: 'pandora2',
+      fileName: (format) => `pandora2.${format}.js`
     },
     rollupOptions: {
       // 确保外部化处理那些你不想打包进库的依赖
@@ -26,6 +30,7 @@ export default defineConfig({
   },
   plugins: [
     vue(),
+    vueJsx(),
     // ...(baseConfig as any).plugins,
     dts()
   ]
