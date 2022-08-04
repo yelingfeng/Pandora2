@@ -1,10 +1,5 @@
 # Pandora2
 
-[![Build Status](https://travis-ci.org/yelingfeng/Pandora2.svg?branch=main)](https://travis-ci.org/yelingfeng/Pandora2)
-![gitub](https://img.shields.io/github/package-json/v/yelingfeng/Pandora2)
-![npm](https://img.shields.io/npm/v/Pandora2)
-
-
 ### 介绍
 ---
 
