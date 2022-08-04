@@ -30,10 +30,8 @@
     "lint": "eslint  src/**/*.{vue,ts}",
     "lint-fix": "yarn lint -- --fix",
     "commit": "git-cz",
-    "type": "tsc -d",
     "version": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0 && git add CHANGELOG.md",
-    "reinstall": "rimraf yarn.lock && rimraf package.lock.json && rimraf node_modules && yarn install",
-    "release": "np"
+    "reinstall": "rimraf yarn.lock && rimraf package.lock.json && rimraf node_modules && yarn install"
   },
   "dependencies": {
     "@element-plus/icons-vue": "^2.0.6",
