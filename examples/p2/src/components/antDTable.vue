@@ -20,10 +20,10 @@ export default defineComponent({
     const getData = async () => {
       const response = await Person.getList<Person>()
       data.value = response.list
-
       const { list } = await OuterMan.getDataList<OuterMan>()
       data2.value = list
     }
+    console.log(columns)
     // const config = Person.getConfig();
 
     onMounted(() => {

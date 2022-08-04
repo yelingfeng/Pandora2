@@ -1,4 +1,4 @@
 export function createNamespace(name: string) {
-  const prefixedName = `pandora-${name}`
+  const prefixedName = `Pd${name}`
   return [prefixedName] as const
 }

@@ -11,7 +11,16 @@ const router = createRouter({
       path: '/table',
       name: 'table',
       component: () =>
-        import(/* webpackChunkName: "home" */ '../components/Table.vue'),
+        import(/* webpackChunkName: "Table" */ '../components/Table.vue'),
+      meta: {
+        index: 1
+      }
+    },
+    {
+      path: '/antDTable',
+      name: 'antTable',
+      component: () =>
+        import(/* webpackChunkName: "Table" */ '../components/antDTable.vue'),
       meta: {
         index: 1
       }
@@ -20,7 +29,7 @@ const router = createRouter({
       path: '/form',
       name: 'form',
       component: () =>
-        import(/* webpackChunkName: "home" */ '../components/Form.vue'),
+        import(/* webpackChunkName: "Form" */ '../components/Form.vue'),
       meta: {
         index: 2
       }
@@ -29,7 +38,7 @@ const router = createRouter({
       path: '/guiTable',
       name: 'guiTable',
       component: () =>
-        import(/* webpackChunkName: "home" */ '../views/GuiTable.vue'),
+        import(/* webpackChunkName: "guiTable" */ '../views/GuiTable.vue'),
       meta: {
         index: 3
       }

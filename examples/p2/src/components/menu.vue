@@ -3,22 +3,19 @@
     <template v-for="(menu, index) in menuData">
       <!-- 二级 -->
       <template v-if="menu.sonmenu && menu.sonmenu.length > 0">
-        <el-submenu :index="index.toString()">
+        <el-sub-menu :index="index" :key="index">
           <template #title>
             <span>{{ menu.name }}</span>
           </template>
-          <div v-for="(cMenu, cIndex) in menu.sonmenu">
-            <el-menu-item
-              :index="`/${cMenu.url}`"
-              :key="cIndex"
-              @click="handleOpen(cIndex, $event, menu.id)"
-              >{{ cMenu.name }}</el-menu-item
-            >
+          <div v-for="(cMenu, cIndex) in menu.sonmenu" :key="cIndex">
+            <el-menu-item :index="`/${cMenu.url}`" :key="cIndex">{{
+              cMenu.name
+            }}</el-menu-item>
           </div>
-        </el-submenu>
+        </el-sub-menu>
       </template>
       <!-- 一级 -->
-      <el-menu-item :index="`/${menu.index}`" v-else>
+      <el-menu-item :index="`/${menu.index}`" :key="index" v-else>
         <template>
           <span slot="title">{{ menu.name }}</span>
         </template>
@@ -42,6 +39,10 @@ const load = () => {
           {
             name: '配置表格',
             url: 'guiTable'
+          },
+          {
+            name: 'antDesign表格',
+            url: 'antDTable'
           }
         ]
       },

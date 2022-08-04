@@ -1,5 +1,4 @@
 export * from './propTypes'
 export * from './withInstall'
-export * from './decorator'
 export * from './props'
 export * from './log'

@@ -2,7 +2,10 @@ import { resolve } from 'path'
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
-import styleImport from 'vite-plugin-style-import'
+import dts from 'vite-plugin-dts'
+import Components from 'unplugin-vue-components/vite'
+import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
+
 // https://vitejs.dev/config/
 export default defineConfig({
   server: {
@@ -24,20 +27,18 @@ export default defineConfig({
   plugins: [
     vue(),
     vueJsx(),
-    styleImport({
-      libs: [
-        {
-          libraryName: 'element-plus',
-          esModule: true,
-          ensureStyleFile: true,
-          resolveStyle: (name) => {
-            return `element-plus/lib/theme-chalk/${name}.css`
-          },
-          resolveComponent: (name) => {
-            return `element-plus/lib/${name}`
-          }
-        }
-      ]
+    dts(),
+    Components({
+      // allow auto load markdown components under `./src/components/`
+      extensions: ['vue', 'md'],
+      // allow auto import and register components used in markdown
+      include: [/\.vue$/, /\.vue\?vue/, /\.md$/],
+      resolvers: [
+        ElementPlusResolver({
+          importStyle: 'sass'
+        })
+      ],
+      dts: 'src/components.d.ts'
     })
   ],
   css: {
@@ -49,16 +50,16 @@ export default defineConfig({
     outDir: './lib',
     lib: {
       entry: resolve(__dirname, './src/index.ts'),
-      name: 'Pandora2'
+      name: 'Pandora2',
+      fileName: (format) => `pandora2.${format}.js`
     },
     rollupOptions: {
       // 请确保外部化那些你的库中不需要的依赖
-      external: ['vue', 'element-plus'],
+      external: ['vue'],
       output: {
         // 在 UMD 构建模式下为这些外部化的依赖提供一个全局变量
         globals: {
-          vue: 'Vue',
-          'element-plus': 'elementPlus'
+          vue: 'Vue'
         }
       }
     }

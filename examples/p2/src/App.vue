@@ -1,10 +1,10 @@
 <template>
   <div>
     <el-row>
-      <el-col :span="4">
+      <el-col :span="3">
         <Menu></Menu>
       </el-col>
-      <el-col :span="16">
+      <el-col :span="14">
         <div class="container">
           <router-view :key="key"></router-view>
         </div>

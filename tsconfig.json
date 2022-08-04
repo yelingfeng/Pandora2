@@ -1,11 +1,12 @@
 {
   "compilerOptions": {
+    "baseUrl": ".",
     "target": "esnext",
     "module": "esnext",
     "moduleResolution": "node",
     "strict": true,
     "jsx": "preserve",
-    "sourceMap": false,
+    "sourceMap": true,
     "forceConsistentCasingInFileNames": true,
     "strictFunctionTypes": false,
     "noUnusedLocals": true,
@@ -20,11 +21,10 @@
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
     "declaration": true,
-    "declarationDir": "dist/types",
     "types": ["vite/client", "jest"],
-    "baseUrl": ".",
     "paths": {
-      "pandora/*": ["./src/*"]
+      "pandora/*": ["./src/*"],
+      "@/*": ["./src/*"]
     },
     "lib": ["esnext", "dom"]
   },
