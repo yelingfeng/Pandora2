@@ -36,7 +36,7 @@
   "dependencies": {
     "@element-plus/icons-vue": "^2.0.6",
     "ant-design-vue": "^3.2.10",
-    "element-plus": "^1.0.1-alpha.1",
+    "element-plus": "2.2.12",
     "lodash-es": "^4.17.21",
     "prismjs": "^1.28.0"
   },
