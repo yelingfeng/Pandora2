@@ -1,1 +1,0 @@
-import{c as o,o as e,b as s}from"./index.69d9c50b.js";const r={class:"markdown-body"},a=s("h1",null,"PdForm",-1),c=[a],i={__name:"README",setup(n,{expose:t}){return t({frontmatter:{}}),(d,m)=>(e(),o("div",r,c))}};export{i as default};

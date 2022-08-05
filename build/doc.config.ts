@@ -3,7 +3,7 @@ import { defineConfig } from 'vite'
 
 export default defineConfig({
   ...baseConfig,
-  base: '/',
+  base: '/Pandora2',
   build: {
     outDir: 'docs'
   }

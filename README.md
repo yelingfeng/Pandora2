@@ -1,7 +1,7 @@
 # Pandora2
 
 ![gitub](https://img.shields.io/github/package-json/v/yelingfeng/Pandora2)
-![npm](https://img.shields.io/npm/v/Pandora2)
+![npm](https://img.shields.io/npm/v/pandora2)
 
 
 ### 介绍
