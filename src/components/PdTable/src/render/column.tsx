@@ -93,8 +93,8 @@ export function useColumnRender<T>(
   const columnsVNode = columnProps.map((items: IPandoraTableColumn<T>) => {
     let childColumn: any
     // 嵌套列
-    if (items.columns && items.columns.length) {
-      childColumn = items.columns.map((it: IPandoraTableColumn<T>) => {
+    if (items?.columns && items?.columns.length) {
+      childColumn = items?.columns.map((it: IPandoraTableColumn<T>) => {
         return getColumnVNode(it, sortService)
       })
       return getColumnVNode(items, sortService, childColumn)

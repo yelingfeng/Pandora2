@@ -1,5 +1,5 @@
 import { SortService } from './sortService'
-import type { Table } from 'element-plus/packages/table/src/table/defaults'
+import type { Table } from '../types/element-type'
 import type { Ref } from 'vue'
 import type { IPandoraTableColumn, ISortService, ISortChangeCb } from '../types'
 /**

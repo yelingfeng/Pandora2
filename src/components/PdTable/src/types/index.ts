@@ -1,10 +1,5 @@
-import type { TableColumnCtx } from 'element-plus/packages/table/src/table-column/defaults'
-import type {
-  TableProps,
-  Table
-} from 'element-plus/packages/table/src/table/defaults'
 import type { Ref, VNode } from 'vue'
-
+import { TableProps, Table, TableColumnCtx } from './element-type'
 export type Dictionary<T> = Record<string, T>
 
 export interface AnyObject {

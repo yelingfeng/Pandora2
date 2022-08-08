@@ -6,7 +6,7 @@
         <div class="version">0.0.1</div>
       </div>
       <div class="menu">
-        <div v-for="(link, index) in data.links" @click.native="scollTop">
+        <div v-for="(link, index) in data.links" :key="index" @click="scollTop">
           <div class="meauTitle" v-if="link.path == '/components/Meau'">
             {{ link.name }}
           </div>

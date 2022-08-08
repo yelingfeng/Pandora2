@@ -1,6 +1,6 @@
 <script lang="tsx">
 import { defineComponent, onMounted, unref, computed } from 'vue'
-import { createNamespace } from '@/_utils/create'
+import { createNamespace } from '@/_utils/create/index'
 import { useColumnRender } from './render/column'
 import { usePagerRender } from './render/pager'
 import { ElTable } from 'element-plus'
@@ -26,8 +26,9 @@ export default defineComponent({
     // console.log(pagination, stripe)
     const unRefProps = computed(() => {
       let obj: any = {}
-      for (let key in otherProps) {
-        obj[key] = unref(otherProps[key])
+      const objKeys = Object.keys(otherProps) as Array<keyof typeof otherProps>
+      for (let key in objKeys) {
+        obj[key] = unref(objKeys[key])
       }
       return obj
     })
@@ -54,7 +55,7 @@ export default defineComponent({
         },
         unRefProps.value
       )
-      // console.log(tableProps)
+      console.log(unRefProps)
 
       // 创建column
       const columnsVNode = useColumnRender(columnsProps.value, $sortService)
@@ -76,7 +77,7 @@ export default defineComponent({
   }
 })
 </script>
-<style>
+<style lang="less">
 .vpandora-table {
   width: 100%;
   height: 100%;
@@ -92,11 +93,11 @@ export default defineComponent({
   margin-right: 7px;
 }
 
-.vpandora-table>>>.active-thead .sort-caret.descending {
+.vpandora-table>.active-thead .sort-caret.descending {
   border-top-color: #409eff;
 }
 
-.vpandora-table>>>.active-thead .sort-caret.ascending {
+.vpandora-table>.active-thead .sort-caret.ascending {
   border-top-color: #409eff;
 }
 

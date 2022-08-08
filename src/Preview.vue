@@ -18,7 +18,7 @@
 
 <script>
 import Prism from 'prismjs'
-import '../assets/prism.css'
+import './assets/prism.css'
 
 const isDev = import.meta.env.MODE === 'development'
 
@@ -47,7 +47,7 @@ export default {
     previewSourceCode() {
       return this.sourceCode.replace(
         /'\.\.\/\.\.\/index'/g,
-        "'@tencent/my-kit'"
+        '\'@tencent/my-kit\''
       )
     }
   },

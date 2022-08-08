@@ -1,12 +1,7 @@
 <template>
   <div>
-    <VTable
-      :data="testData"
-      :columns="columns"
-      :sortConfig="sortConfig"
-      :tableConfig="tableConfig"
-      @handleSizePageChange="handleSizePageChange"
-    ></VTable>
+    <VTable :data="testData" :columns="columns" :sortConfig="sortConfig" :tableConfig="tableConfig"
+      @handleSizePageChange="handleSizePageChange"></VTable>
   </div>
 </template>
 
@@ -118,4 +113,5 @@ export default defineComponent({
 })
 </script>
 
-<style scoped></style>
+<style scoped>
+</style>

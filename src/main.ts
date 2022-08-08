@@ -4,7 +4,7 @@ import router from './router'
 
 import './assets/markdown.css'
 
-import Preview from './components/Preview.vue'
+import Preview from './Preview.vue'
 import 'element-plus/dist/index.css'
 import ElementPlus from 'element-plus'
 import Pandora2 from './components/index'

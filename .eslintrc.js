@@ -27,6 +27,7 @@ module.exports = {
     '@typescript-eslint/no-var-requires': 'off',
     '@typescript-eslint/no-empty-function': 'off',
     'vue/custom-event-name-casing': 'off',
+    'vue/multi-word-component-names': 'off',
     'no-use-before-define': 'off',
     '@typescript-eslint/no-use-before-define': 'off',
     '@typescript-eslint/ban-ts-comment': 'off',
@@ -44,6 +45,7 @@ module.exports = {
     'space-before-function-paren': 'off',
     quotes: ['error', 'single'],
     'comma-dangle': ['error', 'never'],
-    'vue/no-mutating-props': 0
+    'vue/no-mutating-props': 0,
+    'prettier/prettier': 'off'
   }
 }

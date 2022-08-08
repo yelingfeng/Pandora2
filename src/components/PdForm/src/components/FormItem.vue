@@ -65,9 +65,11 @@ export default defineComponent({
 
     const getComponentsChild = () => {
       let childNode
+      const { componentProps = {} } = unref(schema)
+      const opts = componentProps.options as any
       if (component === 'CheckboxGroup') {
-        const { componentProps = {} } = unref(schema)
-        childNode = componentProps.options.map(
+
+        childNode = opts.map(
           ({ label, value }: Recordable) => {
             const CheckNode = componentMap.get('Checkbox') as ReturnType<
               typeof defineComponent
@@ -81,8 +83,7 @@ export default defineComponent({
         )
         return childNode
       } else if (component === 'Select') {
-        const { componentProps = {} } = unref(schema)
-        childNode = componentProps.options.map(
+        childNode = opts.map(
           ({ label, value }: Recordable) => {
             const OptionNode = componentMap.get('SelectOption') as ReturnType<
               typeof defineComponent

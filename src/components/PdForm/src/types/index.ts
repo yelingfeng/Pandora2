@@ -1,4 +1,5 @@
 import type { ComputedRef, Ref } from 'vue'
+import type { FormRules } from 'element-plus'
 export type ComponentType =
   | 'Autocomplete'
   | 'Button'
@@ -18,12 +19,26 @@ export type ComponentType =
   | 'Rate'
 
 export interface IFormProps {
+  model: Record<string, any>
   labelPosition?: 'left' | 'right' | 'top'
   labelWidth?: string | number
+  labelSuffix?: string
+  // 是否显示必填字段的标签旁边的红色星号
+  hideRequiredAsterisk?: boolean
+  // 是否显示校验错误信息
+  showMessage?: boolean
+  // 是否以行内形式展示校验信息
+  inlineMessage?: boolean
+  // 是否在输入框中显示校验结果反馈图标
+  statusIcon?: boolean
+  // 是否在 rules 属性改变后立即触发一次验证
+  validateOnRuleChange?: boolean
+
   // Internal component size of the form
-  size?: 'medium' | 'small' | 'mini'
+  size?: 'large' | 'default' | 'small'
   inline?: false
-  rules?: any[]
+  disabled?: boolean
+  rules?: FormRules
 
   resetFunc?: () => Promise<void>
   submitFunc?: () => Promise<void>
@@ -51,7 +66,7 @@ export interface IFormSchema {
   // component props
   componentProps?:
     | ((opt: { schema: IFormSchema; formModel: Recordable }) => Recordable)
-    | object
+    | any
 }
 
 interface Callback {
@@ -61,7 +76,7 @@ interface Callback {
 export interface IFormActionType {
   submit: () => Promise<void>
   resetFields: () => Promise<void>
-  validate: (cb: Callback) => Promise<void>
+  validate?: (cb: Callback) => Promise<void>
 
   setFieldsValue: <T>(values: T) => Promise<void>
   getFieldsValue: () => Recordable
@@ -74,10 +89,10 @@ export interface IFormActionType {
   ) => Promise<void>
   setProps: (formProps: Partial<IFormProps>) => Promise<void>
   removeSchemaByFiled: (field: string | string[]) => Promise<void>
-  appendSchemaByField: (
+  appendSchemaByField?: (
     schema: IFormSchema,
-    prefixField: string | undefined,
-    first?: boolean | undefined
+    prefixField?: string | undefined,
+    first?: boolean | any
   ) => Promise<void>
 }
 

@@ -18,8 +18,8 @@ export const DataIsNull = (value: any) => {
 
 // 清空对象内属性
 export function resetForm(obj: any) {
-  for (var k in obj) {
-    var ctor = obj[k] && obj[k].constructor
+  for (const k in obj) {
+    const ctor = obj[k] && obj[k].constructor
     if (ctor === Object) resetForm(obj[k])
     else if (ctor === Number) obj[k] = ''
     else if (ctor) obj[k] = ctor()

@@ -3,5 +3,6 @@
   "trailingComma": "none",
   "useTabs": false,
   "singleQuote": true,
-  "semi": false
+  "semi": false,
+  "htmlWhitespaceSensitivity": "css"
 }

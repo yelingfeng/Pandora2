@@ -2,14 +2,14 @@ import { ExtractPropTypes, ref, watch } from 'vue'
 import { tableProps } from './index'
 import { useSortService } from '../sort'
 import { AnyObject, IPandoraTable } from '../types'
-import type { Table } from 'element-plus/packages/table/src/table/defaults'
+import { Table } from '../types/element-type'
 /**
  *
  * @param props table Props属性
  * @returns
  */
 export const useTableProps = (props: ExtractPropTypes<typeof tableProps>) => {
-  const tableInstance = ref<Table<unknown>>()
+  const tableInstance = ref<Table<any>>()
   const currentData = ref(props.data)
   const tableConfig = props.tableConfig as IPandoraTable<AnyObject>
   const columnsProps = ref(props.columns)

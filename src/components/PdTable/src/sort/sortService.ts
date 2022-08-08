@@ -1,6 +1,5 @@
 import { removeClass, addClass, trim } from '@/_utils/helper'
 import { isFunction } from '@/_utils/is'
-import { Table } from 'element-plus/packages/table/src/table/defaults'
 import { ISortService, ISortChangeCb, Dictionary } from '../types'
 export const ASC = 'ascending'
 export const DESC = 'descending'
@@ -72,7 +71,7 @@ export class SortService {
    * 获取当前排序列的th Dom
    */
   getSortColDom(order: string) {
-    const tableInstance = this.option.tableInstance?.value as Table<any>
+    const tableInstance = this.option.tableInstance?.value as any
     const tableEl = tableInstance.$el
     return tableEl.querySelectorAll(`div[relid=${order}]`)
   }

@@ -3,7 +3,8 @@
   "version": "0.0.2",
   "files": [
     "lib",
-    "types"
+    "types",
+    "*.d.ts"
   ],
   "repository": "https://github.com/yelingfeng/Pandora2.git",
   "main": "dist/pandora2.umd.js",
@@ -28,7 +29,7 @@
     "gen": "node ./script/genNewComp/index.js",
     "build:npm": "vite build --config ./build/lib.config.ts",
     "lint": "eslint  src/**/*.{vue,ts}",
-    "lint-fix": "yarn lint -- --fix",
+    "lint-fix": "yarn lint --fix",
     "commit": "git-cz",
     "version": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0 && git add CHANGELOG.md",
     "reinstall": "rimraf yarn.lock && rimraf package.lock.json && rimraf node_modules && yarn install"
@@ -37,8 +38,7 @@
     "@element-plus/icons-vue": "^2.0.6",
     "ant-design-vue": "^3.2.10",
     "element-plus": "2.2.12",
-    "lodash-es": "^4.17.21",
-    "prismjs": "^1.28.0"
+    "lodash-es": "^4.17.21"
   },
   "devDependencies": {
     "@types/jest": "^28.1.6",
@@ -67,6 +67,7 @@
     "less-loader": "^11.0.0",
     "lint-staged": "^13.0.3",
     "np": "^7.6.2",
+    "prismjs": "^1.28.0",
     "prettier": "^2.7.1",
     "rimraf": "^3.0.2",
     "ts-jest": "^28.0.7",

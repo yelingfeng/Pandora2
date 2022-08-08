@@ -17,10 +17,10 @@ export function useFormAction({
   emit,
   getProps,
   formModel,
-  getSchema,
-  defaultValueRef,
+  // getSchema,
+  // defaultValueRef,
   formElRef,
-  schemaRef,
+  // schemaRef,
   handleFormValues
 }: UseFormActionContext) {
   // reset Form
@@ -38,8 +38,8 @@ export function useFormAction({
     emit('reset', toRaw(formModel))
   }
 
-  async function validate(callback: Fn) {
-    return await unref(formElRef)?.validate(callback)
+  async function validate(callback?: any) {
+    return await unref(formElRef)?.validate!(callback)
   }
 
   /**
@@ -58,7 +58,7 @@ export function useFormAction({
       const values = await validate()
       const res = handleFormValues(values)
       emit('submit', res)
-    } catch (error) {
+    } catch (error: any) {
       throw new Error(error)
     }
   }

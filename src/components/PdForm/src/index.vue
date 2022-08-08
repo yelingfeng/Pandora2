@@ -24,16 +24,13 @@ export default defineComponent({
   inheritAttrs: false,
   props: {
     schemas: {
-      type: [Array] as PropType<IFormSchema[]>,
-      default: () => { }
+      type: [Array] as PropType<IFormSchema[]>
     },
     model: {
-      type: Object as PropType<Recordable>,
-      default: {}
+      type: Object as PropType<Recordable>
     },
     formProps: {
-      type: Object as PropType<IFormProps>,
-      default: {}
+      type: Object as PropType<IFormProps>
     }
   },
   setup(props, { emit }) {

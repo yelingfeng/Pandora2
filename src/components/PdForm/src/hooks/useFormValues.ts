@@ -17,7 +17,7 @@ interface UseFormValuesContext {
 export function useFormValues({
   defaultValueRef,
   getSchema,
-  getProps,
+  // getProps,
   formModel
 }: UseFormValuesContext) {
   function handleFormValues(values: Recordable) {
