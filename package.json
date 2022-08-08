@@ -1,6 +1,6 @@
 {
   "name": "pandora2",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "files": [
     "lib",
     "types",
@@ -67,8 +67,8 @@
     "less-loader": "^11.0.0",
     "lint-staged": "^13.0.3",
     "np": "^7.6.2",
-    "prismjs": "^1.28.0",
     "prettier": "^2.7.1",
+    "prismjs": "^1.28.0",
     "rimraf": "^3.0.2",
     "ts-jest": "^28.0.7",
     "typescript": "^4.7.4",
