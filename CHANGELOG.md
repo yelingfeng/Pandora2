@@ -1,3 +1,12 @@
+## [0.0.4](https://github.com/yelingfeng/Pandora2/compare/v0.0.3...v0.0.4) (2022-08-08)
+
+
+### Features
+
+* **update:** update build code ([dd369f3](https://github.com/yelingfeng/Pandora2/commit/dd369f314a9eaca13ff2c54afad88fb5c0d538a7))
+
+
+
 ## [0.0.3](https://github.com/yelingfeng/Pandora2/compare/v0.0.2...v0.0.3) (2022-08-08)
 
 
