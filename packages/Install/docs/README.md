@@ -32,7 +32,22 @@ enter之后，根据项目提示，接下来会让你选择预设, `npm install`
 ###  Step 3
 构建完成后，安装`Pandora2`！
 ```
-npm install es-com --save
+npm install Pandora2 --save
+
+yarn install Pandora2 
+
+pnpm install Pandora2
+```
+
+### Step4 
+
+在项目中引用
+```
+import Pandora2 from "pandora2";
+import "pandora2/dist/style.css";
+
+Vue.use(Pandora2)
+
 ```
 
 # 

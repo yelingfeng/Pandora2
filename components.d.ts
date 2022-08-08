@@ -7,11 +7,11 @@ export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
-    FormItem: typeof import('./src/components/PdForm/src/components/FormItem.vue')['default']
-    Pagination: typeof import('./src/components/PdTable/src/pagination/index.vue')['default']
-    PandoraContainer: typeof import('./src/components/PandoraContainer/index.vue')['default']
-    Preview: typeof import('./src/components/Preview.vue')['default']
-    RouterLink: typeof import('vue-router')['RouterLink']
-    RouterView: typeof import('vue-router')['RouterView']
+    // FormItem: typeof import('./src/components/PdForm/src/components/FormItem.vue')['default']
+    // Pagination: typeof import('./src/components/PdTable/src/pagination/index.vue')['default']
+    // PandoraContainer: typeof import('./src/components/PandoraContainer/index.vue')['default']
+    PdContainer: typeof import('pandora2')['PdContainer']
+    PdForm: typeof import('pandora2')['PdForm']
+    PdTable: typeof import('pandora2')['PdTable']
   }
 }

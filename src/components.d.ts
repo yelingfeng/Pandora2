@@ -13,6 +13,9 @@ declare module 'vue' {
     ElMenuItemGroup: typeof import('element-plus/es')['ElMenuItemGroup']
     ElSubMenu: typeof import('element-plus/es')['ElSubMenu']
     ElTag: typeof import('element-plus/es')['ElTag']
+    PdContainer: typeof import('pandora2')['PdContainer']
+    PdForm: typeof import('pandora2')['PdForm']
+    PdTable: typeof import('pandora2')['PdTable']
   }
 }
 

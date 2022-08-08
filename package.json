@@ -2,8 +2,7 @@
   "name": "pandora2",
   "version": "0.0.3",
   "files": [
-    "lib",
-    "types",
+    "dist",
     "*.d.ts"
   ],
   "repository": "https://github.com/yelingfeng/Pandora2.git",
@@ -15,8 +14,8 @@
       "require": "./dist/pandora2.umd.js"
     },
     "./dist/style.css": {
-      "import": "./dist/pandora2.css",
-      "require": "./dist/pandora2.css"
+      "import": "./dist/style.css",
+      "require": "./dist/style.css"
     }
   },
   "types": "dist/auto-imports.d.ts",

@@ -98,7 +98,7 @@ export function useForm(props?: Props): UseFormReturnType {
       first: boolean
     ) => {
       const form = await getForm()
-      form.appendSchemaByField(schema, prefixField, first)
+      form?.appendSchemaByField!(schema, prefixField, first)
     },
 
     submit: async (): Promise<any> => {
