@@ -38,7 +38,7 @@ export default defineConfig({
           importStyle: 'sass'
         })
       ],
-      dts: 'types/components.d.ts'
+      dts: 'src/components.d.ts'
     })
   ],
   css: {

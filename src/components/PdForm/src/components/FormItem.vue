@@ -36,7 +36,6 @@ export default defineComponent({
   },
   setup(props) {
     const { schema } = toRefs(props)
-
     const {
       component,
       label,

@@ -10,7 +10,7 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     lib: {
-      entry: resolve(__dirname, '../src/components/index.js'),
+      entry: resolve(__dirname, '../src/components/index.ts'),
       name: 'pandora2',
       fileName: (format) => `pandora2.${format}.js`
     },
