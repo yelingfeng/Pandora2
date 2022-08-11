@@ -60,10 +60,3 @@ const routerConfig = {
 const router = createRouter(routerConfig as RouterOptions)
 
 export default router
-
-//  {
-//   title: 'Cascader级联选择器',
-//   name: 'Cascader',
-//   path: '/components/Cascader',
-//   component: () => import('packages/Cascader/docs/README.md'),
-// },

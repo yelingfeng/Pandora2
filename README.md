@@ -4,6 +4,8 @@
 ![npm](https://img.shields.io/npm/v/pandora2)
 
 
+![image](/assets/logo.png)
+
 ### 介绍
 ---
 

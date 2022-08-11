@@ -1,4 +1,5 @@
 # Pandora2
+<img src="/src/assets/logo.png" width="50%" height="50%"/>
 
 ### 介绍
 ---

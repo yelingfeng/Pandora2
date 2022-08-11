@@ -1,26 +1,18 @@
 import { App } from 'vue'
-export * from './PandoraContainer'
-export * from './PdForm'
-export * from './PdTable'
+export { default as PdContainer } from './PandoraContainer'
+export { default as PdForm } from './PdForm'
+export { default as PdTable } from './PdTable'
 
-import PdContainer from './PandoraContainer/index.vue'
-import PdForm from './PdForm/src/index.vue'
-import PdTable from './PdTable/src/index.vue'
-
-const components: any = {
-  PdContainer,
-  PdForm,
-  PdTable
-}
+import PdContainer from './PandoraContainer/index'
+import PdForm from './PdForm/index'
+import PdTable from './PdTable/index'
 
 const Pandora2 = {
   install(app: App) {
-    Object.keys(components).forEach((it: any) => {
-      const component = components[it]
-      app.component(component.name, component)
-    })
-  },
-  ...components
+    app.use(PdContainer)
+    app.use(PdForm)
+    app.use(PdTable)
+  }
 }
 
 export default Pandora2

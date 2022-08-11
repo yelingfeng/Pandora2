@@ -5,30 +5,34 @@ import dts from 'vite-plugin-dts'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 
+// 打包入口文件夹
+const entryDir = resolve(__dirname, '../src/components')
+// 出口文件
+const outputDir = resolve(__dirname, '../dist')
+// rollup 配置
+const rollupOptions = {
+  // 确保外部化处理那些你不想打包进库的依赖
+  external: ['vue'],
+  output: {
+    // 在 UMD 构建模式下为这些外部化的依赖提供一个全局变量
+    globals: {
+      vue: 'Vue'
+    }
+  }
+}
+
 export default defineConfig({
   ...baseConfig,
+  publicDir: false,
   build: {
-    outDir: 'dist',
     lib: {
-      entry: resolve(__dirname, '../src/components/index.ts'),
+      entry: resolve(entryDir, 'index.ts'),
       name: 'pandora2',
-      fileName: (format) => `pandora2.${format}.js`
+      fileName: (format) => `pandora2.${format}.js`,
+      formats: ['es', 'umd']
     },
-    rollupOptions: {
-      // 确保外部化处理那些你不想打包进库的依赖
-      external: ['vue'],
-      output: {
-        // 在 UMD 构建模式下为这些外部化的依赖提供一个全局变量
-        globals: {
-          vue: 'Vue'
-        }
-      }
-    }
+    rollupOptions,
+    outDir: outputDir
   },
-  plugins: [
-    vue(),
-    vueJsx(),
-    // ...(baseConfig as any).plugins,
-    dts()
-  ]
+  plugins: [vue(), vueJsx(), dts()]
 })

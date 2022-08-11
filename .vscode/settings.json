@@ -11,6 +11,7 @@
     "javascriptreact",
     "typescriptreact"
   ],
+  "recommendations": ["Vue.volar"],
   "search.exclude": {
     "**/node_modules": true,
     "**/bower_components": true
@@ -19,6 +20,7 @@
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": false
   },
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
   "files.associations": {
     "*.env.*": "dotenv"
   },

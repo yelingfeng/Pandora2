@@ -35,7 +35,9 @@
   },
   "dependencies": {
     "@element-plus/icons-vue": "^2.0.6",
-    "ant-design-vue": "^3.2.10",
+    "@vueuse/core": "^9.1.0",
+    "async-validator": "^4.2.5",
+    "dayjs": "^1.11.4",
     "element-plus": "2.2.12",
     "lodash-es": "^4.17.21"
   },

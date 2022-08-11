@@ -3,7 +3,7 @@
     <aside>
       <div class="logo">
         <img src="@/assets/logo-long.png" alt="" />
-        <div class="version">0.0.1</div>
+        <div class="version">0.0.5</div>
       </div>
       <div class="menu">
         <div v-for="(link, index) in data.links" :key="index" @click="scollTop">
@@ -51,16 +51,16 @@ body {
 .my-kit-doc {
   display: flex;
   min-height: 100vh;
-  width: 1140px;
+  width: 1200px;
   margin: 0 auto;
 
   .logo {
     width: 100%;
     position: relative;
+    padding: 20px 0;
 
     img {
       width: 100%;
-      margin-top: -20px;
     }
 
     .version {

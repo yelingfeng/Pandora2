@@ -44,7 +44,7 @@ module.exports = {
     'no-unused-vars': 'off',
     'space-before-function-paren': 'off',
     quotes: ['error', 'single'],
-    'comma-dangle': ['error', 'never'],
+    // 'comma-dangle': ['error', 'never'],
     'vue/no-mutating-props': 0,
     'prettier/prettier': 'off'
   }

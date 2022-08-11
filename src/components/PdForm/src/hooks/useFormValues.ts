@@ -1,4 +1,4 @@
-import { IFormProps, IFormSchema } from '../types'
+import { IFormProps, IFormSchema } from '../types/form'
 import { unref, Ref, ComputedRef } from 'vue'
 import {
   isObject,
@@ -7,17 +7,53 @@ import {
   isString,
   isNullOrUnDef
 } from '@/_utils/is'
-import { set } from 'lodash-es'
+import { cloneDeep, set } from 'lodash-es'
+
 interface UseFormValuesContext {
   defaultValueRef: Ref<any>
   getSchema: ComputedRef<IFormSchema[]>
   getProps: ComputedRef<IFormProps>
   formModel: Recordable
 }
+/**
+ * @desription deconstruct array-link key. This method will mutate the target.
+ */
+function tryDeconstructArray(key: string, value: any, target: Recordable) {
+  const pattern = /^\[(.+)\]$/
+  if (pattern.test(key)) {
+    const match = key.match(pattern)
+    if (match && match[1]) {
+      const keys = match[1].split(',')
+      value = Array.isArray(value) ? value : [value]
+      keys.forEach((k, index) => {
+        set(target, k.trim(), value[index])
+      })
+      return true
+    }
+  }
+}
+
+/**
+ * @desription deconstruct object-link key. This method will mutate the target.
+ */
+function tryDeconstructObject(key: string, value: any, target: Recordable) {
+  const pattern = /^\{(.+)\}$/
+  if (pattern.test(key)) {
+    const match = key.match(pattern)
+    if (match && match[1]) {
+      const keys = match[1].split(',')
+      value = isObject(value) ? value : {}
+      keys.forEach((k) => {
+        set(target, k.trim(), value[k.trim()])
+      })
+      return true
+    }
+  }
+}
 export function useFormValues({
   defaultValueRef,
   getSchema,
-  // getProps,
+  getProps,
   formModel
 }: UseFormValuesContext) {
   function handleFormValues(values: Recordable) {
@@ -31,13 +67,54 @@ export function useFormValues({
       if (!key || (isArray(value) && value.length === 0) || isFunction(value)) {
         continue
       }
+      const transformDateFunc = unref(getProps).transformDateFunc
+      if (isObject(value)) {
+        value = transformDateFunc?.(value)
+      }
+      if (isArray(value) && value[0]?.format && value[1]?.format) {
+        value = value.map((item) => transformDateFunc?.(item))
+      }
       if (isString(value)) {
         value = value.trim()
       }
-      set(res, key, value)
+      if (
+        !tryDeconstructArray(key, value, res) &&
+        !tryDeconstructObject(key, value, res)
+      ) {
+        // 没有解构成功的，按原样赋值
+        set(res, key, value)
+      }
     }
     return res
   }
+
+  // /**
+  //  * @description: Processing time interval parameters
+  //  */
+  // function handleRangeTimeValue(values: Recordable) {
+  //   const fieldMapToTime = unref(getProps).fieldMapToTime
+
+  //   if (!fieldMapToTime || !Array.isArray(fieldMapToTime)) {
+  //     return values
+  //   }
+
+  //   for (const [
+  //     field,
+  //     [startTimeKey, endTimeKey],
+  //     format = 'YYYY-MM-DD'
+  //   ] of fieldMapToTime) {
+  //     if (!field || !startTimeKey || !endTimeKey || !values[field]) {
+  //       continue
+  //     }
+  //     const [startTime, endTime]: string[] = values[field]
+
+  //     values[startTimeKey] = dateUtil(startTime).format(format)
+  //     values[endTimeKey] = dateUtil(endTime).format(format)
+  //     Reflect.deleteProperty(values, field)
+  //   }
+
+  //   return values
+  // }
 
   function initDefault() {
     const schemas = unref(getSchema)
@@ -47,10 +124,13 @@ export function useFormValues({
       if (!isNullOrUnDef(defaultValue)) {
         obj[item.field] = defaultValue
         formModel[item.field] = defaultValue
+
+        if (formModel[item.field] === undefined) {
+          formModel[item.field] = defaultValue
+        }
       }
     })
-    console.log(formModel)
-    defaultValueRef.value = obj
+    defaultValueRef.value = cloneDeep(obj)
   }
 
   return { handleFormValues, initDefault }

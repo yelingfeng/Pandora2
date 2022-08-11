@@ -4,5 +4,8 @@
   "useTabs": false,
   "singleQuote": true,
   "semi": false,
-  "htmlWhitespaceSensitivity": "css"
+  "vueIndentScriptAndStyle": true,
+  "htmlWhitespaceSensitivity": "css",
+  "stylelintIntegration": true,
+  "eslintIntegration": true
 }

@@ -24,7 +24,7 @@ export function useForm(props?: Props): UseFormReturnType {
     return form as IFormActionType
   }
 
-  function register(instance: IFormActionType) {
+  const register = (instance: IFormActionType) => {
     isProdMode() &&
       onUnmounted(() => {
         formRef.value = null
