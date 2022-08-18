@@ -4,12 +4,11 @@
 -->
 <template>
   <span :class="getClass">
-    <Icon icon="ion:chevron-forward" :style="$attrs.iconStyle" />
+    <ArrowDown :style="$attrs.iconStyle" />
   </span>
 </template>
 <script lang="ts" setup>
 import { computed } from 'vue';
-import { Icon } from '/@/components/Icon';
 
 const props = defineProps({
   /**
@@ -47,7 +46,7 @@ const getClass = computed(() => {
 });
 </script>
 <style lang="less" scoped>
-@prefix-cls: ~'@{namespace}-basic-arrow';
+@prefix-cls: ~'pandora-basic-arrow';
 
 .@{prefix-cls} {
   display: inline-block;

@@ -9,7 +9,6 @@ import type {
   ButtonProps
 } from 'element-plus'
 import type { ComputedRef, Ref } from 'vue'
-import type { FormItem } from './formItem'
 export interface IFormProps {
   name?: string
   model?: Record<string, any>
@@ -149,10 +148,20 @@ export interface IFormSchema {
   rulesMessageJoinLabel?: boolean
 
   // Reference formModelItem
-  itemProps?: Partial<FormItem>
+  itemProps?: Partial<FormItemProp>
 
   // col configuration outside formModelItem
   colProps?: Partial<ColProps>
+
+  labelCol?: Partial<ColProps>
+  // Col configuration for the entire form
+  wrapperCol?: Partial<ColProps>
+
+  // General row style
+  baseRowStyle?: CSSProperties
+
+  // General col configuration
+  baseColProps?: Partial<ColProps>
 
   // Variable name bound to v-model Default value
   valueField?: string
@@ -217,11 +226,7 @@ export interface IFormActionType {
   submit: () => Promise<void>
   resetFields: () => Promise<void>
   validate: (cb: Callback) => Promise<void>
-  validateFields: (
-    props?: Array<FormItemProp>,
-    callback?: Callback
-  ) => Promise<void>
-
+  validateFields: (props?: NamePath, callback?: Callback) => Promise<void>
   setFieldsValue: <T>(values: T) => Promise<void>
   getFieldsValue: () => Recordable
   clearValidate: (name?: string | string[]) => Promise<void>
@@ -247,3 +252,5 @@ export type RegisterFn = (formInstance: IFormActionType) => void
 export type UseFormReturnType = [RegisterFn, IFormActionType]
 
 export type FieldMapToTime = [string, [string, string], string?][]
+
+export type NamePath = string | number | (string | number)[]

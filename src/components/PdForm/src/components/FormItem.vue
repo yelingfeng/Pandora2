@@ -4,11 +4,12 @@ import {
   PropType,
   toRefs,
   Ref,
+  toRef,
   unref,
   computed,
   onMounted
 } from 'vue'
-import { ElFormItem } from 'element-plus'
+import { ElFormItem, ElCol } from 'element-plus'
 import type { FormRules } from 'element-plus'
 import type { IFormSchema, IFormProps, IFormActionType } from '../types/form'
 import { componentMap } from '../componentsMap'
@@ -16,6 +17,7 @@ import { upperFirst, cloneDeep } from 'lodash-es'
 import { isFunction, isBoolean, isNull } from '@/_utils/is'
 import { createPlaceholderMessage, setComponentRuleType } from '../helper';
 import { getSlot } from '@/_utils/helper/tsxHelper'
+import { useItemLabelWidth } from '../hooks/useLabelWidth'
 import BasicHelp from './BasicHelp.vue'
 
 export default defineComponent({
@@ -54,6 +56,8 @@ export default defineComponent({
       schema: Ref<IFormSchema>;
       formProps: Ref<IFormProps>;
     }
+    const itemLabelWidthProp = useItemLabelWidth(schema, formProps);
+    const { labelCol, wrapperCol } = unref(itemLabelWidthProp);
 
     const getComponentsProps = computed(() => {
       const { schema, tableAction, formModel, formActionType } = props
@@ -70,6 +74,7 @@ export default defineComponent({
       const { mergeDynamicData } = props.formProps;
       return {
         field: schema.field,
+        model: formModel,
         values: {
           ...mergeDynamicData,
           ...allDefaultValues,
@@ -240,11 +245,6 @@ export default defineComponent({
 
       const eventKey = `on${upperFirst(changeEvent)}`;
 
-      const propsData: Recordable = {
-        getPopupContainer: (trigger: Element) => trigger.parentNode,
-        ...unref(getComponentsProps),
-        disabled: unref(getDisable),
-      };
       const on = {
         [eventKey]: (...args: Nullable<Recordable>[]) => {
           const [e] = args;
@@ -257,12 +257,19 @@ export default defineComponent({
         }
       };
       const Comp = componentMap.get(component) as ReturnType<typeof defineComponent>;
-      // const isCreatePlaceholder = !propsData.disabled && autoSetPlaceHolder;
+      const propsData: Recordable = {
+        getPopupContainer: (trigger: Element) => trigger.parentNode,
+        ...unref(getComponentsProps),
+        disabled: unref(getDisable),
+      };
+      const { autoSetPlaceHolder } = props.formProps;
+
+      const isCreatePlaceholder = !propsData.disabled && autoSetPlaceHolder;
       // RangePicker place is an array
-      // if (isCreatePlaceholder && component !== 'RangePicker' && component) {
-      //   propsData.placeholder =
-      //     unref(getComponentsProps)?.placeholder || createPlaceholderMessage(component);
-      // }
+      if (isCreatePlaceholder && component) {
+        propsData.placeholder =
+          unref(getComponentsProps)?.placeholder || createPlaceholderMessage(component);
+      }
       propsData.placeholder = unref(getComponentsProps)?.placeholder;
       propsData.codeField = field;
       propsData.formValues = unref(getValues);
@@ -308,16 +315,17 @@ export default defineComponent({
         [valueField || (isCheck ? 'checked' : 'value')]: props.formModel[field],
       };
 
+      // console.log(props.formModel)
+
+
       const compAttr: Recordable = {
         ...propsData,
         ...on,
         ...bindValue,
-        modelValue: props.formModel[field],
       };
-      console.log(compAttr)
 
       if (!renderComponentContent) {
-        return <Comp {...compAttr} >{getComponentsChild()}</Comp>;
+        return <Comp {...compAttr} v-model={props.formModel[field]}>{getComponentsChild()}</Comp>;
       }
       const compSlot = isFunction(renderComponentContent)
         ? { ...renderComponentContent(unref(getValues)) }
@@ -428,11 +436,10 @@ export default defineComponent({
             ? renderColContent(values)
             : renderItem();
       };
-      // console.log(compAttr)    
       return (
-        <el-col {...realColProps} v-show={isShow}>
+        <ElCol {...realColProps} v-show={isShow}>
           {getContent()}
-        </el-col>
+        </ElCol>
       )
     }
   }

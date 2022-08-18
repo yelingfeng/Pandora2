@@ -16,7 +16,8 @@ import {
   ElOption,
   ElRadio,
   ElSwitch,
-  ElRate
+  ElRate,
+  ElDivider
 } from 'element-plus'
 const componentMap = new Map<ComponentType, Component>()
 
@@ -36,6 +37,7 @@ componentMap.set('SelectOption', ElOption)
 componentMap.set('Switch', ElSwitch)
 componentMap.set('Radio', ElRadio)
 componentMap.set('Rate', ElRate)
+componentMap.set('Divider', ElDivider)
 
 export function add(compName: ComponentType, component: Component) {
   componentMap.set(compName, component)

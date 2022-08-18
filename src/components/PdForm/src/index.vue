@@ -1,4 +1,28 @@
-<script lang="tsx">
+<template>
+  <div class="vpandora-form">
+    <el-Form v-bind="getBindValue" ref="formRef" :model="formModel" @keypress.enter="handleEnterPress">
+      <el-row v-bind="getRow">
+        <slot name="formHeader"></slot>
+        <template v-for="schema in getSchema" :key="schema.field">
+          <FormItem :tableAction="tableAction" :formActionType="formActionType" :schema="schema" :formProps="getProps"
+            :allDefaultValues="defaultValueRef" :formModel="formModel" :setFormModel="setFormModel">
+            <template #[item]="data" v-for="item in Object.keys($slots)">
+              <slot :name="item" v-bind="data || {}"></slot>
+            </template>
+          </FormItem>
+        </template>
+
+        <FormAction v-bind="getFormActionBindProps" @toggle-advanced="handleToggleAdvanced">
+          <template #[item]="data" v-for="item in ['resetBefore', 'submitBefore', 'advanceBefore', 'advanceAfter']">
+            <slot :name="item" v-bind="data || {}"></slot>
+          </template>
+        </FormAction>
+        <slot name="formFooter"></slot>
+      </el-row>
+    </el-Form>
+  </div>
+</template>
+<script lang="ts">
 import {
   defineComponent,
   reactive,
@@ -7,7 +31,7 @@ import {
   Ref,
   computed,
   unref,
-  onMounted
+  onMounted,
 } from 'vue'
 import type { IFormActionType, IFormSchema, IFormProps } from './types/form'
 import type { AdvanceState } from './types/hooks';
@@ -17,7 +41,8 @@ import FormAction from './components/FormAction.vue'
 import { createNamespace } from '@/_utils/create'
 import { deepMerge } from '@/_utils/'
 import { useFormValues } from './hooks/useFormValues'
-import { useFormAction } from './hooks/useFormAction'
+import { useFormEvents } from './hooks/useFormEvents'
+import { useAutoFocus } from './hooks/useAutoFocus'
 import { createFormContext } from './hooks/useFormContext'
 import { useDebounceFn } from '@vueuse/core';
 import { FormBasicProps } from './props/form'
@@ -31,6 +56,13 @@ export default defineComponent({
   name,
   inheritAttrs: false,
   props: FormBasicProps,
+  components: {
+    ElForm,
+    ElRow,
+    FormItem,
+    FormAction
+  },
+  emits: ['advanced-change', 'reset', 'submit', 'register', 'field-value-change'],
   setup(props, { emit, attrs }) {
     const formModel = reactive<Recordable>({})
     const propsRef = ref<Partial<IFormProps>>({})
@@ -38,6 +70,7 @@ export default defineComponent({
     const schemaRef = ref<Nullable<IFormSchema[]>>(null)
     const formRef = ref<Nullable<IFormActionType>>(null)
     const isInitedDefaultRef = ref(false);
+
 
     const advanceState = reactive<AdvanceState>({
       isAdvanced: true,
@@ -107,7 +140,7 @@ export default defineComponent({
       removeSchemaByFiled,
       resetFields,
       scrollToField
-    } = useFormAction({
+    } = useFormEvents({
       emit,
       getProps,
       formModel,
@@ -158,10 +191,14 @@ export default defineComponent({
     watch(
       () => formModel,
       useDebounceFn(() => {
-        handleSubmit()
+        unref(getProps).submitOnChange && handleSubmit()
       }, 300),
       { deep: true }
     );
+
+    async function setProps(formProps: Partial<IFormProps>): Promise<void> {
+      propsRef.value = deepMerge(unref(propsRef) || {}, formProps);
+    }
 
     function setFormModel(key: string, value: any) {
       formModel[key] = value
@@ -185,10 +222,6 @@ export default defineComponent({
 
 
 
-    async function setProps(formProps: Partial<IFormProps>): Promise<void> {
-      propsRef.value = deepMerge(unref(propsRef) || {}, formProps)
-    }
-
     const formActionType: Partial<IFormActionType> = {
       getFieldsValue,
       setFieldsValue,
@@ -204,31 +237,19 @@ export default defineComponent({
       submit: handleSubmit,
       scrollToField: scrollToField
     }
+
+    useAutoFocus({
+      getSchema,
+      getProps,
+      isInitedDefault: isInitedDefaultRef,
+      formElRef: formRef as Ref<IFormActionType>,
+    });
+
+
     onMounted(() => {
       initDefault()
       emit('register', formActionType)
     })
-
-
-
-    const elItems = unref(getSchema).map(
-      ({ field, component, label, ...args }) => {
-        const schema = {
-          field,
-          component,
-          label,
-          ...args
-        }
-        const itemAttr = {
-          schema,
-          formModel,
-          setFormModel,
-          formActionType,
-          allDefaultValues: defaultValueRef
-        }
-        return <FormItem {...itemAttr}></FormItem>
-      }
-    )
 
 
     const { handleToggleAdvanced } = useAdvanced({
@@ -239,31 +260,25 @@ export default defineComponent({
       formModel,
       defaultValueRef,
     });
-    // const getFormActionBindProps = computed(
-    //   (): Recordable => ({ ...getProps.value, ...advanceState }),
-    // )
-    // const fAProp = {
-    //   getFormActionBindProps, handleToggleAdvanced
-    // }
-    // const fASlots = ['resetBefore', 'submitBefore', 'advanceBefore', 'advanceAfter'].forEach(it => {
 
-    // })
-    // const formAction = <FormAction {...fAProp}></FormAction>
-
-    return () => {
-
-      const fProps = {
-        ref: formRef,
-        'onKeypress:enter': handleEnterPress
-      }
-      return (
-        <div class="vpandora-form">
-          <ElForm {...getProps.value} {...fProps} >
-            <ElRow {...getRow}>{elItems}</ElRow>
-          </ElForm>
-        </div>
-      )
-    }
+    return {
+      getBindValue,
+      handleToggleAdvanced,
+      handleEnterPress,
+      formModel,
+      defaultValueRef,
+      advanceState,
+      getRow,
+      getProps,
+      formRef,
+      getSchema,
+      formActionType: formActionType as any,
+      setFormModel,
+      getFormActionBindProps: computed(
+        (): Recordable => ({ ...getProps.value, ...advanceState }),
+      ),
+      ...formActionType,
+    };
   }
 })
 </script>

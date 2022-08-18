@@ -45,15 +45,15 @@ export default {
   box-shadow: 4px 4px 10px 0 rgba(218, 218, 218, 0.50);
   margin-bottom: 6px;
 
-  .el-row {
-    list-style-type: none;
-  }
+  // .el-row {
+  //   list-style-type: none;
+  // }
 
-  [class*=el-col-] {
-    display: inline-block;
-    vertical-align: top;
-    float: none;
-  }
+  // [class*=el-col-] {
+  //   display: inline-block;
+  //   vertical-align: top;
+  //   float: none;
+  // }
 
   .title {
     width: 100%;

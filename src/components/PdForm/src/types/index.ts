@@ -15,3 +15,6 @@ export type ComponentType =
   | 'Radio'
   | 'Switch'
   | 'Rate'
+  | 'Divider'
+
+export type NamePath = string | number | (string | number)[]

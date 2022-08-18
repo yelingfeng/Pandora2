@@ -1,8 +1,9 @@
 <template>
   <PdContainer title="基础表单">
-    <PdForm @register="register" :model="formModel" :schemas="schemas" :formProps="formProps" @submit="handleSubmit" />
-    <el-button type="primary" @click="submitForm">保存表单</el-button>
-    <el-button @click="resetFields">重置表单</el-button>
+    <PdForm @register="register" :model="formModelXXX" :schemas="schemas" :formProps="formProps"
+      @submit="handleSubmit" />
+    <!-- <el-button type="primary" @click="submitForm">保存表单</el-button>
+    <el-button @click="resetFields">重置表单</el-button> -->
   </PdContainer>
 </template>
 
@@ -10,10 +11,9 @@
 import { reactive } from 'vue'
 import { IFormSchema, IFormProps, useForm } from '../../../src/components/PdForm/index'
 import type { FormRules } from 'element-plus'
-import { Message } from 'element-plus'
 
 // form 值绑定
-const formModel = reactive({
+const formModelXXX = reactive({
   name: '',
   region: '',
   city: '',
@@ -21,11 +21,12 @@ const formModel = reactive({
 })
 // form 配置
 const formProps: IFormProps = reactive({
-  model: formModel,
+  model: formModelXXX,
   size: 'small',
   inline: false,
   labelPosition: 'right',
-  labelWidth: '150px',
+  'label-width': '120px',
+  showAdvancedButton: true,
   showActionButtonGroup: true,
   rules: {
     name: [
@@ -41,9 +42,12 @@ const schemas: IFormSchema[] = [
     field: 'name',
     component: 'Input',
     label: '名称',
-    defaultValue: '张三',
+    defaultValue: '',
     colProps: {
-      span: 8
+      span: 8,
+    },
+    componentProps: {
+      placeholder: '自定义placeholder',
     }
   },
   {
@@ -51,7 +55,7 @@ const schemas: IFormSchema[] = [
     component: 'Input',
     label: '活动区域',
     // model: formModel,
-    defaultValue: 'aaaa',
+    defaultValue: '',
     colProps: {
       span: 8
     }
@@ -61,7 +65,7 @@ const schemas: IFormSchema[] = [
     component: 'Select',
     label: '活动城市',
     // model: formModel,
-    defaultValue: 'beijing',
+    defaultValue: '',
     colProps: {
       span: 8
     },
@@ -93,9 +97,9 @@ const schemas: IFormSchema[] = [
     component: 'CheckboxGroup',
     label: '活动形式',
     // model: formModel,
-    defaultValue: ['1', '2'],
+    defaultValue: [],
     colProps: {
-      span: 8
+      span: 12
     },
     componentProps: {
       options: [
@@ -120,12 +124,11 @@ const schemas: IFormSchema[] = [
   }
 ]
 
-const [register, { resetFields }] = useForm({
-  schemas
+const [register] = useForm({
+  schemas,
+  actionColOptions: {
+    span: 24
+  },
 })
-const handleSubmit = (values: Recordable) => {
-  console.log('click search,values:' + JSON.stringify(values));
-}
-const submitForm = () => {
-}
+
 </script>

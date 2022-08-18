@@ -47,7 +47,7 @@ export const FormBasicProps = {
     default: 0
   },
   // 是否显示收起展开按钮
-  showAdvancedButton: propTypes.bool,
+  showAdvancedButton: propTypes.bool.def(false),
   // 转化时间
   transformDateFunc: {
     type: Function as PropType<Fn>,

@@ -10,6 +10,10 @@ import 'element-plus/dist/index.css'
 import Pandora2 from './components/index'
 
 const app = createApp(App)
+import * as ElementPlusIconsVue from '@element-plus/icons-vue'
+for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
+  app.component(key, component)
+}
 app.component('Preview', Preview)
 
 app.use(router).use(ElementPlus).use(Pandora2).mount('#app')

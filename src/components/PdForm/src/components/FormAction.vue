@@ -1,22 +1,22 @@
 <template>
   <el-col v-bind="actionColOpt" v-if="showActionButtonGroup">
-    <div style="width: 100%" :style="{ textAlign: actionColOpt.style.textAlign }">
+    <div style="width: 100%" :style="{ textAlign: 'right' }">
       <el-form-item>
         <slot name="resetBefore"></slot>
-        <Button type="default" class="mr-2" v-bind="getResetBtnOptions" @click="resetAction" v-if="showResetButton">
+        <el-button type="default" v-bind="getResetBtnOptions" @click="resetAction" v-if="showResetButton">
           {{ getResetBtnOptions.text }}
-        </Button>
+        </el-button>
         <slot name="submitBefore"></slot>
 
-        <Button type="primary" class="mr-2" v-bind="getSubmitBtnOptions" @click="submitAction" v-if="showSubmitButton">
+        <el-button type="primary" v-bind="getSubmitBtnOptions" @click="submitAction" v-if="showSubmitButton">
           {{ getSubmitBtnOptions.text }}
-        </Button>
+        </el-button>
 
         <slot name="advanceBefore"></slot>
-        <Button type="link" size="small" @click="toggleAdvanced" v-if="showAdvancedButton && !hideAdvanceBtn">
+        <el-button type="text" size="small" @click="toggleAdvanced" v-if="showAdvancedButton && !hideAdvanceBtn">
           {{ isAdvanced ? '收起' : '展开' }}
           <BasicArrow class="ml-1" :expand="!isAdvanced" up />
-        </Button>
+        </el-button>
         <slot name="advanceAfter"></slot>
       </el-form-item>
     </div>
@@ -24,7 +24,7 @@
 </template>
 <script lang="ts">
 import { defineComponent, computed, PropType } from 'vue';
-import { ElFormItem, ElCol, ButtonProps, ColProps } from 'element-plus';
+import { ElFormItem, ElCol, ButtonProps, ColProps, ElButton } from 'element-plus';
 import BasicArrow from './BasicArrow.vue';
 import { useFormContext } from '../hooks/useFormContext';
 import { propTypes } from '@/_utils/propTypes';
@@ -37,6 +37,7 @@ export default defineComponent({
     ElFormItem,
     BasicArrow,
     ElCol,
+    ElButton
   },
   props: {
     showActionButtonGroup: propTypes.bool.def(true),
@@ -57,7 +58,7 @@ export default defineComponent({
     },
     actionSpan: propTypes.number.def(6),
     isAdvanced: propTypes.bool,
-    hideAdvanceBtn: propTypes.bool,
+    hideAdvanceBtn: propTypes.bool.def(false),
   },
   emits: ['toggle-advanced'],
   setup(props, { emit }) {
@@ -69,7 +70,6 @@ export default defineComponent({
         ? { span: actionSpan < 6 ? 24 : actionSpan }
         : {};
       const actionColOpt: Partial<ColProps> = {
-        style: { textAlign: 'right' },
         span: showAdvancedButton ? 6 : 4,
         ...advancedSpanObj,
         ...actionColOptions,
@@ -86,10 +86,12 @@ export default defineComponent({
       );
     });
 
+
+
     const getSubmitBtnOptions = computed(() => {
       return Object.assign(
         {
-          text: '取消',
+          text: '查询',
         },
         props.submitButtonOptions,
       );
@@ -98,6 +100,7 @@ export default defineComponent({
     function toggleAdvanced() {
       emit('toggle-advanced');
     }
+
 
     return {
       actionColOpt,
