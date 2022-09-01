@@ -9,9 +9,6 @@
     "strict": true,
     "jsx": "preserve",
     "sourceMap": true,
-    // "forceConsistentCasingInFileNames": true,
-    // "strictFunctionTypes": false,
-    // "noUnusedLocals": true,
     "strictNullChecks": true,
     "skipLibCheck": true,
     "noImplicitAny": true,
@@ -24,16 +21,11 @@
     "allowSyntheticDefaultImports": true,
     "types": ["vite/client", "jest"],
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@modules/*": ["./packages/*"]
     },
     "lib": ["esnext", "dom"]
   },
-  "include": [
-    "*.ts",
-    "src/**/*.ts",
-    "src/**/*.d.ts",
-    "src/**/*.tsx",
-    "src/**/*.vue"
-  ],
+  "include": ["packages", "typings/components.d.ts", "global.d.ts"],
   "exclude": ["node_modules"]
 }

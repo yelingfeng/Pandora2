@@ -5,45 +5,42 @@
  *
  * 根据 /packages 目录下的组件所生成的组件类侧边导航栏配置，请勿手动修改
  */
-
 import { createRouter, createWebHashHistory, RouterOptions } from 'vue-router'
 
 const routes = [
   {
     title: '介绍',
-    name: 'pandora2',
-    path: '/',
-    component: () => import('packages/Pandora/docs/README.md')
+    path: '/'
   },
   {
     title: '介绍',
     name: 'Pandora2',
     path: '/components/Introduce',
-    component: () => import('packages/Pandora/docs/README.md')
+    component: () => import('@/_docs/Pandora/docs/README.md')
   },
   {
     title: '安装',
     name: 'Install',
     path: '/components/Install',
-    component: () => import('packages/Install/docs/README.md')
+    component: () => import('@/_docs/Install/README.md')
   },
   // {
   //   title: '快速上手',
   //   name: 'Start',
   //   path: '/components/Start',
-  //   component: () => import('packages/Start/docs/README.md')
+  //   component: () => import('src/_docs_/Start/docs/README.md')
   // },
   {
     title: 'PdForm',
     name: 'PdForm',
     path: '/components/PdForm',
-    component: () => import('packages/PdForm/docs/README.md')
+    component: () => import('@/_docs/PdForm/docs/README.md')
   },
   {
     title: 'PdTable',
     name: 'PdTable',
     path: '/components/PdTable',
-    component: () => import('packages/PdTable/docs/README.md')
+    component: () => import('@/_docs/PdTable/docs/README.md')
   }
 ]
 

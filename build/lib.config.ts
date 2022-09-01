@@ -6,9 +6,9 @@ import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 
 // 打包入口文件夹
-const entryDir = resolve(__dirname, '../src/components')
+const entryDir = resolve(__dirname, '../packages')
 // 出口文件
-const outputDir = resolve(__dirname, '../dist')
+const outputDir = resolve(__dirname, '../lib')
 // rollup 配置
 const rollupOptions = {
   // 确保外部化处理那些你不想打包进库的依赖

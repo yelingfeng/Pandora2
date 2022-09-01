@@ -1,10 +1,12 @@
-import { App, Plugin } from 'vue'
-import Form from './docs/demo.vue'
+import { withInstall } from '@/_utils'
+import _Form from './src/index.vue'
 
-export const PdFormPlugin: Plugin = {
-  install(app: App) {
-    app.component('pd-form,', Form)
-  }
-}
+export const PdForm = withInstall<typeof _Form>(_Form)
+export * from './src/types/form'
+export * from './src/types/formItem'
 
-export { Form }
+export { useForm } from './src/hooks/useForm'
+
+export { useComponentRegister } from './src/hooks/useComponentRegister'
+export { _Form as BasicForm }
+export default PdForm

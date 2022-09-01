@@ -7,7 +7,7 @@ import './assets/markdown.css'
 import Preview from './Preview.vue'
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
-import Pandora2 from './components/index'
+import Pandora2 from '../packages/index'
 
 const app = createApp(App)
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'

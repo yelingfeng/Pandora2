@@ -1,4 +1,3 @@
-// GlobalComponents for Volar
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     PdContainer: typeof import('pandora2')['PdContainer']
@@ -6,5 +5,3 @@ declare module '@vue/runtime-core' {
     PdTable: typeof import('pandora2')['PdTable']
   }
 }
-
-export {}

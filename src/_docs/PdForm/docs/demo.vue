@@ -1,12 +1,10 @@
 <template>
     <PdForm @register="register" :schemas="schemas" @submit="handleSubmit" />
-    <!-- <el-button type="primary" @click="submitForm">保存表单</el-button>
-    <el-button @click="resetFields">重置表单</el-button> -->
 </template>
 
 <script setup lang="tsx">
 import { reactive } from 'vue'
-import { IFormSchema, useForm } from '../../../src/components/PdForm/index'
+import { IFormSchema, useForm } from '@modules/PdForm/index'
 import type { FormRules } from 'element-plus'
 
 // form 值绑定

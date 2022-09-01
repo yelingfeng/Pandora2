@@ -23,7 +23,7 @@
 
 <script setup lang="tsx">
 // import { reactive } from 'vue'
-import { IFormSchema, useForm } from '../../../src/components/PdForm/index'
+import { IFormSchema, useForm } from '@modules/PdForm/index'
 import type { FormRules } from 'element-plus'
 
 // // form 值绑定
