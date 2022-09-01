@@ -1,3 +1,14 @@
+## [0.0.6](https://github.com/yelingfeng/Pandora2/compare/v0.0.5...v0.0.6) (2022-09-01)
+
+
+### Features
+
+* **form:** add form getValue and demo ([e9252d2](https://github.com/yelingfeng/Pandora2/commit/e9252d210f83c5864ea37c3eef5e6efd9532c472))
+* **form:** update form code ([8e0c37f](https://github.com/yelingfeng/Pandora2/commit/8e0c37fe6bc9b330841ddf423cf454f6dba41353))
+* **update:** form update ([b96895a](https://github.com/yelingfeng/Pandora2/commit/b96895a7725af40f942e1ca0f79d755a3a13fcc7))
+
+
+
 ## [0.0.5](https://github.com/yelingfeng/Pandora2/compare/v0.0.4...v0.0.5) (2022-08-08)
 
 
