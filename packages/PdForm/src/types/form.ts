@@ -1,5 +1,5 @@
 import { ComponentType } from './index'
-import type { CSSProperties, VNode } from 'vue'
+import type { CSSProperties, VNode, ComputedRef, Ref } from 'vue'
 import type { ValidateFieldsError } from 'async-validator'
 import type {
   FormRules,
@@ -8,7 +8,6 @@ import type {
   ColProps,
   ButtonProps
 } from 'element-plus'
-import type { ComputedRef, Ref } from 'vue'
 export interface IFormProps {
   name?: string
   model?: Record<string, any>

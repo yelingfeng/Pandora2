@@ -1,5 +1,4 @@
 import type { FieldMapToTime, IFormSchema } from '../types/form';
-import type { CSSProperties } from 'vue';
 export declare const FormBasicProps: {
     model: {
         type: PropType<Recordable>;

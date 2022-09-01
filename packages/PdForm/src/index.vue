@@ -44,7 +44,7 @@ import { useFormEvents } from './hooks/useFormEvents'
 import { useAutoFocus } from './hooks/useAutoFocus'
 import { createFormContext } from './hooks/useFormContext'
 import { useDebounceFn } from '@vueuse/core';
-import { FormBasicProps } from './props/form'
+import { FormBasicProps } from './props'
 import { dateUtil } from '@/_utils/dateUtil'
 import { dateItemType } from './helper'
 import { cloneDeep } from 'lodash-es';

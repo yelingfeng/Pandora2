@@ -42,7 +42,7 @@ enter之后，根据项目提示，接下来会让你选择预设, `npm install`
 
 ```js
 import Pandora2 from "pandora2";
-import "pandora2/dist/style.css";
+import "pandora2/lib/style.css";
 
 Vue.use(Pandora2)
 

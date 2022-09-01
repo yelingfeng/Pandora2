@@ -26,6 +26,6 @@
     },
     "lib": ["esnext", "dom"]
   },
-  "include": ["packages", "typings/components.d.ts", "global.d.ts"],
+  "include": ["packages", "components.d.ts", "global.d.ts"],
   "exclude": ["node_modules"]
 }
