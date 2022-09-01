@@ -1,10 +1,6 @@
-import { App, Plugin } from 'vue'
-import Table from './docs/demo.vue'
+import { withInstall } from '@/_utils'
+import _Table from './src/index.vue'
 
-export const PdTablePlugin: Plugin = {
-  install(app: App) {
-    app.component('my-table', Table)
-  }
-}
+export const PdTable = withInstall<typeof _Table>(_Table)
 
-export { Table }
+export default PdTable
