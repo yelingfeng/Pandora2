@@ -28,8 +28,7 @@ export default defineConfig({
     lib: {
       entry: resolve(entryDir, 'index.ts'),
       name: 'pandora2',
-      fileName: (format) => `pandora2.${format}.js`,
-      formats: ['es', 'umd']
+      fileName: (format) => `pandora2.${format}.js`
     },
     rollupOptions,
     outDir: outputDir

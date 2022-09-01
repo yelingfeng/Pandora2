@@ -210,7 +210,7 @@ export default defineComponent({
       formModel[key] = value
       const { validateTrigger } = unref(getBindValue);
       if (!validateTrigger || validateTrigger === 'change') {
-        validateFields([key]).catch((_) => { });
+        validateFields([key]).catch(() => { });
       }
       emit('field-value-change', key, value);
     }
