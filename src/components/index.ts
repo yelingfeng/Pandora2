@@ -15,4 +15,7 @@ const Pandora2 = {
   }
 }
 
+export { useComponentRegister } from './PdForm/src/hooks/useComponentRegister'
+export { useForm } from './PdForm/src/hooks/useForm'
+
 export default Pandora2
