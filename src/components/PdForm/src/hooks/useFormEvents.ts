@@ -3,7 +3,6 @@ import type {
   IFormProps,
   IFormSchema,
   IFormActionType,
-  NamePath,
   Callback
 } from '../types/form'
 import { unref, toRaw, nextTick } from 'vue'
@@ -24,7 +23,7 @@ import {
 import { dateUtil } from '@/_utils/dateUtil'
 import { cloneDeep, uniqBy } from 'lodash-es'
 import { error } from '@/_utils/log'
-
+import { FormItemProp } from 'element-plus'
 interface UseFormActionContext {
   emit: EmitsOptions | []
   getProps: ComputedRef<IFormProps>
@@ -297,7 +296,7 @@ export function useFormEvents({
   }
 
   async function validateFields(
-    props?: NamePath[] | undefined,
+    props?: FormItemProp[] | undefined,
     callback?: Callback | undefined
   ) {
     return unref(formElRef)?.validateFields(props, callback)
@@ -330,13 +329,15 @@ export function useFormEvents({
     }
     const formEl = unref(formElRef)
     if (!formEl) return
-    try {
-      const values = await validate()
-      const res = handleFormValues(values)
-      emit('submit', res)
-    } catch (error: any) {
-      throw new Error(error)
-    }
+    await validate(function (valid, fields) {
+      if (valid) {
+        console.log('submit!')
+        const res = handleFormValues(toRaw(unref(formModel)))
+        emit('submit', res)
+      } else {
+        console.error('error submit!', fields)
+      }
+    })
   }
 
   return {

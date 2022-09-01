@@ -1,7 +1,7 @@
 import type { FieldMapToTime, IFormSchema } from '../types/form'
 import type { CSSProperties, PropType } from 'vue'
 // import type { TableActionType } from '/@/components/Table'
-import type { ButtonProps, ColProps, RowProps } from 'element-plus'
+import type { ButtonProps, ColProps, FormRules, RowProps } from 'element-plus'
 import { propTypes } from '@/_utils/propTypes'
 
 export const FormBasicProps = {
@@ -86,5 +86,7 @@ export const FormBasicProps = {
 
   labelAlign: propTypes.string,
 
-  rowProps: Object as PropType<RowProps>
+  rowProps: Object as PropType<RowProps>,
+
+  rules: Object as PropType<FormRules>
 }

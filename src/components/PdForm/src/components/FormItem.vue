@@ -13,6 +13,7 @@ import { ElFormItem, ElCol } from 'element-plus'
 import type { FormRules } from 'element-plus'
 import type { IFormSchema, IFormProps, IFormActionType } from '../types/form'
 import { componentMap } from '../componentsMap'
+import { ComponentType } from '../types'
 import { upperFirst, cloneDeep } from 'lodash-es'
 import { isFunction, isBoolean, isNull } from '@/_utils/is'
 import { createPlaceholderMessage, setComponentRuleType } from '../helper';
@@ -231,6 +232,55 @@ export default defineComponent({
     }
 
 
+    const getComponentsChild = (component : ComponentType) => {
+        let childNode
+        const { componentProps = {} } = unref(schema)
+        const opts = componentProps.options as any
+        if (component === 'CheckboxGroup') {
+
+          childNode = opts.map(
+            ({ label, value }: Recordable) => {
+              const CheckNode = componentMap.get('Checkbox') as ReturnType<
+                typeof defineComponent
+              >
+              return (
+                <CheckNode label={value} key={value}>
+                  {label}
+                </CheckNode>
+              )
+            }
+          )
+          return childNode
+        } else if (component === 'Select') {
+          childNode = opts.map(
+            ({ label, value }: Recordable) => {
+              const OptionNode = componentMap.get('SelectOption') as ReturnType<
+                typeof defineComponent
+              >
+              return (
+                <OptionNode label={label} value={value} key={value}>
+                  {label}
+                </OptionNode>
+              )
+            }
+          )
+        } else if( component === 'RadioGroup') {
+          childNode = opts.map(
+            ({ label, value }: Recordable) => {
+              const RadioNode = componentMap.get('Radio') as ReturnType<
+                typeof defineComponent
+              >
+              return (
+                <RadioNode label={value} key={value}>
+                  {label}
+                </RadioNode>
+              )
+            }
+          )
+        }
+        return childNode
+      }
+
 
     const renderComponent = () => {
       const {
@@ -274,42 +324,6 @@ export default defineComponent({
       propsData.codeField = field;
       propsData.formValues = unref(getValues);
 
-      const getComponentsChild = () => {
-        let childNode
-        const { componentProps = {} } = unref(schema)
-        const opts = componentProps.options as any
-        if (component === 'CheckboxGroup') {
-
-          childNode = opts.map(
-            ({ label, value }: Recordable) => {
-              const CheckNode = componentMap.get('Checkbox') as ReturnType<
-                typeof defineComponent
-              >
-              return (
-                <CheckNode label={value} key={value}>
-                  {label}
-                </CheckNode>
-              )
-            }
-          )
-          return childNode
-        } else if (component === 'Select') {
-          childNode = opts.map(
-            ({ label, value }: Recordable) => {
-              const OptionNode = componentMap.get('SelectOption') as ReturnType<
-                typeof defineComponent
-              >
-              return (
-                <OptionNode label={label} value={value} key={value}>
-                  {label}
-                </OptionNode>
-              )
-            }
-          )
-        }
-        return childNode
-      }
-
 
       const bindValue: Recordable = {
         [valueField || (isCheck ? 'checked' : 'value')]: props.formModel[field],
@@ -325,7 +339,7 @@ export default defineComponent({
       };
 
       if (!renderComponentContent) {
-        return <Comp {...compAttr} v-model={props.formModel[field]}>{getComponentsChild()}</Comp>;
+        return <Comp {...compAttr} v-model={props.formModel[field]}>{getComponentsChild(component)}</Comp>;
       }
       const compSlot = isFunction(renderComponentContent)
         ? { ...renderComponentContent(unref(getValues)) }

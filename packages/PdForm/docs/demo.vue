@@ -1,15 +1,12 @@
 <template>
-  <PdContainer title="基础表单">
-    <PdForm @register="register" :model="formModelXXX" :schemas="schemas" :formProps="formProps"
-      @submit="handleSubmit" />
+    <PdForm @register="register" :schemas="schemas" @submit="handleSubmit" />
     <!-- <el-button type="primary" @click="submitForm">保存表单</el-button>
     <el-button @click="resetFields">重置表单</el-button> -->
-  </PdContainer>
 </template>
 
 <script setup lang="tsx">
 import { reactive } from 'vue'
-import { IFormSchema, IFormProps, useForm } from '../../../src/components/PdForm/index'
+import { IFormSchema, useForm } from '../../../src/components/PdForm/index'
 import type { FormRules } from 'element-plus'
 
 // form 值绑定
@@ -20,21 +17,21 @@ const formModelXXX = reactive({
   type: '',
 })
 // form 配置
-const formProps: IFormProps = reactive({
-  model: formModelXXX,
-  size: 'small',
-  inline: false,
-  labelPosition: 'right',
-  'label-width': '120px',
-  showAdvancedButton: true,
-  showActionButtonGroup: true,
-  rules: {
-    name: [
-      { required: true, message: '请输入活动名称', trigger: 'blur' },
-      { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
-    ]
-  } as FormRules
-})
+// const formProps: IFormProps = reactive({
+//   model: formModelXXX,
+//   // size: 'small',
+//   inline: false,
+//   labelPosition: 'right',
+//   'label-width': '120px',
+//   showAdvancedButton: true,
+//   showActionButtonGroup: true,
+//   rules: {
+//     name: [
+//       { required: true, message: '请输入活动名称', trigger: 'blur' },
+//       { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+//     ]
+//   } as FormRules
+// })
 
 // form Schema 配置 
 const schemas: IFormSchema[] = [
@@ -44,7 +41,7 @@ const schemas: IFormSchema[] = [
     label: '名称',
     defaultValue: '',
     colProps: {
-      span: 8,
+      span:24,
     },
     componentProps: {
       placeholder: '自定义placeholder',
@@ -54,17 +51,15 @@ const schemas: IFormSchema[] = [
     field: 'region',
     component: 'Input',
     label: '活动区域',
-    // model: formModel,
     defaultValue: '',
     colProps: {
-      span: 8
+      span: 24
     }
   },
   {
     field: 'city',
     component: 'Select',
     label: '活动城市',
-    // model: formModel,
     defaultValue: '',
     colProps: {
       span: 8
@@ -96,7 +91,6 @@ const schemas: IFormSchema[] = [
     field: 'type',
     component: 'CheckboxGroup',
     label: '活动形式',
-    // model: formModel,
     defaultValue: [],
     colProps: {
       span: 12
@@ -129,6 +123,23 @@ const [register] = useForm({
   actionColOptions: {
     span: 24
   },
+  model: formModelXXX,
+  // size: 'small',
+  inline: false,
+  labelPosition: 'right',
+  labelWidth: '120px',
+  showAdvancedButton: true,
+  showActionButtonGroup: true,
+  rules: {
+    name: [
+      { required: true, message: '请输入活动名称', trigger: 'blur' },
+      { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+    ]
+  } as FormRules
 })
+
+const handleSubmit = (res : any)=>{
+  console.log(res)
+}
 
 </script>

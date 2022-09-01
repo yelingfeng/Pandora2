@@ -20,7 +20,7 @@ export interface IFormProps {
   inline?: boolean
   disabled?: boolean
   // Validation rules
-  rules?: FormRules[]
+  rules?: FormRules
   // Compact mode for search forms
   compact?: boolean
   // Blank line span
@@ -225,8 +225,11 @@ export type DynamicProps<T> = {
 export interface IFormActionType {
   submit: () => Promise<void>
   resetFields: () => Promise<void>
-  validate: (cb: Callback) => Promise<void>
-  validateFields: (props?: NamePath, callback?: Callback) => Promise<void>
+  validate: (cb: Callback | undefined) => Promise<void>
+  validateFields: (
+    props?: Array<FormItemProp>,
+    callback?: Callback
+  ) => Promise<void>
   setFieldsValue: <T>(values: T) => Promise<void>
   getFieldsValue: () => Recordable
   clearValidate: (name?: string | string[]) => Promise<void>

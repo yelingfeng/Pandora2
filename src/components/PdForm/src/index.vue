@@ -1,6 +1,6 @@
 <template>
   <div class="vpandora-form">
-    <el-Form v-bind="getBindValue" ref="formRef" :model="formModel" @keypress.enter="handleEnterPress">
+    <el-Form v-bind="getBindValue" :rules="getRules" ref="formRef" :model="formModel" @keypress.enter="handleEnterPress">
       <el-row v-bind="getRow">
         <slot name="formHeader"></slot>
         <template v-for="schema in getSchema" :key="schema.field">
@@ -35,7 +35,7 @@ import {
 } from 'vue'
 import type { IFormActionType, IFormSchema, IFormProps } from './types/form'
 import type { AdvanceState } from './types/hooks';
-import { ElForm, ElRow } from 'element-plus'
+import { ElForm, ElRow ,FormRules } from 'element-plus'
 import FormItem from './components/FormItem.vue'
 import FormAction from './components/FormAction.vue'
 import { createNamespace } from '@/_utils/create'
@@ -65,7 +65,7 @@ export default defineComponent({
   emits: ['advanced-change', 'reset', 'submit', 'register', 'field-value-change'],
   setup(props, { emit, attrs }) {
     const formModel = reactive<Recordable>({})
-    const propsRef = ref<Partial<IFormProps>>({})
+    const formPropsRef = ref<Partial<IFormProps>>({})
     const defaultValueRef = ref<Recordable>({})
     const schemaRef = ref<Nullable<IFormSchema[]>>(null)
     const formRef = ref<Nullable<IFormActionType>>(null)
@@ -82,8 +82,9 @@ export default defineComponent({
       (): IFormProps => {
         const _props = {
           ...props,
-          ...unref(propsRef),
+          ...unref(formPropsRef),
         } as IFormProps
+        console.log(_props)
         return _props
       }
     )
@@ -94,6 +95,11 @@ export default defineComponent({
         ...rowProps,
       };
     });
+
+    const getRules = computed(():FormRules =>{
+        const { rules={} } = unref(getProps)
+        return rules
+    })
 
     const getBindValue = computed(
       () => ({ ...attrs, ...props, ...unref(getProps) } as Recordable)
@@ -197,7 +203,7 @@ export default defineComponent({
     );
 
     async function setProps(formProps: Partial<IFormProps>): Promise<void> {
-      propsRef.value = deepMerge(unref(propsRef) || {}, formProps);
+      formPropsRef.value = deepMerge(unref(formPropsRef) || {}, formProps);
     }
 
     function setFormModel(key: string, value: any) {
@@ -270,6 +276,7 @@ export default defineComponent({
       advanceState,
       getRow,
       getProps,
+      getRules,
       formRef,
       getSchema,
       formActionType: formActionType as any,

@@ -13,6 +13,7 @@ export type ComponentType =
   | 'Select'
   | 'SelectOption'
   | 'Radio'
+  | 'RadioGroup'
   | 'Switch'
   | 'Rate'
   | 'Divider'

@@ -4,12 +4,12 @@
       <el-form-item>
         <slot name="resetBefore"></slot>
         <el-button type="default" v-bind="getResetBtnOptions" @click="resetAction" v-if="showResetButton">
-          {{ getResetBtnOptions.text }}
+          {{ getResetBtnOptions.label }}
         </el-button>
         <slot name="submitBefore"></slot>
 
         <el-button type="primary" v-bind="getSubmitBtnOptions" @click="submitAction" v-if="showSubmitButton">
-          {{ getSubmitBtnOptions.text }}
+          {{ getSubmitBtnOptions.label }}
         </el-button>
 
         <slot name="advanceBefore"></slot>
@@ -29,7 +29,7 @@ import BasicArrow from './BasicArrow.vue';
 import { useFormContext } from '../hooks/useFormContext';
 import { propTypes } from '@/_utils/propTypes';
 
-type ButtonOptions = Partial<ButtonProps> & { text: string };
+type ButtonOptions = Partial<ButtonProps> & { label: string };
 
 export default defineComponent({
   name: 'BasicFormAction',
@@ -45,11 +45,11 @@ export default defineComponent({
     showSubmitButton: propTypes.bool.def(true),
     showAdvancedButton: propTypes.bool.def(true),
     resetButtonOptions: {
-      type: Object as PropType<ButtonOptions>,
+      type: Object as PropType<Partial<ButtonOptions>>,
       default: () => ({}),
     },
     submitButtonOptions: {
-      type: Object as PropType<ButtonOptions>,
+      type: Object as PropType<Partial<ButtonOptions>>,
       default: () => ({}),
     },
     actionColOptions: {
@@ -80,7 +80,7 @@ export default defineComponent({
     const getResetBtnOptions = computed((): ButtonOptions => {
       return Object.assign(
         {
-          text: '重置',
+          label: '重置',
         },
         props.resetButtonOptions,
       );
@@ -91,7 +91,7 @@ export default defineComponent({
     const getSubmitBtnOptions = computed(() => {
       return Object.assign(
         {
-          text: '查询',
+          label: '查询',
         },
         props.submitButtonOptions,
       );

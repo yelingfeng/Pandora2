@@ -15,6 +15,7 @@ import {
   ElSelect,
   ElOption,
   ElRadio,
+  ElRadioGroup,
   ElSwitch,
   ElRate,
   ElDivider
@@ -36,6 +37,7 @@ componentMap.set('Select', ElSelect)
 componentMap.set('SelectOption', ElOption)
 componentMap.set('Switch', ElSwitch)
 componentMap.set('Radio', ElRadio)
+componentMap.set('RadioGroup', ElRadioGroup)
 componentMap.set('Rate', ElRate)
 componentMap.set('Divider', ElDivider)
 

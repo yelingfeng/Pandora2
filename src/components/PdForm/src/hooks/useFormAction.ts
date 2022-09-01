@@ -1,5 +1,10 @@
 import { ComputedRef, Ref, toRaw, unref } from 'vue'
-import { IFormProps, IFormSchema, IFormActionType, Callback } from '../types'
+import {
+  IFormProps,
+  IFormSchema,
+  IFormActionType,
+  Callback
+} from '../types/form'
 import {
   isArray,
   isFunction,
@@ -43,7 +48,6 @@ export function useFormAction({
       return
     }
     const formEl = unref(formElRef)
-    console.log(formEl)
     if (!formEl) return
 
     formEl?.resetFields()
@@ -285,7 +289,7 @@ export function useFormAction({
     return await unref(formElRef)?.validateFields(props, callback)
   }
 
-  async function validate(cb: Callback) {
+  async function validate(cb: Callback | undefined) {
     return await unref(formElRef)?.validate(cb)
   }
 
@@ -309,13 +313,15 @@ export function useFormAction({
     }
     const formEl = unref(formElRef)
     if (!formEl) return
-    try {
-      const values = await validate()
-      const res = handleFormValues(values)
-      emit('submit', res)
-    } catch (error: any) {
-      throw new Error(error)
-    }
+    await validate(function (valid, fields) {
+      if (valid) {
+        console.log('submit!')
+        const res = handleFormValues(toRaw(unref(formModel)))
+        emit('submit', res)
+      } else {
+        throw new Error('error submit!', fields)
+      }
+    })
   }
   return {
     handleSubmit,
