@@ -31,4 +31,4 @@ jobs:
 
       - run: npm publish
         env:
-          NODE_AUTH_TOKEN: ${{secrets.PANDORA}}
+          NODE_AUTH_TOKEN: ${{secrets.PAD2}}
