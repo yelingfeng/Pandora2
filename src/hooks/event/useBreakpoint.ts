@@ -64,7 +64,6 @@ export function createBreakpointListen(
     }
     // wait: 100,
   })
-
   getWindowWidth()
   globalScreenRef = computed(() => unref(screenRef))
   globalWidthRef = computed((): number => screenMap.get(unref(screenRef)!)!)

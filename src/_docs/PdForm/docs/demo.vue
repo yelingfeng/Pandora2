@@ -5,8 +5,8 @@
 <script setup lang="tsx">
 import { reactive } from 'vue'
 import { IFormSchema, useForm } from '@modules/PdForm/index'
-import type { FormRules } from 'element-plus'
-
+// import type { FormRules } from 'element-plus'
+ 
 // form 值绑定
 const formModelXXX = reactive({
   name: '',
@@ -14,22 +14,6 @@ const formModelXXX = reactive({
   city: '',
   type: '',
 })
-// form 配置
-// const formProps: IFormProps = reactive({
-//   model: formModelXXX,
-//   // size: 'small',
-//   inline: false,
-//   labelPosition: 'right',
-//   'label-width': '120px',
-//   showAdvancedButton: true,
-//   showActionButtonGroup: true,
-//   rules: {
-//     name: [
-//       { required: true, message: '请输入活动名称', trigger: 'blur' },
-//       { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
-//     ]
-//   } as FormRules
-// })
 
 // form Schema 配置 
 const schemas: IFormSchema[] = [
@@ -38,9 +22,6 @@ const schemas: IFormSchema[] = [
     component: 'Input',
     label: '名称',
     defaultValue: '',
-    colProps: {
-      span:24,
-    },
     componentProps: {
       placeholder: '自定义placeholder',
     }
@@ -50,18 +31,12 @@ const schemas: IFormSchema[] = [
     component: 'Input',
     label: '活动区域',
     defaultValue: '',
-    colProps: {
-      span: 24
-    }
   },
   {
     field: 'city',
     component: 'Select',
     label: '活动城市',
     defaultValue: '',
-    colProps: {
-      span: 8
-    },
     componentProps: {
       placeholder: '请选择城市',
       clearable: true,
@@ -90,9 +65,6 @@ const schemas: IFormSchema[] = [
     component: 'CheckboxGroup',
     label: '活动形式',
     defaultValue: [],
-    colProps: {
-      span: 12
-    },
     componentProps: {
       options: [
         {
@@ -118,6 +90,13 @@ const schemas: IFormSchema[] = [
 
 const [register] = useForm({
   schemas,
+  baseColProps: { span: 12 },
+
+  // baseRowStyle : {
+  //   backgroundColor : 'red'
+  // },
+  // 自动设置placeHolder
+  autoSetPlaceHolder:false,
   actionColOptions: {
     span: 24
   },
@@ -128,12 +107,12 @@ const [register] = useForm({
   labelWidth: '120px',
   showAdvancedButton: true,
   showActionButtonGroup: true,
-  rules: {
-    name: [
-      { required: true, message: '请输入活动名称', trigger: 'blur' },
-      { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
-    ]
-  } as FormRules
+  // rules: {
+  //   name: [
+  //     { required: true, message: '请输入活动名称', trigger: 'blur' },
+  //     { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+  //   ]
+  // } as FormRules
 })
 
 const handleSubmit = (res : any)=>{

@@ -398,17 +398,20 @@ export default defineComponent({
           prop={field}
           label={label}
           rules={handleRules()}
+          // style={wrapperCol.style}
           {...(itemProps as Recordable)}
           {...labelSlots}
         >
-          <div style="display:flex">
-            <div style="flex:1;">{getContent()}</div>
-            {showSuffix && <span class="suffix">{getSuffix}</span>}
-          </div>
+           <div style="display:flex;width:100%;"  >
+              <div style="flex:1;">{getContent()}</div>
+              {showSuffix && <span class="suffix">{getSuffix}</span>}
+            </div>
         </ElFormItem >
       );
     }
-
+    // <div style={wrapperCol.style}>
+    //         {getContent()}
+    //       </div>
 
     // const {
     //   component,

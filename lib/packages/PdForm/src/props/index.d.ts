@@ -1,7 +1,8 @@
 import type { FieldMapToTime, IFormSchema } from '../types/form';
+import type { CSSProperties } from 'vue';
 export declare const FormBasicProps: {
     model: {
-        type: PropType<Recordable>;
+        type: PropType<Recordable<any>>;
         default: {};
     };
     labelWidth: {
@@ -17,7 +18,7 @@ export declare const FormBasicProps: {
         default: () => never[];
     };
     mergeDynamicData: {
-        type: PropType<Recordable>;
+        type: PropType<Recordable<any>>;
         default: null;
     };
     baseRowStyle: {
@@ -69,7 +70,7 @@ export declare const FormBasicProps: {
         default: boolean;
     };
     transformDateFunc: {
-        type: PropType<Fn>;
+        type: PropType<Fn<any, any>>;
         default: (date: any) => any;
     };
     rulesMessageJoinLabel: import("vue-types").VueTypeValidableDef<boolean> & {

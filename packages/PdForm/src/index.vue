@@ -121,7 +121,13 @@ export default defineComponent({
           }
         }
       }
-      return cloneDeep(schemas as IFormSchema[])
+      if (unref(getProps).showAdvancedButton) {
+        return cloneDeep(
+          schemas.filter((schema) => schema.component !== 'Divider') as IFormSchema[],
+        );
+      } else {
+        return cloneDeep(schemas as IFormSchema[]);
+      }
     })
 
     // 初始化Form values
@@ -288,3 +294,21 @@ export default defineComponent({
   }
 })
 </script>
+<style lang="less">
+.vpandora-form {
+  position: relative;
+
+  .el-select,
+  .el-date-editor.el-input,
+  .el-radio-group {
+    width: 100%;
+  }
+
+  .el-range-editor.el-input__wrapper {
+    box-sizing: border-box;
+    width: 100%;
+  }
+
+
+}
+</style>

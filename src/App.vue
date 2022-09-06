@@ -23,6 +23,8 @@
 
 <script setup>
 import ComponentList from '@/_docs/list.json'
+
+import { createBreakpointListen } from '@/hooks/event/useBreakpoint';
 import { reactive } from 'vue'
 
 const data = reactive({
@@ -35,6 +37,9 @@ const data = reactive({
 function scollTop() {
   document.getElementById('main').scrollTop = 0
 }
+
+createBreakpointListen();
+
 </script>
 
 <style lang="less">

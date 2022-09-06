@@ -45,9 +45,3 @@ declare interface PromiseFn<T = any, R = T> {
 }
 
 declare type RefType<T> = T | null
-
-declare module 'vue' {
-  export type JSXComponent<Props = any> =
-    | { new (): ComponentPublicInstance<Props> }
-    | FunctionalComponent<Props>
-}

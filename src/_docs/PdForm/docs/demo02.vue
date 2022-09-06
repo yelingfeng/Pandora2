@@ -61,18 +61,21 @@ const schemas: IFormSchema[] = [
     {
       field: 'field3',
       component: 'DatePicker',
-      label: '字段3',
+      label: '日期选择',
       colProps: {
         span: 8,
       },
       componentProps:{
-
+        valueFormat:'YYYY-MM-DD'
       }
     },
     {
       field: 'fieldTime',
       component: 'DatePicker',
-      label: '时间字段',
+      label: '时间段字段',
+      componentProps:{
+          type:'daterange'
+      },
       colProps: {
         span: 8,
       },
@@ -80,7 +83,7 @@ const schemas: IFormSchema[] = [
     {
       field: 'field4',
       component: 'Select',
-      label: '字段4',
+      label: '下拉框',
       colProps: {
         span: 8,
       },
@@ -123,7 +126,7 @@ const schemas: IFormSchema[] = [
     {
       field: 'field7',
       component: 'RadioGroup',
-      label: '字段7',
+      label: 'Radio组',
       colProps: {
         span: 8,
       },
@@ -184,22 +187,40 @@ const schemas: IFormSchema[] = [
     // },
   ];
 
-const [register,{setProps, setFieldsValue, updateSchema}] = useForm({
-  schemas,
+const extraSchemas: IFormSchema[] = [];
+for (let i = 14; i < 30; i++) {
+  extraSchemas.push({
+    field: 'field' + i,
+    component: 'Input',
+    label: '字段' + i,
+    colProps: {
+      span: 8,
+    },
+  });
+}
+
+const [register,{setProps}] = useForm({
+  schemas:[
+    ...schemas,
+    ...extraSchemas
+  ],
   actionColOptions: {
     span: 24
   },
   // model: formModelXXX,
   labelWidth: '120px',
   labelPosition:'right',
+  // 回车提交
+  autoSubmitOnEnter:true,
   showAdvancedButton: true,
   showActionButtonGroup: true,
-  rules: {
-    field1: [
-      { required: true, message: '请输入活动名称', trigger: 'blur' },
-      { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
-    ]
-  } as FormRules
+  fieldMapToTime:[['fieldTime', ['startTime', 'endTime'], 'YYYY-MM']],
+  // rules: {
+  //   field1: [
+  //     { required: true, message: '请输入活动名称', trigger: 'blur' },
+  //     { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+  //   ]
+  // } as FormRules
 })
 
 

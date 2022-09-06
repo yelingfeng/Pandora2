@@ -8,7 +8,7 @@ import Markdown from 'vite-plugin-md'
 export default defineConfig({
   server: {
     open: true,
-    port: 8888
+    port: 8989
     // proxy: {
     //   '/api': {
     //     // target: 'http://localhost:7001',

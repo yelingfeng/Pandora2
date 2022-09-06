@@ -89,7 +89,6 @@ export default function ({
       itemColSum += lgWidth
     } else if (width < screenEnum.XXL) {
       itemColSum += xlWidth
-    } else {
     }
 
     if (isLastAction) {
