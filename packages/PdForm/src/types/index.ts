@@ -17,5 +17,6 @@ export type ComponentType =
   | 'Switch'
   | 'Rate'
   | 'Divider'
+  | 'ApiSelect'
 
 export type NamePath = string | number | (string | number)[]

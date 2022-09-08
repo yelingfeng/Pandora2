@@ -75,7 +75,7 @@ export interface IFormSchema {
         schema: IFormSchema;
         formModel: Recordable;
     }) => Recordable) | any;
-    rules?: FormRules[];
+    rules?: FormRules;
     required?: boolean | ((renderCallbackParams: RenderCallbackParams) => boolean);
     suffix?: string | number | ((values: RenderCallbackParams) => string | number);
     rulesMessageJoinLabel?: boolean;

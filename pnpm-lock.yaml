@@ -5,6 +5,7 @@ specifiers:
   '@types/jest': ^28.1.6
   '@types/lodash-es': ^4.17.6
   '@types/node': ^18.6.3
+  '@types/qs': ^6.9.7
   '@typescript-eslint/eslint-plugin': ^5.32.0
   '@typescript-eslint/parser': ^5.32.0
   '@vitejs/plugin-vue': ^3.0.1
@@ -32,9 +33,11 @@ specifiers:
   less-loader: ^11.0.0
   lint-staged: ^13.0.3
   lodash-es: ^4.17.21
+  mockjs: ^1.1.0
   np: ^7.6.2
   prettier: ^2.7.1
   prismjs: ^1.28.0
+  qs: ^6.11.0
   rimraf: ^3.0.2
   ts-jest: ^28.0.7
   typescript: ^4.7.4
@@ -64,6 +67,7 @@ devDependencies:
   '@types/jest': 28.1.6
   '@types/lodash-es': 4.17.6
   '@types/node': 18.6.3
+  '@types/qs': 6.9.7
   '@typescript-eslint/eslint-plugin': 5.32.0_iosr3hrei2tubxveewluhu5lhy
   '@typescript-eslint/parser': 5.32.0_qugx7qdu5zevzvxaiqyxfiwquq
   '@vitejs/plugin-vue': 3.0.1_vite@3.0.4+vue@3.2.37
@@ -86,9 +90,11 @@ devDependencies:
   less: 4.1.3
   less-loader: 11.0.0_less@4.1.3
   lint-staged: 13.0.3
+  mockjs: 1.1.0
   np: 7.6.2
   prettier: 2.7.1
   prismjs: 1.28.0
+  qs: 6.11.0
   rimraf: 3.0.2
   ts-jest: 28.0.7_bi2kohzqnxavgozw3csgny5hju
   typescript: 4.7.4
@@ -99,7 +105,7 @@ devDependencies:
   vite-plugin-copy: 0.1.6
   vite-plugin-dts: 1.4.1_vite@3.0.4
   vite-plugin-md: 0.11.4_vite@3.0.4
-  vite-plugin-mock: 2.9.6_vite@3.0.4
+  vite-plugin-mock: 2.9.6_mockjs@1.1.0+vite@3.0.4
   vite-plugin-style-import: 2.0.0_vite@3.0.4
   vue: 3.2.37
   vue-router: 4.1.3_vue@3.2.37
@@ -1286,6 +1292,10 @@ packages:
     resolution: {integrity: sha512-fOwvpvQYStpb/zHMx0Cauwywu9yLDmzWiiQBC7gJyq5tYLUXFZvDG7VK1B7WBxxjBJNKFOZ0zLoOQn8vmATbhw==}
     dev: true
 
+  /@types/qs/6.9.7:
+    resolution: {integrity: sha512-FGa1F62FT09qcrueBA6qYTrJPVDzah9a+493+o2PCXsesWHIn27G98TsSMs3WPNbZIEj4+VJf6saSFpvD+3Zsw==}
+    dev: true
+
   /@types/resolve/1.17.1:
     resolution: {integrity: sha512-yy7HuzQhj0dhGpD8RLXSZWEkLsV9ibvxvi6EiJ3bkqLAO1RGo0WbkWQiwpRlSFymTJRz0d3k5LM3kkx8ArDbLw==}
     dependencies:
@@ -2140,6 +2150,13 @@ packages:
   /cachedir/2.3.0:
     resolution: {integrity: sha512-A+Fezp4zxnit6FanDmv9EqXNAi3vt9DWp51/71UEhXukb7QUuvtv9344h91dyAxuTLoSYJFU299qzR3tzwPAhw==}
     engines: {node: '>=6'}
+    dev: true
+
+  /call-bind/1.0.2:
+    resolution: {integrity: sha512-7O+FbCihrB5WGbFYesctwmTKae6rOiIzmz1icreWJ+0aA7LJfuqhEso2T9ncpcFtzMQtzXf2QGGueWJGTYsqrA==}
+    dependencies:
+      function-bind: 1.1.1
+      get-intrinsic: 1.1.2
     dev: true
 
   /callsites/3.1.0:
@@ -3642,6 +3659,14 @@ packages:
     engines: {node: 6.* || 8.* || >= 10.*}
     dev: true
 
+  /get-intrinsic/1.1.2:
+    resolution: {integrity: sha512-Jfm3OyCxHh9DJyc28qGk+JmfkpO41A4XkneDSujN9MDXrm4oDKdHvndhZ2dN94+ERNfkYJWDclW6k2L/ZGHjXA==}
+    dependencies:
+      function-bind: 1.1.1
+      has: 1.0.3
+      has-symbols: 1.0.3
+    dev: true
+
   /get-package-type/0.1.0:
     resolution: {integrity: sha512-pjzuKtY64GYfWizNAJ0fr9VqttZkNiK2iS430LtIHzjBEr6bX8Am2zm4sW4Ro5wjWW5cAlRL1qAMTcXbjNAO2Q==}
     engines: {node: '>=8.0.0'}
@@ -3879,6 +3904,11 @@ packages:
   /has-flag/4.0.0:
     resolution: {integrity: sha512-EykJT/Q1KjTWctppgIAgfSO0tKVuZUjhgMr17kqTumMl6Afv3EISleU7qZUzoXDFTAHTDC4NOoG/ZxU3EvlMPQ==}
     engines: {node: '>=8'}
+    dev: true
+
+  /has-symbols/1.0.3:
+    resolution: {integrity: sha512-l3LCuF6MgDNwTDKkdYGEihYjt5pRPbEg46rtlmnSPlUbgmB8LOIrKJbYYFBSbnPaJexMKtiPO8hmeRjRz2Td+A==}
+    engines: {node: '>= 0.4'}
     dev: true
 
   /has-yarn/2.1.0:
@@ -5443,6 +5473,13 @@ packages:
       pkg-types: 0.3.3
     dev: true
 
+  /mockjs/1.1.0:
+    resolution: {integrity: sha512-eQsKcWzIaZzEZ07NuEyO4Nw65g0hdWAyurVol1IPl1gahRwY+svqzfgfey8U8dahLwG44d6/RwEzuK52rSa/JQ==}
+    hasBin: true
+    dependencies:
+      commander: 9.4.0
+    dev: true
+
   /ms/2.0.0:
     resolution: {integrity: sha512-Tpp60P6IUJDTuOq/5Z8cdskzJujfwqfOTkrwIwj7IRISpnkJnT6SyJ4PCPnGMoFjC9ddhal5KVIYtAt97ix05A==}
     dev: true
@@ -6126,6 +6163,13 @@ packages:
       escape-goat: 2.1.1
     dev: true
 
+  /qs/6.11.0:
+    resolution: {integrity: sha512-MvjoMCJwEarSbUYk5O+nmoSzSutSsTwF85zcHPQ9OrlFoZOYIjaqBAJIqIXjptyD5vThxGq52Xu/MaJzRkIk4Q==}
+    engines: {node: '>=0.6'}
+    dependencies:
+      side-channel: 1.0.4
+    dev: true
+
   /queue-microtask/1.2.3:
     resolution: {integrity: sha512-NuaNSa6flKT5JaSYQzJok04JzTL1CA6aGhv5rfLW3PgqA+M2ChpZQnAC8h8i4ZFkBS8X5RqkDBHA7r4hej3K9A==}
     dev: true
@@ -6443,6 +6487,14 @@ packages:
   /shebang-regex/3.0.0:
     resolution: {integrity: sha512-7++dFhtcx3353uBaq8DDR4NuxBetBzC7ZQOhmTQInHEd6bSrXdiEyzCvG07Z44UYdLShWUyXt5M/yhz8ekcb1A==}
     engines: {node: '>=8'}
+    dev: true
+
+  /side-channel/1.0.4:
+    resolution: {integrity: sha512-q5XPytqFEIKHkGdiMIrY10mvLRvnQh42/+GoBlFW3b2LXLE2xxJpZFdm94we0BaoV3RwJyGqg5wS7epxTv0Zvw==}
+    dependencies:
+      call-bind: 1.0.2
+      get-intrinsic: 1.1.2
+      object-inspect: 1.12.2
     dev: true
 
   /signal-exit/3.0.7:
@@ -7289,7 +7341,7 @@ packages:
       vite: 3.0.4_less@4.1.3
     dev: true
 
-  /vite-plugin-mock/2.9.6_vite@3.0.4:
+  /vite-plugin-mock/2.9.6_mockjs@1.1.0+vite@3.0.4:
     resolution: {integrity: sha512-/Rm59oPppe/ncbkSrUuAxIQihlI2YcBmnbR4ST1RA2VzM1C0tEQc1KlbQvnUGhXECAGTaQN2JyasiwXP6EtKgg==}
     engines: {node: '>=12.0.0'}
     peerDependencies:
@@ -7304,6 +7356,7 @@ packages:
       debug: 4.3.4
       esbuild: 0.11.3
       fast-glob: 3.2.11
+      mockjs: 1.1.0
       path-to-regexp: 6.2.1
       vite: 3.0.4_less@4.1.3
     transitivePeerDependencies:

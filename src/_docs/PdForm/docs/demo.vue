@@ -88,8 +88,23 @@ const schemas: IFormSchema[] = [
   }
 ]
 
+const extraSchemas: IFormSchema[] = [];
+for (let i = 14; i < 30; i++) {
+  extraSchemas.push({
+    field: 'field' + i,
+    component: 'Input',
+    label: '字段' + i,
+    colProps: {
+      span: 8,
+    },
+  });
+}
+
 const [register] = useForm({
-  schemas,
+  schemas:[
+    ...schemas,
+    ...extraSchemas
+  ],
   baseColProps: { span: 12 },
 
   // baseRowStyle : {
@@ -107,6 +122,7 @@ const [register] = useForm({
   labelWidth: '120px',
   showAdvancedButton: true,
   showActionButtonGroup: true,
+  alwaysShowLines:3,
   // rules: {
   //   name: [
   //     { required: true, message: '请输入活动名称', trigger: 'blur' },

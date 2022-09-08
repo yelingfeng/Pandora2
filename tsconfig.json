@@ -13,6 +13,8 @@
     "skipLibCheck": true,
     "noImplicitAny": true,
     "noImplicitThis": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
     "experimentalDecorators": true,
     "resolveJsonModule": true,
     "esModuleInterop": true,

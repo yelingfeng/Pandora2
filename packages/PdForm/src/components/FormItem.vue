@@ -8,16 +8,17 @@ import {
   computed,
   onMounted
 } from 'vue'
-import { ElFormItem, ElCol } from 'element-plus'
+import { ElFormItem, ElCol ,ElDivider } from 'element-plus'
 import type { FormRules } from 'element-plus'
 import type { IFormSchema, IFormProps, IFormActionType } from '../types/form'
 import { componentMap } from '../componentsMap'
 import { ComponentType } from '../types'
 import { upperFirst, cloneDeep } from 'lodash-es'
 import { isFunction, isBoolean, isNull } from '@/_utils/is'
+import { deepMerge } from '@/_utils/'
 import { createPlaceholderMessage, setComponentRuleType } from '../helper';
 import { getSlot } from '@/_utils/helper/tsxHelper'
-import { useItemLabelWidth } from '../hooks/useLabelWidth'
+// import { useItemLabelWidth } from '../hooks/useLabelWidth'
 import BasicHelp from './BasicHelp.vue'
 
 export default defineComponent({
@@ -56,8 +57,8 @@ export default defineComponent({
       schema: Ref<IFormSchema>;
       formProps: Ref<IFormProps>;
     }
-    const itemLabelWidthProp = useItemLabelWidth(schema, formProps);
-    const { labelCol, wrapperCol } = unref(itemLabelWidthProp);
+    // const itemLabelWidthProp = useItemLabelWidth(schema, formProps);
+    // const { labelCol, wrapperCol } = unref(itemLabelWidthProp);
 
     const getComponentsProps = computed(() => {
       const { schema, tableAction, formModel, formActionType } = props
@@ -233,8 +234,13 @@ export default defineComponent({
 
     const getComponentsChild = (component : ComponentType) => {
         let childNode
-        const { componentProps = {} } = unref(schema)
+        const { schema, tableAction, formModel, formActionType}  = props
+        let { componentProps = {}  } = unref(schema)
+        if (isFunction(componentProps)) {
+          componentProps = componentProps({ schema, tableAction, formModel, formActionType }) ?? {};
+        }
         const opts = componentProps.options as any
+        console.log(opts,componentProps)
         if (component === 'CheckboxGroup') {
 
           childNode = opts.map(
@@ -360,68 +366,62 @@ export default defineComponent({
       const getHelpMessage = isFunction(helpMessage)
         ? helpMessage(unref(getValues))
         : helpMessage;
-      if (!getHelpMessage || (Array.isArray(getHelpMessage) && getHelpMessage.length === 0)) {
-        return renderLabel;
+      if (getHelpMessage!==undefined || (Array.isArray(getHelpMessage) && getHelpMessage.length > 0)) {
+        return  (
+          <span>
+             {renderLabel}
+             <BasicHelp placement="top" content={getHelpMessage} {...helpComponentProps} />
+          </span>
+        )
       }
-      return (
-        <span>
-          {renderLabel}
-          <BasicHelp placement="top" class="mx-1" text={getHelpMessage} {...helpComponentProps} />
-        </span>
-      );
+      return ( <span>{renderLabel}</span>)
     }
-
+    
+     
 
     const renderItem = () => {
-      const { label, slot, render, field, suffix, itemProps } = props.schema;
-
-      const getContent = () => {
-        return slot
-          ? getSlot(slots, slot, unref(getValues))
-          : render
+      const { label, slot, render, field, suffix, itemProps,component } = props.schema;
+      if (component === 'Divider') {
+         const dividerProp = deepMerge({contentPosition:'left'},{...unref(getComponentsProps)})
+          return (
+            <ElCol span={24}>
+              <ElDivider {...dividerProp} >{renderLabelHelpMessage()}</ElDivider>
+            </ElCol>
+          );
+      } else {
+        const getContent = () => {
+          return slot
+            ? getSlot(slots, slot, unref(getValues))
+            : render
             ? render(unref(getValues))
             : renderComponent();
-      };
+        };
 
       const showSuffix = !!suffix;
       const getSuffix = isFunction(suffix) ? suffix(unref(getValues)) : suffix;
 
-      const labelSlots = {
-        slots: {
-          label: () => {
-            renderLabelHelpMessage()
-          }
-        }
+      const Slots = {
+        default:()=> {
+          return (
+            <div style="display:flex;width:100%;"  >
+              <div style="flex:1;">{getContent()}</div>
+              {showSuffix && <span class="suffix">{getSuffix}</span>}
+            </div>
+          )
+        },
+        label: () =>{ return renderLabelHelpMessage() }
       }
       return (
         <ElFormItem
           prop={field}
           label={label}
           rules={handleRules()}
-          // style={wrapperCol.style}
+          v-slots={Slots}
           {...(itemProps as Recordable)}
-          {...labelSlots}
-        >
-           <div style="display:flex;width:100%;"  >
-              <div style="flex:1;">{getContent()}</div>
-              {showSuffix && <span class="suffix">{getSuffix}</span>}
-            </div>
-        </ElFormItem >
+        > </ElFormItem >
       );
+      }
     }
-    // <div style={wrapperCol.style}>
-    //         {getContent()}
-    //       </div>
-
-    // const {
-    //   component,
-    //   label,
-    //   field,
-    //   changeEvent = 'change',
-    //   defaultValue = '',
-    //   colProps = { span: '', offset: '' }
-    // } = unref(schema) as IFormSchema
-    // const { labelCol, wrapperCol } = unref(itemLabelWidthProp);
     onMounted(() => {
       const { field,
         defaultValue = '',

@@ -83,7 +83,6 @@ export default defineComponent({
           ...props,
           ...unref(formPropsRef),
         } as IFormProps
-        console.log(_props)
         return _props
       }
     )
@@ -309,6 +308,15 @@ export default defineComponent({
     width: 100%;
   }
 
+  .el-input__wrapper,
+  .el-textarea__inner,
+  .el-button {
+    border-radius: 0;
+  }
+
+  .el-form-item__label {
+    color: rgb(119, 119, 119);
+  }
 
 }
 </style>

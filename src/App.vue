@@ -3,7 +3,7 @@
     <aside>
       <div class="logo">
         <img src="@/assets/logo-long.png" alt="" />
-        <div class="version">0.0.5</div>
+        <div class="version">0.0.12</div>
       </div>
       <div class="menu">
         <div v-for="(link, index) in data.links" :key="index" @click="scollTop">

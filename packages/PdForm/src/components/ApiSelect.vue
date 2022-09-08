@@ -1,43 +1,44 @@
 <template>
-  <Select
-    @dropdown-visible-change="handleFetch"
+  <el-select
+    @visible-change="handleFetch"
     v-bind="$attrs"
     @change="handleChange"
-    :options="getOptions"
     v-model:value="state"
   >
-    <template #[item]="data" v-for="item in Object.keys($slots)">
+    <!-- <template #[item]="data" v-for="item in Object.keys($slots)">
       <slot :name="item" v-bind="data || {}"></slot>
-    </template>
+    </template> -->
+    <el-option  v-for="item in getOptions"
+      :key="item.value"
+      :label="item.label"
+      :value="item.value"
+    />
     <template #suffixIcon v-if="loading">
-      <LoadingOutlined spin />
+      <Loading/>
     </template>
     <template #notFoundContent v-if="loading">
       <span>
-        <LoadingOutlined spin class="mr-1" />
-        {{ t('component.form.apiSelectNotFound') }}
+        <Loading />
+        没有发现数据
       </span>
     </template>
-  </Select>
+  </el-select>
 </template>
 <script lang="ts">
   import { defineComponent, PropType, ref, watchEffect, computed, unref, watch } from 'vue';
-  import { Select } from 'ant-design-vue';
-  import { isFunction } from '/@/utils/is';
-  import { useRuleFormItem } from '/@/hooks/component/useFormItem';
-  import { useAttrs } from '/@/hooks/core/useAttrs';
+  import { ElSelect } from 'element-plus';
+  import { isFunction } from '@/_utils/is';
+  import { useRuleFormItem } from '@/hooks/component/useFormItem';
+  import { useAttrs } from '@/hooks/core/useAttrs';
   import { get, omit } from 'lodash-es';
-  import { LoadingOutlined } from '@ant-design/icons-vue';
-  import { useI18n } from '/@/hooks/web/useI18n';
-  import { propTypes } from '/@/utils/propTypes';
+  import { propTypes } from '@/_utils/propTypes';
 
   type OptionsItem = { label: string; value: string; disabled?: boolean };
 
   export default defineComponent({
     name: 'ApiSelect',
     components: {
-      Select,
-      LoadingOutlined,
+      ElSelect,
     },
     inheritAttrs: false,
     props: {
@@ -66,7 +67,6 @@
       const isFirstLoad = ref(true);
       const emitData = ref<any[]>([]);
       const attrs = useAttrs();
-      const { t } = useI18n();
 
       // Embedded in the form, just use the hook binding to perform form verification
       const [state] = useRuleFormItem(props, 'value', 'change', emitData);
@@ -106,6 +106,7 @@
         try {
           loading.value = true;
           const res = await api(props.params);
+          console.log(res)
           if (Array.isArray(res)) {
             options.value = res;
             emitChange();
@@ -141,7 +142,7 @@
         emitData.value = args;
       }
 
-      return { state, attrs, getOptions, loading, t, handleFetch, handleChange };
+      return { state, attrs, getOptions, loading, handleFetch, handleChange };
     },
   });
 </script>

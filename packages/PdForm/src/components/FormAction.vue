@@ -22,7 +22,7 @@
 </template>
 <script lang="ts">
 import { defineComponent, computed, PropType,CSSProperties } from 'vue';
-import { ElFormItem, ElCol, ButtonProps, ColProps, ElButton } from 'element-plus';
+import {  ElCol, ButtonProps, ColProps, ElButton } from 'element-plus';
 import BasicArrow from './BasicArrow.vue';
 import { useFormContext } from '../hooks/useFormContext';
 import { propTypes } from '@/_utils/propTypes';
@@ -32,7 +32,6 @@ type ButtonOptions = Partial<ButtonProps> & { label: string };
 export default defineComponent({
   name: 'BasicFormAction',
   components: {
-    ElFormItem,
     BasicArrow,
     ElCol,
     ElButton

@@ -8,26 +8,18 @@ import { isString, isArray } from '@/_utils/is';
 import { getSlot } from '@/_utils/helper/tsxHelper';
 
 const props = {
+  color: { type: String, default: '#ffffff' },
   /**
-   * Help text max-width
-   * @default: 600px
-   */
-  maxWidth: { type: String, default: '600px' },
+ * Help text font size
+ * @default: 14px
+ */
+  fontSize: { type: String, default: '14px' },
   /**
+   * 
    * Whether to display the serial number
    * @default: false
    */
-  showIndex: { type: Boolean },
-  /**
-   * Help text font color
-   * @default: #ffffff
-   */
-  color: { type: String, default: '#ffffff' },
-  /**
-   * Help text font size
-   * @default: 14px
-   */
-  fontSize: { type: String, default: '14px' },
+  tabindex: { type: Boolean },
   /**
    * Help text list
    */
@@ -35,7 +27,7 @@ const props = {
   /**
    * Help text list
    */
-  text: { type: [Array, String] as PropType<string[] | string> },
+  content: { type: [Array, String] as PropType<string[] | string> },
 };
 
 export default defineComponent({
@@ -49,17 +41,15 @@ export default defineComponent({
       (): CSSProperties => ({ color: props.color, fontSize: props.fontSize }),
     );
 
-    const getOverlayStyle = computed((): CSSProperties => ({ maxWidth: props.maxWidth }));
+    // const getOverlayStyle = computed((): CSSProperties => ({ maxWidth: props.maxWidth }));
 
     function renderTitle() {
-      const textList = props.text;
-
-      if (isString(textList)) {
-        return <p>{textList}</p>;
+      const content = props.content;
+      if (isString(content)) {
+        return content;
       }
-
-      if (isArray(textList)) {
-        return textList.map((text, index) => {
+      if (isArray(content)) {
+        return content.map((text, index) => {
           return (
             <p key={text}>
               <>
@@ -70,18 +60,15 @@ export default defineComponent({
           );
         });
       }
-      return null;
+      return null
     }
 
     return () => {
       return (
         <ElTooltip
-          popperClass={`${prefixCls}__wrap`}
           content={<div style={unref(getTooltipStyle)}>{renderTitle()}</div>}
-          rawContent={true}
-          overlayStyle={unref(getOverlayStyle)}
+          raw-content={true}
           placement={props.placement as 'right'}
-          appendTo={() => getPopupContainer()}
         >
           <span class={prefixCls}>{getSlot(slots) || <Warning />}</span>
         </ElTooltip>
@@ -94,11 +81,15 @@ export default defineComponent({
 @prefix-cls: ~'pandora-basic-help';
 
 .@{prefix-cls} {
-  display: inline-block;
+  display: block;
   margin-left: 6px;
   font-size: 14px;
+  width: 16px;
+  height: 16px;
   color: #909399;
   cursor: pointer;
+  float: right;
+  margin-top: 3px;
 
   &:hover {
     color: #0960bd;
