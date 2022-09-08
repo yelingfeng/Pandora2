@@ -4,7 +4,7 @@
 ![npm](https://img.shields.io/npm/v/pandora2)
 
 
-![image](/assets/logo.png)
+![image](https://github.com/yelingfeng/Pandora2/blob/main/src/assets/logo-long.png?raw=true)
 
 ### 介绍
 ---
