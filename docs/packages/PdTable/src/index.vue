@@ -55,7 +55,6 @@ export default defineComponent({
         },
         unRefProps.value
       )
-      console.log(unRefProps)
 
       // 创建column
       const columnsVNode = useColumnRender(columnsProps.value, $sortService)

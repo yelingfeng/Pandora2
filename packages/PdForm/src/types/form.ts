@@ -141,7 +141,7 @@ export interface IFormSchema {
     | any
 
   // Validation rules
-  rules?: FormRules
+  rules?: FormRules | FormRules[]
 
   // Required
   required?: boolean | ((renderCallbackParams: RenderCallbackParams) => boolean)

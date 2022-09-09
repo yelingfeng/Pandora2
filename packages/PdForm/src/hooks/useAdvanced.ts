@@ -156,7 +156,6 @@ export default function ({
         schema.isAdvanced = isAdvanced
       }
     }
-    console.log(itemColSum)
     // 确保页面发送更新
     vm?.proxy?.$forceUpdate()
 

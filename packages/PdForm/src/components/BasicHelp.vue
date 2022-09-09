@@ -3,8 +3,6 @@ import type { CSSProperties, PropType } from 'vue';
 import { defineComponent, computed, unref } from 'vue';
 import { ElTooltip } from 'element-plus';
 import { Warning } from '@element-plus/icons-vue';
-import { getPopupContainer } from '@/_utils';
-import { isString, isArray } from '@/_utils/is';
 import { getSlot } from '@/_utils/helper/tsxHelper';
 
 const props = {
@@ -36,38 +34,17 @@ export default defineComponent({
   props,
   setup(props, { slots }) {
     const prefixCls = 'pandora-basic-help';
-
-    const getTooltipStyle = computed(
-      (): CSSProperties => ({ color: props.color, fontSize: props.fontSize }),
-    );
-
     // const getOverlayStyle = computed((): CSSProperties => ({ maxWidth: props.maxWidth }));
-
-    function renderTitle() {
-      const content = props.content;
-      if (isString(content)) {
-        return content;
-      }
-      if (isArray(content)) {
-        return content.map((text, index) => {
-          return (
-            <p key={text}>
-              <>
-                {props.showIndex ? `${index + 1}. ` : ''}
-                {text}
-              </>
-            </p>
-          );
-        });
-      }
-      return null
+    const getContent = ()=>{
+      const str = `<div style="color: ${props.color};fontSize: ${props.fontSize};">${props.content}</div>`
+      return str
     }
 
     return () => {
       return (
         <ElTooltip
-          content={<div style={unref(getTooltipStyle)}>{renderTitle()}</div>}
-          raw-content={true}
+          content={getContent()}
+          rawContent={true}
           placement={props.placement as 'right'}
         >
           <span class={prefixCls}>{getSlot(slots) || <Warning />}</span>

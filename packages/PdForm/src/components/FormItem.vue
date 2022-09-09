@@ -9,17 +9,17 @@ import {
   onMounted
 } from 'vue'
 import { ElFormItem, ElCol ,ElDivider } from 'element-plus'
-import type { FormRules } from 'element-plus'
 import type { IFormSchema, IFormProps, IFormActionType } from '../types/form'
 import { componentMap } from '../componentsMap'
 import { ComponentType } from '../types'
-import { upperFirst, cloneDeep } from 'lodash-es'
-import { isFunction, isBoolean, isNull } from '@/_utils/is'
+import { upperFirst } from 'lodash-es'
+import { isFunction, isBoolean } from '@/_utils/is'
 import { deepMerge } from '@/_utils/'
-import { createPlaceholderMessage, setComponentRuleType } from '../helper';
+import { createPlaceholderMessage } from '../helper';
 import { getSlot } from '@/_utils/helper/tsxHelper'
 // import { useItemLabelWidth } from '../hooks/useLabelWidth'
 import BasicHelp from './BasicHelp.vue'
+
 
 export default defineComponent({
   name: 'PandoraBasicFormItem',
@@ -53,12 +53,9 @@ export default defineComponent({
     }
   },
   setup(props, { slots }) {
-    const { schema, formProps } = toRefs(props) as {
+    const { schema } = toRefs(props) as {
       schema: Ref<IFormSchema>;
-      formProps: Ref<IFormProps>;
     }
-    // const itemLabelWidthProp = useItemLabelWidth(schema, formProps);
-    // const { labelCol, wrapperCol } = unref(itemLabelWidthProp);
 
     const getComponentsProps = computed(() => {
       const { schema, tableAction, formModel, formActionType } = props
@@ -128,110 +125,6 @@ export default defineComponent({
       return { isShow, isIfShow };
     }
 
-
-    function handleRules(): FormRules[] {
-      const {
-        rules: defRules = [],
-        component,
-        rulesMessageJoinLabel,
-        label,
-        dynamicRules,
-        required
-      } = props.schema;
-
-      if (isFunction(dynamicRules)) {
-        return dynamicRules(unref(getValues)) as FormRules[];
-      }
-
-      let rules: FormRules[] = cloneDeep(defRules) as FormRules[];
-      const { rulesMessageJoinLabel: globalRulesMessageJoinLabel } = props.formProps;
-
-      const joinLabel = Reflect.has(props.schema, 'rulesMessageJoinLabel')
-        ? rulesMessageJoinLabel
-        : globalRulesMessageJoinLabel;
-      const defaultMsg = createPlaceholderMessage(component) + `${joinLabel ? label : ''}`;
-
-      function validator(rule: any, value: any, callback: any) {
-        const msg = rule.message || defaultMsg;
-        if (value === undefined || isNull(value)) {
-          // 空值
-          return Promise.reject(msg);
-        } else if (Array.isArray(value) && value.length === 0) {
-          // 数组类型
-          return Promise.reject(msg);
-        } else if (typeof value === 'string' && value.trim() === '') {
-          // 空字符串
-          return Promise.reject(msg);
-        } else if (
-          typeof value === 'object' &&
-          Reflect.has(value, 'checked') &&
-          Reflect.has(value, 'halfChecked') &&
-          Array.isArray(value.checked) &&
-          Array.isArray(value.halfChecked) &&
-          value.checked.length === 0 &&
-          value.halfChecked.length === 0
-        ) {
-          // 非关联选择的tree组件
-          return Promise.reject(msg);
-        }
-        return Promise.resolve();
-      }
-
-      const getRequired = isFunction(required) ? required(unref(getValues)) : required;
-
-      /*
-       * 1、若设置了required属性，又没有其他的rules，就创建一个验证规则；
-       * 2、若设置了required属性，又存在其他的rules，则只rules中不存在required属性时，才添加验证required的规则
-       *     也就是说rules中的required，优先级大于required
-       */
-      if (getRequired) {
-        if (!rules || rules.length === 0) {
-          rules = [{ required: getRequired, validator }];
-        } else {
-          const requiredIndex: number = rules.findIndex((rule) => Reflect.has(rule, 'required'));
-
-          if (requiredIndex === -1) {
-            rules.push({ required: getRequired, validator });
-          }
-        }
-      }
-
-      const requiredRuleIndex: number = rules.findIndex(
-        (rule) => Reflect.has(rule, 'required') && !Reflect.has(rule, 'validator'),
-      );
-
-      if (requiredRuleIndex !== -1) {
-        const rule = rules[requiredRuleIndex];
-        const { isShow } = getShow();
-        if (!isShow) {
-          rule.required = false;
-        }
-        if (component) {
-          if (!Reflect.has(rule, 'type')) {
-            rule.type = component === 'InputNumber' ? 'number' : 'string';
-          }
-
-          rule.message = rule.message || defaultMsg;
-
-          if (component.includes('Input') || component.includes('Textarea')) {
-            rule.whitespace = true;
-          }
-          const valueFormat = unref(getComponentsProps)?.valueFormat;
-          setComponentRuleType(rule, component, valueFormat);
-        }
-      }
-
-      // Maximum input length rule check
-      const characterInx = rules.findIndex((val) => val.max);
-      if (characterInx !== -1 && !rules[characterInx].validator) {
-        rules[characterInx].message =
-          rules[characterInx].message ||
-          t('component.form.maxTip', [rules[characterInx].max] as Recordable);
-      }
-      return rules;
-    }
-
-
     const getComponentsChild = (component : ComponentType) => {
         let childNode
         const { schema, tableAction, formModel, formActionType}  = props
@@ -240,7 +133,6 @@ export default defineComponent({
           componentProps = componentProps({ schema, tableAction, formModel, formActionType }) ?? {};
         }
         const opts = componentProps.options as any
-        console.log(opts,componentProps)
         if (component === 'CheckboxGroup') {
 
           childNode = opts.map(
@@ -351,7 +243,7 @@ export default defineComponent({
         : {
           default: () => renderComponentContent
         };
-      return <Comp {...compAttr}>{compSlot}</Comp>;
+      return <Comp {...compAttr} v-model={props.formModel[field]}>{compSlot}</Comp>;
     }
 
     const renderLabelHelpMessage = () => {
@@ -366,7 +258,7 @@ export default defineComponent({
       const getHelpMessage = isFunction(helpMessage)
         ? helpMessage(unref(getValues))
         : helpMessage;
-      if (getHelpMessage!==undefined || (Array.isArray(getHelpMessage) && getHelpMessage.length > 0)) {
+      if (getHelpMessage!==undefined || (Array.isArray(getHelpMessage) && getHelpMessage?.length > 0)) {
         return  (
           <span>
              {renderLabel}
@@ -380,7 +272,7 @@ export default defineComponent({
      
 
     const renderItem = () => {
-      const { label, slot, render, field, suffix, itemProps,component } = props.schema;
+      const { label, slot,rules, render, field, suffix, itemProps,component } = props.schema;
       if (component === 'Divider') {
          const dividerProp = deepMerge({contentPosition:'left'},{...unref(getComponentsProps)})
           return (
@@ -389,11 +281,12 @@ export default defineComponent({
             </ElCol>
           );
       } else {
+        const values=  unref(getValues);
         const getContent = () => {
           return slot
-            ? getSlot(slots, slot, unref(getValues))
+            ? getSlot(slots, slot, values)
             : render
-            ? render(unref(getValues))
+            ? render(values)
             : renderComponent();
         };
 
@@ -415,7 +308,7 @@ export default defineComponent({
         <ElFormItem
           prop={field}
           label={label}
-          rules={handleRules()}
+          rules={rules}
           v-slots={Slots}
           {...(itemProps as Recordable)}
         > </ElFormItem >
