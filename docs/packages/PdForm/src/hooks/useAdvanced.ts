@@ -1,7 +1,7 @@
 import type { ColProps } from 'element-plus'
 import type { AdvanceState } from '../types/hooks'
-import { ComputedRef, getCurrentInstance, Ref } from 'vue'
 import type { IFormProps, IFormSchema } from '../types/form'
+import { ComputedRef, getCurrentInstance, Ref } from 'vue'
 import { computed, unref, watch } from 'vue'
 import { isBoolean, isFunction, isNumber, isObject } from '@/_utils/is'
 import { useBreakpoint } from '@/hooks/event/useBreakpoint'
@@ -29,7 +29,6 @@ export default function ({
   const vm = getCurrentInstance()
 
   const { realWidthRef, screenEnum, screenRef } = useBreakpoint()
-
   const getEmptySpan = computed((): number => {
     if (!advanceState.isAdvanced) {
       return 0
@@ -80,17 +79,18 @@ export default function ({
       parseInt(itemCol.sm as string) ||
       (itemCol.span as number) ||
       BASIC_COL_LEN
-
     const lgWidth = parseInt(itemCol.lg as string) || mdWidth
     const xlWidth = parseInt(itemCol.xl as string) || lgWidth
-    if (width <= screenEnum.LG) {
+    const xxlWidth = parseInt(itemCol.xxl as string) || xlWidth
+    if (width <= screenEnum.MD) {
       itemColSum += mdWidth
-    } else if (width < screenEnum.XL) {
+    } else if (width < screenEnum.LG) {
       itemColSum += lgWidth
-    } else if (width < screenEnum.XXL) {
+    } else if (width < screenEnum.XL) {
       itemColSum += xlWidth
+    } else {
+      itemColSum += xxlWidth
     }
-
     if (isLastAction) {
       advanceState.hideAdvanceBtn = false
       if (itemColSum <= BASIC_COL_LEN * 2) {
@@ -156,7 +156,6 @@ export default function ({
         schema.isAdvanced = isAdvanced
       }
     }
-
     // 确保页面发送更新
     vm?.proxy?.$forceUpdate()
 

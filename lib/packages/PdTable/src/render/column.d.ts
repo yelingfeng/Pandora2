@@ -6,4 +6,6 @@ import type { IPandoraTableColumn } from '../types';
  * @param sortService 排序service
  * @returns
  */
-export declare function useColumnRender<T>(columnProps: IPandoraTableColumn<T>[], sortService: SortService): any[];
+export declare function useColumnRender<T>(columnProps: IPandoraTableColumn<T>[], sortService: SortService): import("vue").VNode<import("vue").RendererNode, import("vue").RendererElement, {
+    [key: string]: any;
+}>[];

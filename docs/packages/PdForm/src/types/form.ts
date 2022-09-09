@@ -8,6 +8,9 @@ import type {
   ColProps,
   ButtonProps
 } from 'element-plus'
+
+export type FieldMapToTime = [string, [string, string], string?][]
+
 export interface IFormProps {
   name?: string
   model?: Record<string, any>
@@ -63,6 +66,8 @@ export interface IFormProps {
   alwaysShowLines?: number
   // Whether to show the operation button
   showActionButtonGroup?: boolean
+
+  fieldMapToTime?: FieldMapToTime
 
   // Reset button configuration
   resetButtonOptions?: Partial<ButtonProps>
@@ -136,7 +141,7 @@ export interface IFormSchema {
     | any
 
   // Validation rules
-  rules?: FormRules[]
+  rules?: FormRules | FormRules[]
 
   // Required
   required?: boolean | ((renderCallbackParams: RenderCallbackParams) => boolean)
@@ -252,7 +257,5 @@ export interface IFormActionType {
 export type RegisterFn = (formInstance: IFormActionType) => void
 
 export type UseFormReturnType = [RegisterFn, IFormActionType]
-
-export type FieldMapToTime = [string, [string, string], string?][]
 
 export type NamePath = string | number | (string | number)[]

@@ -1,7 +1,6 @@
 <template>
   <el-col v-bind="actionColOpt" v-if="showActionButtonGroup">
-    <div style="width: 100%" :style="{ textAlign: 'right' }">
-      <el-form-item>
+    <div :style="getActionStyle">
         <slot name="resetBefore"></slot>
         <el-button type="default" v-bind="getResetBtnOptions" @click="resetAction" v-if="showResetButton">
           {{ getResetBtnOptions.label }}
@@ -18,13 +17,12 @@
           <BasicArrow class="ml-1" :expand="!isAdvanced" up />
         </el-button>
         <slot name="advanceAfter"></slot>
-      </el-form-item>
     </div>
   </el-col>
 </template>
 <script lang="ts">
-import { defineComponent, computed, PropType } from 'vue';
-import { ElFormItem, ElCol, ButtonProps, ColProps, ElButton } from 'element-plus';
+import { defineComponent, computed, PropType,CSSProperties } from 'vue';
+import {  ElCol, ButtonProps, ColProps, ElButton } from 'element-plus';
 import BasicArrow from './BasicArrow.vue';
 import { useFormContext } from '../hooks/useFormContext';
 import { propTypes } from '@/_utils/propTypes';
@@ -34,7 +32,6 @@ type ButtonOptions = Partial<ButtonProps> & { label: string };
 export default defineComponent({
   name: 'BasicFormAction',
   components: {
-    ElFormItem,
     BasicArrow,
     ElCol,
     ElButton
@@ -44,6 +41,10 @@ export default defineComponent({
     showResetButton: propTypes.bool.def(true),
     showSubmitButton: propTypes.bool.def(true),
     showAdvancedButton: propTypes.bool.def(true),
+    actionColStyle:{
+      type: Object as PropType<CSSProperties>,
+      default: () => ({}),
+    },
     resetButtonOptions: {
       type: Object as PropType<Partial<ButtonOptions>>,
       default: () => ({}),
@@ -77,6 +78,14 @@ export default defineComponent({
       return actionColOpt;
     });
 
+    const getActionStyle = computed(()=>{
+      const { actionColStyle  } = props;
+      return {
+        width : '100%',
+        'text-align': actionColStyle.textAlign? actionColStyle.textAlign :'right'
+      }
+    })
+
     const getResetBtnOptions = computed((): ButtonOptions => {
       return Object.assign(
         {
@@ -107,6 +116,7 @@ export default defineComponent({
       getResetBtnOptions,
       getSubmitBtnOptions,
       toggleAdvanced,
+      getActionStyle,
       ...useFormContext(),
     };
   },

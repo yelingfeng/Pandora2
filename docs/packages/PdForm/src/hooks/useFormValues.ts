@@ -7,6 +7,7 @@ import {
   isString,
   isNullOrUnDef
 } from '@/_utils/is'
+import { dateUtil } from '@/_utils/dateUtil'
 import { cloneDeep, set } from 'lodash-es'
 
 interface UseFormValuesContext {
@@ -85,36 +86,36 @@ export function useFormValues({
         set(res, key, value)
       }
     }
-    return res
+    return handleRangeTimeValue(res)
   }
 
-  // /**
-  //  * @description: Processing time interval parameters
-  //  */
-  // function handleRangeTimeValue(values: Recordable) {
-  //   const fieldMapToTime = unref(getProps).fieldMapToTime
+  /**
+   * @description: Processing time interval parameters
+   */
+  function handleRangeTimeValue(values: Recordable) {
+    const fieldMapToTime = unref(getProps).fieldMapToTime
 
-  //   if (!fieldMapToTime || !Array.isArray(fieldMapToTime)) {
-  //     return values
-  //   }
+    if (!fieldMapToTime || !Array.isArray(fieldMapToTime)) {
+      return values
+    }
 
-  //   for (const [
-  //     field,
-  //     [startTimeKey, endTimeKey],
-  //     format = 'YYYY-MM-DD'
-  //   ] of fieldMapToTime) {
-  //     if (!field || !startTimeKey || !endTimeKey || !values[field]) {
-  //       continue
-  //     }
-  //     const [startTime, endTime]: string[] = values[field]
+    for (const [
+      field,
+      [startTimeKey, endTimeKey],
+      format = 'YYYY-MM-DD'
+    ] of fieldMapToTime) {
+      if (!field || !startTimeKey || !endTimeKey || !values[field]) {
+        continue
+      }
+      const [startTime, endTime]: string[] = values[field]
 
-  //     values[startTimeKey] = dateUtil(startTime).format(format)
-  //     values[endTimeKey] = dateUtil(endTime).format(format)
-  //     Reflect.deleteProperty(values, field)
-  //   }
+      values[startTimeKey] = dateUtil(startTime).format(format)
+      values[endTimeKey] = dateUtil(endTime).format(format)
+      Reflect.deleteProperty(values, field)
+    }
 
-  //   return values
-  // }
+    return values
+  }
 
   function initDefault() {
     const schemas = unref(getSchema)

@@ -1,3 +1,4 @@
+import { PropType } from 'vue';
 import { IPandoraTableColumn, IPandoraTableSort } from '../types';
 export declare const tableProps: {
     data: {

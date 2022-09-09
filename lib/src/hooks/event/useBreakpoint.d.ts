@@ -9,7 +9,7 @@ export interface CreateCallbackParams {
     sizeEnum: typeof sizeEnum;
 }
 export declare function useBreakpoint(): {
-    screenRef: any;
+    screenRef: ComputedRef<sizeEnum | undefined>;
     widthRef: ComputedRef<number>;
     screenEnum: typeof screenEnum;
     realWidthRef: ComputedRef<number>;

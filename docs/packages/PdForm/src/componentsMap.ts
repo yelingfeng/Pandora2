@@ -20,6 +20,7 @@ import {
   ElRate,
   ElDivider
 } from 'element-plus'
+import ApiSelect from './components/ApiSelect.vue'
 const componentMap = new Map<ComponentType, Component>()
 
 componentMap.set('Autocomplete', ElAutocomplete)
@@ -40,6 +41,7 @@ componentMap.set('Radio', ElRadio)
 componentMap.set('RadioGroup', ElRadioGroup)
 componentMap.set('Rate', ElRate)
 componentMap.set('Divider', ElDivider)
+componentMap.set('ApiSelect', ApiSelect)
 
 export function add(compName: ComponentType, component: Component) {
   componentMap.set(compName, component)
