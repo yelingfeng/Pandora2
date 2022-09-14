@@ -18,7 +18,7 @@
       "require": "./lib/style.css"
     }
   },
-  "typings": "./lib/packages/index.d.ts",
+  "types": "./lib/packages/pandora/index.d.ts",
   "scripts": {
     "dev": "vite --config ./build/base.config.ts --host 0.0.0.0 ",
     "build:docs": "vite build --config ./build/doc.config.ts && node script/copyDir.js",
