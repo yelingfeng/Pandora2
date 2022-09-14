@@ -11,14 +11,15 @@
   "exports": {
     ".": {
       "import": "./lib/pandora2.es.js",
-      "require": "./lib/pandora2.umd.js"
+      "require": "./lib/pandora2.umd.js",
+      "types": "./lib/packages/index.d.ts"
     },
     "./lib/style.css": {
       "import": "./lib/style.css",
       "require": "./lib/style.css"
     }
   },
-  "types": "./lib/packages/pandora/index.d.ts",
+  "types": "./lib/packages/index.d.ts",
   "scripts": {
     "dev": "vite --config ./build/base.config.ts --host 0.0.0.0 ",
     "build:docs": "vite build --config ./build/doc.config.ts && node script/copyDir.js",
