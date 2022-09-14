@@ -32,7 +32,7 @@ import {
   unref,
   onMounted,
 } from 'vue'
-import type { IFormActionType, IFormSchema, IFormProps } from './types/form'
+import type { IFormActionType, IFormSchema, IFormProps } from './types'
 import type { AdvanceState } from './types/hooks';
 import { ElForm, ElRow ,FormRules } from 'element-plus'
 import FormItem from './components/FormItem.vue'

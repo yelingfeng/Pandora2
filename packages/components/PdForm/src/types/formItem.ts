@@ -1,7 +1,7 @@
 import type { ColProps } from 'element-plus'
 import type { HTMLAttributes, VNodeChild } from 'vue'
 
-export interface IFormItem {
+export type IFormItem = {
   /**
    * Used with label, whether to display : after label text.
    * @default true

@@ -4,7 +4,7 @@ import type {
   IFormSchema,
   IFormActionType,
   Callback
-} from '../types/form'
+} from '../types'
 import { unref, toRaw, nextTick } from 'vue'
 import {
   isArray,

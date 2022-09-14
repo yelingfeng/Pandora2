@@ -1,5 +1,5 @@
 import type { ComputedRef, Ref } from 'vue'
-import type { IFormSchema, IFormActionType, IFormProps } from '../types/form'
+import type { IFormSchema, IFormActionType, IFormProps } from '../types'
 
 import { unref, nextTick, watchEffect } from 'vue'
 

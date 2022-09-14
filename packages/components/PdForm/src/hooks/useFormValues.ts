@@ -1,4 +1,4 @@
-import { IFormProps, IFormSchema } from '../types/form'
+import { IFormProps, IFormSchema } from '../types'
 import { unref, Ref, ComputedRef } from 'vue'
 import {
   isObject,

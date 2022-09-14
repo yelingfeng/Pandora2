@@ -9,7 +9,7 @@ import {
   onMounted
 } from 'vue'
 import { ElFormItem, ElCol ,ElDivider } from 'element-plus'
-import type { IFormSchema, IFormProps, IFormActionType } from '../types/form'
+import type { IFormSchema, IFormProps, IFormActionType } from '../types'
 import { componentMap } from '../componentsMap'
 import { ComponentType } from '../types'
 import { upperFirst } from 'lodash-es'

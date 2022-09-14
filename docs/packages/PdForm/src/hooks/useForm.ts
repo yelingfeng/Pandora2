@@ -4,7 +4,7 @@ import type {
   DynamicProps,
   UseFormReturnType,
   IFormActionType
-} from '../types/form'
+} from '../types'
 import { ref, watch, onUnmounted, unref, nextTick } from 'vue'
 import { isProdMode } from '@/_utils/env'
 import { getDynamicProps, error } from '@/_utils'

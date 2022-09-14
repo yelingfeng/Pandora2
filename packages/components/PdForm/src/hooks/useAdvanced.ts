@@ -1,6 +1,6 @@
 import type { ColProps } from 'element-plus'
 import type { AdvanceState } from '../types/hooks'
-import type { IFormProps, IFormSchema } from '../types/form'
+import type { IFormProps, IFormSchema } from '../types'
 import { ComputedRef, getCurrentInstance, Ref } from 'vue'
 import { computed, unref, watch } from 'vue'
 import { isBoolean, isFunction, isNumber, isObject } from '@/_utils/is'

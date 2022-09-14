@@ -1,10 +1,5 @@
 import { ComputedRef, Ref, toRaw, unref } from 'vue'
-import {
-  IFormProps,
-  IFormSchema,
-  IFormActionType,
-  Callback
-} from '../types/form'
+import { IFormProps, IFormSchema, IFormActionType, Callback } from '../types'
 import {
   isArray,
   isFunction,

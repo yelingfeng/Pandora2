@@ -1,4 +1,4 @@
-import type { FieldMapToTime, IFormSchema } from '../types/form'
+import type { FieldMapToTime, IFormSchema } from '../types'
 import type { CSSProperties, PropType } from 'vue'
 // import type { TableActionType } from '/@/components/Table'
 import type { ButtonProps, ColProps, FormRules, RowProps } from 'element-plus'
