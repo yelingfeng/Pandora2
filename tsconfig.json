@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "baseUrl": ".",
+    "baseUrl": "./",
     "declaration": true,
     "target": "esnext",
     "module": "esnext",
@@ -24,7 +24,7 @@
     "types": ["vite/client", "jest"],
     "paths": {
       "@/*": ["./src/*"],
-      "@pandora/*": ["./packages/*"]
+      "@pandora/*": ["packages/*"]
     },
     "lib": ["esnext", "dom"]
   },
