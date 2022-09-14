@@ -45,6 +45,7 @@ const schemas: IFormSchema[] = [
         span: 8,
       },
       ifShow: ({ values }) => {
+        console.log(values)
         return !!values.field6;
       },
     },
@@ -99,7 +100,6 @@ const schemas: IFormSchema[] = [
       colProps: {
         span: 8,
       },
-      labelWidth: 200,
     },
     {
       field: 'field6',
@@ -107,7 +107,7 @@ const schemas: IFormSchema[] = [
       label: '是否显示字段2(dom控制)',
       colProps: {
         span: 8,
-      },
+      }
     },
     {
       field: 'field7',

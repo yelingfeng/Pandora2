@@ -6,7 +6,7 @@ import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 
 // 打包入口文件夹
-const entryDir = resolve(__dirname, '../packages')
+const entryDir = resolve(__dirname, '../packages/pandora')
 // 出口文件
 const outputDir = resolve(__dirname, '../lib')
 // rollup 配置
@@ -25,6 +25,7 @@ export default defineConfig({
   ...baseConfig,
   publicDir: false,
   build: {
+    // target: 'esnext',
     lib: {
       entry: resolve(entryDir, 'index.ts'),
       name: 'pandora2',
@@ -33,5 +34,11 @@ export default defineConfig({
     rollupOptions,
     outDir: outputDir
   },
-  plugins: [vue(), vueJsx(), dts()]
+  plugins: [
+    vue(),
+    vueJsx(),
+    dts({
+      include: ['packages', 'typings']
+    })
+  ]
 })

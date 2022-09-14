@@ -13,8 +13,7 @@ import type { IFormSchema, IFormProps, IFormActionType } from '../types/form'
 import { componentMap } from '../componentsMap'
 import { ComponentType } from '../types'
 import { upperFirst } from 'lodash-es'
-import { isFunction, isBoolean } from '@/_utils/is'
-import { deepMerge } from '@/_utils/'
+import { isFunction, isBoolean ,deepMerge } from '@/_utils'
 import { createPlaceholderMessage } from '../helper';
 import { getSlot } from '@/_utils/helper/tsxHelper'
 // import { useItemLabelWidth } from '../hooks/useLabelWidth'
@@ -335,8 +334,10 @@ export default defineComponent({
 
       const { baseColProps = {} } = props.formProps;
       const realColProps = { ...baseColProps, ...colProps };
-      const { isShow } = getShow();
+      const { isShow ,isIfShow } = getShow();
       const values = unref(getValues);
+
+      console.log('render',isIfShow)
 
       const getContent = () => {
         return colSlot
@@ -346,9 +347,11 @@ export default defineComponent({
             : renderItem();
       };
       return (
-        <ElCol {...realColProps} v-show={isShow}>
+        isIfShow && (
+          <ElCol {...realColProps} v-show={isShow}>
           {getContent()}
-        </ElCol>
+         </ElCol>
+         )
       )
     }
   }

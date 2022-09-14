@@ -24,18 +24,15 @@
     "types": ["vite/client", "jest"],
     "paths": {
       "@/*": ["./src/*"],
-      "@modules/*": ["./packages/*"]
+      "@pandora/*": ["./packages/*"]
     },
     "lib": ["esnext", "dom"]
   },
   "include": [
-    "*.ts",
     "src/**/*.ts",
     "src/**/*.d.ts",
-    "src/**/*.tsx",
     "src/**/*.vue",
     "packages/**/*.ts",
-    "packages/**/*.d.ts",
     "packages/**/*.tsx",
     "packages/**/*.vue"
   ],

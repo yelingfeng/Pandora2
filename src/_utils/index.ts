@@ -1,8 +1,7 @@
 export * from './propTypes'
-export * from './withInstall'
 export * from './props'
 export * from './log'
-
+export * from './is'
 /**
  * @description:  Set ui mount node
  */
