@@ -44,11 +44,5 @@ export default defineConfig({
     rollupOptions,
     outDir: outputDir
   },
-  plugins: [
-    vue(),
-    vueJsx(),
-    dts({
-      include: 'packages'
-    })
-  ]
+  plugins: [vue(), vueJsx(), dts()]
 })
