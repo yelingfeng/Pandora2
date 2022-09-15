@@ -38,10 +38,17 @@ export default defineConfig({
     lib: {
       entry: resolve(entryDir, 'index.ts'),
       name: 'pandora2',
+      formats: ['es', 'umd', 'cjs'],
       fileName: (format) => `pandora2.${format}.js`
     },
     rollupOptions,
     outDir: outputDir
   },
-  plugins: [vue(), vueJsx(), dts()]
+  plugins: [
+    vue(),
+    vueJsx(),
+    dts({
+      include: 'packages'
+    })
+  ]
 })
