@@ -9,16 +9,8 @@ export default PdForm
 
 export const PdFormItem = withNoopInstall(FormItem)
 
-export type { IFormItem } from './src/types/formItem'
-export type {
-  IFormProps,
-  IFormSchema,
-  IFormActionType,
-  ComponentType,
-  RenderCallbackParams,
-  HelpComponentProps,
-  UseFormReturnType
-} from './src/types/index'
+export * from './src/types/formItem'
+export * from './src/types/index'
 
 export type FormInstance = InstanceType<typeof Form>
 export type FormItemInstance = InstanceType<typeof FormItem>
