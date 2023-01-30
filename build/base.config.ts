@@ -22,7 +22,7 @@ export default defineConfig({
     alias: {
       '@': resolve(__dirname, '../src'),
       '@pandora': resolve(__dirname, '../packages'),
-      '/#/': resolve(__dirname, '../types')
+      '#/': resolve(__dirname, '../types')
     }
   },
   plugins: [

@@ -4,7 +4,7 @@
  */
 import { viteMockServe } from 'vite-plugin-mock'
 
-export function configMockPlugin(a) {
+export function configMockPlugin() {
   return viteMockServe({
     ignore: /^\_/,
     mockPath: 'mock',

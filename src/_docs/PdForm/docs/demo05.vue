@@ -24,7 +24,7 @@
 </template>
 
 <script setup lang="tsx" name="demo04">
-import { IFormSchema, useForm } from '@modules/PdForm/index'
+import { IFormSchema, useForm } from '@pandora/components/PdForm/index'
 const schemas: IFormSchema[] = [
     {
       field: 'field1',

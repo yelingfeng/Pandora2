@@ -1,4 +1,4 @@
-import type { GlobEnvConfig } from '/#/config'
+import type { GlobEnvConfig } from '#/config'
 
 import { warn } from '@/_utils/log'
 import pkg from '../../package.json'

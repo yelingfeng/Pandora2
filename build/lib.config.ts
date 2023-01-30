@@ -8,41 +8,29 @@ import vueJsx from '@vitejs/plugin-vue-jsx'
 // 打包入口文件夹
 const entryDir = resolve(__dirname, '../packages')
 // 出口文件
-const outputDir = resolve(__dirname, '../lib')
-// rollup 配置
-const rollupOptions = {
-  // 确保外部化处理那些你不想打包进库的依赖
-  external: [
-    'vue',
-    'dayjs',
-    'element-plus',
-    'lodash-es',
-    '@element-plus/icons-vue'
-  ],
-  output: {
-    // 在 UMD 构建模式下为这些外部化的依赖提供一个全局变量
-    globals: {
-      vue: 'Vue',
-      'element-plus': 'elementPlus',
-      dayjs: 'dayjs',
-      'lodash-es': 'lodashEs'
-    }
-  }
-}
+const outputDir = resolve(__dirname, '../dist')
 
 export default defineConfig({
   ...baseConfig,
   publicDir: false,
   build: {
-    // target: 'esnext',
+    outDir: outputDir,
     lib: {
       entry: resolve(entryDir, 'index.ts'),
       name: 'pandora2',
-      formats: ['es', 'umd', 'cjs'],
+      formats: ['es', 'umd'],
       fileName: (format) => `pandora2.${format}.js`
     },
-    rollupOptions,
-    outDir: outputDir
+    rollupOptions: {
+      // 确保外部化处理那些你不想打包进库的依赖
+      external: [
+        'vue',
+        'dayjs',
+        'element-plus',
+        'lodash-es',
+        '@element-plus/icons-vue'
+      ]
+    }
   },
   plugins: [vue(), vueJsx(), dts()]
 })

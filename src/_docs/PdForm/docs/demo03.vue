@@ -16,7 +16,7 @@
 </template>
 
 <script setup lang="tsx" name="demo03">
-import { IFormSchema, useForm } from '@modules/PdForm/index'
+import { IFormSchema, useForm } from '@pandora/components/PdForm/index'
 import { useMessage } from '@/hooks/web/useMessage';
 import { isAccountExist } from '@/api/demo/system';
 import type { FormRules } from 'element-plus'

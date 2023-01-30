@@ -24,7 +24,8 @@
     "types": ["vite/client", "jest"],
     "paths": {
       "@/*": ["./src/*"],
-      "@pandora/*": ["./packages/*"]
+      "@pandora/*": ["./packages/*"],
+      "#/*": ["./src/types"]
     },
     "lib": ["esnext", "dom"]
   },
@@ -34,7 +35,8 @@
     "src/**/*.vue",
     "packages/**/*.ts",
     "packages/**/*.tsx",
-    "packages/**/*.vue"
+    "packages/**/*.vue",
+    "volar.d.ts"
   ],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "dist"]
 }

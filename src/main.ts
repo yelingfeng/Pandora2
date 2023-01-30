@@ -8,7 +8,7 @@ import Preview from './Preview.vue'
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 
-import { PdForm, PdTable, PdContainer } from '@modules/index'
+import { PdForm, PdTable, PdContainer } from '@pandora/index'
 
 const app = createApp(App)
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'

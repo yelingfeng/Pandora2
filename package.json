@@ -5,21 +5,20 @@
     "lib"
   ],
   "repository": "https://github.com/yelingfeng/Pandora2.git",
-  "main": "./lib/pandora2.umd.js",
-  "module": "./lib/pandora2.es.js",
-  "unpkg": "./lib/pandora2.umd.js",
+  "main": "./dist/pandora2.umd.js",
+  "module": "./dist/pandora2.es.js",
   "exports": {
     ".": {
-      "import": "./lib/pandora2.es.js",
-      "require": "./lib/pandora2.umd.js",
-      "types": "./lib/packages/index.d.ts"
+      "import": "./dist/pandora2.es.js",
+      "require": "./dist/pandora2.umd.js",
+      "types": "./dist/packages/index.d.ts"
     },
-    "./lib/style.css": {
-      "import": "./lib/style.css",
-      "require": "./lib/style.css"
+    "./dist/style.css": {
+      "import": "./dist/style.css",
+      "require": "./dist/style.css"
     }
   },
-  "types": "./lib/packages/index.d.ts",
+  "types": "./dist/packages/index.d.ts",
   "scripts": {
     "dev": "vite --config ./build/base.config.ts --host 0.0.0.0 ",
     "build:docs": "vite build --config ./build/doc.config.ts && node script/copyDir.js",
