@@ -12,7 +12,7 @@ export default defineComponent({
   name,
   inheritAttrs: false,
   props: tableProps,
-  setup(props, { emit }) {
+  setup(props, { attrs,emit }) {
     const {
       tableInstance,
       tableConfig,
@@ -23,15 +23,15 @@ export default defineComponent({
     } = useTableProps(props)
 
     const { pagination, pageOpt, ...otherProps } = tableConfig
-    // console.log(pagination, stripe)
     const unRefProps = computed(() => {
       let obj: any = {}
       const objKeys = Object.keys(otherProps) as Array<keyof typeof otherProps>
-      for (let key in objKeys) {
-        obj[key] = unref(objKeys[key])
-      }
+      objKeys.map((prop:any)=>{
+        obj[prop]  = unref(objKeys[prop])
+      })
       return obj
     })
+
 
     onMounted(() => {
       $sortService.init()
@@ -51,11 +51,12 @@ export default defineComponent({
         {
           ref: tableInstance,
           onHeaderClick: handleHeaderClick,
-          data: currentData.value
+          data: currentData.value,
+          ...attrs
         },
-        unRefProps.value
+        unRefProps.value,
       )
-
+      // console.log(tableProps)
       // 创建column
       const columnsVNode = useColumnRender(columnsProps.value, $sortService)
       let pageVNode: any = null
