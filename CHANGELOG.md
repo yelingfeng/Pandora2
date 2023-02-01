@@ -1,3 +1,12 @@
+## [0.0.26](https://github.com/yelingfeng/Pandora2/compare/v0.0.25...v0.0.26) (2023-02-01)
+
+
+### Bug Fixes
+
+* **table:** fix basec attr props bug ([c5e42dc](https://github.com/yelingfeng/Pandora2/commit/c5e42dc83a43667bff9e842687e01f7edd43cb48))
+
+
+
 ## [0.0.25](https://github.com/yelingfeng/Pandora2/compare/v0.0.24...v0.0.25) (2023-01-30)
 
 
