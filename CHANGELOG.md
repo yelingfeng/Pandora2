@@ -1,3 +1,12 @@
+## [0.0.27](https://github.com/yelingfeng/Pandora2/compare/v0.0.26...v0.0.27) (2023-02-02)
+
+
+### Bug Fixes
+
+* **i18n:** fix locale ([309c378](https://github.com/yelingfeng/Pandora2/commit/309c378b03a62dead739da7ff408ad8e841d957d))
+
+
+
 ## [0.0.26](https://github.com/yelingfeng/Pandora2/compare/v0.0.25...v0.0.26) (2023-02-01)
 
 
