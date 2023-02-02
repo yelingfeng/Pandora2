@@ -18,18 +18,19 @@ export default defineConfig({
     lib: {
       entry: resolve(entryDir, 'index.ts'),
       name: 'pandora2',
-      formats: ['es', 'umd'],
       fileName: (format) => `pandora2.${format}.js`
     },
     rollupOptions: {
       // 确保外部化处理那些你不想打包进库的依赖
-      external: [
-        'vue',
-        'dayjs',
-        'element-plus',
-        'lodash-es',
-        '@element-plus/icons-vue'
-      ]
+      treeshake: true,
+      external: ['vue', 'element-plus'],
+      output: {
+        globals: {
+          vue: 'Vue',
+          'element-plus': 'ElementPlus'
+        },
+        exports: 'named'
+      }
     }
   },
   plugins: [vue(), vueJsx(), dts()]

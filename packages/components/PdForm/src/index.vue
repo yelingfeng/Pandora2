@@ -49,7 +49,6 @@ import { dateUtil } from '@/_utils/dateUtil'
 import { dateItemType } from './helper'
 import { cloneDeep } from 'lodash-es';
 import useAdvanced from './hooks/useAdvanced';
-
 const [name] = createNamespace('Form')
 export default defineComponent({
   name,
@@ -293,7 +292,7 @@ export default defineComponent({
   }
 })
 </script>
-<style lang="less">
+<style>
 .vpandora-form {
   position: relative;
 

@@ -1,5 +1,5 @@
 <template>
-    <PdTable ref="table" :data="testData" :columns="columns" :stripe="stripe" :border="stripe" :tableLayout="tableLayout"></PdTable>
+    <PdTable ref="table" size="large" :data="testData" :columns="columns" :stripe="stripe" :border="border" :tableLayout="tableLayout"></PdTable>
 </template>
 
 <script lang="tsx">
@@ -16,7 +16,7 @@ export default defineComponent({
 
     const stripe = ref(true)
     const border = ref(true)
-    const tableLayout = ref('fixed')
+    const tableLayout = ref('auto')
   
       
     const columns = [
