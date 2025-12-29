@@ -17,6 +17,7 @@ Pandora2 的table组件
 </Preview>
 
 
+
 ## `stripe`
 
 - 类型： `Boolean`

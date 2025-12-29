@@ -41,6 +41,42 @@ const routes = [
     name: 'PdTable',
     path: '/components/PdTable',
     component: () => import('@/_docs/PdTable/docs/README.md')
+  },
+  {
+    title: 'Table Pagination',
+    name: 'TablePagination',
+    path: '/components/TablePagination',
+    component: () => import('@/_docs/PdTable/docs/pagination.md')
+  },
+  {
+    title: 'Table Sort',
+    name: 'TableSort',
+    path: '/components/TableSort',
+    component: () => import('@/_docs/PdTable/docs/sort.md')
+  },
+  {
+    title: 'Table Styles',
+    name: 'TableStyles',
+    path: '/components/TableStyles',
+    component: () => import('@/_docs/PdTable/docs/styles.md')
+  },
+  {
+    title: 'Table Selection',
+    name: 'TableSelection',
+    path: '/components/TableSelection',
+    component: () => import('@/_docs/PdTable/docs/selection.md')
+  },
+  {
+    title: 'Table Interaction',
+    name: 'TableInteraction',
+    path: '/components/TableInteraction',
+    component: () => import('@/_docs/PdTable/docs/interaction.md')
+  },
+  {
+    title: 'Table Summary',
+    name: 'TableSummary',
+    path: '/components/TableSummary',
+    component: () => import('@/_docs/PdTable/docs/summary.md')
   }
 ]
 

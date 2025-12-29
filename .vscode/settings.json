@@ -17,7 +17,7 @@
   },
   "editor.formatOnSave": true,
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": false
+    "source.fixAll.eslint": "never"
   },
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "files.associations": {

@@ -31,8 +31,44 @@
   },
   {
     "compName": "PdTable",
-    "compZhName": "PdTable",
+    "compZhName": "基础表格",
     "compDesc": "Table组件",
+    "compClassName": "PdTable"
+  },
+  {
+    "compName": "TablePagination",
+    "compZhName": "分页",
+    "compDesc": "表格分页",
+    "compClassName": "PdTable"
+  },
+  {
+    "compName": "TableSort",
+    "compZhName": "表格排序",
+    "compDesc": "表格排序",
+    "compClassName": "PdTable"
+  },
+  {
+    "compName": "TableStyles",
+    "compZhName": "基础样式",
+    "compDesc": "样式",
+    "compClassName": "PdTable"
+  },
+  {
+    "compName": "TableSelection",
+    "compZhName": "多选",
+    "compDesc": "表格多选",
+    "compClassName": "PdTable"
+  },
+  {
+    "compName": "TableInteraction",
+    "compZhName": "表格交互",
+    "compDesc": "表格交互",
+    "compClassName": "PdTable"
+  },
+  {
+    "compName": "TableSummary",
+    "compZhName": "表格汇总",
+    "compDesc": "表格汇总",
     "compClassName": "PdTable"
   }
 ]

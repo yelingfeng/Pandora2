@@ -1,0 +1,23 @@
+{
+  "globals": {
+    "ref": true,
+    "reactive": true,
+    "readonly": true,
+    "computed": true,
+    "watch": true,
+    "watchEffect": true,
+    "onMounted": true,
+    "onUnmounted": true,
+    "onBeforeMount": true,
+    "onBeforeUnmount": true,
+    "onUpdated": true,
+    "onBeforeUpdate": true,
+    "nextTick": true,
+    "unref": true,
+    "isRef": true,
+    "toRef": true,
+    "toRefs": true,
+    "defineComponent": true,
+    "h": true
+  }
+}

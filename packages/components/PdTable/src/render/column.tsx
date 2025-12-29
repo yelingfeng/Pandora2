@@ -1,9 +1,8 @@
-import { SortService } from '../sort/sortService'
-import { ElTableColumn } from 'element-plus'
-import type { IPandoraTableColumn } from '../types'
 import { isFunction } from '@/_utils/is'
-import { toRaw } from 'vue'
-import { createVNode } from 'vue'
+import { ElTableColumn } from 'element-plus'
+import { createVNode, toRaw } from 'vue'
+import { SortService } from '../sort/sortService'
+import type { IPandoraTableColumn } from '../types'
 /**
  *
  */
@@ -24,7 +23,10 @@ function renderColumnProp<T>(
       header: (props: any) => {
         const column = props.column
         const customHeader = (
-          <div relId={column.property}>
+          <div
+            relId={column.property}
+            style={{ cursor: 'pointer', display: 'inline-flex', alignItems: 'center' }}
+          >
             {column.label}
             <span class="caret-wrapper">
               <i
@@ -72,6 +74,11 @@ function getColumnVNode<T>(
   childNode = null
 ) {
   const { columnProps, slots } = renderColumnProp<T>(columnProp, sortService)
+  // 确保 columnProps 有 key，优先使用 id, prop, type, label
+  if (!columnProps.key) {
+    columnProps.key = columnProps.prop || columnProps.type || columnProps.label || Math.random().toString(36).slice(2)
+  }
+
   if (childNode) {
     return <ElTableColumn {...columnProps}>{childNode}</ElTableColumn>
   }

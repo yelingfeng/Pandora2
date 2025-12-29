@@ -5,6 +5,7 @@ import vueJsx from '@vitejs/plugin-vue-jsx'
 import dts from 'vite-plugin-dts'
 import Components from 'unplugin-vue-components/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
+import AutoImport from 'unplugin-auto-import/vite'
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -40,7 +41,25 @@ export default defineConfig({
         })
       ],
       dts: 'src/components.d.ts'
-    })
+    }),
+    AutoImport({
+      imports: [
+        'vue',          // 自动导入 ref, reactive, computed, watch...
+        'vue-router' ,  // 可选：useRoute, useRouter
+        'piniy'
+      ],
+      include: [
+        /\.[tj]sx?$/,        // ✅ 让 .tsx / .jsx 生效
+        /\.vue$/,
+        /\.vue\?vue/,
+      ],
+      dts: 'src/auto-imports.d.ts', // 生成类型声明，TS 必备
+      eslintrc: {
+        enabled: true, // 解决 eslint no-undef
+        filepath: '.eslintrc-auto-import.json',
+        globalsPropValue: true,
+      },
+    }),
   ],
   css: {
     modules: {
