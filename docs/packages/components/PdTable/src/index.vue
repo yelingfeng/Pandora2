@@ -1,18 +1,18 @@
 <script lang="tsx">
-import { defineComponent, onMounted, unref, computed } from 'vue'
 import { createNamespace } from '@/_utils/create/index'
-import { useColumnRender } from './render/column'
-import { usePagerRender } from './render/pager'
 import { ElTable } from 'element-plus'
+import { computed, defineComponent, nextTick, onMounted, unref } from 'vue'
 import { tableProps } from './props'
 import { useTableProps } from './props/useTableProps'
+import { useColumnRender } from './render/column'
+import { usePagerRender } from './render/pager'
 
 const [name] = createNamespace('Table')
 export default defineComponent({
   name,
   inheritAttrs: false,
   props: tableProps,
-  setup(props, { emit }) {
+  setup(props, { attrs, emit }) {
     const {
       tableInstance,
       tableConfig,
@@ -22,19 +22,27 @@ export default defineComponent({
       handleHeaderClick
     } = useTableProps(props)
 
-    const { pagination, pageOpt, ...otherProps } = tableConfig
-    // console.log(pagination, stripe)
+    // 从 props.tableConfig 中提取分页配置，用于后续判断
+    const pagination = computed(() => props.tableConfig?.pagination)
+    const pageOpt = computed(() => props.tableConfig?.pageOpt)
+
     const unRefProps = computed(() => {
+      // 必须在 computed 内部重新解构 tableConfig，以建立响应式依赖
+      const { pagination, pageOpt, ...otherProps } = props.tableConfig || {}
+
       let obj: any = {}
       const objKeys = Object.keys(otherProps) as Array<keyof typeof otherProps>
-      for (let key in objKeys) {
-        obj[key] = unref(objKeys[key])
-      }
+      objKeys.map((prop: any) => {
+        obj[prop] = unref(otherProps[prop])
+      })
       return obj
     })
 
+
     onMounted(() => {
-      $sortService.init()
+      nextTick(() => {
+        $sortService.init()
+      })
     })
 
     // 分页事件回调
@@ -51,17 +59,18 @@ export default defineComponent({
         {
           ref: tableInstance,
           onHeaderClick: handleHeaderClick,
-          data: currentData.value
+          data: currentData.value,
+          ...attrs
         },
-        unRefProps.value
+        unRefProps.value,
       )
-
+      // console.log(tableProps)
       // 创建column
       const columnsVNode = useColumnRender(columnsProps.value, $sortService)
       let pageVNode: any = null
       if (unref(pagination)) {
         pageVNode = usePagerRender(
-          pageOpt,
+          unref(pageOpt),
           handleSizeChange,
           handleCurrentChange
         )

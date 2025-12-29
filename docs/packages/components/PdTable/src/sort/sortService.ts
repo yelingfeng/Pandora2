@@ -1,6 +1,6 @@
-import { removeClass, addClass, trim } from '@/_utils/helper'
+import { addClass, removeClass, trim } from '@/_utils/helper'
 import { isFunction } from '@/_utils/is'
-import { ISortService, ISortChangeCb, Dictionary } from '../types'
+import { Dictionary, ISortChangeCb, ISortService } from '../types'
 export const ASC = 'ascending'
 export const DESC = 'descending'
 export const DEFAULT_SORT = 'descending'
@@ -72,6 +72,7 @@ export class SortService {
    */
   getSortColDom(order: string) {
     const tableInstance = this.option.tableInstance?.value as any
+    if (!tableInstance) return []
     const tableEl = tableInstance.$el
     return tableEl.querySelectorAll(`div[relid=${order}]`)
   }
