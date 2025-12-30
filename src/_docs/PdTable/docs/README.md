@@ -18,6 +18,8 @@ Pandora2 的table组件
 
 
 
+# 常用属性
+
 ## `stripe`
 
 - 类型： `Boolean`
@@ -32,7 +34,7 @@ Pandora2 的table组件
 
 是否显示`loading`
 
-## `isHeader`
+## `showHeader`
 
 - 类型： `Boolean`
 - 默认： `true`

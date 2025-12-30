@@ -1,24 +1,22 @@
 <template>
   <div style="height: 400px">
     <div style="margin-bottom: 20px">
+      <el-text class="mx-1">选择列位置 selectionPos：</el-text>
       <el-radio-group v-model="config.selection.selectionPos" style="margin-right: 20px">
         <el-radio label="top">Pos: Top</el-radio>
         <el-radio label="end">Pos: End</el-radio>
       </el-radio-group>
-      <span>Selectable: Disable ID 2</span>
     </div>
-
+    <p>
+      selectable 禁用第二行, Selected rows: {{ selectedRows.length }}
+    </p>
     <PdTable ref="table" :data="testData" :columns="columns" :tableConfig="config" border
       @selection-change="handleSelectionChange"></PdTable>
-    <div style="margin-top: 20px">
-      Selected rows: {{ selectedRows.length }}
-    </div>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
-
 export default defineComponent({
   setup() {
     const testData = ref([

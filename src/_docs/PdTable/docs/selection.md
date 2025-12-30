@@ -1,10 +1,10 @@
 
 # 多选功能 (Selection)
 
-<Preview comp-name="PdTable" demo-name="demo05">
-  <demo05 />
+<Preview comp-name="PdTable" demo-name="selection">
+  <selection />
 </Preview>
 
 <script setup>
-import demo05 from './demo05.vue'
+import selection from './selection.vue'
 </script>

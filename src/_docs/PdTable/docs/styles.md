@@ -1,10 +1,10 @@
 
 # 样式与属性透传 (Styles & Props)
 
-<Preview comp-name="PdTable" demo-name="demo04">
-  <demo04 />
+<Preview comp-name="PdTable" demo-name="stylesProps">
+  <stylesProps />
 </Preview>
 
 <script setup>
-import demo04 from './demo04.vue'
+import stylesProps from './stylesProps.vue'
 </script>

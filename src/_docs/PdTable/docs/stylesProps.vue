@@ -3,6 +3,7 @@
     <div style="margin-bottom: 20px">
       <el-checkbox v-model="config.stripe">Stripe</el-checkbox>
       <el-checkbox v-model="config.border">Border</el-checkbox>
+      <el-checkbox v-model="config.showHeader">showHeader</el-checkbox>
       <el-radio-group v-model="config.size" style="margin-left: 20px">
         <el-radio label="large">Large</el-radio>
         <el-radio label="default">Default</el-radio>
@@ -10,19 +11,12 @@
       </el-radio-group>
     </div>
 
-    <PdTable
-      ref="table"
-      :data="testData"
-      :columns="columns"
-      :stripe="config.stripe"
-      :border="config.border"
-      :size="config.size"
-    ></PdTable>
+    <PdTable ref="table" :data="testData" :columns="columns" :tableConfig="config"></PdTable>
   </div>
 </template>
 
 <script lang="tsx">
-import { defineComponent, ref, reactive } from 'vue'
+import { defineComponent, reactive, ref } from 'vue';
 
 export default defineComponent({
   setup() {
@@ -42,7 +36,8 @@ export default defineComponent({
     const config = reactive({
       stripe: true,
       border: true,
-      size: 'default'
+      size: 'default',
+      showHeader: true
     })
 
     return {

@@ -25,6 +25,30 @@
     "compDesc": "Form组件",
     "compClassName": "PdForm"
   },
+ {
+    "compName": "FormBaseProps",
+    "compZhName": "基础属性",
+    "compDesc": "Form组件",
+    "compClassName": "PdForm"
+  },
+   {
+    "compName": "FormAPI",
+    "compZhName": "API",
+    "compDesc": "Form组件",
+    "compClassName": "PdForm"
+  },
+     {
+    "compName": "FormCustom",
+    "compZhName": "自定义组件",
+    "compDesc": "Form组件",
+    "compClassName": "PdForm"
+  },
+     {
+    "compName": "FormDynamic",
+    "compZhName": "动态组件",
+    "compDesc": "Form组件",
+    "compClassName": "PdForm"
+  },
   {
     "compName": "Meau",
     "compZhName": "表格组件"

@@ -36,6 +36,32 @@ const routes = [
     path: '/components/PdForm',
     component: () => import('@/_docs/PdForm/docs/README.md')
   },
+
+    {
+    title: 'FormBaseProps',
+    name: 'FormBaseProps',
+    path: '/components/FormBaseProps',
+    component: () => import('@/_docs/PdForm/docs/props.md')
+  },
+
+  {
+    title:'FormAPI',
+    name:'FormAPI',
+    path:'/components/FormAPI',
+    component: () => import('@/_docs/PdForm/docs/api.md')
+  },
+  {
+    title: 'FormCustom',
+    name: 'FormCustom',
+    path: '/components/FormCustom',
+    component: () => import('@/_docs/PdForm/docs/custom.md')
+  },
+  {
+    title: 'FormDynamic',
+    name: 'FormDynamic',
+    path: '/components/FormDynamic',
+    component: () => import('@/_docs/PdForm/docs/dynamic.md')
+  },
   {
     title: 'PdTable',
     name: 'PdTable',

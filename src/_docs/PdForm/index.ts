@@ -3,7 +3,7 @@ import Form from './docs/demo.vue'
 
 export const PdFormPlugin: Plugin = {
   install(app: App) {
-    app.component('pd-form,', Form)
+    app.component('pd-form', Form)
   }
 }
 

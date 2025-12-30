@@ -1,10 +1,10 @@
 
 # 分页配置 (Pagination)
 
-<Preview comp-name="PdTable" demo-name="demo02">
-  <demo02 />
+<Preview comp-name="PdTable" demo-name="pagination">
+  <pagination />
 </Preview>
 
 <script setup>
-import demo02 from './demo02.vue'
+import pagination from './pagination.vue'
 </script>

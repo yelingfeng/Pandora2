@@ -64,7 +64,7 @@ export default defineComponent({
         },
         unRefProps.value,
       )
-      // console.log(tableProps)
+      console.log('tableProps', tableProps)
       // 创建column
       const columnsVNode = useColumnRender(columnsProps.value, $sortService)
       let pageVNode: any = null
