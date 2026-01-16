@@ -1,10 +1,11 @@
 <template>
   <div class="vpandora-form">
-    <el-Form v-bind="getBindValue" :rules="getRules" ref="formRef" :model="formModel" @keypress.enter="handleEnterPress">
+    <el-Form v-bind="getBindValue" :rules="getRules" ref="formRef" :model="formModel"
+      @keypress.enter="handleEnterPress">
       <el-row v-bind="getRow">
         <slot name="formHeader"></slot>
         <template v-for="schema in getSchema" :key="schema.field">
-          <FormItem :tableAction="tableAction" :formActionType="formActionType" :schema="schema" :formProps="getProps"
+          <FormItem :formActionType="formActionType" :schema="schema" :formProps="getProps"
             :allDefaultValues="defaultValueRef" :formModel="formModel" :setFormModel="setFormModel">
             <template #[item]="data" v-for="item in Object.keys($slots)">
               <slot :name="item" v-bind="data || {}"></slot>
@@ -22,33 +23,33 @@
   </div>
 </template>
 <script lang="ts">
+import { deepMerge } from '@/_utils/';
+import { createNamespace } from '@/_utils/create';
+import { dateUtil } from '@/_utils/dateUtil';
+import { useDebounceFn } from '@vueuse/core';
+import { ElForm, ElRow, FormRules } from 'element-plus';
+import { cloneDeep } from 'lodash-es';
 import {
+  computed,
   defineComponent,
+  onMounted,
   reactive,
-  watch,
   ref,
   Ref,
-  computed,
   unref,
-  onMounted,
-} from 'vue'
-import type { IFormActionType, IFormSchema, IFormProps } from './types'
-import type { AdvanceState } from './types/hooks';
-import { ElForm, ElRow ,FormRules } from 'element-plus'
-import FormItem from './components/FormItem.vue'
-import FormAction from './components/FormAction.vue'
-import { createNamespace } from '@/_utils/create'
-import { deepMerge } from '@/_utils/'
-import { useFormValues } from './hooks/useFormValues'
-import { useFormEvents } from './hooks/useFormEvents'
-import { useAutoFocus } from './hooks/useAutoFocus'
-import { createFormContext } from './hooks/useFormContext'
-import { useDebounceFn } from '@vueuse/core';
-import { FormBasicProps } from './props'
-import { dateUtil } from '@/_utils/dateUtil'
-import { dateItemType } from './helper'
-import { cloneDeep } from 'lodash-es';
+  watch,
+} from 'vue';
+import FormAction from './components/FormAction.vue';
+import FormItem from './components/FormItem.vue';
+import { dateItemType } from './helper';
 import useAdvanced from './hooks/useAdvanced';
+import { useAutoFocus } from './hooks/useAutoFocus';
+import { createFormContext } from './hooks/useFormContext';
+import { useFormEvents } from './hooks/useFormEvents';
+import { useFormValues } from './hooks/useFormValues';
+import { FormBasicProps } from './props';
+import type { IFormActionType, IFormProps, IFormSchema } from './types';
+import type { AdvanceState } from './types/hooks';
 const [name] = createNamespace('Form')
 export default defineComponent({
   name,
@@ -93,9 +94,9 @@ export default defineComponent({
       };
     });
 
-    const getRules = computed(():FormRules =>{
-        const { rules={} } = unref(getProps)
-        return rules
+    const getRules = computed((): FormRules => {
+      const { rules = {} } = unref(getProps)
+      return rules
     })
 
     const getBindValue = computed(
