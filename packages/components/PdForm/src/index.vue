@@ -1,5 +1,5 @@
 <template>
-  <div class="vpandora-form">
+  <div class="vpandora-form" :class="{ collapsed: !advanceState.isAdvanced }">
     <el-Form v-bind="getBindValue" :rules="getRules" ref="formRef" :model="formModel"
       @keypress.enter="handleEnterPress">
       <el-row v-bind="getRow">
@@ -32,12 +32,13 @@ import { cloneDeep } from 'lodash-es';
 import {
   computed,
   defineComponent,
+  inject,
   onMounted,
   reactive,
   ref,
   Ref,
   unref,
-  watch,
+  watch
 } from 'vue';
 import FormAction from './components/FormAction.vue';
 import FormItem from './components/FormItem.vue';
@@ -63,6 +64,7 @@ export default defineComponent({
   },
   emits: ['advanced-change', 'reset', 'submit', 'register', 'field-value-change'],
   setup(props, { emit, attrs }) {
+    const isInPageLayout = inject('isInPageLayout', false)
     const formModel = reactive<Recordable>({})
     const formPropsRef = ref<Partial<IFormProps>>({})
     const defaultValueRef = ref<Recordable>({})
@@ -83,6 +85,12 @@ export default defineComponent({
           ...props,
           ...unref(formPropsRef),
         } as IFormProps
+
+        if (isInPageLayout) {
+          if (_props.alwaysShowLines === 1) _props.alwaysShowLines = 0.75
+          if (_props.autoAdvancedLine === 3) _props.autoAdvancedLine = 1
+          if (_props.showAdvancedButton === false) _props.showAdvancedButton = true
+        }
         return _props
       }
     )
@@ -296,6 +304,7 @@ export default defineComponent({
 <style>
 .vpandora-form {
   position: relative;
+  width: 100%;
 
   .el-select,
   .el-date-editor.el-input,
@@ -318,5 +327,11 @@ export default defineComponent({
     color: rgb(119, 119, 119);
   }
 
+}
+
+.vpandora-form.collapsed {
+  .el-form-item {
+    margin-bottom: 0 !important;
+  }
 }
 </style>

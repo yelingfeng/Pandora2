@@ -109,6 +109,12 @@ const routes = [
     name: 'TableUseTable',
     path: '/components/TableUseTable',
     component: () => import('@/_docs/PdTable/docs/useTable.md')
+  },
+  {
+    title: 'PageLayout',
+    name: 'PdPageLayout',
+    path: '/components/PdPageLayout',
+    component: () => import('@/_docs/PdPageLayout/docs/README.md')
   }
 ]
 

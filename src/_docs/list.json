@@ -25,25 +25,25 @@
     "compDesc": "Form组件",
     "compClassName": "PdForm"
   },
- {
+  {
     "compName": "FormBaseProps",
     "compZhName": "基础属性",
     "compDesc": "Form组件",
     "compClassName": "PdForm"
   },
-   {
+  {
     "compName": "FormAPI",
     "compZhName": "API",
     "compDesc": "Form组件",
     "compClassName": "PdForm"
   },
-     {
+  {
     "compName": "FormCustom",
     "compZhName": "自定义组件",
     "compDesc": "Form组件",
     "compClassName": "PdForm"
   },
-     {
+  {
     "compName": "FormDynamic",
     "compZhName": "动态组件",
     "compDesc": "Form组件",
@@ -59,7 +59,7 @@
     "compDesc": "Table组件",
     "compClassName": "PdTable"
   },
-   {
+  {
     "compName": "TableUseTable",
     "compZhName": "hook用法",
     "compDesc": "useTable",
@@ -100,5 +100,15 @@
     "compZhName": "表格汇总",
     "compDesc": "表格汇总",
     "compClassName": "PdTable"
+  },
+  {
+    "compName": "Meau",
+    "compZhName": "布局组件"
+  },
+  {
+    "compName": "PdPageLayout",
+    "compZhName": "页面布局",
+    "compDesc": "PageLayout",
+    "compClassName": "PdPageLayout"
   }
 ]

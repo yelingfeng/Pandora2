@@ -1,6 +1,7 @@
 <template>
   <div class="vpandora-form">
-    <el-Form v-bind="getBindValue" :rules="getRules" ref="formRef" :model="formModel" @keypress.enter="handleEnterPress">
+    <el-Form v-bind="getBindValue" :rules="getRules" ref="formRef" :model="formModel"
+      @keypress.enter="handleEnterPress">
       <el-row v-bind="getRow">
         <slot name="formHeader"></slot>
         <template v-for="schema in getSchema" :key="schema.field">
@@ -34,7 +35,7 @@ import {
 } from 'vue'
 import type { IFormActionType, IFormSchema, IFormProps } from './types'
 import type { AdvanceState } from './types/hooks';
-import { ElForm, ElRow ,FormRules } from 'element-plus'
+import { ElForm, ElRow, FormRules } from 'element-plus'
 import FormItem from './components/FormItem.vue'
 import FormAction from './components/FormAction.vue'
 import { createNamespace } from '@/_utils/create'
@@ -93,9 +94,9 @@ export default defineComponent({
       };
     });
 
-    const getRules = computed(():FormRules =>{
-        const { rules={} } = unref(getProps)
-        return rules
+    const getRules = computed((): FormRules => {
+      const { rules = {} } = unref(getProps)
+      return rules
     })
 
     const getBindValue = computed(
@@ -295,6 +296,7 @@ export default defineComponent({
 <style>
 .vpandora-form {
   position: relative;
+  width: 100%;
 
   .el-select,
   .el-date-editor.el-input,
