@@ -126,6 +126,17 @@ interface Table<T> extends ComponentInternalInstance {
   refs: TableRefs
   tableId: string
   state: TableState
+  clearSelection: () => void
+  getSelectionRows: () => T[]
+  toggleRowSelection: (row: T, selected?: boolean) => void
+  toggleAllSelection: () => void
+  toggleRowExpansion: (row: T, expanded?: boolean) => void
+  setCurrentRow: (row?: T) => void
+  clearSort: () => void
+  clearFilter: (columnKeys?: string[]) => void
+  doLayout: () => void
+  sort: (prop: string, order: string) => void
+  scrollTo: (options: number | ScrollToOptions, yCoord?: number) => void
 }
 
 type ColumnCls<T> = string | ((data: { row: T; rowIndex: number }) => string)

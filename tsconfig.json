@@ -25,7 +25,7 @@
     "paths": {
       "@/*": ["./src/*"],
       "@pandora/*": ["./packages/*"],
-      "#/*": ["./src/types"]
+      "#/*": ["./src/types/*"]
     },
     "lib": ["esnext", "dom"]
   },
@@ -36,6 +36,7 @@
     "packages/**/*.ts",
     "packages/**/*.tsx",
     "packages/**/*.vue",
+    "src/**/*.md",
     "volar.d.ts"
   ],
   "exclude": ["node_modules", "dist"]

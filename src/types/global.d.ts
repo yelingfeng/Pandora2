@@ -99,3 +99,9 @@ declare module 'vue' {
     | { new (): ComponentPublicInstance<Props> }
     | FunctionalComponent<Props>;
 }
+
+declare module '*.md' {
+  import type { ComponentOptions } from 'vue'
+  const Component: ComponentOptions
+  export default Component
+}

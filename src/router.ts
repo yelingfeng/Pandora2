@@ -103,6 +103,12 @@ const routes = [
     name: 'TableSummary',
     path: '/components/TableSummary',
     component: () => import('@/_docs/PdTable/docs/summary.md')
+  },
+  {
+    title: 'Table useTable',
+    name: 'TableUseTable',
+    path: '/components/TableUseTable',
+    component: () => import('@/_docs/PdTable/docs/useTable.md')
   }
 ]
 

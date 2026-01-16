@@ -2,7 +2,7 @@ import { resolve } from 'path'
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
-import Markdown from 'vite-plugin-md'
+import Markdown from 'unplugin-vue-markdown/vite'
 import { configMockPlugin } from './plugin/mock'
 
 // 文档: https://vitejs.dev/config/
@@ -26,11 +26,11 @@ export default defineConfig({
     }
   },
   plugins: [
+    Markdown(),
     vue({
       include: [/\.vue$/, /\.md$/]
     }),
     vueJsx(),
-    Markdown(),
     configMockPlugin()
   ]
 })

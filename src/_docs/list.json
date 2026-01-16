@@ -59,6 +59,12 @@
     "compDesc": "Table组件",
     "compClassName": "PdTable"
   },
+   {
+    "compName": "TableUseTable",
+    "compZhName": "hook用法",
+    "compDesc": "useTable",
+    "compClassName": "PdTable"
+  },
   {
     "compName": "TablePagination",
     "compZhName": "分页",

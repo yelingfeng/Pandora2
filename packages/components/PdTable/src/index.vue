@@ -1,48 +1,155 @@
 <script lang="tsx">
 import { createNamespace } from '@/_utils/create/index'
 import { ElTable } from 'element-plus'
-import { computed, defineComponent, nextTick, onMounted, unref } from 'vue'
+import { merge } from 'lodash-es'
+import {
+  computed,
+  defineComponent,
+  nextTick,
+  onMounted,
+  reactive,
+  ref,
+  unref,
+  watch
+} from 'vue'
 import { tableProps } from './props'
 import { useTableProps } from './props/useTableProps'
 import { useColumnRender } from './render/column'
 import { usePagerRender } from './render/pager'
+import type {
+  IPandoraTableColumn,
+  IPandoraTableProps,
+  ITableActionType
+} from './types'
 
 const [name] = createNamespace('Table')
 export default defineComponent({
   name,
   inheritAttrs: false,
   props: tableProps,
+  emits: ['register', 'handleSizePageChange', 'handleCurrentPageChange'],
   setup(props, { attrs, emit }) {
+    const propsRef = ref<Partial<IPandoraTableProps<any>>>({})
+
+    const innerProps = reactive({ ...props })
+
+    // update innerProps when props or propsRef changes
+    watch(
+      [() => props, () => propsRef.value],
+      () => {
+        const merged = merge({}, unref(props), unref(propsRef))
+        if ('data' in merged) (innerProps as any).data = (merged as any).data
+        if ('columns' in merged)
+          (innerProps as any).columns = (merged as any).columns
+        if ('tableConfig' in merged)
+          (innerProps as any).tableConfig = (merged as any).tableConfig
+      },
+      { deep: true, immediate: true }
+    )
+
     const {
       tableInstance,
-      tableConfig,
       currentData,
       columnsProps,
       $sortService,
       handleHeaderClick
-    } = useTableProps(props)
+    } = useTableProps(innerProps as any)
 
-    // 从 props.tableConfig 中提取分页配置，用于后续判断
-    const pagination = computed(() => props.tableConfig?.pagination)
-    const pageOpt = computed(() => props.tableConfig?.pageOpt)
+    const getConfig = () => (innerProps.tableConfig as any) || {}
+    const pagination = computed(() => getConfig().pagination)
+    const pageOpt = computed(() => getConfig().pageOpt)
+    const selectionMode = computed(() => {
+      const selection = getConfig().selection
+      if (!selection || typeof selection !== 'object') return ''
+      return selection.selectionMode || ''
+    })
+    const tableKey = computed(() => {
+      const cols = columnsProps.value || []
+      return cols
+        .map((c: any) => c.type || c.prop || c.value || c.label || c.name || '')
+        .join('|')
+    })
 
     const unRefProps = computed(() => {
-      // 必须在 computed 内部重新解构 tableConfig，以建立响应式依赖
-      const { pagination, pageOpt, ...otherProps } = props.tableConfig || {}
+      const {
+        pagination: h,
+        pageOpt: h2,
+        selection: h3,
+        ...otherProps
+      } = getConfig()
 
       let obj: any = {}
       const objKeys = Object.keys(otherProps) as Array<keyof typeof otherProps>
       objKeys.map((prop: any) => {
-        obj[prop] = unref(otherProps[prop])
+        obj[prop] = unref((otherProps as any)[prop])
       })
       return obj
     })
 
+    const internalSelecting = ref(false)
+    const handleSelectionChange = (val: any[]) => {
+      const userHandler: any = (attrs as any).onSelectionChange
+      if (internalSelecting.value) {
+        if (userHandler) userHandler(val)
+        return
+      }
+
+      if (
+        unref(selectionMode) === 'single' &&
+        Array.isArray(val) &&
+        val.length > 1
+      ) {
+        const last = val[val.length - 1]
+        internalSelecting.value = true
+        nextTick(() => {
+          const inst: any = tableInstance.value as any
+          if (inst && inst.clearSelection && inst.toggleRowSelection) {
+            inst.clearSelection()
+            inst.toggleRowSelection(last, true)
+          }
+          internalSelecting.value = false
+        })
+        if (userHandler) userHandler([last])
+        return
+      }
+
+      if (userHandler) userHandler(val)
+    }
+
+    const tableAction: ITableActionType = {
+      setProps: async (props: Partial<IPandoraTableProps<any>>) => {
+        propsRef.value = merge({}, unref(propsRef) || {}, props)
+        await nextTick()
+      },
+      setColumns: async (columns: IPandoraTableColumn<any>[]) => {
+        const update = { columns }
+        propsRef.value = merge({}, unref(propsRef) || {}, update)
+        await nextTick()
+      },
+      setData: async (data: any[]) => {
+        const update = { data }
+        propsRef.value = merge({}, unref(propsRef) || {}, update)
+        await nextTick()
+      },
+      reload: async (_opt?: any) => {
+        // TODO reload logic
+      },
+      getSelectRows: <T = any>() => {
+        const inst: any = tableInstance.value as any
+        if (inst && inst.getSelectionRows) return inst.getSelectionRows() || []
+        return []
+      },
+      clearSelection: () => {
+        const inst: any = tableInstance.value as any
+        if (inst && inst.clearSelection) inst.clearSelection()
+      }
+    }
 
     onMounted(() => {
       nextTick(() => {
         $sortService.init()
       })
+      emit('register', tableAction)
     })
 
     // 分页事件回调
@@ -58,13 +165,14 @@ export default defineComponent({
       const tableProps = Object.assign(
         {
           ref: tableInstance,
+          key: unref(tableKey),
           onHeaderClick: handleHeaderClick,
+          onSelectionChange: handleSelectionChange,
           data: currentData.value,
           ...attrs
         },
-        unRefProps.value,
+        unRefProps.value
       )
-      console.log('tableProps', tableProps)
       // 创建column
       const columnsVNode = useColumnRender(columnsProps.value, $sortService)
       let pageVNode: any = null

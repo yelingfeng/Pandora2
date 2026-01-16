@@ -5,3 +5,6 @@ declare module 'vue' {
     PdTable: typeof import('pandora2')['PdTable']
   }
 }
+
+export { }
+
