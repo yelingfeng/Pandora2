@@ -1,0 +1,44 @@
+<svg width="128" height="128" viewBox="0 0 128 128"
+     xmlns="http://www.w3.org/2000/svg">
+
+  <!-- 立方体外框 -->
+  <polygon points="24,40 64,20 104,40 104,92 64,112 24,92"
+           fill="#E6F4FF" stroke="#6BB8FF" stroke-width="3"/>
+
+  <!-- 左侧面 -->
+  <polygon points="24,40 64,60 64,112 24,92"
+           fill="#D4ECFF"/>
+
+  <!-- 右侧面 -->
+  <polygon points="64,60 104,40 104,92 64,112"
+           fill="#BEE4FF"/>
+
+  <!-- 内部柱状数据 -->
+  <rect x="38" y="68" width="8" height="24" fill="#5B8CFF"/>
+  <rect x="50" y="76" width="8" height="16" fill="#5B8CFF"/>
+  <rect x="62" y="84" width="8" height="8" fill="#5B8CFF"/>
+
+  <!-- 内部模块立方体 -->
+  <rect x="74" y="70" width="20" height="20" rx="2"
+        fill="#FF6A5F"/>
+
+  <!-- 顶部能力入口 -->
+  <rect x="54" y="32" width="28" height="28" rx="6"
+        transform="rotate(45 68 46)"
+        fill="url(#gradCore)"/>
+
+  <circle cx="52" cy="36" r="10" fill="url(#gradBall)"/>
+
+  <!-- 渐变定义 -->
+  <defs>
+    <linearGradient id="gradCore" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#6C7CFF"/>
+      <stop offset="100%" stop-color="#8B9BFF"/>
+    </linearGradient>
+    <linearGradient id="gradBall" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#5AD8FF"/>
+      <stop offset="100%" stop-color="#5B8CFF"/>
+    </linearGradient>
+  </defs>
+
+</svg>

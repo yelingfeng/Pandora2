@@ -21,7 +21,7 @@
   },
   {
     "compName": "PdForm",
-    "compZhName": "PdForm",
+    "compZhName": "基础表单",
     "compDesc": "Form组件",
     "compClassName": "PdForm"
   },
@@ -107,8 +107,24 @@
   },
   {
     "compName": "PdPageLayout",
-    "compZhName": "页面布局",
+    "compZhName": "基础布局",
     "compDesc": "PageLayout",
     "compClassName": "PdPageLayout"
+  },
+  {
+    "compName": "PdPageTreeLayout",
+    "compZhName": "侧边栏布局",
+    "compDesc": "PageTreeLayout",
+    "compClassName": "PdPageTreeLayout"
+  },
+  {
+    "compName": "Meau",
+    "compZhName": "可视化组件"
+  },
+  {
+    "compName": "PdCharts",
+    "compZhName": "图表",
+    "compDesc": "PdCharts",
+    "compClassName": "PdCharts"
   }
 ]

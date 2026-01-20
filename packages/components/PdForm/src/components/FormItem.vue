@@ -141,7 +141,7 @@ export default defineComponent({
               typeof defineComponent
             >
             return (
-              <CheckNode value={value} key={value}>
+              <CheckNode label={value} key={value}>
                 {label}
               </CheckNode>
             )

@@ -1,17 +1,14 @@
 <template>
   <div class="my-kit-doc">
+    <TopHeader />
     <aside>
-      <div class="logo">
-        <img src="@/assets/logo-long.png" alt="" />
-        <div class="version">0.0.12</div>
-      </div>
       <div class="menu">
         <div v-for="(link, index) in data.links" :key="index" @click="scollTop">
           <div class="meauTitle" v-if="link.path == '/components/Meau'">
             {{ link.name }}
           </div>
           <router-link :class="{ active: link.path === $route.path }" v-else :key="index" :to="link.path">{{ link.name
-          }}</router-link>
+            }}</router-link>
         </div>
       </div>
     </aside>
@@ -22,10 +19,11 @@
 </template>
 
 <script setup>
-import ComponentList from '@/_docs/list.json'
+import ComponentList from '@/_docs/list.json';
+import TopHeader from '@/components/layout/TopHeader.vue';
 
 import { createBreakpointListen } from '@/hooks/event/useBreakpoint';
-import { reactive } from 'vue'
+import { reactive } from 'vue';
 
 const data = reactive({
   links: ComponentList.map((item) => ({
@@ -47,6 +45,9 @@ html,
 body {
   margin: 0;
   padding: 0;
+  font-family: 'Helvetica Neue', Helvetica, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑', Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  background-color: #fff;
 }
 
 .el-input__prefix {
@@ -58,78 +59,117 @@ body {
   min-height: 100vh;
   width: 100%;
   margin: 0 auto;
-
-  .logo {
-    width: 100%;
-    position: relative;
-    padding: 20px 0;
-
-    img {
-      width: 100%;
-    }
-
-    .version {
-      position: absolute;
-      right: 0;
-      bottom: 15px;
-      background: #7abafa;
-      color: #fff;
-      padding: 0 10px;
-      border-radius: 25px;
-      font-size: 10px;
-      line-height: 18px;
-    }
-  }
+  padding-top: 60px;
+  /* Header height */
+  box-sizing: border-box;
 
   aside {
-    width: 230px;
-    padding: 0 15px;
+    position: fixed;
+    top: 60px;
+    left: 0;
+    bottom: 0;
+    width: 240px;
+    padding: 20px 0;
     display: flex;
     flex-direction: column;
+    border-right: 1px solid #dcdfe6;
+    background: #fff;
+    z-index: 99;
+    overflow-y: auto;
+    transition: transform 0.3s ease;
 
     .menu {
-      height: calc(100vh - 107px);
-      overflow: scroll;
-      padding-bottom: 30px;
-      padding-right: 10px;
+      padding: 0 10px;
       box-sizing: border-box;
     }
 
-    .menu::-webkit-scrollbar {
-      width: 0 !important;
+    /* 滚动条美化 */
+    &::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: #e4e7ed;
+      border-radius: 4px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: transparent;
     }
 
     .meauTitle {
       font-size: 16px;
-      font-weight: bold;
-      line-height: 50px;
-      color: #333;
-      padding-left: 30px;
+      font-weight: 700;
+      color: #303133;
+      padding-left: 0;
+      margin-top: 10px;
+      margin-bottom: 5px;
+      /* 优化垂直居中，移除固定 line-height */
+      display: flex;
+      align-items: center;
+      min-height: 40px;
     }
 
-    .active {
-      color: #53a8ff;
-      font-weight: bold;
-      padding: 5px 2rem 5px 1.5rem;
-      font-size: 0.9rem;
-      margin: 0 8px;
-      border-radius: 8px;
-      background: #ecf5ff;
+    a {
+      display: flex;
+      /* 改为 flex 布局 */
+      align-items: center;
+      /* 垂直居中 */
+      color: #606266;
+      text-decoration: none;
+      padding: 2px 10px;
+      /* 调整 padding */
+      font-size: 14px;
+      border-radius: 4px;
+      margin: 2px 0;
+      transition: all 0.2s;
+      line-height: 1.5;
+      min-height: 40px;
+      /* 确保最小高度 */
+
+      &:hover {
+        color: #409eff;
+        background-color: #ecf5ff;
+      }
+
+      &.active {
+        color: #409eff;
+        font-weight: 600;
+        background-color: #ecf5ff;
+        position: relative;
+
+        &::after {
+          content: '';
+          position: absolute;
+          right: 0;
+          top: 0;
+          bottom: 0;
+          width: 3px;
+          background-color: #409eff;
+          border-top-right-radius: 4px;
+          border-bottom-right-radius: 4px;
+          display: none;
+          /* 暂时隐藏右侧条，Element Plus 风格通常是整行高亮 */
+        }
+      }
     }
   }
 
   main {
-    width: 100%;
     flex: 1;
-    padding: 0 30px;
-    height: 100vh;
-    overflow: scroll;
-    padding-bottom: 30px;
+    margin-left: 240px;
+    /* Sidebar width */
+    padding: 30px 40px;
+    min-height: calc(100vh - 60px);
+    overflow-x: hidden;
     box-sizing: border-box;
-  }
+    max-width: calc(100vw - 240px);
 
-  main::-webkit-scrollbar {
-    width: 0 !important;
+    /* 限制内容最大宽度，优化阅读体验 */
+    >* {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
   }
 }
 </style>

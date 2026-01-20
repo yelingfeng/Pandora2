@@ -44,7 +44,6 @@ const [registerForm, { getFieldsValue }] = useForm({
     { field: 'address', label: '地址', component: 'Input', colProps: { span: 6 } },
   ],
   labelWidth: 80,
-  rowProps: { gutter: 10 }, // 使用 gutter 替代 gap
 })
 
 const [registerTable, { setData }] = useTable({

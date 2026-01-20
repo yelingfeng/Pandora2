@@ -1,5 +1,5 @@
-import { PdContainer } from '@pandora/components/PandoraContainer'
+import { PdPageLayout } from '@pandora/components/PdPageLayout'
 
 import type { Plugin } from 'vue'
 
-export default [PdContainer] as Plugin[]
+export default [PdPageLayout] as Plugin[]

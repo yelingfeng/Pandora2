@@ -1,5 +1,5 @@
 <template>
-  <div class="pandora-page-layout-container" :style="{ height: typeof height === 'number' ? height + 'px' : height }">
+  <div class="pandora-page-layout" :style="[{ height: typeof height === 'number' ? height + 'px' : height }, style]">
     <LoadCom v-if="tableLoading" />
     <!-- 表单区域 -->
     <div class="pandora-form-section" ref="formSectionRef">
@@ -17,7 +17,7 @@
 </template>
 
 <script lang="ts" setup>
-import { onBeforeUnmount, onMounted, provide, ref } from 'vue'
+import { onBeforeUnmount, onMounted, PropType, provide, ref, StyleValue } from 'vue'
 import LoadCom from './components/Loading.vue'
 
 // Provide context for child components (like PdForm) to adapt behavior
@@ -37,6 +37,10 @@ const props = defineProps({
   tableLoading: {
     type: Boolean,
     default: false,
+  },
+  style: {
+    type: [String, Object] as PropType<StyleValue>,
+    default: () => ({}),
   },
 })
 
@@ -83,7 +87,7 @@ onBeforeUnmount(() => {
 </script>
 
 <style lang="less" scoped>
-.pandora-page-layout-container {
+.pandora-page-layout {
   width: 100%;
   min-width: 900px;
   background: #f6f8f9;

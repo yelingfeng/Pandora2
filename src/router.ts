@@ -24,12 +24,12 @@ const routes = [
     path: '/components/Install',
     component: () => import('@/_docs/Install/README.md')
   },
-  // {
-  //   title: '快速上手',
-  //   name: 'Start',
-  //   path: '/components/Start',
-  //   component: () => import('src/_docs_/Start/docs/README.md')
-  // },
+  {
+    title: '快速上手',
+    name: 'Start',
+    path: '/components/Start',
+    component: () => import('@/_docs/Start/docs/README.md')
+  },
   {
     title: 'PdForm',
     name: 'PdForm',
@@ -115,6 +115,19 @@ const routes = [
     name: 'PdPageLayout',
     path: '/components/PdPageLayout',
     component: () => import('@/_docs/PdPageLayout/docs/README.md')
+  },
+  {
+    title: 'PageTreeLayout',
+    name: 'PdPageTreeLayout',
+    path: '/components/PdPageTreeLayout',
+    component: () => import('@/_docs/PdPageLayout/docs/TreeLayout.md')
+  },
+
+  {
+    title: 'Charts',
+    name: 'PdCharts',
+    path: '/components/PdCharts',
+    component: () => import('@/_docs/PdCharts/docs/README.md')
   }
 ]
 
