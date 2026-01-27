@@ -3,6 +3,7 @@ import { mount } from '@vue/test-utils'
 import fs from 'node:fs'
 import path from 'node:path'
 import { pathToFileURL } from 'node:url'
+import { execSync } from 'node:child_process'
 import { createApp, defineComponent, nextTick } from 'vue'
 import type { App } from 'vue'
 
@@ -16,9 +17,12 @@ beforeAll(async () => {
   }
 
   const distEntry = path.resolve(process.cwd(), 'dist/pandora2.es.js')
+  if (!fs.existsSync(distEntry)) {
+    execSync('pnpm run build:lib', { stdio: 'inherit' })
+  }
   expect(
     fs.existsSync(distEntry),
-    `dist entry not found: ${distEntry}. Please run "yarn build:lib" first.`
+    `dist entry not found: ${distEntry}. Please run "pnpm run build:lib" first.`
   ).toBe(true)
   dist = await import(pathToFileURL(distEntry).href)
 })
