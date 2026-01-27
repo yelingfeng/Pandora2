@@ -49,6 +49,17 @@ pnpm run test:coverage
 - `coverage/lcov.info`：用于 CI 上传到 Codecov
 - `coverage/index.html`：本地可视化覆盖率报告（图表 + 文件明细）
 
+### 发布（自动打 Tag）
+该仓库的 GitHub Actions 会在推送 `v*` tag 时触发 `npm publish`。
+
+本地发布（会自动生成 changelog、提交、打 tag 并 push）：
+
+```bash
+pnpm run release:patch
+# pnpm run release:minor
+# pnpm run release:major
+```
+
 #
 
 ### 开发者 👨‍💻
