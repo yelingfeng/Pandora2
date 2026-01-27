@@ -4,7 +4,10 @@
 [![npm](https://img.shields.io/npm/v/pandora2)](https://www.npmjs.com/package/pandora2)
 [![test](https://github.com/yelingfeng/Pandora2/actions/workflows/node.js.yml/badge.svg?branch=main)](https://github.com/yelingfeng/Pandora2/actions/workflows/node.js.yml)
 [![coverage](https://codecov.io/gh/yelingfeng/Pandora2/branch/main/graph/badge.svg)](https://codecov.io/gh/yelingfeng/Pandora2)
-![image](https://github.com/yelingfeng/Pandora2/blob/main/src/assets/logo.svg?raw=true)
+
+<p align="center">
+  <img src="https://github.com/yelingfeng/Pandora2/blob/main/src/assets/logo.svg?raw=true" alt="Pandora2 Logo" />
+</p>
 
 ### 介绍
 ---

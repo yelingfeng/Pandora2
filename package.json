@@ -6,6 +6,9 @@
     "volar.d.ts"
   ],
   "repository": "https://github.com/yelingfeng/Pandora2.git",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
   "main": "./dist/pandora2.umd.js",
   "module": "./dist/pandora2.es.js",
   "types": "./dist/packages/index.d.ts",
