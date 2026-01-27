@@ -1,4 +1,4 @@
-<script lang="tsx">
+<script lang="js">
 import { deepMerge } from '@/_utils/'
 import { getSlot } from '@/_utils/helper/tsxHelper'
 import { isBoolean, isFunction } from '@/_utils/is'
@@ -7,9 +7,12 @@ import { upperFirst } from 'lodash-es'
 import {
   computed,
   defineComponent,
+  h,
   onMounted,
   toRefs,
-  unref
+  unref,
+  vShow,
+  withDirectives
 } from 'vue'
 import { componentMap } from '../componentsMap'
 import { createPlaceholderMessage } from '../helper'
@@ -119,50 +122,40 @@ export default defineComponent({
       return { isShow, isIfShow };
     }
 
-    const getComponentsChild = (component: any) => {
-      let childNode
+    const getComponentsChild = (component) => {
       const { schema, tableAction, formModel, formActionType } = props
-      let { componentProps = {} } = unref(schema)
+      let { componentProps = {} } = unref(schema) || {}
       if (isFunction(componentProps)) {
-        componentProps = componentProps({ schema, tableAction, formModel, formActionType }) ?? {};
+        componentProps =
+          componentProps({
+            schema,
+            tableAction,
+            formModel,
+            formActionType
+          }) ?? {}
       }
-      const opts = componentProps.options as any
+      const opts = (componentProps && componentProps.options) || []
+      if (!Array.isArray(opts)) return undefined
+
       if (component === 'CheckboxGroup') {
-        childNode = opts.map(
-          ({ label, value }: any) => {
-            const CheckNode = componentMap.get('Checkbox') as any
-            return (
-              <CheckNode label={value} key={value}>
-                {label}
-              </CheckNode>
-            )
-          }
-        )
-        return childNode
-      } else if (component === 'Select') {
-        childNode = opts.map(
-          ({ label, value }: any) => {
-            const OptionNode = componentMap.get('SelectOption') as any
-            return (
-              <OptionNode label={label} value={value} key={value}>
-                {label}
-              </OptionNode>
-            )
-          }
-        )
-      } else if (component === 'RadioGroup') {
-        childNode = opts.map(
-          ({ label, value }: any) => {
-            const RadioNode = componentMap.get('Radio') as any
-            return (
-              <RadioNode label={value} key={value}>
-                {label}
-              </RadioNode>
-            )
-          }
+        const CheckNode = componentMap.get('Checkbox')
+        return opts.map(({ label, value }) =>
+          h(CheckNode, { label: value, key: value }, () => label)
         )
       }
-      return childNode
+      if (component === 'Select') {
+        const OptionNode = componentMap.get('SelectOption')
+        return opts.map(({ label, value }) =>
+          h(OptionNode, { label, value, key: value }, () => label)
+        )
+      }
+      if (component === 'RadioGroup') {
+        const RadioNode = componentMap.get('Radio')
+        return opts.map(({ label, value }) =>
+          h(RadioNode, { label: value, key: value }, () => label)
+        )
+      }
+      return undefined
     }
 
 
@@ -180,7 +173,7 @@ export default defineComponent({
       const eventKey = `on${upperFirst(changeEvent)}`;
 
       const on = {
-        [eventKey]: (...args: any[]) => {
+        [eventKey]: (...args) => {
           const [e] = args;
           if (propsData[eventKey]) {
             propsData[eventKey](...args);
@@ -190,9 +183,9 @@ export default defineComponent({
           props.setFormModel(field, value);
         }
       };
-      const Comp = componentMap.get(component) as any;
+      const Comp = componentMap.get(component);
       const propsData = {
-        getPopupContainer: (trigger: any) => trigger.parentNode,
+        getPopupContainer: (trigger) => trigger.parentNode,
         ...unref(getComponentsProps),
         disabled: unref(getDisable),
       };
@@ -222,47 +215,47 @@ export default defineComponent({
         ...bindValue,
       };
 
+      if (!Comp) return null
+
       if (!renderComponentContent) {
-        return (
-          <Comp {...compAttr} v-model={props.formModel[field]}>
-            {getComponentsChild(component)}
-          </Comp>
-        )
+        const children = getComponentsChild(component)
+        return h(Comp, compAttr, () => children)
       }
 
-      let slots: any
       if (isFunction(renderComponentContent)) {
-        const slotObj = renderComponentContent(unref(getValues))
-        slots = slotObj && typeof slotObj === 'object'
-          ? { ...slotObj }
-          : { default: () => slotObj }
-      } else {
-        slots = { default: () => renderComponentContent }
+        const slotObj = renderComponentContent(unref(getValues)) || {}
+        if (slotObj && typeof slotObj === 'object') {
+          return h(Comp, compAttr, slotObj)
+        }
+        return h(Comp, compAttr, { default: () => slotObj })
       }
-      return <Comp {...compAttr} v-model={props.formModel[field]} v-slots={slots} />
+
+      return h(Comp, compAttr, { default: () => renderComponentContent })
     }
 
     const renderLabelHelpMessage = () => {
       const { label, helpMessage, helpComponentProps, subLabel } = props.schema;
-      const renderLabel = subLabel ? (
-        <span>
-          {label} <span class="text-secondary">{subLabel}</span>
-        </span>
-      ) : (
-        label
-      );
+      const renderLabel = subLabel
+        ? h('span', null, [
+          label,
+          ' ',
+          h('span', { class: 'text-secondary' }, subLabel)
+        ])
+        : h('span', null, label)
       const getHelpMessage = isFunction(helpMessage)
         ? helpMessage(unref(getValues))
         : helpMessage;
       if (getHelpMessage !== undefined || (Array.isArray(getHelpMessage) && getHelpMessage.length > 0)) {
-        return (
-          <span>
-            {renderLabel}
-            <BasicHelp placement="top" content={getHelpMessage} {...helpComponentProps} />
-          </span>
-        )
+        return h('span', null, [
+          renderLabel,
+          h(BasicHelp, {
+            placement: 'top',
+            content: getHelpMessage,
+            ...(helpComponentProps || {})
+          })
+        ])
       }
-      return (<span>{renderLabel}</span>)
+      return h('span', null, [renderLabel])
     }
 
 
@@ -271,11 +264,9 @@ export default defineComponent({
       const { label, slot, rules, render, field, suffix, itemProps, component } = props.schema;
       if (component === 'Divider') {
         const dividerProp = deepMerge({ contentPosition: 'left' }, { ...unref(getComponentsProps) })
-        return (
-          <ElCol span={24}>
-            <ElDivider {...dividerProp} >{renderLabelHelpMessage()}</ElDivider>
-          </ElCol>
-        );
+        return h(ElCol, { span: 24 }, () =>
+          h(ElDivider, dividerProp, () => renderLabelHelpMessage())
+        )
       } else {
         const values = unref(getValues);
         const getContent = () => {
@@ -291,24 +282,27 @@ export default defineComponent({
 
         const Slots = {
           default: () => {
-            return (
-              <div style="display:flex;width:100%;"  >
-                <div style="flex:1;">{getContent()}</div>
-                {showSuffix && <span class="suffix">{getSuffix}</span>}
-              </div>
+            return h(
+              'div',
+              { style: 'display:flex;width:100%;' },
+              [
+                h('div', { style: 'flex:1;' }, [getContent()]),
+                showSuffix ? h('span', { class: 'suffix' }, String(getSuffix)) : null
+              ]
             )
           },
           label: () => { return renderLabelHelpMessage() }
         }
-        return (
-          <ElFormItem
-            prop={field}
-            label={label}
-            rules={rules}
-            v-slots={Slots}
-            {...(itemProps || {})}
-          > </ElFormItem >
-        );
+        return h(
+          ElFormItem,
+          {
+            prop: field,
+            label,
+            rules,
+            ...(itemProps || {})
+          },
+          Slots
+        )
       }
     }
     onMounted(() => {
@@ -339,10 +333,9 @@ export default defineComponent({
             ? renderColContent(values)
             : renderItem();
       };
-      return (
-        <ElCol {...realColProps} v-show={isShow}>
-          {getContent()}
-        </ElCol>
+      return withDirectives(
+        h(ElCol, { ...realColProps }, () => getContent()),
+        [[vShow, isShow]]
       )
     }
   }

@@ -4,7 +4,7 @@ import type { CSSProperties, PropType } from 'vue'
 import type { ButtonProps, ColProps, FormRules, RowProps } from 'element-plus'
 import { propTypes } from '@/_utils/propTypes'
 
-export const FormBasicProps: Record<string, any> = {
+export const FormBasicProps = {
   model: {
     type: Object as PropType<Recordable>,
     default: {}

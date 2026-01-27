@@ -8,6 +8,11 @@ export default defineConfig({
     globals: true,
     transformMode: {
       web: [/\.[jt]sx$/]
+    },
+    coverage: {
+      provider: 'v8',
+      reporter: ['text', 'lcov', 'html'],
+      reportsDirectory: './coverage'
     }
   }
 })
