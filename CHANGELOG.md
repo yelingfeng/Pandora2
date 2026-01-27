@@ -1,4 +1,13 @@
-# 0.1.0 (2026-01-27)
+## [0.1.1](https://github.com/yelingfeng/Pandora2/compare/v0.1.0...v0.1.1) (2026-01-27)
+
+
+### Features
+
+* 添加测试覆盖率支持并优化表单组件渲染 ([e18d086](https://github.com/yelingfeng/Pandora2/commit/e18d0861d0fb8e7dfc1454252a003a86071069e2))
+
+
+
+# [0.1.0](https://github.com/yelingfeng/Pandora2/compare/2d6e5d6e8984ceb6a80d888ab0825cbd885f27c1...v0.1.0) (2026-01-27)
 
 
 ### Bug Fixes
