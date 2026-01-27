@@ -31,11 +31,13 @@
   </div>
 </template>
 
-<script lang="ts" name="pdPageTreeLayout" setup>
+<script lang="ts" name="PdPageTreeLayout" setup>
 import { ArrowLeft, ArrowRight } from '@element-plus/icons-vue'
 import { ElIcon } from 'element-plus'
 import { computed, PropType, ref, StyleValue } from 'vue'
 import PdPageLayout from './index.vue'
+
+defineOptions({ name: 'PdPageTreeLayout' })
 
 const props = defineProps({
   // Sidebar props

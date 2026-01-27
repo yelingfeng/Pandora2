@@ -93,17 +93,18 @@ export default function ({
     }
     if (isLastAction) {
       advanceState.hideAdvanceBtn = false
-      if (itemColSum <= BASIC_COL_LEN * 2) {
-        // When less than or equal to 2 lines, the collapse and expand buttons are not displayed
+      const alwaysShowLines = unref(getProps).alwaysShowLines || 1
+      if (itemColSum <= BASIC_COL_LEN * alwaysShowLines) {
+        // When less than or equal to alwaysShowLines lines, the collapse and expand buttons are not displayed
         advanceState.hideAdvanceBtn = true
         advanceState.isAdvanced = true
       } else if (
-        itemColSum > BASIC_COL_LEN * 2 &&
+        itemColSum > BASIC_COL_LEN * alwaysShowLines &&
         itemColSum <= BASIC_COL_LEN * (unref(getProps).autoAdvancedLine || 3)
       ) {
         advanceState.hideAdvanceBtn = false
 
-        // More than 3 lines collapsed by default
+        // More than autoAdvancedLine lines collapsed by default
       } else if (!advanceState.isLoad) {
         advanceState.isLoad = true
         advanceState.isAdvanced = !advanceState.isAdvanced

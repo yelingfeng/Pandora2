@@ -1,13 +1,13 @@
-import type { UnwrapRef, Ref, WritableComputedRef, DeepReadonly } from 'vue'
+import type { DeepReadonly, Ref, UnwrapRef, WritableComputedRef } from 'vue'
 import {
-  reactive,
-  readonly,
   computed,
   getCurrentInstance,
-  watchEffect,
-  unref,
   nextTick,
-  toRaw
+  reactive,
+  readonly,
+  toRaw,
+  unref,
+  watchEffect
 } from 'vue'
 
 import { isEqual } from 'lodash-es'
@@ -19,7 +19,7 @@ export function useRuleFormItem<
 >(
   props: T,
   key?: K,
-  changeEvent?,
+  changeEvent?: string,
   emitData?: Ref<any[]>
 ): [WritableComputedRef<V>, (val: V) => void, DeepReadonly<V>]
 

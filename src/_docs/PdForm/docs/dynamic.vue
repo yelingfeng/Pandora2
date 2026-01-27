@@ -135,7 +135,7 @@ const schemas: IFormSchema[] = [
       colProps: {
         span: 12,
       },
-      componentProps: ({ formModel }) => {
+      componentProps: ({ formModel }: any) => {
         return {
           placeholder: '同步f2的值为f1',
           onChange: (e: ChangeEvent) => {
@@ -211,7 +211,7 @@ const schemas: IFormSchema[] = [
   }
 
   function appendField() {
-    appendSchemaByField(
+    appendSchemaByField?.(
       {
         field: 'field10',
         label: '字段10',

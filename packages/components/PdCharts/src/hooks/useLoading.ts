@@ -5,7 +5,6 @@ import {
   watchEffect,
   type Ref,
   type InjectionKey,
-  type PropType,
 } from 'vue'
 import type { EChartsType, LoadingOptions } from '../types'
 

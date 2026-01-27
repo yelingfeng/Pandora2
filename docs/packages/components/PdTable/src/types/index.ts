@@ -1,5 +1,5 @@
 import type { Ref, VNode } from 'vue'
-import { TableProps, Table, TableColumnCtx } from './element-type'
+import { Table, TableColumnCtx, TableProps } from './element-type'
 export type Dictionary<T> = Record<string, T>
 
 export interface AnyObject {
@@ -60,7 +60,7 @@ export interface IPandoraTableProps<T> {
   // 排序配置
   sortConfig?: IPandoraTableSort<T>
   // table本身配置（element-plus属性）
-  tableConfig?: IPandoraTableOption<T>
+  tableConfig?: IPandoraTable<T>
 }
 
 // 对外table配置类型 剔除data和column
@@ -72,7 +72,7 @@ export type IPandoraTableOption<T> = Partial<
 >
 
 // 定义列接口
-export interface IPandoraTableColumn<T> extends TableColumnCtx<T> {
+export interface IPandoraTableColumn<T> extends Partial<TableColumnCtx<T>> {
   name?: string
   value?: string
   render?: (row: any, column: any, index: number) => VNode
@@ -113,3 +113,17 @@ export interface ISortService<T> extends IPandoraTableSort<T> {
 }
 
 export type IPandoraTableKeys = keyof IPandoraTable<any>
+
+export interface ITableActionType {
+  setProps: (props: Partial<IPandoraTableProps<any>>) => Promise<void>
+  setColumns: (columns: IPandoraTableColumn<any>[]) => Promise<void>
+  setData: (data: any[]) => Promise<void>
+  reload: (opt?: any) => Promise<void>
+  getSelectRows: <T = any>() => T[]
+  clearSelection: () => void
+}
+
+export type UseTableReturnType = [
+  (instance: ITableActionType) => void,
+  ITableActionType
+]

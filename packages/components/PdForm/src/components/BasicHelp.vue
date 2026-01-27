@@ -1,6 +1,5 @@
 <script lang="tsx">
-import type { CSSProperties, PropType } from 'vue';
-import { defineComponent, computed, unref } from 'vue';
+import { defineComponent, type PropType } from 'vue';
 import { ElTooltip } from 'element-plus';
 import { Warning } from '@element-plus/icons-vue';
 import { getSlot } from '@/_utils/helper/tsxHelper';

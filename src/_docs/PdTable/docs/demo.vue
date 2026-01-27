@@ -78,7 +78,7 @@ export default defineComponent({
       { value: 'role', name: '权限', width: '100' },
       { value: 'createTime', name: '创建时间', width: '200', sortable: true },
       {
-        value: 'op', name: '操作', align: 'center', width: '200', render: (row: any, column: any, index: number) => {
+        value: 'op', name: '操作', align: 'center', width: '200', render: (row: any) => {
           // console.log(row, index)
           return (
             <div>

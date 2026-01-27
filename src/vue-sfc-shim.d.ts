@@ -11,3 +11,9 @@ declare module '*.json' {
   const value: any;
   export default value;
 }
+
+declare module '*.md' {
+  import type { DefineComponent } from 'vue'
+  const component: DefineComponent<{}, {}, any>
+  export default component
+}

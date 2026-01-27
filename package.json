@@ -8,18 +8,17 @@
   "repository": "https://github.com/yelingfeng/Pandora2.git",
   "main": "./dist/pandora2.umd.js",
   "module": "./dist/pandora2.es.js",
+  "types": "./dist/packages/index.d.ts",
   "exports": {
     ".": {
       "import": "./dist/pandora2.es.js",
-      "require": "./dist/pandora2.umd.js",
-      "types": "./dist/packages/index.d.ts"
+      "require": "./dist/pandora2.umd.js"
     },
     "./dist/style.css": {
       "import": "./dist/style.css",
       "require": "./dist/style.css"
     }
   },
-  "types": "./dist/packages/index.d.ts",
   "scripts": {
     "dev": "vite --config ./build/base.config.ts --host 0.0.0.0 ",
     "build:docs": "vite build --config ./build/doc.config.ts && node script/copyDir.js",

@@ -16,7 +16,7 @@ export const useTableProps = (props: ExtractPropTypes<typeof tableProps>) => {
   const { sortConfig, columns } = props
 
   const initColumns = () => {
-    const config = props.tableConfig || {}
+    const config = (props.tableConfig || {}) as IPandoraTable<AnyObject>
     const selectionConfig = config.selection
 
     // 如果有 selection 配置，则过滤掉 columns 里的 selection，由配置重新生成

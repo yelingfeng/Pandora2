@@ -1,16 +1,16 @@
 import {
-  COMMON_COLORS,
-  BG_COLOR,
-  SPLIT_LINE_COLOR,
   AXIS_LBAEL_COLOR,
   AXIS_LINE_COLOR,
+  BG_COLOR,
+  COMMON_COLORS,
   DEAULT_LINE_TYPE,
+  SPLIT_LINE_COLOR,
 } from './../constant'
 
 import {
-  BaseLineType,
-  AxisLineType,
   AxisLabelType,
+  AxisLineType,
+  BaseLineType,
   DataZoomType,
 } from '../types/props'
 
@@ -140,15 +140,9 @@ export const getDataZoomOpt = (opt: DataZoomType) => {
   ]
 }
 
-const theme1 = {
-  color: COMMON_COLORS,
-  backgroundColor: BG_COLOR,
-}
-
-/**
- * default 主题配置 配置
- * @returns
- */
 export const defaultThemeOpt = () => {
-  return {}
+  return {
+    color: COMMON_COLORS,
+    backgroundColor: BG_COLOR,
+  }
 }

@@ -1,19 +1,19 @@
 // axios配置  可自行根据项目进行更改，只需更改该文件即可，其他文件可以不动
 // The axios configuration can be changed according to the project, just change the file, other files can be left unchanged
 
+import type { RequestOptions, Result } from '#/axios'
+import { deepMerge } from '@/_utils'
+import { isString } from '@/_utils/is'
+import { ContentTypeEnum, RequestEnum, ResultEnum } from '@/enums/httpEnum'
+import { useGlobSetting } from '@/hooks/setting'
+import { useMessage } from '@/hooks/web/useMessage'
+import { AxiosRetry } from '@/utils/axios/axiosRetry'
 import type { AxiosResponse } from 'axios'
 import { clone } from 'lodash-es'
-import type { RequestOptions, Result } from '#/axios'
-import type { AxiosTransform, CreateAxiosOptions } from './axiosTransform'
 import { VAxios } from './Axios'
+import type { AxiosTransform, CreateAxiosOptions } from './axiosTransform'
 import { checkStatus } from './checkStatus'
-import { useMessage } from '@/hooks/web/useMessage'
-import { useGlobSetting } from '@/hooks/setting'
-import { RequestEnum, ResultEnum, ContentTypeEnum } from '@/enums/httpEnum'
-import { isString } from '@/_utils/is'
-import { deepMerge } from '@/_utils'
-import { joinTimestamp, formatRequestDate } from './helper'
-import { AxiosRetry } from '@/utils/axios/axiosRetry'
+import { formatRequestDate, joinTimestamp } from './helper'
 
 const globSetting = useGlobSetting()
 const urlPrefix = globSetting.urlPrefix
@@ -152,7 +152,7 @@ const transform: AxiosTransform = {
   /**
    * @description: 请求拦截器处理
    */
-  requestInterceptors: (config, options) => {
+  requestInterceptors: (config) => {
     // 请求之前处理config
     // const token = getToken()
     // if (token && (config as Recordable)?.requestOptions?.withToken !== false) {

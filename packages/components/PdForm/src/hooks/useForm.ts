@@ -89,7 +89,7 @@ export function useForm(props?: Props): UseFormReturnType {
 
     setFieldsValue: async <T>(values: T) => {
       const form = await getForm()
-      form.setFieldsValue<T>(values)
+      form.setFieldsValue(values as any)
     },
 
     appendSchemaByField: async (
@@ -104,6 +104,18 @@ export function useForm(props?: Props): UseFormReturnType {
     submit: async (): Promise<any> => {
       const form = await getForm()
       return form.submit()
+    },
+    validate: async (cb: any) => {
+      const form = await getForm()
+      return form.validate(cb)
+    },
+    validateFields: async (props?: any, callback?: any) => {
+      const form = await getForm()
+      return form.validateFields(props, callback)
+    },
+    scrollToField: async (name: any, options?: any) => {
+      const form = await getForm()
+      return form.scrollToField(name, options)
     }
   }
 

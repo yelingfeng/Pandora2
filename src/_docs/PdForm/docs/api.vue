@@ -182,8 +182,8 @@ const schemas: IFormSchema[] = [
         message: '请输入数据',
       },
       {
-        validator(_, value: any) {
-          return new Promise((resolve, reject) => {
+        validator(_: any, value: any) {
+          return new Promise<void>((resolve, reject) => {
             isAccountExist(value)
               .then(() => resolve())
               .catch((err) => {
@@ -229,6 +229,10 @@ function setFormValues() {
     field33: '2020-12-12',
     field3: '2020-12-12',
   });
+}
+
+function handleSubmit(v: any) {
+  console.log(v)
 }
 
 </script>

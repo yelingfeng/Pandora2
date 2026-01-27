@@ -1,17 +1,11 @@
 <template>
   <div style="height: 400px">
-    <PdTable
-      ref="table"
-      :data="testData"
-      :columns="columns"
-      :tableConfig="config"
-      border
-    ></PdTable>
+    <PdTable ref="table" :data="testData" :columns="columns" :tableConfig="config" border></PdTable>
   </div>
 </template>
 
 <script lang="tsx">
-import { defineComponent, ref, reactive } from 'vue'
+import { defineComponent, reactive, ref } from 'vue';
 
 export default defineComponent({
   setup() {
@@ -30,17 +24,17 @@ export default defineComponent({
     const config = reactive({
       showSummary: true,
       sumText: 'Total Cost',
-      summaryMethod: (param) => {
+      summaryMethod: (param: any) => {
         const { columns, data } = param
-        const sums = []
-        columns.forEach((column, index) => {
+        const sums: any = []
+        columns.forEach((column: any, index: number) => {
           if (index === 0) {
             sums[index] = 'Total'
             return
           }
-          const values = data.map((item) => Number(item[column.property]))
-          if (!values.every((value) => Number.isNaN(value))) {
-            sums[index] = values.reduce((prev, curr) => {
+          const values = data.map((item: any) => Number(item[column.property]))
+          if (!values.every((value: any) => Number.isNaN(value))) {
+            sums[index] = values.reduce((prev: any, curr: any) => {
               const value = Number(curr)
               if (!Number.isNaN(value)) {
                 return prev + curr

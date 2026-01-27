@@ -82,7 +82,7 @@ function getColumnVNode<T>(
   if (childNode) {
     return <ElTableColumn {...columnProps}>{childNode}</ElTableColumn>
   }
-  const _childSlots = slots && (slots.default || slots.header) ? slots : ''
+  const _childSlots = (slots?.default || slots?.header) ? slots : ''
   return createVNode(ElTableColumn, { ...columnProps }, _childSlots)
 }
 

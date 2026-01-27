@@ -1,16 +1,16 @@
 import type { ElMessageBoxOptions, NotificationProps } from 'element-plus'
 
 import {
-  ElMessageBox as MessageBox,
+  CircleCheckFilled,
+  CircleCloseFilled,
+  InfoFilled,
+  WarningFilled
+} from '@element-plus/icons-vue'
+import {
   ElMessage as Message,
+  ElMessageBox as MessageBox,
   ElNotification as Notification
 } from 'element-plus'
-import {
-  InfoFilled,
-  WarningFilled,
-  CircleCheckFilled,
-  CircleCloseFilled
-} from '@element-plus/icons-vue'
 
 import { isString } from '@/_utils/is'
 
@@ -35,13 +35,6 @@ export interface ModalOptionsEx extends Omit<ElMessageBoxOptions, 'type'> {
 export type ModalOptionsPartial = Partial<ModalOptionsEx> &
   Pick<ModalOptionsEx, 'message'>
 
-interface ConfirmOptions {
-  info: ElMessageBoxOptions
-  success: ElMessageBoxOptions
-  error: ElMessageBoxOptions
-  warning: ElMessageBoxOptions
-}
-
 function getIcon(icon: string) {
   if (icon === 'warning') {
     return <WarningFilled class="modal-icon-warning" />
@@ -65,16 +58,18 @@ function renderContent({ message }: Pick<ModalOptionsEx, 'message'>) {
 /**
  * @description: Create confirmation box
  */
-function createConfirm(options: ModalOptionsEx): ConfirmOptions {
-  const iconType = options.type || 'warning'
-  Reflect.deleteProperty(options, 'iconType')
+function createConfirm(options: ModalOptionsEx): Promise<any> {
+  const { type, title, message, ...rest } = options
+  const iconType = type || 'warning'
+  const content = renderContent(options)
   const opt: ElMessageBoxOptions = {
     center: true,
     type: iconType,
-    ...options,
-    message: renderContent(options)
+    title,
+    message: content,
+    ...rest
   }
-  return MessageBox.confirm(opt) as unknown as ConfirmOptions
+  return MessageBox.confirm(content, title, opt)
 }
 
 const getBaseOptions = () => {
@@ -98,19 +93,23 @@ function createModalOptions(
 }
 
 function createSuccessModal(options: ModalOptionsPartial) {
-  return MessageBox.alert(createModalOptions(options, 'success'))
+  const opt = createModalOptions(options, 'success')
+  return MessageBox.alert(opt.message, opt.title, opt)
 }
 
 function createErrorModal(options: ModalOptionsPartial) {
-  return MessageBox.alert(createModalOptions(options, 'close'))
+  const opt = createModalOptions(options, 'close')
+  return MessageBox.alert(opt.message, opt.title, opt)
 }
 
 function createInfoModal(options: ModalOptionsPartial) {
-  return MessageBox.alert(createModalOptions(options, 'info'))
+  const opt = createModalOptions(options, 'info')
+  return MessageBox.alert(opt.message, opt.title, opt)
 }
 
 function createWarningModal(options: ModalOptionsPartial) {
-  return MessageBox.alert(createModalOptions(options, 'warning'))
+  const opt = createModalOptions(options, 'warning')
+  return MessageBox.alert(opt.message, opt.title, opt)
 }
 
 // Notification.config({
@@ -124,7 +123,7 @@ function createWarningModal(options: ModalOptionsPartial) {
 export function useMessage() {
   return {
     createMessage: Message,
-    notification: Notification as NotifyApi,
+    notification: Notification as unknown as NotifyApi,
     createConfirm: createConfirm,
     createSuccessModal,
     createErrorModal,

@@ -109,7 +109,7 @@ type RenderExpanded<T> = ({
   row,
   $index,
   store,
-  expanded: boolean
+  expanded
 }: RIS<T>) => VNode
 
 type SummaryMethod<T> = (data: {

@@ -112,7 +112,7 @@ export default defineComponent({
     );
 
     const getSchema = computed((): IFormSchema[] => {
-      const schemas: IFormSchema[] = unref(schemaRef) || (props.schemas as any)
+      const schemas: IFormSchema[] = unref(schemaRef) || (unref(getProps).schemas as any)
       for (const schema of schemas) {
         const { defaultValue, component } = schema;
         // handle date type
@@ -159,7 +159,7 @@ export default defineComponent({
       resetFields,
       scrollToField
     } = useFormEvents({
-      emit,
+      emit: emit as any,
       getProps,
       formModel,
       getSchema,
@@ -272,7 +272,7 @@ export default defineComponent({
 
     const { handleToggleAdvanced } = useAdvanced({
       advanceState,
-      emit,
+      emit: emit as any,
       getProps,
       getSchema,
       formModel,

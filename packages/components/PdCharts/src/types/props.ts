@@ -1,3 +1,5 @@
+export type Fn = (...args: any[]) => any
+
 export type LineType = 'solid' | 'dashed' | 'dotted'
 
 export interface BaseLineType {

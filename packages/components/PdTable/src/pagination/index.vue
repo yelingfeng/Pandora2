@@ -7,15 +7,15 @@
 </template>
 
 <script lang="ts">
-import { createNamespace } from '@/_utils/create'
-import { defineComponent } from 'vue'
-import { getPagerProps } from './config'
+import { createNamespace } from '@/_utils/create';
+import { defineComponent } from 'vue';
+import { getPagerProps } from './config';
 const [name] = createNamespace('Pagination')
 export default defineComponent({
   name,
   inheritAttrs: false,
   props: getPagerProps(),
-  setup(props, { emit }) {
+  setup(_, { emit }) {
     const handleSizeChange = (val: number) => {
       emit('handleSizeChange', val)
     }

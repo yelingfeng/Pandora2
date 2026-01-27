@@ -1,10 +1,8 @@
-<script lang="ts">
+<script lang="tsx">
 import { init as initChart } from 'echarts'
 import {
   computed,
   defineComponent,
-  getCurrentInstance,
-  h,
   inject,
   nextTick,
   onBeforeUnmount,
@@ -20,7 +18,6 @@ import type {
   ChartsOption,
   ChartsProps,
   EChartsType,
-  Emits,
   InitOptionsInjection,
   ThemeInjection,
   UpdateOptions,
@@ -59,7 +56,7 @@ export default defineComponent({
   name: 'Charts',
   inheritAttrs: false,
   props: defaultProps,
-  emits: {} as unknown as Emits,
+  emits: ['register'],
   setup(props, { attrs, emit }) {
     const root = shallowRef<EChartsElement>()
     const chart = shallowRef<EChartsType>()
@@ -109,9 +106,6 @@ export default defineComponent({
 
     const nonEventAttrs = computed(() => omitOn(attrs))
 
-    // @ts-expect-error listeners for Vue 2 compatibility
-    const listeners = getCurrentInstance()?.proxy?.$listeners
-
     function init(option?: ChartsOption) {
       if (!root.value) {
         return
@@ -120,12 +114,12 @@ export default defineComponent({
         root.value,
         realTheme.value,
         realInitOptions.value
-      ))
+      ) as unknown as EChartsType)
       if (getProps.value.group) {
         instance.group = getProps.value.group
       }
 
-      useEventListener(instance, attrs, listeners)
+      useEventListener(instance, attrs, undefined)
 
       function resize() {
         if (instance && !instance.isDisposed()) {
@@ -138,8 +132,8 @@ export default defineComponent({
         if (opt) {
           const newopt = build(
             data.value,
-            chartType.value,
-            subChartType.value
+            chartType.value as any,
+            subChartType.value as any
           )
           instance.setOption(
             newopt,
@@ -184,25 +178,20 @@ export default defineComponent({
     let unwatchOption: (() => void) | null = null
     watch(
       manualUpdate,
-      (manualUpdate) => {
+      (val: any) => {
         if (typeof unwatchOption === 'function') {
           unwatchOption()
           unwatchOption = null
         }
-
-        if (!manualUpdate) {
+        if (!val) {
           unwatchOption = watch(
-            () => getProps.value.options,
-            (option, oldOption) => {
-              if (!option) {
-                return
-              }
+            () => getProps.value.options as any,
+            (option: any, oldOption: any) => {
+              if (!option) return
               if (!chart.value) {
                 init()
               } else {
                 chart.value.setOption(option, {
-                  // mutating `option` will lead to `notMerge: false` and
-                  // replacing it with new reference will lead to `notMerge: true`
                   notMerge: option !== oldOption,
                   ...realUpdateOptions.value,
                 })
@@ -212,38 +201,28 @@ export default defineComponent({
           )
         }
       },
-      {
-        immediate: true,
-      }
+      { immediate: true }
     )
 
-    watch(
-      [realTheme, realInitOptions],
-      () => {
-        cleanup()
-        init()
-      },
-      {
-        deep: true,
-      }
-    )
+    watch([realTheme, realInitOptions], () => {
+      cleanup()
+      init()
+    }, { deep: true })
+
     watchEffect(() => {
       if (getProps.value.group && chart.value) {
         chart.value.group = getProps.value.group
       }
     })
 
-    watch(data, function (newval, oldval) {
+    watch(data, (newval: any) => {
       if (newval && newval.length) {
-        setOption(
-          build(newval, chartType.value, subChartType.value)
-        )
+        setOption(build(newval, chartType.value as any, subChartType.value as any))
       }
     })
 
-    useLoading(chart, loading, loadingOptions)
-
-    useAutoresize(chart, autoresize, root)
+    useLoading(chart, (computed(() => !!loading.value) as unknown) as any, loadingOptions as any)
+    useAutoresize(chart, autoresize as any, root as any)
 
     const publicApi = usePublicAPI(chart)
 
@@ -269,10 +248,6 @@ export default defineComponent({
 
     onBeforeUnmount(() => {
       if (wcRegistered && root.value) {
-        // For registered web component, we can leverage the
-        // `disconnectedCallback` to dispose the chart instance
-        // so that we can delay the cleanup after exsiting leaving
-        // transition.
         root.value.__dispose = cleanup
       } else {
         cleanup()
@@ -293,7 +268,7 @@ export default defineComponent({
     attrs.class = attrs.class
       ? ['echarts'].concat(attrs.class)
       : 'echarts'
-    return h(TAG_NAME, attrs)
+    return <TAG_NAME {...attrs} />
   },
 })
 </script>

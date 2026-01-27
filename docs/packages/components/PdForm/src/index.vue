@@ -1,11 +1,11 @@
 <template>
-  <div class="vpandora-form">
+  <div class="vpandora-form" :class="{ collapsed: !advanceState.isAdvanced }">
     <el-Form v-bind="getBindValue" :rules="getRules" ref="formRef" :model="formModel"
       @keypress.enter="handleEnterPress">
       <el-row v-bind="getRow">
         <slot name="formHeader"></slot>
         <template v-for="schema in getSchema" :key="schema.field">
-          <FormItem :tableAction="tableAction" :formActionType="formActionType" :schema="schema" :formProps="getProps"
+          <FormItem :formActionType="formActionType" :schema="schema" :formProps="getProps"
             :allDefaultValues="defaultValueRef" :formModel="formModel" :setFormModel="setFormModel">
             <template #[item]="data" v-for="item in Object.keys($slots)">
               <slot :name="item" v-bind="data || {}"></slot>
@@ -23,33 +23,34 @@
   </div>
 </template>
 <script lang="ts">
+import { deepMerge } from '@/_utils/';
+import { createNamespace } from '@/_utils/create';
+import { dateUtil } from '@/_utils/dateUtil';
+import { useDebounceFn } from '@vueuse/core';
+import { ElForm, ElRow, FormRules } from 'element-plus';
+import { cloneDeep } from 'lodash-es';
 import {
+  computed,
   defineComponent,
+  inject,
+  onMounted,
   reactive,
-  watch,
   ref,
   Ref,
-  computed,
   unref,
-  onMounted,
-} from 'vue'
-import type { IFormActionType, IFormSchema, IFormProps } from './types'
-import type { AdvanceState } from './types/hooks';
-import { ElForm, ElRow, FormRules } from 'element-plus'
-import FormItem from './components/FormItem.vue'
-import FormAction from './components/FormAction.vue'
-import { createNamespace } from '@/_utils/create'
-import { deepMerge } from '@/_utils/'
-import { useFormValues } from './hooks/useFormValues'
-import { useFormEvents } from './hooks/useFormEvents'
-import { useAutoFocus } from './hooks/useAutoFocus'
-import { createFormContext } from './hooks/useFormContext'
-import { useDebounceFn } from '@vueuse/core';
-import { FormBasicProps } from './props'
-import { dateUtil } from '@/_utils/dateUtil'
-import { dateItemType } from './helper'
-import { cloneDeep } from 'lodash-es';
+  watch
+} from 'vue';
+import FormAction from './components/FormAction.vue';
+import FormItem from './components/FormItem.vue';
+import { dateItemType } from './helper';
 import useAdvanced from './hooks/useAdvanced';
+import { useAutoFocus } from './hooks/useAutoFocus';
+import { createFormContext } from './hooks/useFormContext';
+import { useFormEvents } from './hooks/useFormEvents';
+import { useFormValues } from './hooks/useFormValues';
+import { FormBasicProps } from './props';
+import type { IFormActionType, IFormProps, IFormSchema } from './types';
+import type { AdvanceState } from './types/hooks';
 const [name] = createNamespace('Form')
 export default defineComponent({
   name,
@@ -63,6 +64,7 @@ export default defineComponent({
   },
   emits: ['advanced-change', 'reset', 'submit', 'register', 'field-value-change'],
   setup(props, { emit, attrs }) {
+    const isInPageLayout = inject('isInPageLayout', false)
     const formModel = reactive<Recordable>({})
     const formPropsRef = ref<Partial<IFormProps>>({})
     const defaultValueRef = ref<Recordable>({})
@@ -83,6 +85,12 @@ export default defineComponent({
           ...props,
           ...unref(formPropsRef),
         } as IFormProps
+
+        if (isInPageLayout) {
+          if (_props.alwaysShowLines === 1) _props.alwaysShowLines = 0.75
+          if (_props.autoAdvancedLine === 3) _props.autoAdvancedLine = 1
+          if (_props.showAdvancedButton === false) _props.showAdvancedButton = true
+        }
         return _props
       }
     )
@@ -319,5 +327,11 @@ export default defineComponent({
     color: rgb(119, 119, 119);
   }
 
+}
+
+.vpandora-form.collapsed {
+  .el-form-item {
+    margin-bottom: 0 !important;
+  }
 }
 </style>

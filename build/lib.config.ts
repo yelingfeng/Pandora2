@@ -33,5 +33,13 @@ export default defineConfig({
       }
     }
   },
-  plugins: [vue(), vueJsx(), dts()]
+  plugins: [
+    vue(),
+    vueJsx(),
+    dts({
+      skipDiagnostics: true,
+      include: ['src/**/*.ts', 'src/**/*.tsx', 'packages/**/*.ts', 'packages/**/*.tsx'],
+      exclude: ['**/*.vue', 'src/_docs/**']
+    })
+  ]
 })

@@ -1,10 +1,10 @@
-import type { FieldMapToTime, IFormSchema } from '../types'
+import type { FieldMapToTime, IFormSchema, Fn } from '../types'
 import type { CSSProperties, PropType } from 'vue'
 // import type { TableActionType } from '/@/components/Table'
 import type { ButtonProps, ColProps, FormRules, RowProps } from 'element-plus'
 import { propTypes } from '@/_utils/propTypes'
 
-export const FormBasicProps = {
+export const FormBasicProps: Record<string, any> = {
   model: {
     type: Object as PropType<Recordable>,
     default: {}

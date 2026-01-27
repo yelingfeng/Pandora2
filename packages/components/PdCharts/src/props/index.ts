@@ -13,7 +13,7 @@ import type {
   SubChartType,
 } from '../types/chart'
 
-export const defaultProps = {
+export const defaultProps: Record<string, any> = {
   data: {
     type: Array as PropType<OriginData<any>[]>,
     default: () => [],

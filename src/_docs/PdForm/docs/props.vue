@@ -117,7 +117,7 @@ const schemas: IFormSchema[] = [
     component: 'Input',
     label: '自定义Props属性',
     colProps,
-    componentProps: ({ schema, formModel }) => {
+    componentProps: () => {
       return {
         placeholder: '字段2placeholder',
         onChange: (e: any) => {
@@ -319,7 +319,7 @@ const schemas: IFormSchema[] = [
     component: 'Select',
     label: '省份',
     colProps,
-    componentProps: ({ formModel, formActionType }) => {
+    componentProps: ({ formModel, formActionType }: any) => {
       return {
         options: provincesOptions,
         placeholder: '省份与城市联动',
@@ -327,8 +327,8 @@ const schemas: IFormSchema[] = [
           // console.log(e)
           let citiesOptions =
             e == 1
-              ? citiesOptionsData[provincesOptions[0].id]
-              : citiesOptionsData[provincesOptions[1].id];
+              ? (citiesOptionsData as any)[provincesOptions[0].id]
+              : (citiesOptionsData as any)[provincesOptions[1].id];
           // console.log(citiesOptions)
           if (e === undefined) {
             citiesOptions = [];

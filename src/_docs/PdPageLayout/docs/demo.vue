@@ -26,7 +26,7 @@ import { ref } from 'vue'
 
 const loading = ref(false)
 
-const [registerForm, { getFieldsValue }] = useForm({
+const [registerForm] = useForm({
   schemas: [
     { field: 'name', label: '姓名', component: 'Input', colProps: { span: 6 } },
     { field: 'age', label: '年龄', component: 'InputNumber', colProps: { span: 6 } },

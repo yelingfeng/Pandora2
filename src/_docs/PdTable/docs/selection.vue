@@ -43,7 +43,7 @@ export default defineComponent({
       selection: {
         selectionMode: 'multi',
         selectionPos: 'top',
-        selectable: (row: any, index: number) => {
+        selectable: (row: any) => {
           return row.id !== 2
         }
       }

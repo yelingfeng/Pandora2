@@ -5,7 +5,7 @@ export const withInstall = <T, E extends Record<string, any>>(
   main: T,
   extra?: E
 ) => {
-  ;(main as SFCWithInstall<T>).install = (app): void => {
+  ;(main as SFCWithInstall<T>).install = (app:App): void => {
     for (const comp of [main, ...Object.values(extra ?? {})]) {
       app.component(comp.name, comp)
     }
@@ -28,7 +28,7 @@ export const withInstallFunction = <T>(fn: T, name: string) => {
   return fn as SFCInstallWithContext<T>
 }
 
-export const withInstallDirective = <T>(directive: T, name: string) => {
+export const withInstallDirective = <T extends import('vue').Directive>(directive: T, name: string) => {
   ;(directive as SFCWithInstall<T>).install = (app: App): void => {
     app.directive(name, directive)
   }
