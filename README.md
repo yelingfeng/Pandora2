@@ -78,6 +78,8 @@ pnpm run release:patch
 # pnpm run release:major
 ```
 
+如果出现 `Tag already exists: vX.Y.Z`，说明该版本 tag 已经存在（本地或远端），需要先提升 `package.json` 的 version，再重新发布。
+
 #
 
 ### 开发者 👨‍💻

@@ -26,6 +26,7 @@ const tag = `v${version}`
 try {
   execSync(`git rev-parse "${tag}"`, { stdio: 'ignore' })
   console.error(`Tag already exists: ${tag}`)
+  console.error('Please bump version and create a new tag, e.g. run: pnpm run release:patch')
   process.exit(1)
 } catch {}
 
