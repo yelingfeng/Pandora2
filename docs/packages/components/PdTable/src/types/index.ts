@@ -44,7 +44,7 @@ export interface IPandoraTable<T> extends IPandoraTableOption<T> {
   // 选择器 模式是否显示多选
   selection?: ISelectionMode<T>
   // 分页
-  pagination?: IPageConfig
+  pagination?: IPageConfig | boolean
   // 分页属性
   pageOpt?: IPageConfig
 }

@@ -1,8 +1,9 @@
 import { withInstall } from '@/_utils/vue'
 import index from './index.vue'
 import tree from './tree.vue'
+import type { SFCWithInstall } from '@/_utils/vue/typescript'
 
-export const PdPageLayout = withInstall(index)
-export const PdPageTreeLayout = withInstall(tree)
+export const PdPageLayout: SFCWithInstall<typeof index> = withInstall(index)
+export const PdPageTreeLayout: SFCWithInstall<typeof tree> = withInstall(tree)
 
 export default PdPageLayout

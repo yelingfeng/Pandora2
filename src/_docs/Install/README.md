@@ -32,7 +32,7 @@ enter之后，根据项目提示，接下来会让你选择预设, `npm install`
 构建完成后，安装`Pandora2`
 
 ```js
-  npm install Pandora2 / yarn install Pandora2  / pnpm install Pandora2
+  npm install @yelingfeng/pandora2 / yarn add @yelingfeng/pandora2 / pnpm add @yelingfeng/pandora2
 
 ```
 
@@ -41,9 +41,14 @@ enter之后，根据项目提示，接下来会让你选择预设, `npm install`
 在项目中引用
 
 ```js
-import Pandora2 from "pandora2";
-import "pandora2/lib/style.css";
+import { createApp } from 'vue'
+import App from './App.vue'
 
-Vue.use(Pandora2)
+import Pandora2 from '@yelingfeng/pandora2'
+import '@yelingfeng/pandora2/dist/style.css'
+
+const app = createApp(App)
+app.use(Pandora2)
+app.mount('#app')
 
 ```

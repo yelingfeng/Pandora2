@@ -1,6 +1,6 @@
 import type { ColProps } from 'element-plus'
 import type { AdvanceState } from '../types/hooks'
-import type { IFormProps, IFormSchema } from '../types'
+import type { EmitType, IFormProps, IFormSchema } from '../types'
 import { ComputedRef, getCurrentInstance, Ref } from 'vue'
 import { computed, unref, watch } from 'vue'
 import { isBoolean, isFunction, isNumber, isObject } from '@/_utils/is'
@@ -81,7 +81,7 @@ export default function ({
       BASIC_COL_LEN
     const lgWidth = parseInt(itemCol.lg as string) || mdWidth
     const xlWidth = parseInt(itemCol.xl as string) || lgWidth
-    const xxlWidth = parseInt(itemCol.xxl as string) || xlWidth
+    const xxlWidth = parseInt((itemCol as any).xxl as string) || xlWidth
     if (width <= screenEnum.MD) {
       itemColSum += mdWidth
     } else if (width < screenEnum.LG) {

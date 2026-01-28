@@ -1,8 +1,7 @@
 import { defaultThemeOpt } from '../../utils/defaultOpt'
 import { transformPieDataToSeries } from '../../transform'
 import type { EChartsOption } from 'echarts'
-import * as echarts from 'echarts/core'
-import { _merge, hexToRgba } from '../../utils/index'
+import { _merge } from '../../utils/index'
 
 const createSeriesData = (data: any) => {
   return {

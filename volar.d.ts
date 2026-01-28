@@ -1,10 +1,9 @@
 declare module 'vue' {
   export interface GlobalComponents {
-    PdContainer: typeof import('pandora2')['PdContainer']
-    PdForm: typeof import('pandora2')['PdForm']
-    PdTable: typeof import('pandora2')['PdTable']
+    PdContainer: typeof import('@yelingfeng/pandora2')['PdContainer']
+    PdForm: typeof import('@yelingfeng/pandora2')['PdForm']
+    PdTable: typeof import('@yelingfeng/pandora2')['PdTable']
   }
 }
 
 export { }
-

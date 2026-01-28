@@ -1,11 +1,5 @@
 <template>
-  <el-cascader
-    v-model:value="state"
-    :options="options"
-    :load-data="loadData"
-    change-on-select
-    @change="handleChange"
-  >
+  <el-cascader v-model:value="state" :options="options" :load-data="loadData" change-on-select @change="handleChange">
     <template #suffixIcon v-if="loading">
       <Loading spin />
     </template>
@@ -18,176 +12,176 @@
   </el-cascader>
 </template>
 <script lang="ts">
-  import { defineComponent, PropType, ref, unref, watch, watchEffect } from 'vue';
-  import { ElCascader } from 'element-plus';
-  import { propTypes } from '@/_utils/propTypes';
-  import { isFunction } from '@/_utils/is';
-  import { get, omit } from 'lodash-es';
-  import { useRuleFormItem } from '@/hooks/component/useFormItem';
-  interface Option {
-    value: string;
-    label: string;
-    loading?: boolean;
-    isLeaf?: boolean;
-    children?: Option[];
-  }
-  export default defineComponent({
-    name: 'ApiCascader',
-    components: {
-      [ElCascader.name]: ElCascader,
+import { isFunction } from '@/_utils/is';
+import { propTypes } from '@/_utils/propTypes';
+import { useRuleFormItem } from '@/hooks/component/useFormItem';
+import { ElCascader } from 'element-plus';
+import { get, omit } from 'lodash-es';
+import { defineComponent, PropType, ref, unref, watch, watchEffect } from 'vue';
+interface Option {
+  value: string;
+  label: string;
+  loading?: boolean;
+  isLeaf?: boolean;
+  children?: Option[];
+}
+export default defineComponent({
+  name: 'ApiCascader',
+  components: {
+    [ElCascader.name as string]: ElCascader,
+  },
+  props: {
+    value: {
+      type: Array,
     },
-    props: {
-      value: {
-        type: Array,
-      },
-      api: {
-        type: Function as PropType<(arg?: Recordable) => Promise<Option[]>>,
-        default: null,
-      },
-      numberToString: propTypes.bool,
-      resultField: propTypes.string.def(''),
-      labelField: propTypes.string.def('label'),
-      valueField: propTypes.string.def('value'),
-      childrenField: propTypes.string.def('children'),
-      asyncFetchParamKey: propTypes.string.def('parentCode'),
-      immediate: propTypes.bool.def(true),
-      // init fetch params
-      initFetchParams: {
-        type: Object as PropType<Recordable>,
-        default: () => ({}),
-      },
-      // 是否有下级，默认是
-      isLeaf: {
-        type: Function as PropType<(arg: Recordable) => boolean>,
-        default: null,
-      },
-      displayRenderArray: {
-        type: Array,
-      },
+    api: {
+      type: Function as PropType<(arg?: Recordable) => Promise<Option[]>>,
+      default: null,
     },
-    emits: ['change', 'defaultChange'],
-    setup(props, { emit }) {
-      const apiData = ref<any[]>([]);
-      const options = ref<Option[]>([]);
-      const loading = ref<boolean>(false);
-      const emitData = ref<any[]>([]);
-      const isFirstLoad = ref(true);
-      // Embedded in the form, just use the hook binding to perform form verification
-      const [state] = useRuleFormItem(props, 'value', 'change', emitData);
+    numberToString: propTypes.bool,
+    resultField: propTypes.string.def(''),
+    labelField: propTypes.string.def('label'),
+    valueField: propTypes.string.def('value'),
+    childrenField: propTypes.string.def('children'),
+    asyncFetchParamKey: propTypes.string.def('parentCode'),
+    immediate: propTypes.bool.def(true),
+    // init fetch params
+    initFetchParams: {
+      type: Object as PropType<Recordable>,
+      default: () => ({}),
+    },
+    // 是否有下级，默认是
+    isLeaf: {
+      type: Function as PropType<(arg: Recordable) => boolean>,
+      default: null,
+    },
+    displayRenderArray: {
+      type: Array,
+    },
+  },
+  emits: ['change', 'defaultChange'],
+  setup(props, { emit }) {
+    const apiData = ref<any[]>([]);
+    const options = ref<Option[]>([]);
+    const loading = ref<boolean>(false);
+    const emitData = ref<any[]>([]);
+    const isFirstLoad = ref(true);
+    // Embedded in the form, just use the hook binding to perform form verification
+    const [state] = useRuleFormItem(props, 'value', 'change', emitData);
 
-      watch(
-        apiData,
-        (data) => {
-          const opts = generatorOptions(data);
-          options.value = opts;
-        },
-        { deep: true },
-      );
+    watch(
+      apiData,
+      (data) => {
+        const opts = generatorOptions(data);
+        options.value = opts;
+      },
+      { deep: true },
+    );
 
-      function generatorOptions(options: any[]): Option[] {
-        const { labelField, valueField, numberToString, childrenField, isLeaf } = props;
-        return options.reduce((prev, next: Recordable) => {
-          if (next) {
-            const value = next[valueField];
-            const item = {
-              ...omit(next, [labelField, valueField]),
-              label: next[labelField],
-              value: numberToString ? `${value}` : value,
-              isLeaf: isLeaf && typeof isLeaf === 'function' ? isLeaf(next) : false,
-            };
-            const children = Reflect.get(next, childrenField);
-            if (children) {
-              Reflect.set(item, childrenField, generatorOptions(children));
-            }
-            prev.push(item);
+    function generatorOptions(options: any[]): Option[] {
+      const { labelField, valueField, numberToString, childrenField, isLeaf } = props;
+      return options.reduce((prev, next: Recordable) => {
+        if (next) {
+          const value = next[valueField];
+          const item = {
+            ...omit(next, [labelField, valueField]),
+            label: next[labelField],
+            value: numberToString ? `${value}` : value,
+            isLeaf: isLeaf && typeof isLeaf === 'function' ? isLeaf(next) : false,
+          };
+          const children = Reflect.get(next, childrenField);
+          if (children) {
+            Reflect.set(item, childrenField, generatorOptions(children));
           }
-          return prev;
-        }, [] as Option[]);
-      }
-
-      async function initialFetch() {
-        const api = props.api;
-        if (!api || !isFunction(api)) return;
-        apiData.value = [];
-        loading.value = true;
-        try {
-          const res = await api(props.initFetchParams);
-          if (Array.isArray(res)) {
-            apiData.value = res;
-            return;
-          }
-          if (props.resultField) {
-            apiData.value = get(res, props.resultField) || [];
-          }
-        } catch (error) {
-          console.warn(error);
-        } finally {
-          loading.value = false;
+          prev.push(item);
         }
-      }
+        return prev;
+      }, [] as Option[]);
+    }
 
-      async function loadData(selectedOptions: Option[]) {
-        const targetOption = selectedOptions[selectedOptions.length - 1];
-        targetOption.loading = true;
-
-        const api = props.api;
-        if (!api || !isFunction(api)) return;
-        try {
-          const res = await api({
-            [props.asyncFetchParamKey]: Reflect.get(targetOption, 'value'),
-          });
-          if (Array.isArray(res)) {
-            const children = generatorOptions(res);
-            targetOption.children = children;
-            return;
-          }
-          if (props.resultField) {
-            const children = generatorOptions(get(res, props.resultField) || []);
-            targetOption.children = children;
-          }
-        } catch (e) {
-          console.error(e);
-        } finally {
-          targetOption.loading = false;
+    async function initialFetch() {
+      const api = props.api;
+      if (!api || !isFunction(api)) return;
+      apiData.value = [];
+      loading.value = true;
+      try {
+        const res = await api(props.initFetchParams);
+        if (Array.isArray(res)) {
+          apiData.value = res;
+          return;
         }
+        if (props.resultField) {
+          apiData.value = get(res, props.resultField) || [];
+        }
+      } catch (error) {
+        console.warn(error);
+      } finally {
+        loading.value = false;
       }
+    }
 
-      watchEffect(() => {
-        props.immediate && initialFetch();
-      });
+    async function loadData(selectedOptions: Option[]) {
+      const targetOption = selectedOptions[selectedOptions.length - 1];
+      targetOption.loading = true;
 
-      watch(
-        () => props.initFetchParams,
-        () => {
-          !unref(isFirstLoad) && initialFetch();
-        },
-        { deep: true },
-      );
-
-      function handleChange(keys, args) {
-        emitData.value = keys;
-        emit('defaultChange', keys, args);
+      const api = props.api;
+      if (!api || !isFunction(api)) return;
+      try {
+        const res = await api({
+          [props.asyncFetchParamKey]: Reflect.get(targetOption, 'value'),
+        });
+        if (Array.isArray(res)) {
+          const children = generatorOptions(res);
+          targetOption.children = children;
+          return;
+        }
+        if (props.resultField) {
+          const children = generatorOptions(get(res, props.resultField) || []);
+          targetOption.children = children;
+        }
+      } catch (e) {
+        console.error(e);
+      } finally {
+        targetOption.loading = false;
       }
+    }
 
-      // function handleRenderDisplay({ labels, selectedOptions }) {
-      //   if (unref(emitData).length === selectedOptions.length) {
-      //     return labels.join(' / ');
-      //   }
-      //   if (props.displayRenderArray) {
-      //     return props.displayRenderArray.join(' / ');
-      //   }
-      //   return '';
-      // }
+    watchEffect(() => {
+      props.immediate && initialFetch();
+    });
 
-      return {
-        state,
-        options,
-        loading,
-        handleChange,
-        loadData,
-        // handleRenderDisplay,
-        apiSelectNotFound:'请等待数据加载完成...'
-      };
-    },
-  });
+    watch(
+      () => props.initFetchParams,
+      () => {
+        !unref(isFirstLoad) && initialFetch();
+      },
+      { deep: true },
+    );
+
+    function handleChange(keys: any, args?: any) {
+      emitData.value = keys;
+      emit('defaultChange', keys, args);
+    }
+
+    // function handleRenderDisplay({ labels, selectedOptions }) {
+    //   if (unref(emitData).length === selectedOptions.length) {
+    //     return labels.join(' / ');
+    //   }
+    //   if (props.displayRenderArray) {
+    //     return props.displayRenderArray.join(' / ');
+    //   }
+    //   return '';
+    // }
+
+    return {
+      state,
+      options,
+      loading,
+      handleChange,
+      loadData,
+      // handleRenderDisplay,
+      apiSelectNotFound: '请等待数据加载完成...'
+    };
+  },
+});
 </script>

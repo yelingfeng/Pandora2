@@ -1,4 +1,4 @@
-<script lang="tsx">
+<script lang="jsx">
 import { createNamespace } from '@/_utils/create/index'
 import { ElTable } from 'element-plus'
 import { merge } from 'lodash-es'
@@ -16,11 +16,7 @@ import { tableProps } from './props'
 import { useTableProps } from './props/useTableProps'
 import { useColumnRender } from './render/column'
 import { usePagerRender } from './render/pager'
-import type {
-  IPandoraTableColumn,
-  IPandoraTableProps,
-  ITableActionType
-} from './types'
+// types are omitted to improve dts parsing compatibility
 
 const [name] = createNamespace('Table')
 export default defineComponent({
@@ -29,7 +25,7 @@ export default defineComponent({
   props: tableProps,
   emits: ['register', 'handleSizePageChange', 'handleCurrentPageChange'],
   setup(props, { attrs, emit }) {
-    const propsRef = ref<Partial<IPandoraTableProps<any>>>({})
+    const propsRef = ref({})
 
     const innerProps = reactive({ ...props })
 
@@ -38,11 +34,11 @@ export default defineComponent({
       [() => props, () => propsRef.value],
       () => {
         const merged = merge({}, unref(props), unref(propsRef))
-        if ('data' in merged) (innerProps as any).data = (merged as any).data
+        if ('data' in merged) innerProps.data = merged.data
         if ('columns' in merged)
-          (innerProps as any).columns = (merged as any).columns
+          innerProps.columns = merged.columns
         if ('tableConfig' in merged)
-          (innerProps as any).tableConfig = (merged as any).tableConfig
+          innerProps.tableConfig = merged.tableConfig
       },
       { deep: true, immediate: true }
     )
@@ -53,9 +49,9 @@ export default defineComponent({
       columnsProps,
       $sortService,
       handleHeaderClick
-    } = useTableProps(innerProps as any)
+    } = useTableProps(innerProps)
 
-    const getConfig = () => (innerProps.tableConfig as any) || {}
+    const getConfig = () => innerProps.tableConfig || {}
     const pagination = computed(() => getConfig().pagination)
     const pageOpt = computed(() => getConfig().pageOpt)
     const selectionMode = computed(() => {
@@ -66,7 +62,7 @@ export default defineComponent({
     const tableKey = computed(() => {
       const cols = columnsProps.value || []
       return cols
-        .map((c: any) => c.type || c.prop || c.value || c.label || c.name || '')
+        .map((c) => c.type || c.prop || c.value || c.label || c.name || '')
         .join('|')
     })
 
@@ -78,17 +74,17 @@ export default defineComponent({
         ...otherProps
       } = getConfig()
 
-      let obj: any = {}
-      const objKeys = Object.keys(otherProps) as Array<keyof typeof otherProps>
-      objKeys.map((prop: any) => {
-        obj[prop] = unref((otherProps as any)[prop])
+      let obj = {}
+      const objKeys = Object.keys(otherProps)
+      objKeys.map((prop) => {
+        obj[prop] = unref(otherProps[prop])
       })
       return obj
     })
 
     const internalSelecting = ref(false)
-    const handleSelectionChange = (val: any[]) => {
-      const userHandler: any = (attrs as any).onSelectionChange
+    const handleSelectionChange = (val) => {
+      const userHandler = attrs.onSelectionChange
       if (internalSelecting.value) {
         if (userHandler) userHandler(val)
         return
@@ -102,7 +98,7 @@ export default defineComponent({
         const last = val[val.length - 1]
         internalSelecting.value = true
         nextTick(() => {
-          const inst: any = tableInstance.value as any
+          const inst = tableInstance.value
           if (inst && inst.clearSelection && inst.toggleRowSelection) {
             inst.clearSelection()
             inst.toggleRowSelection(last, true)
@@ -116,31 +112,31 @@ export default defineComponent({
       if (userHandler) userHandler(val)
     }
 
-    const tableAction: ITableActionType = {
-      setProps: async (props: Partial<IPandoraTableProps<any>>) => {
+    const tableAction = {
+      setProps: async (props) => {
         propsRef.value = merge({}, unref(propsRef) || {}, props)
         await nextTick()
       },
-      setColumns: async (columns: IPandoraTableColumn<any>[]) => {
+      setColumns: async (columns) => {
         const update = { columns }
         propsRef.value = merge({}, unref(propsRef) || {}, update)
         await nextTick()
       },
-      setData: async (data: any[]) => {
+      setData: async (data) => {
         const update = { data }
         propsRef.value = merge({}, unref(propsRef) || {}, update)
         await nextTick()
       },
-      reload: async (_opt?: any) => {
+      reload: async (_opt) => {
         // TODO reload logic
       },
-      getSelectRows: <T = any>() => {
-        const inst: any = tableInstance.value as any
+      getSelectRows: () => {
+        const inst = tableInstance.value
         if (inst && inst.getSelectionRows) return inst.getSelectionRows() || []
         return []
       },
       clearSelection: () => {
-        const inst: any = tableInstance.value as any
+        const inst = tableInstance.value
         if (inst && inst.clearSelection) inst.clearSelection()
       }
     }
@@ -153,11 +149,11 @@ export default defineComponent({
     })
 
     // 分页事件回调
-    const handleSizeChange = (val: number) => {
+    const handleSizeChange = (val) => {
       emit('handleSizePageChange', val)
     }
     // 分页事件回调
-    const handleCurrentChange = (val: number) => {
+    const handleCurrentChange = (val) => {
       emit('handleCurrentPageChange', val)
     }
 
@@ -175,7 +171,7 @@ export default defineComponent({
       )
       // 创建column
       const columnsVNode = useColumnRender(columnsProps.value, $sortService)
-      let pageVNode: any = null
+      let pageVNode = null
       if (unref(pagination)) {
         pageVNode = usePagerRender(
           unref(pageOpt),

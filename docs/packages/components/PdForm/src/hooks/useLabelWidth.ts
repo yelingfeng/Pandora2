@@ -9,7 +9,7 @@ export function useItemLabelWidth(
 ) {
   return computed(() => {
     const schemaItem = unref(schemaItemRef)
-    const { labelCol = {}, wrapperCol = {} } = schemaItem.itemProps || {}
+    const { labelCol = {}, wrapperCol = {} } = (schemaItem.itemProps || {}) as any
     const { labelWidth, disabledLabelWidth } = schemaItem
 
     const {

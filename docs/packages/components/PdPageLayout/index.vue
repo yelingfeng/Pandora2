@@ -16,9 +16,11 @@
   </div>
 </template>
 
-<script lang="ts" setup>
+<script lang="ts" name="PdPageLayout" setup>
 import { onBeforeUnmount, onMounted, PropType, provide, ref, StyleValue } from 'vue'
 import LoadCom from './components/Loading.vue'
+
+defineOptions({ name: 'PdPageLayout' })
 
 // Provide context for child components (like PdForm) to adapt behavior
 provide('isInPageLayout', true)

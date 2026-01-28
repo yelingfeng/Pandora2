@@ -4,7 +4,7 @@ import Charts from './src/index.vue'
 export { Charts }
 
 
-export const PdCharts= withInstall(Charts)
+export const PdCharts: any = withInstall(Charts)
 
 export default PdCharts
 

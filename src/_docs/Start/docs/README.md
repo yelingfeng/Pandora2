@@ -20,8 +20,8 @@ import 'element-plus/dist/index.css'
 import ElementPlus from 'element-plus'
 
 // 引入Pandora2
-import 'pandora2/lib/style.css'
-import Pandora2 from 'pandora2'
+import '@yelingfeng/pandora2/dist/style.css'
+import Pandora2 from '@yelingfeng/pandora2'
 
 const app = createApp(App)
 

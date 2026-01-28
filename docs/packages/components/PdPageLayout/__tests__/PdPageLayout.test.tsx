@@ -2,7 +2,7 @@ import { describe, test, expect, beforeAll } from 'vitest'
 import { mount } from '@vue/test-utils'
 import PdPageLayout from '../index.vue'
 import PdPageTreeLayout from '../tree.vue'
-import { defineComponent, nextTick } from 'vue'
+import { defineComponent } from 'vue'
 
 // Mock ResizeObserver
 beforeAll(() => {

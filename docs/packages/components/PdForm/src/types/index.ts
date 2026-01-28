@@ -1,12 +1,16 @@
-import type { CSSProperties, VNode, ComputedRef, Ref } from 'vue'
 import type { ValidateFieldsError } from 'async-validator'
 import type {
-  FormRules,
-  FormItemProp,
-  RowProps,
+  ButtonProps,
   ColProps,
-  ButtonProps
+  FormItemProp,
+  FormItemRule,
+  FormRules,
+  RowProps
 } from 'element-plus'
+import type { ComputedRef, CSSProperties, Ref, VNode } from 'vue'
+
+export type Fn = (...args: any[]) => any
+export type EmitType = (event: string, ...args: any[]) => void
 
 export type FieldMapToTime = [string, [string, string], string?][]
 
@@ -96,6 +100,7 @@ export type IFormProps = {
   resetFunc?: () => Promise<void>
   submitFunc?: () => Promise<void>
   transformDateFunc?: (date: any) => string
+  layout?: 'horizontal' | 'vertical' | 'inline'
 }
 
 export type RenderCallbackParams = {
@@ -140,7 +145,7 @@ export type IFormSchema = {
     | any
 
   // Validation rules
-  rules?: FormRules | FormRules[]
+  rules?: FormItemRule | FormItemRule[]
 
   // Required
   required?: boolean | ((renderCallbackParams: RenderCallbackParams) => boolean)
@@ -215,7 +220,9 @@ export type IFormSchema = {
     | boolean
     | ((renderCallbackParams: RenderCallbackParams) => boolean)
 
-  dynamicRules?: (renderCallbackParams: RenderCallbackParams) => FormRules[]
+  dynamicRules?: (renderCallbackParams: RenderCallbackParams) => FormItemRule[]
+  labelWidth?: string | number
+  disabledLabelWidth?: boolean
 }
 export type Callback = {
   (isValid?: boolean, invalidFields?: ValidateFieldsError): void
@@ -233,7 +240,7 @@ export type IFormActionType = {
     props?: Array<FormItemProp>,
     callback?: Callback
   ) => Promise<void>
-  setFieldsValue: <T>(values: T) => Promise<void>
+  setFieldsValue: (values: Recordable) => Promise<void>
   getFieldsValue: () => Recordable
   clearValidate: (name?: string | string[]) => Promise<void>
   updateSchema: (

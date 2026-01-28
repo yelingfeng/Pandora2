@@ -1,4 +1,4 @@
-import { describe, test, expect, vi, beforeAll } from 'vitest'
+import { describe, test, expect, beforeAll } from 'vitest'
 import { mount } from '@vue/test-utils'
 import PdTable from '../src/index.vue'
 import { useTable } from '../src/hooks/useTable'

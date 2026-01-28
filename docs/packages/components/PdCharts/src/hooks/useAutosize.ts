@@ -6,7 +6,7 @@ import {
 } from 'resize-detector'
 import { watch, type Ref } from 'vue'
 import type { EChartsType } from '../types'
-import type { AutoresizeProp } from '../types/props'
+import type { AutoresizeProp } from '../types'
 
 export function useAutoresize(
   chart: Ref<EChartsType | undefined>,

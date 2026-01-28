@@ -1,13 +1,14 @@
 {
-  "name": "pandora2",
-  "version": "0.1.1",
+  "name": "@yelingfeng/pandora2",
+  "version": "0.1.0",
   "files": [
     "dist",
     "volar.d.ts"
   ],
   "repository": "https://github.com/yelingfeng/Pandora2.git",
   "publishConfig": {
-    "registry": "https://registry.npmjs.org/"
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
   },
   "main": "./dist/pandora2.umd.js",
   "module": "./dist/pandora2.es.js",
@@ -35,6 +36,7 @@
     "release:patch": "node script/release.js patch",
     "release:minor": "node script/release.js minor",
     "release:major": "node script/release.js major",
+    "release:tag": "node script/release-tag.js",
     "preversion": "pnpm run test:ci && pnpm run build:lib",
     "version": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0 && git add CHANGELOG.md",
     "postversion": "git push origin HEAD --follow-tags",

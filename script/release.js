@@ -17,7 +17,4 @@ try {
   run('git commit -m "chore: prepare release"')
 }
 
-run('pnpm run test:ci')
-run('pnpm run build:lib')
-
 run(`npm version ${bump}`)
