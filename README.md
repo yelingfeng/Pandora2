@@ -1,7 +1,7 @@
 # Pandora2
 
 [![version](https://img.shields.io/github/package-json/v/yelingfeng/Pandora2)](https://github.com/yelingfeng/Pandora2)
-[![npm](https://img.shields.io/npm/v/%40yelingfeng%2Fpandora2)](https://www.npmjs.com/package/@yelingfeng/pandora2)
+[![npm](https://img.shields.io/npm/v/%40ylf521%2Fpandora2)](https://www.npmjs.com/package/@ylf521/pandora2)
 [![test](https://github.com/yelingfeng/Pandora2/actions/workflows/node.js.yml/badge.svg?branch=main)](https://github.com/yelingfeng/Pandora2/actions/workflows/node.js.yml)
 [![coverage](https://codecov.io/gh/yelingfeng/Pandora2/branch/main/graph/badge.svg)](https://codecov.io/gh/yelingfeng/Pandora2)
 
@@ -23,15 +23,15 @@
 ### 安装
 
 ```bash
-pnpm add @yelingfeng/pandora2
+pnpm add @ylf521/pandora2
 ```
 
 ```ts
 import { createApp } from 'vue'
 import App from './App.vue'
 
-import Pandora2 from '@yelingfeng/pandora2'
-import '@yelingfeng/pandora2/dist/style.css'
+import Pandora2 from '@ylf521/pandora2'
+import '@ylf521/pandora2/dist/style.css'
 
 const app = createApp(App)
 app.use(Pandora2)

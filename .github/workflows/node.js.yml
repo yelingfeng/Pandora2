@@ -107,14 +107,7 @@ jobs:
       - name: Ensure npm registry
         run: npm config set registry https://registry.npmjs.org/
 
-      - name: Verify npm auth
-        run: |
-          npm config get registry
-          npm whoami --registry https://registry.npmjs.org/
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-
-      - name: Publish
-        run: npm publish --access public --registry https://registry.npmjs.org/
+      - name: Publish to npm
+        run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

@@ -1,5 +1,5 @@
 {
-  "name": "@yelingfeng/pandora2",
+  "name": "@ylf521/pandora2",
   "version": "0.1.3",
   "files": [
     "dist",
@@ -7,7 +7,6 @@
   ],
   "repository": "https://github.com/yelingfeng/Pandora2.git",
   "publishConfig": {
-    "registry": "https://registry.npmjs.org/",
     "access": "public"
   },
   "main": "./dist/pandora2.umd.js",
