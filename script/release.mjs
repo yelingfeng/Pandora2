@@ -6,7 +6,7 @@ function run(command) {
 
 const bump = process.argv[2]
 if (!['patch', 'minor', 'major'].includes(bump)) {
-  console.error('Usage: node script/release.js <patch|minor|major>')
+  console.error('Usage: node script/release.mjs <patch|minor|major>')
   process.exit(1)
 }
 
