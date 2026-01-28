@@ -1,8 +1,8 @@
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
-    PdContainer: typeof import('@ylf521/pandora2')['PdContainer']
-    PdForm: typeof import('@ylf521/pandora2')['PdForm']
-    PdTable: typeof import('@ylf521/pandora2')['PdTable']
+    PdContainer: typeof import('@yelingfeng/pandora2')['PdContainer']
+    PdForm: typeof import('@yelingfeng/pandora2')['PdForm']
+    PdTable: typeof import('@yelingfeng/pandora2')['PdTable']
   }
 }
 
