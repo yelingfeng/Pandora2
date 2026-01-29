@@ -20,7 +20,10 @@
 import Prism from 'prismjs'
 import './assets/prism.css'
 
-const isDev = import.meta.env.MODE === 'development'
+const demoSourceModules = import.meta.glob('./_docs/**/docs/*.vue', {
+  query: '?raw',
+  import: 'default'
+})
 
 export default {
   props: {
@@ -53,18 +56,11 @@ export default {
   },
   async mounted() {
     if (this.compName && this.demoName) {
-      if (isDev) {
-        this.sourceCode = (
-          await import(
-            /* @vite-ignore */ `./_docs/${this.compName}/docs/${this.demoName}.vue?raw`
-          )
-        ).default
-      } else {
-        this.sourceCode = await fetch(
-          `${isDev ? '' : 'https://github.com/yelingfeng/Pandora2'}/_docs/${this.compName
-          }/docs/${this.demoName}.vue`
-        ).then((res) => res.text())
-      }
+      const key = `./_docs/${this.compName}/docs/${this.demoName}.vue`
+      const loader = demoSourceModules[key]
+      this.sourceCode = loader
+        ? await loader()
+        : `// 未找到源码：${key}`
     }
     await this.$nextTick()
     Prism.highlightAll()
@@ -75,6 +71,11 @@ export default {
     },
     showSourceCode() {
       this.codeVisible = !this.codeVisible
+      if (this.codeVisible) {
+        this.$nextTick(() => {
+          Prism.highlightAll()
+        })
+      }
     }
   }
 }
