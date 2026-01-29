@@ -31,13 +31,13 @@ function renderColumnProp<T>(
             <span class="caret-wrapper">
               <i
                 class="sort-caret ascending"
-                on-click={(e: any) =>
+                onClick={(e: any) =>
                   $sortService.sortIconClick(e, column, 'ascending')
                 }
               ></i>
               <i
                 class="sort-caret descending"
-                on-click={(e: any) =>
+                onClick={(e: any) =>
                   $sortService.sortIconClick(e, column, 'descending')
                 }
               ></i>

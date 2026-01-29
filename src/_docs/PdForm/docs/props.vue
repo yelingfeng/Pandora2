@@ -18,6 +18,12 @@
       <el-button @click="setProps({ actionColOptions: { span: 24 } })" class="mr-2">
         操作按钮还原
       </el-button>
+      <el-button @click="setProps({ showAdvancedButton: true })" class="mr-2">
+        展开按钮显示
+      </el-button>
+      <el-button @click="setProps({ showAdvancedButton: false })" class="mr-2">
+        展开按钮隐藏
+      </el-button>
     </el-col>
   </el-row>
   <el-row>

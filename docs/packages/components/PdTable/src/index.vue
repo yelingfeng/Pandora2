@@ -39,6 +39,18 @@ export default defineComponent({
           innerProps.columns = merged.columns
         if ('tableConfig' in merged)
           innerProps.tableConfig = merged.tableConfig
+        if ('sortConfig' in merged) {
+          const nextSortConfig = merged.sortConfig || {}
+          const currentSortConfig = innerProps.sortConfig
+          if (currentSortConfig && typeof currentSortConfig === 'object') {
+            Object.keys(currentSortConfig).forEach((k) => {
+              delete currentSortConfig[k]
+            })
+            Object.assign(currentSortConfig, nextSortConfig)
+          } else {
+            innerProps.sortConfig = nextSortConfig
+          }
+        }
       },
       { deep: true, immediate: true }
     )

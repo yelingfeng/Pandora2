@@ -1,6 +1,6 @@
 <template>
-  <div style="height: 600px; position: relative; border: 1px solid #eee;">
-    <PdPageLayout :tableLoading="loading" height="100%">
+  <div style="height: 400px; position: relative; border: 1px solid #eee;">
+    <PdPageLayout :tableLoading="loading" height="calc(60vh - 300px)" :baseTableHeight="300">
       <template #form>
         <PdForm @register="registerForm" @submit="handleQuery" @reset="handleReset">
           <template #advanceAfter>
@@ -44,6 +44,7 @@ const [registerForm] = useForm({
     { field: 'address', label: '地址', component: 'Input', colProps: { span: 6 } },
   ],
   labelWidth: 80,
+  showAdvancedButton:false
 })
 
 const [registerTable, { setData }] = useTable({

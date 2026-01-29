@@ -13,7 +13,6 @@ export const useTableProps = (props: ExtractPropTypes<typeof tableProps>) => {
   const currentData = ref(props.data)
   const tableConfig = props.tableConfig as IPandoraTable<AnyObject>
   const columnsProps = ref(props.columns)
-  const { sortConfig, columns } = props
 
   const initColumns = () => {
     const config = (props.tableConfig || {}) as IPandoraTable<AnyObject>
@@ -57,10 +56,28 @@ export const useTableProps = (props: ExtractPropTypes<typeof tableProps>) => {
   )
 
   const $sortService = useSortService<AnyObject>(
-    sortConfig,
-    columns,
+    props.sortConfig as any,
+    columnsProps.value as any,
     tableInstance
   )
+
+  const rebuildSortColumns = () => {
+    const cfg: any = props.sortConfig || {}
+    const order = Object.create(null)
+    ;(columnsProps.value || []).forEach((item: any) => {
+      if (item.sortable && item.sortable !== undefined) {
+        const key = item.value || item.prop
+        if (key) order[key] = ''
+      }
+    })
+    cfg.userColumnOrder = order
+    cfg.tableInstance = tableInstance
+    $sortService.init()
+  }
+
+  watch(() => columnsProps.value, rebuildSortColumns, { deep: true, immediate: true })
+  watch(() => props.sortConfig, rebuildSortColumns, { immediate: true })
+
   // Header点击事件回调
   const handleHeaderClick = (column: any, e: any) => {
     $sortService.executeHeaderClick(column, e)

@@ -151,7 +151,7 @@ export class SortService {
    *  判断配置column中是否有指定的配置项sortable
    **/
   isNeedOrderChange(prop: string) {
-    return this._oldActiveSort[prop]
+    return Object.prototype.hasOwnProperty.call(this._oldActiveSort, prop)
   }
 
   /**

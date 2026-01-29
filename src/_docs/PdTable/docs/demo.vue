@@ -4,7 +4,7 @@
   </div>
 </template>
 
-<script lang="tsx">
+<script lang="jsx">
 import { defineComponent, onMounted, reactive, ref } from 'vue';
 export default defineComponent({
   setup() {
@@ -14,7 +14,7 @@ export default defineComponent({
     // const clickTag = (e: Event, row: any) => {
     //   console.log(e, row)
     // }
-    let testData: any = ref([
+    let testData = ref([
       {
         id: '1',
         username: '张三',
@@ -65,7 +65,7 @@ export default defineComponent({
       },
     })
 
-    const editClick = (row: any) => {
+    const editClick = (row) => {
       console.log(row)
     }
 
@@ -78,11 +78,11 @@ export default defineComponent({
       { value: 'role', name: '权限', width: '100' },
       { value: 'createTime', name: '创建时间', width: '200', sortable: true },
       {
-        value: 'op', name: '操作', align: 'center', width: '200', render: (row: any) => {
+        value: 'op', name: '操作', align: 'center', width: '200', render: (row) => {
           // console.log(row, index)
           return (
             <div>
-              <el-button type="text" size="small" onClick={() => editClick(row)}>编辑</el-button>
+              <el-button type="primary" size="small" onClick={() => editClick(row)}>编辑</el-button>
               <el-button type="text" size="small">删除</el-button>
             </div>
           )

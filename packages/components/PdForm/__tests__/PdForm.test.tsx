@@ -1,4 +1,4 @@
-import { describe, test, expect, beforeAll } from 'vitest'
+import { describe, test, expect, beforeAll, vi } from 'vitest'
 import { mount } from '@vue/test-utils'
 import PdForm from '../src/index.vue'
 import { useForm } from '../src/hooks/useForm'
@@ -51,5 +51,38 @@ describe('PdForm', () => {
     await nextTick()
     
     expect(wrapper.exists()).toBe(true)
+  })
+
+  test('showAdvancedButton should control advanced toggle rendering', async () => {
+    vi.useFakeTimers()
+    try {
+      const schemas = [
+        { field: 'f1', component: 'Input', label: '字段1', colProps: { span: 8 } },
+        { field: 'f2', component: 'Input', label: '字段2', colProps: { span: 8 } },
+        { field: 'f3', component: 'Input', label: '字段3', colProps: { span: 8 } },
+        { field: 'f4', component: 'Input', label: '字段4', colProps: { span: 8 } }
+      ] as any
+
+      const wrapperOn = mount(PdForm, {
+        props: { schemas, showAdvancedButton: true }
+      })
+      await nextTick()
+      vi.runAllTimers()
+      await nextTick()
+      expect(wrapperOn.text()).toContain('收起')
+      wrapperOn.unmount()
+
+      const wrapperOff = mount(PdForm, {
+        props: { schemas, showAdvancedButton: false }
+      })
+      await nextTick()
+      vi.runAllTimers()
+      await nextTick()
+      expect(wrapperOff.text()).not.toContain('收起')
+      expect(wrapperOff.text()).not.toContain('展开')
+      wrapperOff.unmount()
+    } finally {
+      vi.useRealTimers()
+    }
   })
 })
