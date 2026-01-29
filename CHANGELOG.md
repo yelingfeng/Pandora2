@@ -1,3 +1,12 @@
+# [1.0.0](https://github.com/yelingfeng/Pandora2/compare/v0.1.3...v1.0.0) (2026-01-29)
+
+
+### Bug Fixes
+
+* **PdTable:** 修复排序服务属性检查与列渲染事件绑定 ([9dc7e25](https://github.com/yelingfeng/Pandora2/commit/9dc7e25099d489cd351ba9bf64a130344dc4d557))
+
+
+
 ## [0.1.3](https://github.com/yelingfeng/Pandora2/compare/v0.1.2...v0.1.3) (2026-01-28)
 
 
