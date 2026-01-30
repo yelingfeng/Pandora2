@@ -1,20 +1,21 @@
 <template>
   <div class="vpandora-colorful-table">
-    <div v-if="resolvedLoading" class="colorful-loading">
+    <div v-if="displayLoading" class="colorful-loading">
       <div class="colorful-loading-mask"></div>
       <div class="colorful-loading-indicator"></div>
     </div>
-    <PdTable v-bind="$attrs" :data="displayData" :columns="enhancedColumns" :sortConfig="mergedSortConfig"
-      :tableConfig="mergedTableConfig" @register="handleRegister"
+    <PdTable ref="innerTableRef" v-bind="$attrs" :data="displayData" :columns="enhancedColumns"
+      :sortConfig="mergedSortConfig" :tableConfig="mergedTableConfig" @register="handleRegister"
       @handleSizePageChange="(v) => emit('handleSizePageChange', v)"
       @handleCurrentPageChange="(v) => emit('handleCurrentPageChange', v)" />
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed, nextTick, ref } from 'vue'
 import PdTable from '../index.vue'
 import { tableProps } from '../props'
+import TableScreenshot from './screenshot'
 import { buildDataCellMeta, buildSummaryMeta, formatValueByProp, isTimeString, renderDataCell, renderSummaryCell } from './summary'
 
 defineOptions({
@@ -48,6 +49,8 @@ const emit = defineEmits([
 ])
 
 const selectedRowRef = ref<any>(null)
+const innerTableRef = ref<any>(null)
+const screenshotLoadingRef = ref(false)
 
 const resolvedTotalRow = computed(() => {
   if (props.totalRow) return props.totalRow as any
@@ -235,8 +238,29 @@ const resolvedLoading = computed(() => {
   return false
 })
 
+const displayLoading = computed(() => {
+  return resolvedLoading.value || screenshotLoadingRef.value
+})
+
+async function exportScreenshot(options: any = {}) {
+  const { filename = '表格截图', download = true, scale } = options || {}
+  screenshotLoadingRef.value = true
+  try {
+    const result = await TableScreenshot.captureTableScreenshot({
+      tableRef: innerTableRef.value,
+      nextTick,
+      filename,
+      download,
+      scale
+    })
+    return result
+  } finally {
+    screenshotLoadingRef.value = false
+  }
+}
+
 function handleRegister(action: any) {
-  emit('register', action)
+  emit('register', { ...action, exportScreenshot })
 }
 </script>
 

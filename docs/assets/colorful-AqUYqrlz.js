@@ -1,4 +1,4 @@
-<template>
+const n=`<template>
   <div style="margin-bottom: 12px; display: flex; align-items: center; gap: 10px;">
     <el-button type="primary" link @click="toggleLoading">
       {{ loading ? '关闭 Loading' : '开启 Loading' }}
@@ -12,7 +12,7 @@
 
   <div style="margin-bottom: 12px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
     <el-tag size="small" type="success">
-      当前排序：{{ sortState.orderFile ? `${sortState.orderFile} ${sortState.orderType}` : '无' }}
+      当前排序：{{ sortState.orderFile ? \`\${sortState.orderFile} \${sortState.orderType}\` : '无' }}
     </el-tag>
     <el-tag size="small" type="warning">
       最近单元格点击：{{ lastCellClickText || '无' }}
@@ -116,12 +116,12 @@ const tableConfig = {
 }
 
 function onSummaryClick(prop: string) {
-  ElMessage.info(`summary-click: ${prop}`)
+  ElMessage.info(\`summary-click: \${prop}\`)
 }
 
 function onSortChange(payload: any) {
   sortState.value = payload
-  ElMessage.success(`sort-change: ${payload.orderFile} ${payload.orderType}`)
+  ElMessage.success(\`sort-change: \${payload.orderFile} \${payload.orderType}\`)
 }
 
 function onRegister(action: any) {
@@ -140,11 +140,12 @@ async function handleScreenshot() {
 async function onCellClick(payload: any) {
   const rowName = payload && payload.row ? payload.row.provName : ''
   const value = payload && typeof payload.value !== 'undefined' ? payload.value : ''
-  lastCellClickText.value = `${rowName || '-'} / ${payload.prop} = ${value}`
+  lastCellClickText.value = \`\${rowName || '-'} / \${payload.prop} = \${value}\`
   await ElMessageBox.alert(lastCellClickText.value, 'cell-click', { type: 'info' })
 }
 
 function toggleLoading() {
   loading.value = !loading.value
 }
-</script>
+<\/script>
+`;export{n as default};

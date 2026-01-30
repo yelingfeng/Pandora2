@@ -50,6 +50,7 @@
     "dayjs": "^1.11.4",
     "echarts": "^6.0.0",
     "element-plus": "^2.13.1",
+    "html2canvas": "^1.4.1",
     "lodash-es": "^4.17.21",
     "resize-detector": "^0.3.0"
   },
