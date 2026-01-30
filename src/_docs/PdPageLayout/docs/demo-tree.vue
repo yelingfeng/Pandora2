@@ -39,7 +39,8 @@
 <script lang="ts" setup>
 import { PdForm, useForm } from '@pandora/components/PdForm'
 import { PdPageTreeLayout } from '@pandora/components/PdPageLayout'
-import { PdTable, useTable } from '@pandora/components/PdTable'
+import { PdTable } from '@pandora/components/PdTable'
+import { useTable } from '@pandora/hooks'
 import { ElMessage, ElIcon } from 'element-plus'
 import { Folder } from '@element-plus/icons-vue'
 import { ref } from 'vue'

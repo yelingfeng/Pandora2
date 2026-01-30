@@ -5,21 +5,34 @@ import demo from './demo.vue'
 </script>
 # 快速上手
 
-### 引入 Pandora2
-你可以引入整个 Pandora2，或是根据需要仅引入部分组件。我们先介绍如何引入完整的 Pandora2。
+## 环境要求
 
-完整引入
-在 main.js 中写入以下内容：
+- Node.js：建议 20+（本项目开发环境使用 Node 22.x）
+- 包管理器：yarn
 
-```javascript
+## 安装
+
+```bash
+yarn add element-plus @yelingfeng/pandora2
+```
+
+如果你还没有安装 Element Plus：
+
+```bash
+yarn add element-plus
+```
+
+## 完整引入（推荐快速体验）
+
+在 `main.ts` / `main.js` 中写入以下内容：
+
+```js
 import { createApp } from 'vue'
 import App from './App.vue'
 
-// 引入Element plus
 import 'element-plus/dist/index.css'
 import ElementPlus from 'element-plus'
 
-// 引入Pandora2
 import '@yelingfeng/pandora2/dist/style.css'
 import Pandora2 from '@yelingfeng/pandora2'
 
@@ -31,8 +44,20 @@ app.use(Pandora2)
 app.mount('#app')
 ```
 
-### 使用方法
-成功引入整个 Pandora2 后，就可以直接使用啦！（请点击`查看代码`进行查看）
+## 按需引入（组件 / hooks）
+
+Pandora2 的组件和业务 hooks 都可以从包入口直接引入（不需要使用内部别名）。
+
+```js
+import { PdForm, PdTable, useForm, useTable } from '@yelingfeng/pandora2'
+```
+
+说明：
+
+## 使用示例
+
+成功引入后，就可以直接使用组件与业务 hooks（请点击 “查看代码” 查看完整示例）：
+
 <Preview comp-name="Start" demo-name="demo">
   <demo />
 </Preview>

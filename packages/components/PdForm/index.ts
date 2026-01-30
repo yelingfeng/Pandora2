@@ -1,7 +1,7 @@
-import { withInstall, withNoopInstall } from '@/_utils/vue'
+import { withInstall, withNoopInstall } from '@pandora/shared/_utils/vue'
 import Form from './src/index.vue'
 import FormItem from './src/components/FormItem.vue'
-import type { SFCWithInstall } from '@/_utils/vue/typescript'
+import type { SFCWithInstall } from '@pandora/shared/_utils/vue/typescript'
 
 export { useComponentRegister } from './src/hooks/useComponentRegister'
 

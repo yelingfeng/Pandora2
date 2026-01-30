@@ -1,8 +1,8 @@
 // import type { FormRules } from 'element-plus'
 import type { ComponentType } from './types/index'
 // import { useI18n } from '@/hooks/web/useI18n'
-import { dateUtil } from '@/_utils/dateUtil'
-import { isNumber, isObject } from '@/_utils/is'
+import { dateUtil } from '@pandora/shared/_utils/dateUtil'
+import { isNumber, isObject } from '@pandora/shared/_utils/is'
 import { FormRules } from 'element-plus'
 
 // const { t } = useI18n()

@@ -6,8 +6,8 @@ import type {
   IFormActionType
 } from '../types'
 import { ref, watch, onUnmounted, unref, nextTick } from 'vue'
-import { isProdMode } from '@/_utils/env'
-import { getDynamicProps, error } from '@/_utils'
+import { isProdMode } from '@pandora/shared/_utils/env'
+import { getDynamicProps, error } from '@pandora/shared/_utils'
 type Props = Partial<DynamicProps<IFormProps>>
 export function useForm(props?: Props): UseFormReturnType {
   const formRef = ref<Nullable<IFormActionType>>(null)

@@ -1,5 +1,5 @@
 <script lang="jsx">
-import { createNamespace } from '@/_utils/create/index'
+import { createNamespace } from '@pandora/shared/_utils/create/index'
 import { ElTable } from 'element-plus'
 import { merge } from 'lodash-es'
 import {

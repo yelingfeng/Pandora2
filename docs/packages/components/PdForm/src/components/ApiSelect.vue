@@ -16,10 +16,10 @@
   </el-select>
 </template>
 <script lang="ts">
-import { isFunction } from '@/_utils/is';
-import { propTypes } from '@/_utils/propTypes';
-import { useRuleFormItem } from '@/hooks/component/useFormItem';
-import { useAttrs } from '@/hooks/core/useAttrs';
+import { isFunction } from '@pandora/shared/_utils/is';
+import { propTypes } from '@pandora/shared/_utils/propTypes';
+import { useRuleFormItem } from '@pandora/shared/hooks/component/useFormItem';
+import { useAttrs } from '@pandora/shared/hooks/core/useAttrs';
 import { ElSelect } from 'element-plus';
 import { get, omit } from 'lodash-es';
 import { computed, defineComponent, PropType, ref, unref, watch, watchEffect } from 'vue';

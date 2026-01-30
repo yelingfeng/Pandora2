@@ -1,5 +1,5 @@
-import { deepMerge } from '@/_utils'
-import { dateUtil } from '@/_utils/dateUtil'
+import { deepMerge } from '@pandora/shared/_utils'
+import { dateUtil } from '@pandora/shared/_utils/dateUtil'
 import {
   isArray,
   isDef,
@@ -7,8 +7,8 @@ import {
   isNullOrUnDef,
   isObject,
   isString
-} from '@/_utils/is'
-import { error } from '@/_utils/log'
+} from '@pandora/shared/_utils/is'
+import { error } from '@pandora/shared/_utils/log'
 import { FormItemProp } from 'element-plus'
 import { cloneDeep, uniqBy } from 'lodash-es'
 import type { ComputedRef, Ref } from 'vue'

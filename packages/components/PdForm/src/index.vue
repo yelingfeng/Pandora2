@@ -23,9 +23,9 @@
   </div>
 </template>
 <script lang="ts">
-import { deepMerge } from '@/_utils/';
-import { createNamespace } from '@/_utils/create';
-import { dateUtil } from '@/_utils/dateUtil';
+import { deepMerge } from '@pandora/shared/_utils';
+import { createNamespace } from '@pandora/shared/_utils/create';
+import { dateUtil } from '@pandora/shared/_utils/dateUtil';
 import { useDebounceFn } from '@vueuse/core';
 import { ElForm, ElRow, FormRules } from 'element-plus';
 import { cloneDeep } from 'lodash-es';

@@ -107,6 +107,7 @@ describe('PdPageTreeLayout', () => {
     expect(sidebar.classes()).toContain('collapsed')
     expect(sidebar.attributes('style')).toContain('width: 50px')
     expect(wrapper.emitted('sidebar-toggle')).toBeTruthy()
-    expect(wrapper.emitted('sidebar-toggle')?.[0]).toEqual([true])
+    const emitted: any = wrapper.emitted('sidebar-toggle')
+    expect(emitted[0]).toEqual([true])
   })
 })

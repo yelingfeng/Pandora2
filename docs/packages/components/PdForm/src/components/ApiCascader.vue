@@ -12,9 +12,9 @@
   </el-cascader>
 </template>
 <script lang="ts">
-import { isFunction } from '@/_utils/is';
-import { propTypes } from '@/_utils/propTypes';
-import { useRuleFormItem } from '@/hooks/component/useFormItem';
+import { isFunction } from '@pandora/shared/_utils/is';
+import { propTypes } from '@pandora/shared/_utils/propTypes';
+import { useRuleFormItem } from '@pandora/shared/hooks/component/useFormItem';
 import { ElCascader } from 'element-plus';
 import { get, omit } from 'lodash-es';
 import { defineComponent, PropType, ref, unref, watch, watchEffect } from 'vue';

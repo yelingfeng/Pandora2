@@ -20,7 +20,8 @@
 <script lang="ts" setup>
 import { PdForm, useForm } from '@pandora/components/PdForm'
 import { PdPageLayout } from '@pandora/components/PdPageLayout'
-import { PdTable, useTable } from '@pandora/components/PdTable'
+import { PdTable } from '@pandora/components/PdTable'
+import { useTable } from '@pandora/hooks'
 import { ElMessage } from 'element-plus'
 import { ref } from 'vue'
 

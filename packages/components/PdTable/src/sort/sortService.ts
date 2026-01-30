@@ -1,5 +1,5 @@
-import { addClass, removeClass, trim } from '@/_utils/helper'
-import { isFunction } from '@/_utils/is'
+import { addClass, removeClass, trim } from '@pandora/shared/_utils/helper'
+import { isFunction } from '@pandora/shared/_utils/is'
 import { Dictionary, ISortChangeCb, ISortService } from '../types'
 export const ASC = 'ascending'
 export const DESC = 'descending'

@@ -1,4 +1,4 @@
-import { isFunction } from '@/_utils/is'
+import { isFunction } from '@pandora/shared/_utils/is'
 import { ElTableColumn } from 'element-plus'
 import { createVNode, toRaw } from 'vue'
 import { SortService } from '../sort/sortService'

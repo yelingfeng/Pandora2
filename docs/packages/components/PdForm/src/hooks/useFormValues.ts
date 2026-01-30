@@ -6,8 +6,8 @@ import {
   isFunction,
   isString,
   isNullOrUnDef
-} from '@/_utils/is'
-import { dateUtil } from '@/_utils/dateUtil'
+} from '@pandora/shared/_utils/is'
+import { dateUtil } from '@pandora/shared/_utils/dateUtil'
 import { cloneDeep, set } from 'lodash-es'
 
 interface UseFormValuesContext {

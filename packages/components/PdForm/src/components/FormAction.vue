@@ -1,31 +1,31 @@
 <template>
   <el-col v-bind="actionColOpt" v-if="showActionButtonGroup">
     <div :style="getActionStyle">
-        <slot name="resetBefore"></slot>
-        <el-button type="default" v-bind="getResetBtnOptions" @click="resetAction" v-if="showResetButton">
-          {{ getResetBtnOptions.label }}
-        </el-button>
-        <slot name="submitBefore"></slot>
+      <slot name="resetBefore"></slot>
+      <el-button type="default" v-bind="getResetBtnOptions" @click="resetAction" v-if="showResetButton">
+        {{ getResetBtnOptions.label }}
+      </el-button>
+      <slot name="submitBefore"></slot>
 
-        <el-button type="primary" v-bind="getSubmitBtnOptions" @click="submitAction" v-if="showSubmitButton">
-          {{ getSubmitBtnOptions.label }}
-        </el-button>
+      <el-button type="primary" v-bind="getSubmitBtnOptions" @click="submitAction" v-if="showSubmitButton">
+        {{ getSubmitBtnOptions.label }}
+      </el-button>
 
-        <slot name="advanceBefore"></slot>
-        <el-button type="text" size="small" @click="toggleAdvanced" v-if="showAdvancedButton && !hideAdvanceBtn">
-          {{ isAdvanced ? '收起' : '展开' }}
-          <BasicArrow class="ml-1" :expand="!isAdvanced" up />
-        </el-button>
-        <slot name="advanceAfter"></slot>
+      <slot name="advanceBefore"></slot>
+      <el-button type="text" size="small" @click="toggleAdvanced" v-if="showAdvancedButton && !hideAdvanceBtn">
+        {{ isAdvanced ? '收起' : '展开' }}
+        <BasicArrow class="ml-1" :expand="!isAdvanced" up />
+      </el-button>
+      <slot name="advanceAfter"></slot>
     </div>
   </el-col>
 </template>
 <script lang="ts">
-import { defineComponent, computed, PropType,CSSProperties } from 'vue';
-import {  ElCol, ButtonProps, ColProps, ElButton } from 'element-plus';
-import BasicArrow from './BasicArrow.vue';
+import { propTypes } from '@pandora/shared/_utils/propTypes';
+import { ButtonProps, ColProps, ElButton, ElCol } from 'element-plus';
+import { computed, CSSProperties, defineComponent, PropType } from 'vue';
 import { useFormContext } from '../hooks/useFormContext';
-import { propTypes } from '@/_utils/propTypes';
+import BasicArrow from './BasicArrow.vue';
 
 type ButtonOptions = Partial<ButtonProps> & { label: string };
 
@@ -41,7 +41,7 @@ export default defineComponent({
     showResetButton: propTypes.bool.def(true),
     showSubmitButton: propTypes.bool.def(true),
     showAdvancedButton: propTypes.bool.def(true),
-    actionColStyle:{
+    actionColStyle: {
       type: Object as PropType<CSSProperties>,
       default: () => ({}),
     },
@@ -71,18 +71,18 @@ export default defineComponent({
         ? { span: actionSpan < 6 ? 24 : actionSpan }
         : {};
       const actionColOpt: Partial<ColProps> = {
-        span: showAdvancedButton ? 6 : 4,
+        span: 6,
         ...advancedSpanObj,
         ...actionColOptions,
       };
       return actionColOpt;
     });
 
-    const getActionStyle = computed(()=>{
-      const { actionColStyle  } = props;
+    const getActionStyle = computed(() => {
+      const { actionColStyle } = props;
       return {
-        width : '100%',
-        'text-align': actionColStyle.textAlign? actionColStyle.textAlign :'right'
+        width: '100%',
+        'text-align': actionColStyle.textAlign ? actionColStyle.textAlign : 'right'
       }
     })
 

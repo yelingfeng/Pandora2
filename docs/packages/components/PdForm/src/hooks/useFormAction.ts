@@ -1,5 +1,7 @@
 import { ComputedRef, Ref, toRaw, unref } from 'vue'
 import { IFormProps, IFormSchema, IFormActionType, Callback, EmitType, Fn } from '../types'
+import { deepMerge, error } from '@pandora/shared/_utils'
+import { dateUtil } from '@pandora/shared/_utils/dateUtil'
 import {
   isArray,
   isFunction,
@@ -7,9 +9,7 @@ import {
   isString,
   isDef,
   isNullOrUnDef
-} from '@/_utils/is'
-import { deepMerge, error } from '@/_utils'
-import { dateUtil } from '@/_utils/dateUtil'
+} from '@pandora/shared/_utils/is'
 import { dateItemType, handleInputNumberValue } from '../helper'
 import { cloneDeep, uniqBy } from 'lodash-es'
 import { FormItemProp } from 'element-plus'

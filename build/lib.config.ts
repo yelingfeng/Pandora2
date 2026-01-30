@@ -4,6 +4,7 @@ import { resolve } from 'path'
 import dts from 'vite-plugin-dts'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
+import { copyFileSync, existsSync } from 'fs'
 
 // 打包入口文件夹
 const entryDir = resolve(__dirname, '../packages')
@@ -40,6 +41,15 @@ export default defineConfig({
       skipDiagnostics: true,
       include: ['src/**/*.ts', 'src/**/*.tsx', 'packages/**/*.ts', 'packages/**/*.tsx'],
       exclude: ['**/*.vue', 'src/_docs/**']
-    })
+    }),
+    {
+      name: 'pandora2-style-css',
+      closeBundle() {
+        const from = resolve(outputDir, 'pandora2.css')
+        const to = resolve(outputDir, 'style.css')
+        if (!existsSync(from) || existsSync(to)) return
+        copyFileSync(from, to)
+      }
+    }
   ]
 })

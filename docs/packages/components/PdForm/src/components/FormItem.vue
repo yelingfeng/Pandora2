@@ -1,7 +1,7 @@
 <script lang="js">
-import { deepMerge } from '@/_utils/'
-import { getSlot } from '@/_utils/helper/tsxHelper'
-import { isBoolean, isFunction } from '@/_utils/is'
+import { deepMerge } from '@pandora/shared/_utils'
+import { getSlot } from '@pandora/shared/_utils/helper/tsxHelper'
+import { isBoolean, isFunction } from '@pandora/shared/_utils/is'
 import { ElCol, ElDivider, ElFormItem } from 'element-plus'
 import { upperFirst } from 'lodash-es'
 import {

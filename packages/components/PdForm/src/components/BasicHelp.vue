@@ -2,7 +2,7 @@
 import { defineComponent, type PropType } from 'vue';
 import { ElTooltip } from 'element-plus';
 import { Warning } from '@element-plus/icons-vue';
-import { getSlot } from '@/_utils/helper/tsxHelper';
+import { getSlot } from '@pandora/shared/_utils/helper/tsxHelper';
 
 const props = {
   color: { type: String, default: '#ffffff' },

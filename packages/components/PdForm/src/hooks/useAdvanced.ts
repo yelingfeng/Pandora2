@@ -3,8 +3,8 @@ import type { AdvanceState } from '../types/hooks'
 import type { EmitType, IFormProps, IFormSchema } from '../types'
 import { ComputedRef, getCurrentInstance, Ref } from 'vue'
 import { computed, unref, watch } from 'vue'
-import { isBoolean, isFunction, isNumber, isObject } from '@/_utils/is'
-import { useBreakpoint } from '@/hooks/event/useBreakpoint'
+import { isBoolean, isFunction, isNumber, isObject } from '@pandora/shared/_utils/is'
+import { useBreakpoint } from '@pandora/shared/hooks/event/useBreakpoint'
 import { useDebounceFn } from '@vueuse/core'
 
 const BASIC_COL_LEN = 24

@@ -19,7 +19,7 @@
 </template>
 
 <script lang="tsx">
-import { useTable } from '@pandora/components/PdTable';
+ import { useTable } from '@pandora/hooks';
 import { ElMessage } from 'element-plus';
 import { defineComponent, ref } from 'vue';
 

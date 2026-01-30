@@ -7,7 +7,7 @@
 </template>
 
 <script lang="ts">
-import { createNamespace } from '@/_utils/create';
+import { createNamespace } from '@pandora/shared/_utils/create';
 import { defineComponent } from 'vue';
 import { getPagerProps } from './config';
 const [name] = createNamespace('Pagination')

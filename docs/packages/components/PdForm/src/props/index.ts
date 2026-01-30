@@ -2,7 +2,7 @@ import type { FieldMapToTime, IFormSchema, Fn } from '../types'
 import type { CSSProperties, PropType } from 'vue'
 // import type { TableActionType } from '/@/components/Table'
 import type { ButtonProps, ColProps, FormRules, RowProps } from 'element-plus'
-import { propTypes } from '@/_utils/propTypes'
+import { propTypes } from '@pandora/shared/_utils/propTypes'
 
 export const FormBasicProps = {
   model: {

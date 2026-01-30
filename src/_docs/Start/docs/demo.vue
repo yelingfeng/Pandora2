@@ -14,7 +14,7 @@
 
 <script setup lang="tsx">
 import { IFormSchema, useForm } from '@pandora/components/PdForm/index'
-import { useTable } from '@pandora/components/PdTable/index'
+import { useTable } from '@pandora/hooks'
 import { reactive } from 'vue'
 
 

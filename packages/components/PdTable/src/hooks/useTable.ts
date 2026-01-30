@@ -1,5 +1,5 @@
-import { error, getDynamicProps } from '@/_utils'
-import { isProdMode } from '@/_utils/env'
+import { error, getDynamicProps } from '@pandora/shared/_utils'
+import { isProdMode } from '@pandora/shared/_utils/env'
 import { nextTick, onUnmounted, ref, unref, watch } from 'vue'
 import type {
   IPandoraTableColumn,
@@ -32,7 +32,7 @@ export function useTable(props?: Props): UseTableReturnType {
         loadedRef.value = null
       })
 
-    if (unref(loadedRef) && isProdMode() && instance === unref(tableRef)) return
+    if (instance === unref(tableRef)) return
 
     tableRef.value = instance
     loadedRef.value = true
