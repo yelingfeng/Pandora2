@@ -1,3 +1,12 @@
+## [1.0.1](https://github.com/yelingfeng/Pandora2/compare/v1.0.0...v1.0.1) (2026-01-30)
+
+
+### Features
+
+* **PdTable:** 新增 ColorfulTable 组件并优化文档 ([ecce8f3](https://github.com/yelingfeng/Pandora2/commit/ecce8f37c0ca364410421f2b4a17cfd76d98fee2))
+
+
+
 # [1.0.0](https://github.com/yelingfeng/Pandora2/compare/v0.1.3...v1.0.0) (2026-01-29)
 
 
