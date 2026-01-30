@@ -1,4 +1,4 @@
-import{c as n,a,o}from"./index-B0SowJ8y.js";const t={class:"markdown-body"},i={__name:"README",setup(r,{expose:p}){return p({frontmatter:{}}),(s,e)=>(o(),n("div",t,[...e[0]||(e[0]=[a(`<h1>Pandora2</h1><h2>安装</h2><p>推荐使用 <code>pnpm</code> 的方式安装，它能更好地和 <code>vite</code> 等打包工具配合使用。</p><p>（ * 如果您已搭建好项目，可直接进行 &quot; Step 3 &quot; ）</p><h2>环境</h2><p>先搭建vue3环境,推荐安装最新Vite (全局安装过旧版本的请先卸载它)</p><pre><code class="language-js">
+import{c as n,a,o}from"./index-DHDPi3Su.js";const t={class:"markdown-body"},i={__name:"README",setup(r,{expose:p}){return p({frontmatter:{}}),(s,e)=>(o(),n("div",t,[...e[0]||(e[0]=[a(`<h1>Pandora2</h1><h2>安装</h2><p>推荐使用 <code>pnpm</code> 的方式安装，它能更好地和 <code>vite</code> 等打包工具配合使用。</p><p>（ * 如果您已搭建好项目，可直接进行 &quot; Step 3 &quot; ）</p><h2>环境</h2><p>先搭建vue3环境,推荐安装最新Vite (全局安装过旧版本的请先卸载它)</p><pre><code class="language-js">
 npm init @vitejs/app
 //o r 
 yarn create @vitejs/app
