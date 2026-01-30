@@ -15,8 +15,64 @@ import demo from './demo.vue'
   <demo />
 </Preview>
 
+## 快速开始
+
+PdForm 通过 `schemas` 描述表单项，通过 `useForm()` 获取表单实例方法（校验、取值、动态改 schema 等），适合“配置化表单 / 动态表单”场景。
+
+```vue
+<template>
+  <PdForm :schemas="schemas" @register="register" @submit="onSubmit" />
+</template>
+
+<script setup lang="ts">
+import { PdForm, useForm, type IFormSchema } from '@pandora/components/PdForm'
+
+const schemas: IFormSchema[] = [
+  { field: 'name', component: 'Input', label: '名称', required: true, colProps: { span: 8 } },
+  { field: 'date', component: 'DatePicker', label: '日期', colProps: { span: 8 } }
+]
+
+const [register] = useForm({ schemas, labelWidth: 120 })
+
+function onSubmit(values: Record<string, any>) {
+  console.log(values)
+}
+</script>
+```
+
+## useForm / 表单实例
+
+`useForm()` 返回 `[register, methods]`：
+
+- `register`：绑定到 `<PdForm @register="register" />`，用于拿到实例
+- `methods`：表单实例方法（可用于按钮事件、接口联动、动态增减表单项）
+
+常用方法（完整类型以 `IFormActionType` 为准）：
+
+- `submit()`：触发表单提交（内部会校验并触发 `submit` 事件）
+- `validate(cb?)` / `validateFields(fields?)` / `clearValidate(name?)`
+- `getFieldsValue()` / `setFieldsValue(values)`
+- `setProps(formProps)`：动态设置表单 props（包含 Element Plus Form 原生 props）
+- `updateSchema(partial)` / `resetSchema(partial)`：动态更新 schema
+- `removeSchemaByFiled(field)` / `appendSchemaByField(schema, prefixField?, first?)`
+- `scrollToField(name, options?)`
+
+## 事件
+
+| 事件名 | 参数 | 说明 |
+| --- | --- | --- |
+| register | (instance: IFormActionType) | 表单实例注册（配合 useForm） |
+| submit | (values: Recordable) | 点击提交或调用 `submit()` 后触发 |
+| reset | () | 点击重置或调用 `resetFields()` 后触发 |
+| advanced-change | (isAdvanced: boolean) | 展开/收起状态变化 |
+| field-value-change | (data: { key: string; value: any; values: Recordable }) | 任意字段值变化（受 `submitOnChange`/watch 逻辑影响） |
 
 ## 属性
+
+PdForm 的属性由两部分构成：
+
+- **组件扩展属性**：下表列出（schemas、折叠、按钮组等）
+- **Element Plus Form 原生属性**：可直接作为 `<PdForm ... />` 传入，也可用 `setProps()` 动态设置（例如 `labelPosition/inline/rules/hideRequiredAsterisk` 等）
 
 | 属性 | 说明 | 类型 | 默认值 |
 | :--- | :--- | :--- | :--- |
@@ -52,6 +108,19 @@ import demo from './demo.vue'
 | labelAlign | 标签对齐方式 | `String` | - |
 | rowProps | 行组件配置 (Element Plus RowProps) | `Object` | - |
 | rules | 表单验证规则 | `Object` | - |
+
+### 常用 Element Plus Form 原生属性（透传）
+
+| 属性 | 说明 | 类型 |
+| --- | --- | --- |
+| labelPosition | label 位置 | `'left' \| 'right' \| 'top'` |
+| labelSuffix | label 后缀 | `string` |
+| inline | 行内表单 | `boolean` |
+| showMessage | 是否显示校验信息 | `boolean` |
+| inlineMessage | 行内显示校验信息 | `boolean` |
+| statusIcon | 输入框状态图标 | `boolean` |
+| validateOnRuleChange | 规则变化时是否触发校验 | `boolean` |
+| hideRequiredAsterisk | 是否隐藏必填星号 | `boolean` |
 
 ## FormSchema
 

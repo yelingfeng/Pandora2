@@ -51,11 +51,12 @@ function renderColumnProp<T>(
 
   // 动态渲染
   if (render && isFunction(render)) {
-    slots = {
+    const defaultSlot = {
       default: (props: any) => {
         return render(toRaw(props.row), props.column, props.$index)
       }
     }
+    slots = slots ? { ...slots, ...defaultSlot } : defaultSlot
   }
 
   return { columnProps, slots }

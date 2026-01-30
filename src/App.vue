@@ -167,7 +167,7 @@ body {
 
     /* 限制内容最大宽度，优化阅读体验 */
     >* {
-      max-width: 1000px;
+      max-width: 1400px;
       margin: 0 auto;
     }
   }

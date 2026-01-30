@@ -5,11 +5,18 @@
   },
   {
     "compName": "Introduce",
-    "compZhName": "介绍"
+    "compZhName": "介绍",
+    "doc": "_docs/Pandora/docs/README.md"
+  },
+  {
+    "compName": "Install",
+    "compZhName": "安装",
+    "doc": "_docs/Install/README.md"
   },
   {
     "compName": "Start",
-    "compZhName": "快速上手"
+    "compZhName": "快速上手",
+    "doc": "_docs/Start/docs/README.md"
   },
   {
     "compName": "Meau",
@@ -19,31 +26,36 @@
     "compName": "PdForm",
     "compZhName": "基础表单",
     "compDesc": "Form组件",
-    "compClassName": "PdForm"
+    "compClassName": "PdForm",
+    "doc": "_docs/PdForm/docs/README.md"
   },
   {
     "compName": "FormBaseProps",
     "compZhName": "基础属性",
     "compDesc": "Form组件",
-    "compClassName": "PdForm"
+    "compClassName": "PdForm",
+    "doc": "_docs/PdForm/docs/props.md"
   },
   {
     "compName": "FormAPI",
     "compZhName": "API",
     "compDesc": "Form组件",
-    "compClassName": "PdForm"
+    "compClassName": "PdForm",
+    "doc": "_docs/PdForm/docs/api.md"
   },
   {
     "compName": "FormCustom",
     "compZhName": "自定义组件",
     "compDesc": "Form组件",
-    "compClassName": "PdForm"
+    "compClassName": "PdForm",
+    "doc": "_docs/PdForm/docs/custom.md"
   },
   {
     "compName": "FormDynamic",
     "compZhName": "动态组件",
     "compDesc": "Form组件",
-    "compClassName": "PdForm"
+    "compClassName": "PdForm",
+    "doc": "_docs/PdForm/docs/dynamic.md"
   },
   {
     "compName": "Meau",
@@ -53,49 +65,57 @@
     "compName": "PdTable",
     "compZhName": "基础表格",
     "compDesc": "Table组件",
-    "compClassName": "PdTable"
+    "compClassName": "PdTable",
+    "doc": "_docs/PdTable/docs/README.md"
   },
   {
     "compName": "TableUseTable",
     "compZhName": "hook用法",
     "compDesc": "useTable",
-    "compClassName": "PdTable"
+    "compClassName": "PdTable",
+    "doc": "_docs/PdTable/docs/useTable.md"
   },
   {
     "compName": "TablePagination",
     "compZhName": "分页",
     "compDesc": "表格分页",
-    "compClassName": "PdTable"
+    "compClassName": "PdTable",
+    "doc": "_docs/PdTable/docs/pagination.md"
   },
   {
     "compName": "TableSort",
     "compZhName": "表格排序",
     "compDesc": "表格排序",
-    "compClassName": "PdTable"
+    "compClassName": "PdTable",
+    "doc": "_docs/PdTable/docs/sort.md"
   },
   {
     "compName": "TableStyles",
     "compZhName": "基础样式",
     "compDesc": "样式",
-    "compClassName": "PdTable"
+    "compClassName": "PdTable",
+    "doc": "_docs/PdTable/docs/styles.md"
   },
   {
     "compName": "TableSelection",
     "compZhName": "多选",
     "compDesc": "表格多选",
-    "compClassName": "PdTable"
+    "compClassName": "PdTable",
+    "doc": "_docs/PdTable/docs/selection.md"
   },
   {
     "compName": "TableInteraction",
     "compZhName": "表格交互",
     "compDesc": "表格交互",
-    "compClassName": "PdTable"
+    "compClassName": "PdTable",
+    "doc": "_docs/PdTable/docs/interaction.md"
   },
   {
-    "compName": "TableSummary",
-    "compZhName": "表格汇总",
-    "compDesc": "表格汇总",
-    "compClassName": "PdTable"
+    "compName": "ColorfulTable",
+    "compZhName": "彩色汇总表格",
+    "compDesc": "ColorfulTable",
+    "compClassName": "PdTable",
+    "doc": "_docs/PdTable/docs/colorful.md"
   },
   {
     "compName": "Meau",
@@ -105,13 +125,15 @@
     "compName": "PdPageLayout",
     "compZhName": "基础布局",
     "compDesc": "PageLayout",
-    "compClassName": "PdPageLayout"
+    "compClassName": "PdPageLayout",
+    "doc": "_docs/PdPageLayout/docs/README.md"
   },
   {
     "compName": "PdPageTreeLayout",
     "compZhName": "侧边栏布局",
     "compDesc": "PageTreeLayout",
-    "compClassName": "PdPageTreeLayout"
+    "compClassName": "PdPageTreeLayout",
+    "doc": "_docs/PdPageLayout/docs/TreeLayout.md"
   },
   {
     "compName": "Meau",
@@ -121,6 +143,7 @@
     "compName": "PdCharts",
     "compZhName": "图表",
     "compDesc": "PdCharts",
-    "compClassName": "PdCharts"
+    "compClassName": "PdCharts",
+    "doc": "_docs/PdCharts/docs/README.md"
   }
 ]

@@ -5,7 +5,7 @@
 </template>
 
 <script lang="tsx">
-import { defineComponent, reactive, ref } from 'vue';
+import { defineComponent, ref } from 'vue';
 
 export default defineComponent({
   setup() {
@@ -18,7 +18,7 @@ export default defineComponent({
 
     const columns = [
       { value: 'name', name: 'Name', width: '150' },
-      { value: 'age', name: 'Age', width: '100' }, // Enable sorting on this column
+      { value: 'age', name: 'Age', width: '100', sortable: true },
       { value: 'score', name: 'Score', width: '100', sortable: true }
     ]
 
@@ -31,7 +31,7 @@ export default defineComponent({
 
       console.log(prop, order)
 
-      testData.value.sort((a, b) => {
+      testData.value = [...testData.value].sort((a, b) => {
         if (order === 'ascending') {
           return a[prop] > b[prop] ? 1 : -1
         } else {
@@ -45,11 +45,11 @@ export default defineComponent({
       getTableList(column)
     }
 
-    const sortConfig = reactive({
+    const sortConfig = {
       sortMode: 'single', // 'single' or 'multi'
       defaultSorts: [{ prop: 'score', order: 'descending' }],
       sortChange: handleSortChange
-    })
+    }
 
     return {
       testData,

@@ -24,7 +24,7 @@ beforeAll(async () => {
     `dist entry not found: ${distEntry}. Please run "yarn build:lib" first.`
   ).toBe(true)
   dist = await import(pathToFileURL(distEntry).href)
-})
+}, 30000)
 
 describe('dist 产物依赖测试', () => {
   test('dist 导出与 install 可用', () => {

@@ -1,134 +1,41 @@
-/* eslint-disable prettier/prettier */
-
 /**
  * !--------- FBI WARNING ----------!
  *
  * 根据 /packages 目录下的组件所生成的组件类侧边导航栏配置，请勿手动修改
  */
+import ComponentList from '@/_docs/list.json'
 import { createRouter, createWebHashHistory, RouterOptions } from 'vue-router'
+
+const docModules = import.meta.glob('./_docs/**/*.md')
+
+function getFirstDocRoutePath() {
+  const first = (ComponentList as any[]).find(
+    (it) => it && it.compName && it.compName !== 'Meau' && it.doc
+  )
+  return first ? `/components/${first.compName}` : '/components/Introduce'
+}
 
 const routes = [
   {
     title: '介绍',
-    path: '/'
+    path: '/',
+    redirect: getFirstDocRoutePath()
   },
-  {
-    title: '介绍',
-    name: 'Pandora2',
-    path: '/components/Introduce',
-    component: () => import('@/_docs/Pandora/docs/README.md')
-  },
-  {
-    title: '安装',
-    name: 'Install',
-    path: '/components/Install',
-    component: () => import('@/_docs/Install/README.md')
-  },
-  {
-    title: '快速上手',
-    name: 'Start',
-    path: '/components/Start',
-    component: () => import('@/_docs/Start/docs/README.md')
-  },
-  {
-    title: 'PdForm',
-    name: 'PdForm',
-    path: '/components/PdForm',
-    component: () => import('@/_docs/PdForm/docs/README.md')
-  },
-
-    {
-    title: 'FormBaseProps',
-    name: 'FormBaseProps',
-    path: '/components/FormBaseProps',
-    component: () => import('@/_docs/PdForm/docs/props.md')
-  },
-
-  {
-    title:'FormAPI',
-    name:'FormAPI',
-    path:'/components/FormAPI',
-    component: () => import('@/_docs/PdForm/docs/api.md')
-  },
-  {
-    title: 'FormCustom',
-    name: 'FormCustom',
-    path: '/components/FormCustom',
-    component: () => import('@/_docs/PdForm/docs/custom.md')
-  },
-  {
-    title: 'FormDynamic',
-    name: 'FormDynamic',
-    path: '/components/FormDynamic',
-    component: () => import('@/_docs/PdForm/docs/dynamic.md')
-  },
-  {
-    title: 'PdTable',
-    name: 'PdTable',
-    path: '/components/PdTable',
-    component: () => import('@/_docs/PdTable/docs/README.md')
-  },
-  {
-    title: 'Table Pagination',
-    name: 'TablePagination',
-    path: '/components/TablePagination',
-    component: () => import('@/_docs/PdTable/docs/pagination.md')
-  },
-  {
-    title: 'Table Sort',
-    name: 'TableSort',
-    path: '/components/TableSort',
-    component: () => import('@/_docs/PdTable/docs/sort.md')
-  },
-  {
-    title: 'Table Styles',
-    name: 'TableStyles',
-    path: '/components/TableStyles',
-    component: () => import('@/_docs/PdTable/docs/styles.md')
-  },
-  {
-    title: 'Table Selection',
-    name: 'TableSelection',
-    path: '/components/TableSelection',
-    component: () => import('@/_docs/PdTable/docs/selection.md')
-  },
-  {
-    title: 'Table Interaction',
-    name: 'TableInteraction',
-    path: '/components/TableInteraction',
-    component: () => import('@/_docs/PdTable/docs/interaction.md')
-  },
-  {
-    title: 'Table Summary',
-    name: 'TableSummary',
-    path: '/components/TableSummary',
-    component: () => import('@/_docs/PdTable/docs/summary.md')
-  },
-  {
-    title: 'Table useTable',
-    name: 'TableUseTable',
-    path: '/components/TableUseTable',
-    component: () => import('@/_docs/PdTable/docs/useTable.md')
-  },
-  {
-    title: 'PageLayout',
-    name: 'PdPageLayout',
-    path: '/components/PdPageLayout',
-    component: () => import('@/_docs/PdPageLayout/docs/README.md')
-  },
-  {
-    title: 'PageTreeLayout',
-    name: 'PdPageTreeLayout',
-    path: '/components/PdPageTreeLayout',
-    component: () => import('@/_docs/PdPageLayout/docs/TreeLayout.md')
-  },
-
-  {
-    title: 'Charts',
-    name: 'PdCharts',
-    path: '/components/PdCharts',
-    component: () => import('@/_docs/PdCharts/docs/README.md')
-  }
+  ...(ComponentList as any[])
+    .filter((it) => it && it.compName && it.compName !== 'Meau' && it.doc)
+    .map((it) => {
+      const key = `./${it.doc}`
+      const loader = (docModules as any)[key]
+      if (!loader) {
+        throw new Error(`[docs] 未找到文档：${key}（来自 list.json: ${it.compName}）`)
+      }
+      return {
+        title: it.compZhName || it.compName,
+        name: it.compName,
+        path: `/components/${it.compName}`,
+        component: loader
+      }
+    })
 ]
 
 const routerConfig = {
