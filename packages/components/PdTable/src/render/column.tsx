@@ -3,6 +3,11 @@ import { ElTableColumn } from 'element-plus'
 import { createVNode, toRaw } from 'vue'
 import { SortService } from '../sort/sortService'
 import type { IPandoraTableColumn } from '../types'
+
+type ColumnSlots = {
+  header?: (props: any) => any
+  default?: (props: any) => any
+}
 /**
  *
  */
@@ -17,7 +22,7 @@ function renderColumnProp<T>(
     label: label || name,
     ...others
   }
-  let slots
+  let slots: ColumnSlots | undefined
   if (sortable) {
     slots = {
       header: (props: any) => {
@@ -83,8 +88,8 @@ function getColumnVNode<T>(
   if (childNode) {
     return <ElTableColumn {...columnProps}>{childNode}</ElTableColumn>
   }
-  const _childSlots = (slots?.default || slots?.header) ? slots : ''
-  return createVNode(ElTableColumn, { ...columnProps }, _childSlots)
+  const childSlots = slots && (slots.default || slots.header) ? slots : undefined
+  return createVNode(ElTableColumn, { ...columnProps }, childSlots as any)
 }
 
 /**
