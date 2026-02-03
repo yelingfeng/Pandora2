@@ -223,6 +223,12 @@ export default defineComponent({
       }
     })
 
+    watch(chartConfig, () => {
+      if (data.value && data.value.length) {
+        setOption(build(data.value, chartType.value as any, subChartType.value as any, chartConfig.value as any))
+      }
+    }, { deep: true })
+
     useLoading(chart, (computed(() => !!loading.value) as unknown) as any, loadingOptions as any)
     useAutoresize(chart, autoresize as any, root as any)
 
