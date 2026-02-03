@@ -22,4 +22,9 @@ export type ChartTypes = IChartType[keyof IChartType]
 /**
  * 二级图表
  */
-export type SubChartType = 'pie01' | 'pie02' | 'pie03'
+export type SubChartType =
+  | 'pie01'
+  | 'pie02'
+  | 'pie03'
+  | 'bar01'
+  | 'bar02'

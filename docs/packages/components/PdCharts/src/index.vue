@@ -85,6 +85,7 @@ export default defineComponent({
     const data = computed(() => getProps.value.data)
     const chartType = computed(() => getProps.value.chartType)
     const subChartType = computed(() => getProps.value.subChartType)
+    const chartConfig = computed(() => getProps.value.chartConfig)
 
     const realTheme = computed(
       () => getProps.value.theme || unwrapInjected(defaultTheme, {})
@@ -133,7 +134,8 @@ export default defineComponent({
           const newopt = build(
             data.value,
             chartType.value as any,
-            subChartType.value as any
+            subChartType.value as any,
+            chartConfig.value as any
           )
           instance.setOption(
             newopt,
@@ -217,7 +219,7 @@ export default defineComponent({
 
     watch(data, (newval: any) => {
       if (newval && newval.length) {
-        setOption(build(newval, chartType.value as any, subChartType.value as any))
+        setOption(build(newval, chartType.value as any, subChartType.value as any, chartConfig.value as any))
       }
     })
 

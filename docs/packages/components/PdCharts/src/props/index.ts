@@ -26,6 +26,10 @@ export const defaultProps = {
     type: Object as PropType<ChartsOption>,
     default: () => {},
   },
+  chartConfig: {
+    type: Object as PropType<Record<string, any>>,
+    default: () => ({}),
+  },
   group: String,
   // echarts 配置
   initOptions: Object as PropType<InitOptions>,

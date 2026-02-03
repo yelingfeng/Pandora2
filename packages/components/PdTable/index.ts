@@ -12,4 +12,3 @@ export type ColorfulTableInstance = InstanceType<typeof ColorfulTable>
 
 export { default as TableScreenshot } from './src/colorful/screenshot'
 export * from './src/types'
-

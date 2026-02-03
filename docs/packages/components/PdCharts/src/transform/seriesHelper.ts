@@ -1,4 +1,4 @@
-import { cloneDeep, chain } from 'lodash-es'
+import { chain, cloneDeep } from 'lodash-es'
 import type { ChartTypes } from '../types/chart'
 const XAXIS = 'xAixs'
 
@@ -245,7 +245,7 @@ export const getGroupSeriesObj = (
   const _chain = chain(data)
 
   // 取分类数据集合
-  const group = getCategoryCollection(chain)
+  const group = getCategoryCollection(_chain)
 
   // 取xAxis 轴分组集合
   const xAxis = getxAxisName(_chain, hasxAxis)
@@ -255,7 +255,7 @@ export const getGroupSeriesObj = (
     group,
     data,
     xAxis,
-    chain,
+    chain: _chain,
     hasxAxis,
     name,
   })

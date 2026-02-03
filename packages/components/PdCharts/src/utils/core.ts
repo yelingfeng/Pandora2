@@ -1,10 +1,11 @@
 import { EChartsOption } from 'echarts'
+import Bar from '../charts/bar/index'
+import Pie from '../charts/pie/index'
 import {
   ChartTypeEnum,
   ChartTypes,
   SubChartType,
 } from '../types/chart'
-import Pie from '../charts/pie/index'
 /**
  * echarts 构建 封装
  * build
@@ -12,18 +13,20 @@ import Pie from '../charts/pie/index'
 export const build = (
   data: any,
   chartType: ChartTypes,
-  subChartType: SubChartType
+  subChartType: SubChartType,
+  chartConfig?: Record<string, any>
 ): EChartsOption => {
   let result: EChartsOption = Object.create(null)
-  const subMainMethod = Pie[subChartType]
   switch (chartType) {
     case ChartTypeEnum.Pie:
-      result = subMainMethod(data)
+      result = Pie[subChartType](data, chartConfig)
+      break
+    case ChartTypeEnum.Bar:
+      result = Bar[subChartType](data, chartConfig)
       break
     default:
       result = {}
       break
   }
-  console.log(result)
   return result
 }

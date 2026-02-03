@@ -32,7 +32,7 @@ const createSeriesData = (data: any) => {
  *
  * @param originData 原始数据
  */
-export const build = (originData: any): EChartsOption => {
+export const build = (originData: any, _config?: Record<string, any>): EChartsOption => {
   const colors = [
     '#67C8FF',
     '#FF6666',

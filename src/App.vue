@@ -3,12 +3,33 @@
     <TopHeader />
     <aside>
       <div class="menu">
-        <div v-for="(link, index) in data.links" :key="index" @click="scollTop">
-          <div class="meauTitle" v-if="link.path == '/components/Meau'">
-            {{ link.name }}
+        <div v-for="section in menuSections" :key="section.id" class="menu-section">
+          <div class="meauTitle" @click="toggleSection(section.id)">
+            <span>{{ section.title }}</span>
+            <span class="menu-arrow" :class="{ open: isSectionOpen(section.id) }">›</span>
           </div>
-          <router-link :class="{ active: link.path === $route.path }" v-else :key="index" :to="link.path">{{ link.name
-            }}</router-link>
+
+          <div v-show="isSectionOpen(section.id)" class="menu-section-body">
+            <div v-for="group in section.groups" :key="group.id" class="menu-group">
+              <template v-if="group.items.length > 1">
+                <div class="menu-group-title" @click="toggleGroup(group.id)">
+                  <span>{{ group.title }}</span>
+                  <span class="menu-arrow" :class="{ open: isGroupOpen(group.id) }">›</span>
+                </div>
+                <div v-show="isGroupOpen(group.id)" class="menu-group-body">
+                  <router-link v-for="item in group.items" :key="item.path" :to="item.path"
+                    class="menu-item menu-item--lvl3" :class="{ active: item.path === $route.path }" @click="scollTop">
+                    {{ item.name }}
+                  </router-link>
+                </div>
+              </template>
+
+              <router-link v-else :to="group.items[0].path" class="menu-item menu-item--lvl2"
+                :class="{ active: group.items[0].path === $route.path }" @click="scollTop">
+                {{ group.items[0].name }}
+              </router-link>
+            </div>
+          </div>
         </div>
       </div>
     </aside>
@@ -23,14 +44,106 @@ import ComponentList from '@/_docs/list.json';
 import TopHeader from '@/components/layout/TopHeader.vue';
 
 import { createBreakpointListen } from '@/hooks/event/useBreakpoint';
-import { reactive } from 'vue';
+import { computed, ref, watch } from 'vue';
+import { useRoute } from 'vue-router';
 
-const data = reactive({
-  links: ComponentList.map((item) => ({
-    path: `/components/${item.compName}`,
-    name: item.compZhName
-  }))
-})
+const route = useRoute()
+
+function normalizeMenu(list) {
+  const sectionsInput = Array.isArray(list) ? list : []
+  return sectionsInput
+    .map((sec, sIndex) => {
+      const title = sec && (sec.title || sec.compZhName) ? String(sec.title || sec.compZhName) : `分类${sIndex + 1}`
+      const groupsInput = sec && Array.isArray(sec.children) ? sec.children : []
+      const groups = groupsInput
+        .map((group, gIndex) => {
+          if (group && group.compName && group.doc) {
+            const item = {
+              path: `/components/${String(group.compName)}`,
+              name: group.compZhName ? String(group.compZhName) : String(group.compName)
+            }
+            return {
+              id: `group:${sIndex}:${gIndex}:${String(group.compName)}`,
+              title: group.title ? String(group.title) : item.name,
+              items: [item]
+            }
+          }
+
+          const groupTitle = group && group.title ? String(group.title) : `分组${gIndex + 1}`
+          const pagesInput = group && Array.isArray(group.children) ? group.children : []
+          const items = pagesInput
+            .filter((p) => p && p.compName && p.doc)
+            .map((p) => ({
+              path: `/components/${String(p.compName)}`,
+              name: p.compZhName ? String(p.compZhName) : String(p.compName)
+            }))
+          return {
+            id: `group:${sIndex}:${gIndex}:${groupTitle}`,
+            title: groupTitle,
+            items
+          }
+        })
+        .filter((g) => g && g.items && g.items.length > 0)
+
+      return {
+        id: `section:${sIndex}:${title}`,
+        title,
+        groups
+      }
+    })
+    .filter((s) => s.groups.length > 0)
+}
+
+const menuSections = computed(() => normalizeMenu(ComponentList))
+
+const openSectionIds = ref(new Set())
+const openGroupIds = ref(new Set())
+
+function isSectionOpen(id) {
+  return openSectionIds.value.has(id)
+}
+
+function isGroupOpen(id) {
+  return openGroupIds.value.has(id)
+}
+
+function toggleSection(id) {
+  const next = new Set(openSectionIds.value)
+  if (next.has(id)) next.delete(id)
+  else next.add(id)
+  openSectionIds.value = next
+}
+
+function toggleGroup(id) {
+  const next = new Set(openGroupIds.value)
+  if (next.has(id)) next.delete(id)
+  else next.add(id)
+  openGroupIds.value = next
+}
+
+function ensureOpenByRoute(path) {
+  const sections = menuSections.value
+  const nextSections = new Set(openSectionIds.value)
+  const nextGroups = new Set(openGroupIds.value)
+
+  sections.forEach((sec) => {
+    sec.groups.forEach((group) => {
+      const hit = group.items.some((it) => it.path === path)
+      if (!hit) return
+      nextSections.add(sec.id)
+      if (group.items.length > 1) nextGroups.add(group.id)
+    })
+  })
+
+  openSectionIds.value = nextSections
+  openGroupIds.value = nextGroups
+}
+
+watch(
+  () => route.path,
+  (p) => ensureOpenByRoute(p),
+  { immediate: true }
+)
 
 function scollTop() {
   document.getElementById('main').scrollTop = 0
@@ -108,9 +221,45 @@ body {
       display: flex;
       align-items: center;
       min-height: 40px;
+      justify-content: space-between;
+      cursor: pointer;
     }
 
-    a {
+    .menu-arrow {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 20px;
+      height: 20px;
+      color: #a8abb2;
+      transition: transform 0.2s ease;
+      user-select: none;
+    }
+
+    .menu-arrow.open {
+      transform: rotate(90deg);
+    }
+
+    .menu-group-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 2px 10px;
+      margin: 2px 0;
+      min-height: 36px;
+      border-radius: 4px;
+      color: #303133;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .menu-group-title:hover {
+      color: #409eff;
+      background-color: #ecf5ff;
+    }
+
+    .menu-item {
       display: flex;
       /* 改为 flex 布局 */
       align-items: center;
@@ -152,6 +301,15 @@ body {
           /* 暂时隐藏右侧条，Element Plus 风格通常是整行高亮 */
         }
       }
+    }
+
+    .menu-item--lvl2 {
+      padding-left: 10px;
+    }
+
+    .menu-item--lvl3 {
+      padding-left: 26px;
+      min-height: 36px;
     }
   }
 

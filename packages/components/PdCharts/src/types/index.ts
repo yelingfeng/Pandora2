@@ -140,6 +140,7 @@ export type AutoresizeProp =
 export interface ChartsProps {
   data?: any[]
   options?: ChartsOption
+  chartConfig?: Record<string, any>
   theme?: Theme
   chartType?: string
   subChartType?: string
@@ -167,4 +168,3 @@ export type UseChartsReturnType = [
   (instance: ChartsActionType) => void,
   ChartsActionType
 ]
-

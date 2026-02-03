@@ -10,17 +10,17 @@
 
     <div class="preview-bottom">
       <span name="Code" @click="showSourceCode">{{
-          this.codeVisible ? '关闭' : '查看代码'
-      }}</span>
+        this.codeVisible ? '关闭' : '查看代码'
+        }}</span>
     </div>
   </div>
 </template>
 
 <script>
-import Prism from 'prismjs'
-import './assets/prism.css'
+import Prism from 'prismjs';
+import './assets/prism.css';
 
-const demoSourceModules = import.meta.glob('./_docs/**/docs/*.vue', {
+const demoSourceModules = import.meta.glob('./_docs/**/docs/**/*.vue', {
   query: '?raw',
   import: 'default'
 })
@@ -94,12 +94,18 @@ pre {
 
   section {
     margin: 15px;
+    position: relative;
+    overflow: hidden;
+    transform: translateZ(0);
   }
 }
 
-// .source-code {
-// max-height: 500px;
-// }
+.source-code {
+  position: relative;
+  z-index: 10;
+  background: #fff;
+}
+
 .language-html {
   margin: 0;
   padding: 0 15px;
