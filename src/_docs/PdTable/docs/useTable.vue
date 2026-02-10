@@ -68,7 +68,7 @@ export default defineComponent({
     const [
       register,
       { setProps, setColumns, setData, getSelectRows, clearSelection }
-    ] = useTable({
+    ]: any = useTable({
       data: testData,
       columns: columns,
       sortConfig: {

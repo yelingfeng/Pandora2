@@ -83,7 +83,7 @@ export default defineComponent({
           return (
             <div>
               <el-button type="primary" size="small" onClick={() => editClick(row)}>编辑</el-button>
-              <el-button type="text" size="small">删除</el-button>
+              <el-button link size="small">删除</el-button>
             </div>
           )
         }

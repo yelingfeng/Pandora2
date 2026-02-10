@@ -12,7 +12,7 @@
       </el-button>
 
       <slot name="advanceBefore"></slot>
-      <el-button type="text" size="small" @click="toggleAdvanced" v-if="showAdvancedButton && !hideAdvanceBtn">
+      <el-button link size="small" @click="toggleAdvanced" v-if="showAdvancedButton && !hideAdvanceBtn">
         {{ isAdvanced ? '收起' : '展开' }}
         <BasicArrow class="ml-1" :expand="!isAdvanced" up />
       </el-button>
