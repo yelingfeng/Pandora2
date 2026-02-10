@@ -1,3 +1,12 @@
+## [1.0.2](https://github.com/yelingfeng/Pandora2/compare/v1.0.1...v1.0.2) (2026-02-10)
+
+
+### Features
+
+* **PdCharts:** 新增柱状图支持并完善图表配置功能 ([19278e2](https://github.com/yelingfeng/Pandora2/commit/19278e2224526bc27a3add9c1a353e201b22171e))
+
+
+
 ## [1.0.1](https://github.com/yelingfeng/Pandora2/compare/v1.0.0...v1.0.1) (2026-01-30)
 
 
