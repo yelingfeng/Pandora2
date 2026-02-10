@@ -7,6 +7,7 @@
     <el-button @click="changeData">切换数据</el-button>
     <el-button @click="changeColumns">切换列</el-button>
     <el-button @click="resetSort">重置排序</el-button>
+    <el-button @click="deleteTable">删除数据</el-button>
   </div>
   <div style="margin-bottom: 10px">
     <el-button @click="sortIdAsc">按 ID 升序（本地排序）</el-button>
@@ -19,7 +20,7 @@
 </template>
 
 <script lang="tsx">
- import { useTable } from '@pandora/hooks';
+import { useTable } from '@pandora/hooks';
 import { ElMessage } from 'element-plus';
 import { defineComponent, ref } from 'vue';
 
@@ -127,6 +128,13 @@ export default defineComponent({
       ElMessage.success('数据已更新')
     }
 
+
+    const deleteTable = () => {
+      setData([])
+      ElMessage.success('数据已删除')
+    }
+
+
     const changeColumns = () => {
       setColumns([
         { value: 'username', name: '用户名称', width: 150, sortable: true },
@@ -141,6 +149,7 @@ export default defineComponent({
       changeBorder,
       getSelection,
       clearSelect,
+      deleteTable,
       changeData,
       changeColumns,
       sortIdAsc: () => applySort('id', 'ascending'),

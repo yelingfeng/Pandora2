@@ -118,8 +118,8 @@
     ]
   },
   {
-    "title": "PdCharts",
-    "compName": "PdCharts",
+    "title": "Charts",
+    "compName": "Charts",
     "compZhName": "Charts",
     "doc": "_docs/PdCharts/docs/README.md",
     "children": [
