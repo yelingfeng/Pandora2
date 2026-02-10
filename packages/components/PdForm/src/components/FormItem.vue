@@ -112,7 +112,7 @@ export default defineComponent({
       return { isShow, isIfShow }
     }
 
-    const getComponentsChild = (component: string) => {
+    const getComponentsChild = (component) => {
       const { schema, tableAction, formModel, formActionType } = props
       let { componentProps = {} } = unref(schema) || {}
 
@@ -171,11 +171,11 @@ export default defineComponent({
       const isCheck = component && ['Switch', 'Checkbox'].includes(component)
       const eventKey = `on${upperFirst(changeEvent)}`
 
-      const Comp: any = componentMap.get(component)
+      const Comp = componentMap.get(component)
       if (!Comp) return null
 
-      const propsData: any = {
-        getPopupContainer: (trigger: any) => trigger.parentNode,
+      const propsData = {
+        getPopupContainer: (trigger) => trigger.parentNode,
         ...unref(getComponentsProps),
         disabled: unref(getDisable),
       }
@@ -194,12 +194,12 @@ export default defineComponent({
       propsData.codeField = field
       propsData.formValues = unref(getValues)
 
-      const bindValue: any = {
+      const bindValue = {
         [valueField || (isCheck ? 'checked' : 'modelValue')]: props.formModel[field],
       }
 
-      const on: any = {
-        'onUpdate:modelValue': (...args: any[]) => {
+      const on = {
+        'onUpdate:modelValue': (...args: []) => {
           const [e] = args
           if (propsData[eventKey]) {
             propsData[eventKey](...args)
