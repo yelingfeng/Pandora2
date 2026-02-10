@@ -1,6 +1,6 @@
 {
   "name": "@yelingfeng/pandora2",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "files": [
     "dist",
     "volar.d.ts"
