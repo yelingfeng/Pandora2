@@ -199,7 +199,7 @@ export default defineComponent({
       }
 
       const on = {
-        'onUpdate:modelValue': (...args: []) => {
+        'onUpdate:modelValue': (...args) => {
           const [e] = args
           if (propsData[eventKey]) {
             propsData[eventKey](...args)
