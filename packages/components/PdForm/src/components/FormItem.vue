@@ -1,4 +1,4 @@
-<script lang="tsx">
+<script lang="jsx">
 import { deepMerge } from '@pandora/shared/_utils'
 import { getSlot } from '@pandora/shared/_utils/helper/tsxHelper'
 import { isBoolean, isFunction } from '@pandora/shared/_utils/is'
