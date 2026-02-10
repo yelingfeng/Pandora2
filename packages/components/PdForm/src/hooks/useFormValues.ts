@@ -1,14 +1,14 @@
-import { IFormProps, IFormSchema } from '../types'
-import { unref, Ref, ComputedRef } from 'vue'
+import { dateUtil } from '@pandora/shared/_utils/dateUtil'
 import {
-  isObject,
   isArray,
   isFunction,
-  isString,
-  isNullOrUnDef
+  isNullOrUnDef,
+  isObject,
+  isString
 } from '@pandora/shared/_utils/is'
-import { dateUtil } from '@pandora/shared/_utils/dateUtil'
 import { cloneDeep, set } from 'lodash-es'
+import { ComputedRef, Ref, unref } from 'vue'
+import { IFormProps, IFormSchema } from '../types'
 
 interface UseFormValuesContext {
   defaultValueRef: Ref<any>
@@ -131,6 +131,7 @@ export function useFormValues({
         }
       }
     })
+    console.log('initDefault formModel', formModel)
     defaultValueRef.value = cloneDeep(obj)
   }
 

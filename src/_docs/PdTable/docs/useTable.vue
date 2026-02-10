@@ -20,9 +20,9 @@
 </template>
 
 <script lang="tsx">
-import { useTable } from '@pandora/hooks';
 import { ElMessage } from 'element-plus';
 import { defineComponent, ref } from 'vue';
+import { useTable } from '../../../../dist/pandora2.es';
 
 export default defineComponent({
   setup() {
@@ -130,7 +130,8 @@ export default defineComponent({
 
 
     const deleteTable = () => {
-      setData([])
+      setData([{ id: '1', username: '张三', role: 'admin' },
+      { id: '2', username: '李四', role: 'user' }])
       ElMessage.success('数据已删除')
     }
 

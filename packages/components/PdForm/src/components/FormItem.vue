@@ -1,4 +1,4 @@
-<script lang="js">
+<script lang="tsx">
 import { deepMerge } from '@pandora/shared/_utils'
 import { getSlot } from '@pandora/shared/_utils/helper/tsxHelper'
 import { isBoolean, isFunction } from '@pandora/shared/_utils/is'
@@ -7,18 +7,13 @@ import { upperFirst } from 'lodash-es'
 import {
   computed,
   defineComponent,
-  h,
   onMounted,
   toRefs,
   unref,
-  vShow,
-  withDirectives
 } from 'vue'
 import { componentMap } from '../componentsMap'
 import { createPlaceholderMessage } from '../helper'
-// import { useItemLabelWidth } from '../hooks/useLabelWidth'
 import BasicHelp from './BasicHelp.vue'
-
 
 export default defineComponent({
   name: 'PandoraBasicFormItem',
@@ -45,7 +40,7 @@ export default defineComponent({
       default: () => ({})
     },
     tableAction: {
-      type: Object,
+      type: Object
     },
     formActionType: {
       type: Object
@@ -57,16 +52,15 @@ export default defineComponent({
     const getComponentsProps = computed(() => {
       const { schema, tableAction, formModel, formActionType } = props
       const { componentProps = {} } = schema
-      if (!isFunction(componentProps)) {
-        return componentProps
-      }
+
+      if (!isFunction(componentProps)) return componentProps
       return componentProps({ schema, tableAction, formModel, formActionType }) ?? {}
     })
 
-
     const getValues = computed(() => {
-      const { allDefaultValues, formModel, schema } = props;
-      const { mergeDynamicData } = props.formProps;
+      const { allDefaultValues, formModel, schema } = props
+      const { mergeDynamicData } = props.formProps
+
       return {
         field: schema.field,
         model: formModel,
@@ -76,55 +70,52 @@ export default defineComponent({
           ...formModel
         },
         schema: schema
-      };
-    });
-
+      }
+    })
 
     const getDisable = computed(() => {
-      const { disabled: globDisabled } = props.formProps;
-      const { dynamicDisabled } = props.schema;
-      const { disabled: itemDisabled = false } = unref(getComponentsProps);
-      let disabled = !!globDisabled || itemDisabled;
+      const { disabled: globDisabled } = props.formProps
+      const { dynamicDisabled } = props.schema
+      const { disabled: itemDisabled = false } = unref(getComponentsProps)
+
+      let disabled = !!globDisabled || itemDisabled
+
       if (isBoolean(dynamicDisabled)) {
-        disabled = dynamicDisabled;
+        disabled = dynamicDisabled
       }
       if (isFunction(dynamicDisabled)) {
-        disabled = dynamicDisabled(unref(getValues));
+        disabled = dynamicDisabled(unref(getValues))
       }
-      return disabled;
-    });
+      return disabled
+    })
 
     function getShow() {
-      const { show, ifShow } = props.schema;
-      const { showAdvancedButton } = props.formProps;
+      const { show, ifShow } = props.schema
+      const { showAdvancedButton } = props.formProps
+
       const itemIsAdvanced = showAdvancedButton
         ? isBoolean(props.schema.isAdvanced)
           ? props.schema.isAdvanced
           : true
-        : true;
+        : true
 
-      let isShow = true;
-      let isIfShow = true;
+      let isShow = true
+      let isIfShow = true
 
-      if (isBoolean(show)) {
-        isShow = show;
-      }
-      if (isBoolean(ifShow)) {
-        isIfShow = ifShow;
-      }
-      if (isFunction(show)) {
-        isShow = show(unref(getValues));
-      }
-      if (isFunction(ifShow)) {
-        isIfShow = ifShow(unref(getValues));
-      }
-      isShow = isShow && itemIsAdvanced;
-      return { isShow, isIfShow };
+      if (isBoolean(show)) isShow = show
+      if (isBoolean(ifShow)) isIfShow = ifShow
+      if (isFunction(show)) isShow = show(unref(getValues))
+      if (isFunction(ifShow)) isIfShow = ifShow(unref(getValues))
+
+      isShow = isShow && itemIsAdvanced
+
+      return { isShow, isIfShow }
     }
 
-    const getComponentsChild = (component) => {
+    const getComponentsChild = (component: string) => {
       const { schema, tableAction, formModel, formActionType } = props
       let { componentProps = {} } = unref(schema) || {}
+
       if (isFunction(componentProps)) {
         componentProps =
           componentProps({
@@ -134,30 +125,39 @@ export default defineComponent({
             formActionType
           }) ?? {}
       }
+
       const opts = (componentProps && componentProps.options) || []
       if (!Array.isArray(opts)) return undefined
 
       if (component === 'CheckboxGroup') {
         const CheckNode = componentMap.get('Checkbox')
-        return opts.map(({ label, value }) =>
-          h(CheckNode, { label: value, key: value }, () => label)
-        )
+        return opts.map(({ label, value }) => (
+          <CheckNode label={value} key={value}>
+            {label}
+          </CheckNode>
+        ))
       }
+
       if (component === 'Select') {
         const OptionNode = componentMap.get('SelectOption')
-        return opts.map(({ label, value }) =>
-          h(OptionNode, { label, value, key: value }, () => label)
-        )
+        return opts.map(({ label, value }) => (
+          <OptionNode label={label} value={value} key={value}>
+            {label}
+          </OptionNode>
+        ))
       }
+
       if (component === 'RadioGroup') {
         const RadioNode = componentMap.get('Radio')
-        return opts.map(({ label, value }) =>
-          h(RadioNode, { label: value, key: value }, () => label)
-        )
+        return opts.map(({ label, value }) => (
+          <RadioNode label={value} key={value}>
+            {label}
+          </RadioNode>
+        ))
       }
+
       return undefined
     }
-
 
     const renderComponent = () => {
       const {
@@ -168,174 +168,195 @@ export default defineComponent({
         valueField
       } = props.schema
 
-      const isCheck = component && ['Switch', 'Checkbox'].includes(component);
+      const isCheck = component && ['Switch', 'Checkbox'].includes(component)
+      const eventKey = `on${upperFirst(changeEvent)}`
 
-      const eventKey = `on${upperFirst(changeEvent)}`;
+      const Comp: any = componentMap.get(component)
+      if (!Comp) return null
 
-      const on = {
-        [eventKey]: (...args) => {
-          const [e] = args;
-          if (propsData[eventKey]) {
-            propsData[eventKey](...args);
-          }
-          const target = e ? e.target : null;
-          const value = target ? (isCheck ? target.checked : target.value) : e;
-          props.setFormModel(field, value);
-        }
-      };
-      const Comp = componentMap.get(component);
-      const propsData = {
-        getPopupContainer: (trigger) => trigger.parentNode,
+      const propsData: any = {
+        getPopupContainer: (trigger: any) => trigger.parentNode,
         ...unref(getComponentsProps),
         disabled: unref(getDisable),
-      };
-      const { autoSetPlaceHolder } = props.formProps;
+      }
 
-      const isCreatePlaceholder = !propsData.disabled && autoSetPlaceHolder;
-      // RangePicker place is an array
+      const { autoSetPlaceHolder } = props.formProps
+
+      const isCreatePlaceholder = !propsData.disabled && autoSetPlaceHolder
       if (isCreatePlaceholder && component) {
         propsData.placeholder =
-          unref(getComponentsProps)?.placeholder || createPlaceholderMessage(component);
+          unref(getComponentsProps)?.placeholder || createPlaceholderMessage(component)
       }
-      propsData.placeholder = unref(getComponentsProps)?.placeholder;
-      propsData.codeField = field;
-      propsData.formValues = unref(getValues);
 
+      // 你这里原代码写了两次 placeholder，第二次会覆盖第一次
+      propsData.placeholder = unref(getComponentsProps)?.placeholder
 
-      const bindValue = {
-        [valueField || (isCheck ? 'checked' : 'value')]: props.formModel[field],
-      };
+      propsData.codeField = field
+      propsData.formValues = unref(getValues)
 
-      // console.log(props.formModel)
+      const bindValue: any = {
+        [valueField || (isCheck ? 'checked' : 'modelValue')]: props.formModel[field],
+      }
 
+      const on: any = {
+        'onUpdate:modelValue': (...args: any[]) => {
+          const [e] = args
+          if (propsData[eventKey]) {
+            propsData[eventKey](...args)
+          }
+
+          const target = e ? e.target : null
+          const value = target ? (isCheck ? target.checked : target.value) : e
+
+          props.setFormModel(field, value)
+        }
+      }
 
       const compAttr = {
         ...propsData,
         ...on,
         ...bindValue,
-      };
-
-      if (!Comp) return null
+      }
 
       if (!renderComponentContent) {
         const children = getComponentsChild(component)
-        return h(Comp, compAttr, () => children)
+        return <Comp {...compAttr}>{children}</Comp>
       }
 
       if (isFunction(renderComponentContent)) {
         const slotObj = renderComponentContent(unref(getValues)) || {}
         if (slotObj && typeof slotObj === 'object') {
-          return h(Comp, compAttr, slotObj)
+          return <Comp {...compAttr}>{slotObj}</Comp>
         }
-        return h(Comp, compAttr, { default: () => slotObj })
+        return <Comp {...compAttr}>{() => slotObj}</Comp>
       }
 
-      return h(Comp, compAttr, { default: () => renderComponentContent })
+      return <Comp {...compAttr}>{renderComponentContent}</Comp>
     }
 
     const renderLabelHelpMessage = () => {
-      const { label, helpMessage, helpComponentProps, subLabel } = props.schema;
-      const renderLabel = subLabel
-        ? h('span', null, [
-          label,
-          ' ',
-          h('span', { class: 'text-secondary' }, subLabel)
-        ])
-        : h('span', null, label)
+      const { label, helpMessage, helpComponentProps, subLabel } = props.schema
+
+      const renderLabel = subLabel ? (
+        <span>
+          {label}{' '}
+          <span class="text-secondary">{subLabel}</span>
+        </span>
+      ) : (
+        <span>{label}</span>
+      )
+
       const getHelpMessage = isFunction(helpMessage)
         ? helpMessage(unref(getValues))
-        : helpMessage;
-      if (getHelpMessage !== undefined || (Array.isArray(getHelpMessage) && getHelpMessage.length > 0)) {
-        return h('span', null, [
-          renderLabel,
-          h(BasicHelp, {
-            placement: 'top',
-            content: getHelpMessage,
-            ...(helpComponentProps || {})
-          })
-        ])
+        : helpMessage
+
+      if (
+        getHelpMessage !== undefined ||
+        (Array.isArray(getHelpMessage) && getHelpMessage.length > 0)
+      ) {
+        return (
+          <span>
+            {renderLabel}
+            <BasicHelp
+              placement="top"
+              content={getHelpMessage}
+              {...(helpComponentProps || {})}
+            />
+          </span>
+        )
       }
-      return h('span', null, [renderLabel])
+
+      return <span>{renderLabel}</span>
     }
-
-
 
     const renderItem = () => {
-      const { label, slot, rules, render, field, suffix, itemProps, component } = props.schema;
+      const { label, slot, rules, render, field, suffix, itemProps, component } =
+        props.schema
+
+      // Divider
       if (component === 'Divider') {
-        const dividerProp = deepMerge({ contentPosition: 'left' }, { ...unref(getComponentsProps) })
-        return h(ElCol, { span: 24 }, () =>
-          h(ElDivider, dividerProp, () => renderLabelHelpMessage())
+        const dividerProp = deepMerge(
+          { contentPosition: 'left' },
+          { ...unref(getComponentsProps) }
         )
-      } else {
-        const values = unref(getValues);
-        const getContent = () => {
-          return slot
-            ? getSlot(slots, slot, values)
-            : render
-              ? render(values)
-              : renderComponent();
-        };
 
-        const showSuffix = !!suffix;
-        const getSuffix = isFunction(suffix) ? suffix(unref(getValues)) : suffix;
-
-        const Slots = {
-          default: () => {
-            return h(
-              'div',
-              { style: 'display:flex;width:100%;' },
-              [
-                h('div', { style: 'flex:1;' }, [getContent()]),
-                showSuffix ? h('span', { class: 'suffix' }, String(getSuffix)) : null
-              ]
-            )
-          },
-          label: () => { return renderLabelHelpMessage() }
-        }
-        return h(
-          ElFormItem,
-          {
-            prop: field,
-            label,
-            rules,
-            ...(itemProps || {})
-          },
-          Slots
+        return (
+          <ElCol span={24}>
+            <ElDivider {...dividerProp}>
+              {renderLabelHelpMessage()}
+            </ElDivider>
+          </ElCol>
         )
       }
+
+      const values = unref(getValues)
+
+      const getContent = () => {
+        return slot
+          ? getSlot(slots, slot, values)
+          : render
+            ? render(values)
+            : renderComponent()
+      }
+
+      const showSuffix = !!suffix
+      const getSuffix = isFunction(suffix) ? suffix(unref(getValues)) : suffix
+
+      return (
+        <ElFormItem
+          prop={field}
+          label={label}
+          rules={rules}
+          {...(itemProps || {})}
+        >
+          {{
+            default: () => (
+              <div style="display:flex;width:100%;">
+                <div style="flex:1;">
+                  {getContent()}
+                </div>
+                {showSuffix ? (
+                  <span class="suffix">{String(getSuffix)}</span>
+                ) : null}
+              </div>
+            ),
+            label: () => renderLabelHelpMessage(),
+          }}
+        </ElFormItem>
+      )
     }
+
     onMounted(() => {
       const { field, defaultValue = '' } = unref(schema) || {}
       if (field) props.setFormModel(field, defaultValue)
     })
 
-
-
     return () => {
-      const { colProps = {}, colSlot, renderColContent, component } = props.schema;
+      const { colProps = {}, colSlot, renderColContent, component } = props.schema
+
       if (!componentMap.has(component)) {
-        console.error(
-          `FormItem component:${component} is an unregistered component Key`
-        )
+        console.error(`FormItem component:${component} is an unregistered component Key`)
         return null
       }
 
-      const { baseColProps = {} } = props.formProps;
-      const realColProps = { ...baseColProps, ...colProps };
-      const { isShow } = getShow();
-      const values = unref(getValues);
+      const { baseColProps = {} } = props.formProps
+      const realColProps = { ...baseColProps, ...colProps }
+
+      const { isShow } = getShow()
+      const values = unref(getValues)
 
       const getContent = () => {
         return colSlot
           ? getSlot(slots, colSlot, values)
           : renderColContent
             ? renderColContent(values)
-            : renderItem();
-      };
-      return withDirectives(
-        h(ElCol, { ...realColProps }, () => getContent()),
-        [[vShow, isShow]]
+            : renderItem()
+      }
+
+      return (
+        <ElCol {...realColProps} v-show={isShow}>
+          {getContent()}
+        </ElCol>
       )
     }
   }
