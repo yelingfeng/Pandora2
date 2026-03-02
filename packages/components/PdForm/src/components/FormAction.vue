@@ -1,6 +1,6 @@
 <template>
   <el-col v-bind="actionColOpt" v-if="showActionButtonGroup">
-    <div class="pdForm-actionCol" :style="getActionStyle">
+    <div :style="getActionStyle">
       <slot name="resetBefore"></slot>
       <el-button type="default" v-bind="getResetBtnOptions" @click="resetAction" v-if="showResetButton">
         {{ getResetBtnOptions.label }}
@@ -80,21 +80,21 @@ export default defineComponent({
 
 
 
-    const getActionStyle = computed(() => {
+    const getActionStyle = computed<CSSProperties>(() => {
       const { actionColStyle } = props;
 
       // 针对左对齐 微调样式
       if (actionColStyle.textAlign === 'left') {
         return {
           width: '100%',
-          'margin-left': '10px',
-          'margin-top': '1px',
-          'text-align': 'left'
+          marginLeft: '10px',
+          marginTop: '1px',
+          textAlign: 'left'
         }
       }
       return {
         width: '100%',
-        'text-align': actionColStyle.textAlign ? actionColStyle.textAlign : 'right'
+        textAlign: actionColStyle.textAlign ? actionColStyle.textAlign : 'right'
       }
     })
 
