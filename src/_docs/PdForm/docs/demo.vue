@@ -1,12 +1,12 @@
 <template>
-    <PdForm @register="register" :schemas="schemas" @submit="handleSubmit" />
+  <PdForm @register="register" :schemas="schemas" @submit="handleSubmit" />
 </template>
 
 <script setup lang="tsx">
-import { reactive } from 'vue'
-import { IFormSchema, useForm } from '@pandora/components/PdForm/index'
+import { IFormSchema, useForm } from '@pandora/components/PdForm/index';
+import { reactive } from 'vue';
 // import type { FormRules } from 'element-plus'
- 
+
 // form 值绑定
 const formModelXXX = reactive({
   name: '',
@@ -15,7 +15,7 @@ const formModelXXX = reactive({
   type: '',
 })
 
-// form Schema 配置 
+// form Schema 配置
 const schemas: IFormSchema[] = [
   {
     field: 'name',
@@ -24,68 +24,71 @@ const schemas: IFormSchema[] = [
     defaultValue: '',
     componentProps: {
       placeholder: '自定义placeholder',
-    }
+    },
+    colProps: {
+      span: 8,
+    },
   },
-  {
-    field: 'region',
-    component: 'Input',
-    label: '活动区域',
-    defaultValue: '',
-  },
-  {
-    field: 'city',
-    component: 'Select',
-    label: '活动城市',
-    defaultValue: '',
-    componentProps: {
-      placeholder: '请选择城市',
-      clearable: true,
-      options: [
-        {
-          label: '北京',
-          value: 'beijing'
-        },
-        {
-          label: '上海',
-          value: 'shanghai'
-        },
-        {
-          label: '沈阳',
-          value: 'shenyang'
-        },
-        {
-          label: '广州',
-          value: 'guangzhou'
-        }
-      ]
-    }
-  },
-  {
-    field: 'type',
-    component: 'CheckboxGroup',
-    label: '活动形式',
-    defaultValue: [],
-    componentProps: {
-      options: [
-        {
-          label: '选项1',
-          value: '1'
-        },
-        {
-          label: '选项2',
-          value: '2'
-        },
-        {
-          label: '选项3',
-          value: '3'
-        },
-        {
-          label: '选项4',
-          value: '4'
-        }
-      ]
-    }
-  }
+  // {
+  //   field: 'region',
+  //   component: 'Input',
+  //   label: '活动区域',
+  //   defaultValue: '',
+  // },
+  // {
+  //   field: 'city',
+  //   component: 'Select',
+  //   label: '活动城市',
+  //   defaultValue: '',
+  //   componentProps: {
+  //     placeholder: '请选择城市',
+  //     clearable: true,
+  //     options: [
+  //       {
+  //         label: '北京',
+  //         value: 'beijing'
+  //       },
+  //       {
+  //         label: '上海',
+  //         value: 'shanghai'
+  //       },
+  //       {
+  //         label: '沈阳',
+  //         value: 'shenyang'
+  //       },
+  //       {
+  //         label: '广州',
+  //         value: 'guangzhou'
+  //       }
+  //     ]
+  //   }
+  // },
+  // {
+  //   field: 'type',
+  //   component: 'CheckboxGroup',
+  //   label: '活动形式',
+  //   defaultValue: [],
+  //   componentProps: {
+  //     options: [
+  //       {
+  //         label: '选项1',
+  //         value: '1'
+  //       },
+  //       {
+  //         label: '选项2',
+  //         value: '2'
+  //       },
+  //       {
+  //         label: '选项3',
+  //         value: '3'
+  //       },
+  //       {
+  //         label: '选项4',
+  //         value: '4'
+  //       }
+  //     ]
+  //   }
+  // }
 ]
 
 const extraSchemas: IFormSchema[] = [];
@@ -101,9 +104,9 @@ for (let i = 14; i < 30; i++) {
 }
 
 const [register] = useForm({
-  schemas:[
+  schemas: [
     ...schemas,
-    ...extraSchemas
+    // ...extraSchemas
   ],
   baseColProps: { span: 12 },
 
@@ -111,18 +114,22 @@ const [register] = useForm({
   //   backgroundColor : 'red'
   // },
   // 自动设置placeHolder
-  autoSetPlaceHolder:false,
+  autoSetPlaceHolder: false,
   actionColOptions: {
-    span: 24
+    span: 8,
+  },
+  actionColStyle: {
+    textAlign: 'left'
   },
   model: formModelXXX,
   // size: 'small',
-  inline: false,
+  inline: true,
   labelPosition: 'right',
   labelWidth: '120px',
   showAdvancedButton: true,
   showActionButtonGroup: true,
-  alwaysShowLines:3,
+  alwaysShowLines: 0.75,
+  autoAdvancedLine: 1,
   // rules: {
   //   name: [
   //     { required: true, message: '请输入活动名称', trigger: 'blur' },
@@ -131,7 +138,7 @@ const [register] = useForm({
   // } as FormRules
 })
 
-const handleSubmit = (res : any)=>{
+const handleSubmit = (res: any) => {
   console.log(res)
 }
 

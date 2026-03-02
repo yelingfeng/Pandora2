@@ -81,6 +81,8 @@ export type IFormProps = {
   // Operation column configuration
   actionColOptions?: Partial<ColProps>
 
+  actionColStyle?: CSSProperties
+
   // Show reset button
   showResetButton?: boolean
   // Show confirmation button
