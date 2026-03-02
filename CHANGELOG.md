@@ -1,3 +1,12 @@
+## [1.0.5](https://github.com/yelingfeng/Pandora2/compare/v1.0.4...v1.0.5) (2026-03-02)
+
+
+### Bug Fixes
+
+* **PdForm:** 修复左侧对齐时表单操作按钮的边距问题 ([023c128](https://github.com/yelingfeng/Pandora2/commit/023c1282aef0237ea7b38d2f69077e828978342e))
+
+
+
 ## [1.0.4](https://github.com/yelingfeng/Pandora2/compare/v1.0.3...v1.0.4) (2026-03-02)
 
 
