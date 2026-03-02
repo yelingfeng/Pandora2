@@ -1,3 +1,12 @@
+## [1.0.4](https://github.com/yelingfeng/Pandora2/compare/v1.0.3...v1.0.4) (2026-03-02)
+
+
+### Features
+
+* **PdForm:** 支持操作列左对齐样式配置 ([067532c](https://github.com/yelingfeng/Pandora2/commit/067532c5c5d0fc624e0994556c0d912d9a7d3e9f))
+
+
+
 ## [1.0.3](https://github.com/yelingfeng/Pandora2/compare/v1.0.2...v1.0.3) (2026-02-10)
 
 
