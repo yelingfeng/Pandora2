@@ -78,11 +78,20 @@ export default defineComponent({
       return actionColOpt;
     });
 
-    const getActionStyle = computed(() => {
+    const getActionStyle = computed<CSSProperties>(() => {
       const { actionColStyle } = props;
-      return {
-        width: '100%',
-        'text-align': actionColStyle.textAlign ? actionColStyle.textAlign : 'right'
+      if (actionColStyle.textAlign === 'left') {
+        return {
+          width: '100%',
+          marginLeft: '10px',
+          marginTop: '1px',
+          textAlign: 'left'
+        }
+      } else {
+        return {
+          width: '100%',
+          textAlign: actionColStyle.textAlign || 'right'
+        }
       }
     })
 
