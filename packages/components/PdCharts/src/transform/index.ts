@@ -1,7 +1,8 @@
 import * as echarts from 'echarts/core'
 import type { ChartTypes } from '../types/chart'
+import { getAxisLabelOpt, getAxisLineOpt, getSplitLineOpt } from '../utils/defaultOpt'
 import { hexToRgba } from '../utils/index'
-import { getGroupSeriesObj, getNormalSeriesObj } from './seriesHelper'
+import { buildBarXAxis, buildLineXAxis, buildSeries, buildTooltip, buildYAxis, getGroupSeriesObj, getNormalSeriesObj, normalizeXAxis } from './seriesHelper'
 /**
  * 转换数据 生成 echarts Series 对象
  * @param data
@@ -61,66 +62,63 @@ export const transformPieDataToSeries = (
   }
 }
 
+
+
 export const transformGroupDataToSeries = (
   data: any,
-  chartName: ChartTypes
-) : any => {
+  chartName: ChartTypes,
+  cfg: Record<string, any> = {}
+): any => {
   const result = getGroupSeriesObj(data, chartName)
-  if (chartName === 'bar') {
-    const xAxisData = Array.isArray(result.xAxis)
-      ? result.xAxis.map((it: any) => String(it))
-      : []
-    const groups = Array.isArray(result.series) ? result.series : []
-    const legendData = groups
-      .map((it: any) => (it && it.name != null ? String(it.name) : ''))
-      .filter((it: any) => it)
 
-    const colorArr = [
-      ['#00FFE3', '#4693EC'],
-      ['#4693EC', '#00FFE3'],
-      ['#FF6767', '#FF9D6B'],
-      ['#55CA69', '#16D8B8'],
-    ]
-
-    const series = groups.map((groupItem: any, index: number) => {
-      const legendName =
-        groupItem && groupItem.name != null ? String(groupItem.name) : ''
-      const rawData =
-        groupItem && Array.isArray(groupItem.data) ? groupItem.data : []
-      const seriesData = xAxisData.map((axisName: any) => {
-        const hit = rawData.find((d: any) => {
-          return d && String(d.name) === String(axisName)
-        })
-        return hit ? Number(hit.value) || 0 : 0
-      })
-      const colors = colorArr[index % colorArr.length]
-
-      return {
-        type: 'bar',
-        name: legendName,
-        barWidth: 15,
-        data: seriesData,
-        itemStyle: {
-          normal: {
-            color: new (echarts as any).graphic.LinearGradient(0, 0, 0, 1, [
-              { offset: 0, color: colors[0] },
-              { offset: 1, color: colors[1] },
-            ]),
-          },
-        },
-      }
-    })
-
+  if (!['bar', 'line'].includes(chartName)) {
     return {
-      xAxisData,
+      xAxis: result.xAxis,
+      series: result.series,
+    }
+  }
+
+  const xAxisData = normalizeXAxis(result.xAxis)
+  const groups = Array.isArray(result.series) ? result.series : []
+  const legendData = groups
+    .map((it: any) => (it?.name != null ? String(it.name) : ''))
+    .filter(Boolean)
+
+  const themeMode: 'light' | 'dark' =
+    cfg.themeMode === 'dark' ? 'dark' : 'light'
+
+  const splitLine = getSplitLineOpt(cfg.splitLine || {}, themeMode)
+  const axisLine = getAxisLineOpt(cfg.axisLine || {}, themeMode)
+  const axisLabel = getAxisLabelOpt(cfg.axisLabel || {}, themeMode)
+
+  const { series, unitForAxis, yRange } = buildSeries(
+    groups,
+    xAxisData,
+    cfg.autoFormatView
+  )
+
+  const tooltip = buildTooltip(cfg.tooltip, unitForAxis, themeMode)
+
+  if (chartName === 'bar') {
+    return {
+      xAxis: buildBarXAxis(xAxisData, axisLabel, axisLine, splitLine),
+      yAxis: buildYAxis(axisLabel, axisLine, splitLine, unitForAxis, yRange),
       legendData,
-      series,
+      series: series.map(s => ({ ...s, type: 'bar' })),
+      ...(tooltip ? { tooltip } : {}),
     }
   }
 
   return {
-    xAxis: result.xAxis,
-    series: result.series,
+    xAxis: [
+      buildLineXAxis(xAxisData, axisLabel, axisLine, splitLine),
+    ],
+    yAxis: [
+      buildYAxis(axisLabel, axisLine, splitLine, unitForAxis, yRange),
+    ],
+    legendData,
+    series: series.map(s => ({ ...s, type: 'line' })),
+    ...(tooltip ? { tooltip } : {}),
   }
 }
 
@@ -153,3 +151,5 @@ export const transformRankBarData = (data: any): any => {
     maxPercent,
   }
 }
+
+// line option builder moved into charts/line/line01.ts per design (transform focuses on data mapping)

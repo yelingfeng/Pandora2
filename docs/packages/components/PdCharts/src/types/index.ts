@@ -5,6 +5,8 @@ import {
   type SetOptionOpts,
 } from 'echarts/core'
 import { Ref } from 'vue'
+import { type IChartConfigType } from './chart'
+export type { IChartConfigType } from './chart'
 export type Injection<T> =
   | T
   | null
@@ -140,7 +142,7 @@ export type AutoresizeProp =
 export interface ChartsProps {
   data?: any[]
   options?: ChartsOption
-  chartConfig?: Record<string, any>
+  chartConfig?: IChartConfigType
   theme?: Theme
   chartType?: string
   subChartType?: string

@@ -153,17 +153,30 @@
         "compName": "Bar",
         "compZhName": "Bar",
         "children": [
-          {
-            "title": "Bar01",
-            "compName": "Bar01",
-            "compZhName": "排行柱形图",
-            "doc": "_docs/PdCharts/docs/bar/bar01.md"
+           {
+            "title": "BasicBar",
+            "compName": "BasicBar",
+            "compZhName": "基础柱形图",
+            "doc": "_docs/PdCharts/docs/bar/basicBar.md"
           },
           {
-            "title": "Bar02",
-            "compName": "Bar02",
-            "compZhName": "多系列柱形图",
-            "doc": "_docs/PdCharts/docs/bar/bar02.md"
+            "title": "HoriRankBar",
+            "compName": "HoriRankBar",
+            "compZhName": "横向排行柱形图",
+            "doc": "_docs/PdCharts/docs/bar/horiRankBar.md"
+          }
+        ]
+      },
+      {
+        "title": "折线图",
+        "compName": "Line",
+        "compZhName": "Line",
+        "children": [
+          {
+            "title": "Line01",
+            "compName": "Line01",
+            "compZhName": "基础折线图",
+            "doc": "_docs/PdCharts/docs/line/line01.md"
           }
         ]
       }

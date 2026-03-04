@@ -1,9 +1,9 @@
-import { build as build1 } from './bar01'
-import { build as build2 } from './bar02'
+import { build as basicBar } from './basicBar'
+import { build as horiRankBar } from './horiRankBar'
 
 const result: any = {
-  bar01: build1,
-  bar02: build2,
+  horiRankBar,
+  basicBar,
 }
 
 export default result

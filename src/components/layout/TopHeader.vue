@@ -22,7 +22,7 @@
 // TopHeader logic
 import { ref } from 'vue';
 
-const version = ref('1.0.1')
+const version = ref('1.0.5')
 </script>
 
 <style lang="less" scoped>

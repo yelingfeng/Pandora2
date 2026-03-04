@@ -12,7 +12,7 @@
       </el-button>
 
       <slot name="advanceBefore"></slot>
-      <el-button type="text" size="small" @click="toggleAdvanced" v-if="showAdvancedButton && !hideAdvanceBtn">
+      <el-button link size="small" @click="toggleAdvanced" v-if="showAdvancedButton && !hideAdvanceBtn">
         {{ isAdvanced ? '收起' : '展开' }}
         <BasicArrow class="ml-1" :expand="!isAdvanced" up />
       </el-button>
@@ -78,8 +78,12 @@ export default defineComponent({
       return actionColOpt;
     });
 
+
+
     const getActionStyle = computed<CSSProperties>(() => {
       const { actionColStyle } = props;
+
+      // 针对左对齐 微调样式
       if (actionColStyle.textAlign === 'left') {
         return {
           width: '100%',
@@ -87,11 +91,10 @@ export default defineComponent({
           marginTop: '1px',
           textAlign: 'left'
         }
-      } else {
-        return {
-          width: '100%',
-          textAlign: actionColStyle.textAlign || 'right'
-        }
+      }
+      return {
+        width: '100%',
+        textAlign: actionColStyle.textAlign ? actionColStyle.textAlign : 'right'
       }
     })
 

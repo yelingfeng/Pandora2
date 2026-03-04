@@ -131,12 +131,20 @@ export default defineComponent({
       },
       setColumns: async (columns) => {
         const update = { columns }
-        propsRef.value = merge({}, unref(propsRef) || {}, update)
+        propsRef.value = {
+          ...unref(propsRef),
+          ...update,
+        }
         await nextTick()
       },
       setData: async (data) => {
         const update = { data }
-        propsRef.value = merge({}, unref(propsRef) || {}, update)
+        console.log('setData', update)
+        // propsRef.value = merge({}, unref(propsRef) || {}, update)
+        propsRef.value = {
+          ...unref(propsRef),
+          ...update,
+        }
         await nextTick()
       },
       reload: async (_opt) => {

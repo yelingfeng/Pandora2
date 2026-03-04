@@ -1,261 +1,184 @@
 import { chain, cloneDeep } from 'lodash-es'
 import type { ChartTypes } from '../types/chart'
-const XAXIS = 'xAixs'
 
-const EMPTY_DATA = { category: [], xAxis: [], series: [] }
+const XAXIS = 'XAIXS'
+
+const EMPTY_DATA = {
+  category: [],
+  xAxis: [],
+  series: [],
+}
 
 /**
  * 是否为业务空数据
- * isEmptyData
- * @param  {Array} data
  */
-const isEmptyData = (data: any) => {
+const isEmptyData = (data: any[]) => {
   return (
     data == null ||
-    (data.length === 1 && data[0].name === '')
+    (data.length === 1 && data[0]?.name === '')
   )
 }
 
 /**
- * 取分类数据集合
- * getCategoryCollection
- * @param chain lodash chain对象
+ * 获取分类集合
  */
-const getCategoryCollection = (chain: any) => {
-  const CATEGORY_KEY = 'category'
-  const groupData = chain
-    .filter((it: any) => {
+const getCategoryCollection = (data: any[]) => {
+  return chain(data)
+    .filter(it => {
+      const c = it.category
       return (
-        it[CATEGORY_KEY] !== '' &&
-        it[CATEGORY_KEY] != null &&
-        it[CATEGORY_KEY].toUpperCase() !== XAXIS
+        c !== '' &&
+        c != null &&
+        c.toUpperCase() !== XAXIS
       )
     })
-    .map((it: any) => {
-      return it[CATEGORY_KEY]
-    })
+    .map(it => it.category)
     .uniq()
     .value()
-  return groupData || []
 }
 
 /**
- * 获得图例对象集合
- * getLegendCollection
- * @param  {Array}  group
- * @return {Array}
+ * 图例对象集合
  */
-const getLegendCollection = (group: any) => {
-  const legendData = group.map((g: any) => {
-    return {
-      name: g,
-    }
-  })
-  return legendData
+const getLegendCollection = (group: string[]) => {
+  return group.map(name => ({ name }))
 }
 
 /**
- * 是否有约定的xAxis分类标识
- * hasConsensusxAxis
- * 【与后台约定，如果有xAxis  坐标轴data就取xAxis的集合】
- * @param   data
- * @return {Boolean}
+ * 是否存在约定 xAxis（分组图）
  */
-const hasConsensusxAxis = (data: any) => {
-  let hasXAsix = false
-  data.forEach((it: any) => {
-    if (
+const hasConsensusxAxis = (data: any[]) => {
+  return data.some(
+    it =>
       it.category &&
       it.category.toUpperCase() === XAXIS
-    ) {
-      // 与后台约定，如果有xAxis  x轴data就取xAxis的集合
-      hasXAsix = true
-    }
-  })
-  return hasXAsix
+  )
 }
 
 /**
- * 是否有约定的xAxis分类标识 基础图表类
- * [hasConsensusxAxisBase ]  基础图表类 判断是否有xAxis字段
- * @param   data
- * @return {Boolean}
+ * 是否存在约定 xAxis（基础图）
  */
-const hasConsensusxAxisBase = (data: any) => {
-  let hasXAsix = false
-  data.forEach((it: any) => {
-    if (it['xAxis']) {
-      // 与后台约定，如果有xAxis  x轴data就取xAxis的集合
-      hasXAsix = true
-    }
-  })
-  return hasXAsix
+const hasConsensusxAxisBase = (data: any[]) => {
+  return data.some(it => it.xAxis)
 }
 
 /**
- * 取xAxis分组名称
- * getxAxisName
- * @param  chain
- * @param  hasAxis 是否存在特殊分组
- * @return {Array}
+ * 获取 xAxis 名称集合
  */
-const getxAxisName = (chain: any, hasAxis: boolean) => {
-  let tmpArr
-  let xAxisArr = []
-  if (hasAxis) {
-    tmpArr = chain.filter((it: any) => {
-      return it.category.toUpperCase() === XAXIS
-    })
-  } else {
-    tmpArr = chain
-  }
-  xAxisArr = tmpArr
-    .map((n: any) => {
-      return n.name
-    })
+const getxAxisName = (
+  data: any[],
+  hasAxis: boolean
+) => {
+  const c = chain(data)
+
+  const source = hasAxis
+    ? c.filter(
+        it =>
+          it.category &&
+          it.category.toUpperCase() === XAXIS
+      )
+    : c
+
+  return source
+    .map(it => it.name)
     .uniq()
     .value()
-  return xAxisArr
 }
 
 /**
- * 当有xAxis的时候，处理数据的方法。
- * 获取xAxis 对应相同name下的value
- * 例如
- * =============================================================================
- * ======  已知
- * ======    data: [{category:A ,name:G1,value:10}]
- * ======    xAxis : G1(按groupName取data中的name)
- * ======    groupName: A
- * ======  逻辑
- * ======   匹配groupName等于A下 且name为xAxis(G1)的数据 对应的value(100) 并返回
- * =============================================================================
- * lookGroupValue
- * @param  {String} groupName  分组名称
- * @param  {String} xAxis     xAxis名称
- * @param  {Array} chains
- * @return {String}
+ * 查找指定 group + xAxis 的 value
  */
 const lookGroupValue = (
   groupName: string,
   xAxis: string,
-  chains: any
+  data: any[]
 ) => {
-  const val = chains
-    .filter((it: any) => {
-      return (
-        it.name === xAxis &&
-        it.category != null &&
-        it.category === groupName
+  return (
+    chain(data)
+      .find(
+        it =>
+          it.name === xAxis &&
+          it.category === groupName
       )
-    })
-    .map((data: any) => {
-      return data.value
-    })
-    .toString()
-    .value()
-  return val
+      ?.value ?? 0
+  )
 }
 
 /**
- * 构建series集合对象
- * createSeriesCollection
- * @param {Object}
- *  {
- *      group: 分类数据集合
- *      data: 原始数据集合
- *      xAxis: 坐标数据集合
- *      chain: lodash处理data的chain对象
- *      hasxAxis: 是否有xAxis约定
- *  }
- *
+ * 构建 series 集合（分组类）
  */
 const createSeriesCollection = (params: any) => {
-  const { group, data, xAxis, chain, hasxAxis, name } =
-    params
+  const {
+    group,
+    data,
+    xAxis,
+    hasxAxis,
+    name,
+  } = params
 
-  const seriesCollect: any = []
-  group.forEach((g: any) => {
-    let seriesTemp = []
+  return group.map((g: string) => {
+    let seriesData: any[] = []
+
     if (hasxAxis) {
-      seriesTemp = xAxis.map((axis: any) => {
-        const val = lookGroupValue(g, axis, chain)
-        let obj = g
-        data.forEach((item: any) => {
-          if (item.category === g && item.name === axis) {
-            obj = item
-          }
-        })
+      seriesData = xAxis.map((axis: string) => {
+        const dataObj =
+          data.find(
+            (d: any) =>
+              d.category === g &&
+              d.name === axis
+          ) || {}
+
         return {
           name: axis,
-          value: val === '' ? 0 : val,
-          dataObj: obj,
+          value:
+            lookGroupValue(g, axis, data) || 0,
+          dataObj,
           xAxis: true,
         }
       })
     } else {
-      seriesTemp = data.map((d: any) => {
-        if (d.category === g) {
-          return {
-            name: d.name,
-            value: d.value,
-            dataObj: d,
-            tooltip: {
-              formatter: d.info,
-            },
-            group: 'group',
-          }
-        }
-      })
+      seriesData = data
+        .filter((d:any) => d.category === g)
+        .map((d:any) => ({
+          name: d.name,
+          value: d.value ?? 0,
+          dataObj: d,
+          tooltip: d.info
+            ? { formatter: d.info }
+            : undefined,
+          group: 'group',
+        }))
     }
-    seriesCollect.push({
+
+    return {
       type: name,
       name: g,
-      data: seriesTemp.filter((it: any) => {
-        return it !== undefined
-      }),
-    })
+      data: seriesData,
+    }
   })
-  return seriesCollect
 }
 
 /**
- * 多分组构建 用于线图 柱图 地图等多分组类图表
- * getGroupSeriesObj
- * @param {Array} originData 原始数据集合
- * @param {Object} props 属性集合对象
- * @param {String} __chartName__ 图表标识
- * @return  {category,xAxis,series,data}
+ * 多分组图表（bar / line / map）
  */
 export const getGroupSeriesObj = (
-  originData: any,
-  name: any
+  originData: any[],
+  name: ChartTypes
 ) => {
-  // 非空判断处理
   if (isEmptyData(originData)) {
     return EMPTY_DATA
   }
-  // 拷贝一份原始数据
-  const data = cloneDeep(originData) || []
 
-  // 判断是否存在xAxis共识
+  const data = cloneDeep(originData)
+
   const hasxAxis = hasConsensusxAxis(data)
+  const group = getCategoryCollection(data)
+  const xAxis = getxAxisName(data, hasxAxis)
 
-  // 转换成lodash chains
-  const _chain = chain(data)
-
-  // 取分类数据集合
-  const group = getCategoryCollection(_chain)
-
-  // 取xAxis 轴分组集合
-  const xAxis = getxAxisName(_chain, hasxAxis)
-
-  // 构建series对象集合
   const series = createSeriesCollection({
     group,
     data,
     xAxis,
-    chain: _chain,
     hasxAxis,
     name,
   })
@@ -267,86 +190,63 @@ export const getGroupSeriesObj = (
 }
 
 /**
- * 普通非分组类图表series构建方法
- * [ 2.0需求 也需要支持xAixs功能 ]
- * getNormalSeriesObj
- * @param  {Array} originData  原始数据
- * @param  {Object} props       属性对象
- * @param  {String} __chartName__ 图表表示 bar line map
- * @return
+ * 普通非分组图表
  */
 export const getNormalSeriesObj = (
-  originData: any,
-  __chartName__: ChartTypes
+  originData: any[],
+  chartName: ChartTypes
 ) => {
-  const category: any = []
-  let datas: any = []
-  let data: any = cloneDeep(originData)
+  const category: string[] = []
+  let data = cloneDeep(originData)
   const hasxAxis = hasConsensusxAxisBase(data)
 
-  const xAxisArr: any = []
+  let xAxisArr: string[] = []
+
   if (hasxAxis) {
-    data.forEach((it: any) => {
-      if (it['xAxis']) {
-        xAxisArr.push(it.name)
-      }
-    })
-    data = data.filter((d: any) => {
-      return d['xAxis'] === undefined
-    })
+    xAxisArr = data
+      .filter(it => it.xAxis)
+      .map(it => it.name)
+
+    data = data.filter(it => !it.xAxis)
   }
 
-  function hasDataVal(xAxis: any, data: any) {
-    let v = ''
-    data.forEach((d: any) => {
-      if (d.name === xAxis) {
-        v = d
-      }
-    })
-    return v
-  }
-  const seriesObj: any = {
-    type: __chartName__,
-  }
-  if (Array.isArray(data)) {
-    if (hasxAxis) {
-      datas = xAxisArr.map((xAxis: any) => {
-        category.push(xAxis)
-        const it: any = hasDataVal(xAxis, data)
-        const obj: any = {
-          name: xAxis,
-          value: it !== '' ? it.value : 0,
-          dataObj: it !== '' ? it : '',
-          group: 'noGroup',
-        }
-        if (it.info !== undefined) obj.info = it.info
-        return obj
-      })
-    } else {
-      datas = data.map((item: any) => {
-        category.push(item.name ?? '')
+  const seriesData = hasxAxis
+    ? xAxisArr.map(x => {
+        const it =
+          data.find(d => d.name === x) || {}
+        category.push(x)
         return {
-          name: item.name,
-          value: item.value || 0,
-          info: item.info,
-          dataObj: item,
+          name: x,
+          value: it.value ?? 0,
+          dataObj: it,
+          group: 'noGroup',
+          info: it.info,
+        }
+      })
+    : data.map(it => {
+        category.push(it.name ?? '')
+        return {
+          name: it.name,
+          value: it.value ?? 0,
+          dataObj: it,
+          info: it.info,
           group: 'noGroup',
         }
       })
-    }
-    seriesObj.data = datas
-  }
+
   return {
     category,
-    seriesObj,
+    seriesObj: {
+      type: chartName,
+      data: seriesData,
+    },
   }
 }
 
-export const getCategory = (originData: any) => {
-  // 转换成lodash chains
-  const _chain = chain(originData)
-  // 取分类数据集合
-  const group = getCategoryCollection(_chain)
-  // 取图例集合 ["A","B"] => [{name :"A"},{name:"B"}]
+/**
+ * 获取图例
+ */
+export const getCategory = (originData: any[]) => {
+  const group = getCategoryCollection(originData)
   return getLegendCollection(group)
 }

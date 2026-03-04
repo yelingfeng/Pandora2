@@ -10,6 +10,7 @@ import type {
 } from '../types'
 import type {
   ChartTypes,
+  IChartConfigType,
   SubChartType,
 } from '../types/chart'
 
@@ -27,6 +28,11 @@ export const defaultProps = {
     default: () => {},
   },
   chartConfig: {
+    type: Object as PropType<IChartConfigType>,
+    default: () => ({}),
+  },
+  // 业务属性配置
+  bizConfig:{
     type: Object as PropType<Record<string, any>>,
     default: () => ({}),
   },

@@ -25,6 +25,10 @@ const [register, methods] = useForm({
 - `setFieldsValue()`：设置表单值
 - `resetFields()`：重置表单
 
+完整方法列表以类型定义为准：
+- [PdForm types](file:///Users/xiaofanren/ylf/github/Pandora2/packages/components/PdForm/src/types/index.ts)
+
+
 <script setup>
 import api from './api.vue'
 </script>

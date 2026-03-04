@@ -1,5 +1,6 @@
 <script lang="tsx">
-import { init as initChart } from 'echarts'
+import { init as initChart, registerTheme } from 'echarts'
+import darkTheme from 'echarts/theme/dark'
 import {
   computed,
   defineComponent,
@@ -42,6 +43,11 @@ import { defaultProps } from './props'
 
 const wcRegistered = register()
 
+try {
+  // ensure dark theme is available
+  // @ts-ignore
+  registerTheme?.('dark', (darkTheme as any))
+} catch { }
 if (typeof (window as any).Vue !== 'undefined' && (window as any).Vue.config) {
   (window as any).Vue.config.ignoredElements.push(TAG_NAME)
 }

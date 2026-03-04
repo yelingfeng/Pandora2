@@ -1,3 +1,5 @@
+import { type AutoFormatArrayOptions } from './formatter'
+import { type AxisLabelType, type AxisLineType, type BaseLineType, type DataZoomType } from './props'
 // 动态生成枚举
 
 export enum ChartTypeEnum {
@@ -26,5 +28,64 @@ export type SubChartType =
   | 'pie01'
   | 'pie02'
   | 'pie03'
-  | 'bar01'
-  | 'bar02'
+  | 'horiRankBar'
+  | 'basicBar'
+
+
+/**
+ * 自动格式化视图
+ */
+export interface IChartConfigType {
+  themeMode?: 'light' | 'dark'
+  colors?: string[]
+  smooth?: boolean
+  step?: boolean
+  legend?: Record<string, any>
+  axisLabel?: AxisLabelType
+  axisLine?: AxisLineType
+  splitLine?: BaseLineType
+  tooltip?: Record<string, any>
+  dataZoom?: DataZoomType,
+  bar?: BarConfig,
+  autoFormatView?: AutoFormatArrayOptions
+}
+
+export interface BarLabelConfig {
+  minWidth?: number
+  maxWidth?: number
+  charWidth?: number
+}
+
+export interface BarRankItemStyle {
+  backgroundColor?: string
+  borderColor?: string
+  color?: string
+  width?: number
+  height?: number
+  fontSize?: number
+}
+
+export interface BarRankConfig {
+  topCount?: number
+  topColors?: BarRankItemStyle[]
+  backgroundColor?: string
+  color?: string
+  width?: number
+  height?: number
+  fontSize?: number
+}
+
+export interface BarRightLabelConfig {
+  prefix?: string
+  suffix?: string
+  formatter?: (args: { rawValue: number, value: number, name: string, index: number }) => string
+}
+
+export interface BarConfig {
+  color?: string
+  backgroundColor?: string
+  topColors?: string[]
+  label?: BarLabelConfig
+  rank?: BarRankConfig
+  rightLabel?: BarRightLabelConfig
+}

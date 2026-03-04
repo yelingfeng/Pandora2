@@ -1,6 +1,7 @@
 import { chain, cloneDeep } from 'lodash-es'
 import type { ChartTypes } from '../types/chart'
-
+import { autoFormat } from '../utils/autoformatter'
+import { getTooltip } from '../utils/tooltip'
 const XAXIS = 'XAIXS'
 
 const EMPTY_DATA = {
@@ -249,4 +250,182 @@ export const getNormalSeriesObj = (
 export const getCategory = (originData: any[]) => {
   const group = getCategoryCollection(originData)
   return getLegendCollection(group)
+}
+
+
+export const normalizeXAxis = (xAxis: any): string[] => {
+  return Array.isArray(xAxis)
+    ? xAxis.map((it: any) => String(it))
+    : []
+}
+
+export const buildSeries = (
+  groups: any[],
+  xAxisData: string[],
+  afv: any
+) => {
+  let unitForAxis = ''
+  let yRange: [number, number] | null = null
+
+  const series = groups.map(groupItem => {
+    const name =
+      groupItem?.name != null ? String(groupItem.name) : ''
+
+    const rawData = Array.isArray(groupItem?.data)
+      ? groupItem.data
+      : []
+
+    const alignedData = xAxisData.map(axisName => {
+      const hit = rawData.find(
+        (d: any) => String(d?.name) === axisName
+      )
+      return hit ? Number(hit.value) || 0 : 0
+    })
+
+    let dataOut = alignedData
+
+    if (afv) {
+      const key = String(afv.key || 'value')
+      const typeOpt = afv.type ?? 'num'
+      const decimalPlaces = Number(afv.decimalPlaces ?? 2)
+      const unitName = String(afv.unitName || '')
+      const showUnitLabel = Boolean(afv.showUnitLabel ?? false)
+
+      const arr = dataOut.map(v => ({
+        [key]: Number(v),
+      }))
+
+      const res = autoFormat(arr, {
+        key,
+        type: typeOpt,
+        decimalPlaces,
+        unitName,
+        showUnitLabel,
+      })
+
+      unitForAxis ||= res.unit
+      yRange ||= res.yAxisRange
+      dataOut = res.data.map(
+        (d: any) => d[`${key}Axis`]
+      )
+    }
+
+    return {
+      name,
+      data: dataOut,
+    }
+  })
+
+  return { series, unitForAxis, yRange }
+}
+
+
+export const buildYAxis = (
+  axisLabel: any,
+  axisLine: any,
+  splitLine: any,
+  unit: string,
+  yRange: [number, number] | null
+) => {
+  return {
+    type: 'value',
+    axisLabel: unit
+      ? {
+          ...(axisLabel.yAxis || {}),
+          formatter: (value: any) =>
+            `${value} ${unit}`,
+        }
+      : axisLabel.yAxis,
+    axisLine: axisLine.yAxis,
+    splitLine: splitLine.yAxis,
+    axisTick: { show: false },
+    ...(yRange
+      ? { min: yRange[0], max: yRange[1] }
+      : {}),
+  }
+}
+
+
+export const buildBarXAxis = (
+  data: string[],
+  axisLabel: any,
+  axisLine: any,
+  splitLine: any
+) => ({
+  type: 'category',
+  data,
+  axisLabel: axisLabel.xAxis,
+  axisLine: axisLine.xAxis,
+  splitLine: splitLine.xAxis,
+  axisTick: { show: false },
+})
+
+export const buildLineXAxis = (
+  data: string[],
+  axisLabel: any,
+  axisLine: any,
+  splitLine: any
+) => ({
+  type: 'category',
+  boundaryGap: false,
+  data,
+  axisLabel: axisLabel.xAxis,
+  axisLine: axisLine.xAxis,
+  splitLine: splitLine.xAxis,
+  axisTick: { show: false },
+})
+
+export const buildTooltip = (
+  tooltipCfg: any,
+  unit: string,
+  themeMode: 'light' | 'dark'
+) => {
+  if (!unit) return undefined
+
+  const customRow =
+    typeof tooltipCfg?.rowTemplate === 'function'
+      ? tooltipCfg.rowTemplate
+      : null
+
+  const customFormatter =
+    typeof tooltipCfg?.formatter === 'function'
+      ? tooltipCfg.formatter
+      : null
+
+  return getTooltip(
+    {
+      axisPointer: { type: 'shadow' },
+      formatter(params: any[]) {
+        if (customFormatter) {
+          return customFormatter(params, unit)
+        }
+
+        const name = params?.[0]?.name || ''
+
+        const rows = (params || []).map(p => {
+          if (customRow) {
+            return customRow(p, unit)
+          }
+
+          const v = p?.value ?? ''
+
+          return `
+            <tr>
+              <td style="text-align:left;">
+                ${p.marker}${p.seriesName}：
+              </td>
+              <td style="text-align:left;">
+                ${v} ${unit}
+              </td>
+            </tr>
+          `
+        })
+
+        return `${name}<br/><table>${rows.join(
+          ''
+        )}</table>`
+      },
+    },
+    themeMode
+  )
 }
