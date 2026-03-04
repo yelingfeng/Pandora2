@@ -1,3 +1,12 @@
+## [1.0.6](https://github.com/yelingfeng/Pandora2/compare/v1.0.5...v1.0.6) (2026-03-04)
+
+
+### Features
+
+* **PdCharts:** 增强图表功能和添加文档 ([74ce59d](https://github.com/yelingfeng/Pandora2/commit/74ce59df3fb3e141f981609352e1711c545b9fa3))
+
+
+
 ## [1.0.5](https://github.com/yelingfeng/Pandora2/compare/v1.0.4...v1.0.5) (2026-03-02)
 
 
