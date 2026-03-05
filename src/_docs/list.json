@@ -164,6 +164,12 @@
             "compName": "HoriRankBar",
             "compZhName": "横向排行柱形图",
             "doc": "_docs/PdCharts/docs/bar/horiRankBar.md"
+          },
+          {
+            "title": "TooltipDemo",
+            "compName": "TooltipDemo",
+            "compZhName": "Tooltip 模版演示",
+            "doc": "_docs/PdCharts/docs/bar/tooltipDemo.md"
           }
         ]
       },

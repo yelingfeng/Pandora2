@@ -6,9 +6,14 @@ import { getDataZoomOpt, getLegendOpt } from '../../utils/defaultOpt'
 import { hexToRgba } from '../../utils/index'
 
 export const build = (originData: any, chartConfig?: IChartConfigType): EChartsOption => {
-  const { legendData = [], xAxis = [], yAxis = [], series: rawSeries = [], tooltip } = transformGroupDataToSeries(originData, 'line', chartConfig) || {}
+  const cfg = (chartConfig || {}) as IChartConfigType
+  const { xAxis = [], yAxis = [], series: rawSeries = [], tooltip } = transformGroupDataToSeries(originData, 'line', cfg) || {}
 
   const { colors = [] ,smooth,legend={}, themeMode='light', dataZoom } = chartConfig || {}
+
+  const legendData = Array.isArray(rawSeries) ? rawSeries.map((s: any) => String(s?.name || '')).filter(Boolean) : []
+  const defaultLegend = getLegendOpt(themeMode as any, legend, legendData)
+
 
   let curColors = colors
   if(colors.length == 0){
@@ -54,8 +59,6 @@ export const build = (originData: any, chartConfig?: IChartConfigType): EChartsO
       data: seriesData,
     }
   })
-
-  const defaultLegend = getLegendOpt(themeMode as any, legend || {}, legendData)
 
   const opt = {
     color: colors,

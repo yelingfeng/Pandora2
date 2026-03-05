@@ -28,18 +28,17 @@ export type SubChartType =
   | 'pie01'
   | 'pie02'
   | 'pie03'
-  | 'horiRankBar'
   | 'basicBar'
+  | 'rankBar'
 
 
 /**
- * 自动格式化视图
  */
 export interface IChartConfigType {
   themeMode?: 'light' | 'dark'
   colors?: string[]
   smooth?: boolean
-  step?: boolean
+  subChartType?: SubChartType
   legend?: Record<string, any>
   axisLabel?: AxisLabelType
   axisLine?: AxisLineType

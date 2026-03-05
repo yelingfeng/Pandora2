@@ -1,4 +1,4 @@
-<template>
+const n=`<template>
   <div class="demo-charts">
     <div class="demo-ops">
       <span class="ops-label">单位类型</span>
@@ -138,7 +138,7 @@ onMounted(() => {
         ? {
           rowTemplate: (p, unit) => {
             const v = p && p.value != null ? p.value : ''
-            return `<tr><td style="text-align:left;">${p.marker}<strong>${p.seriesName}</strong>：</td><td style="text-align:right;">${v} <span style="color:#5B8FF9">${unit}</span></td></tr>`
+            return \`<tr><td style="text-align:left;">\${p.marker}<strong>\${p.seriesName}</strong>：</td><td style="text-align:right;">\${v} <span style="color:#5B8FF9">\${unit}</span></td></tr>\`
           }
         }
         : tooltipMode.value === 'full'
@@ -147,9 +147,9 @@ onMounted(() => {
               const name = params && params[0] ? params[0].name : ''
               const rows = (params || []).map((p) => {
                 const v = p && p.value != null ? p.value : ''
-                return `<tr><td style="text-align:left;">${p.marker}<strong>${p.seriesName}</strong>：</td><td style="text-align:right;">${v} <span style="color:#5B8FF9">${unit}</span></td></tr>`
+                return \`<tr><td style="text-align:left;">\${p.marker}<strong>\${p.seriesName}</strong>：</td><td style="text-align:right;">\${v} <span style="color:#5B8FF9">\${unit}</span></td></tr>\`
               })
-              return `<div style="min-width:180px;"><div style="margin-bottom:6px;color:#999;">${name}</div><table style="width:100%;">${rows.join('')}</table></div>`
+              return \`<div style="min-width:180px;"><div style="margin-bottom:6px;color:#999;">\${name}</div><table style="width:100%;">\${rows.join('')}</table></div>\`
             }
           }
           : tooltipMode.value === 'dom'
@@ -160,11 +160,11 @@ onMounted(() => {
                 'border: 1px solid rgba(0,0,0,0.06); box-shadow: 0 6px 16px rgba(0,0,0,0.08);',
               rowTemplate: (p, unit) => {
                 const v = p && p.value != null ? p.value : ''
-                return `
+                return \`
                     <tr class="tt-row">
-                      <td class="tt-left">${p.marker}<span class="tt-series">${p.seriesName}</span>：</td>
-                      <td class="tt-right"><span class="tt-value">${v}</span> <span class="tt-unit">${unit}</span></td>
-                    </tr>`
+                      <td class="tt-left">\${p.marker}<span class="tt-series">\${p.seriesName}</span>：</td>
+                      <td class="tt-right"><span class="tt-value">\${v}</span> <span class="tt-unit">\${unit}</span></td>
+                    </tr>\`
               }
             }
             : undefined
@@ -207,7 +207,7 @@ watch([type, dp, unitName, preset], () => {
         ? {
           rowTemplate: (p, unit) => {
             const v = p && p.value != null ? p.value : ''
-            return `<tr><td style="text-align:left;">${p.marker}<strong>${p.seriesName}</strong>：</td><td style="text-align:right;">${v} <span style="color:#5B8FF9">${unit}</span></td></tr>`
+            return \`<tr><td style="text-align:left;">\${p.marker}<strong>\${p.seriesName}</strong>：</td><td style="text-align:right;">\${v} <span style="color:#5B8FF9">\${unit}</span></td></tr>\`
           }
         }
         : tooltipMode.value === 'full'
@@ -216,9 +216,9 @@ watch([type, dp, unitName, preset], () => {
               const name = params && params[0] ? params[0].name : ''
               const rows = (params || []).map((p) => {
                 const v = p && p.value != null ? p.value : ''
-                return `<tr><td style="text-align:left;">${p.marker}<strong>${p.seriesName}</strong>：</td><td style="text-align:right;">${v} <span style="color:#5B8FF9">${unit}</span></td></tr>`
+                return \`<tr><td style="text-align:left;">\${p.marker}<strong>\${p.seriesName}</strong>：</td><td style="text-align:right;">\${v} <span style="color:#5B8FF9">\${unit}</span></td></tr>\`
               })
-              return `<div style="min-width:180px;"><div style="margin-bottom:6px;color:#999;">${name}</div><table style="width:100%;">${rows.join('')}</table></div>`
+              return \`<div style="min-width:180px;"><div style="margin-bottom:6px;color:#999;">\${name}</div><table style="width:100%;">\${rows.join('')}</table></div>\`
             }
           }
           : undefined
@@ -240,7 +240,7 @@ watch([tooltipMode], () => {
         ? {
           rowTemplate: (p, unit) => {
             const v = p && p.value != null ? p.value : ''
-            return `<tr><td style="text-align:left;">${p.marker}<strong>${p.seriesName}</strong>：</td><td style="text-align:right;">${v} <span style="color:#5B8FF9">${unit}</span></td></tr>`
+            return \`<tr><td style="text-align:left;">\${p.marker}<strong>\${p.seriesName}</strong>：</td><td style="text-align:right;">\${v} <span style="color:#5B8FF9">\${unit}</span></td></tr>\`
           }
         }
         : tooltipMode.value === 'full'
@@ -249,9 +249,9 @@ watch([tooltipMode], () => {
               const name = params && params[0] ? params[0].name : ''
               const rows = (params || []).map((p) => {
                 const v = p && p.value != null ? p.value : ''
-                return `<tr><td style="text-align:left;">${p.marker}<strong>${p.seriesName}</strong>：</td><td style="text-align:right;">${v} <span style="color:#5B8FF9">${unit}</span></td></tr>`
+                return \`<tr><td style="text-align:left;">\${p.marker}<strong>\${p.seriesName}</strong>：</td><td style="text-align:right;">\${v} <span style="color:#5B8FF9">\${unit}</span></td></tr>\`
               })
-              return `<div style="min-width:180px;"><div style="margin-bottom:6px;color:#999;">${name}</div><table style="width:100%;">${rows.join('')}</table></div>`
+              return \`<div style="min-width:180px;"><div style="margin-bottom:6px;color:#999;">\${name}</div><table style="width:100%;">\${rows.join('')}</table></div>\`
             }
           }
           : tooltipMode.value === 'dom'
@@ -262,11 +262,11 @@ watch([tooltipMode], () => {
                 'border: 1px solid rgba(0,0,0,0.06); box-shadow: 0 6px 16px rgba(0,0,0,0.08);',
               rowTemplate: (p, unit) => {
                 const v = p && p.value != null ? p.value : ''
-                return `
+                return \`
                     <tr class="tt-row">
-                      <td class="tt-left">${p.marker}<span class="tt-series">${p.seriesName}</span>：</td>
-                      <td class="tt-right"><span class="tt-value">${v}</span> <span class="tt-unit">${unit}</span></td>
-                    </tr>`
+                      <td class="tt-left">\${p.marker}<span class="tt-series">\${p.seriesName}</span>：</td>
+                      <td class="tt-right"><span class="tt-value">\${v}</span> <span class="tt-unit">\${unit}</span></td>
+                    </tr>\`
               }
             }
             : undefined
@@ -299,7 +299,7 @@ watch([rateUnit, rateDp], () => {
     }
   })
 })
-</script>
+<\/script>
 
 <style scoped>
 .demo-charts {
@@ -374,3 +374,4 @@ watch([rateUnit, rateDp], () => {
   height: calc(100% - 40px);
 }
 </style>
+`;export{n as default};
