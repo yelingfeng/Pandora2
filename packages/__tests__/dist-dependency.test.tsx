@@ -1,9 +1,9 @@
-import { beforeAll, describe, expect, test } from 'vitest'
 import { mount } from '@vue/test-utils'
+import { execSync } from 'node:child_process'
 import fs from 'node:fs'
 import path from 'node:path'
 import { pathToFileURL } from 'node:url'
-import { execSync } from 'node:child_process'
+import { beforeAll, describe, expect, test } from 'vitest'
 import { createApp, defineComponent, nextTick } from 'vue'
 
 let dist: any
@@ -15,9 +15,9 @@ beforeAll(async () => {
     disconnect() {}
   }
 
-  const distEntry = path.resolve(process.cwd(), 'dist/pandora2.es.js')
+  const distEntry = path.resolve(process.cwd(), 'dist/pandora2.mjs')
   if (!fs.existsSync(distEntry)) {
-    execSync('yarn build:lib', { stdio: 'inherit' })
+    execSync('pnpm run build:npm', { stdio: 'inherit' })
   }
   expect(
     fs.existsSync(distEntry),

@@ -10,12 +10,12 @@
     "access": "public"
   },
   "main": "./dist/pandora2.umd.js",
-  "module": "./dist/pandora2.es.js",
+  "module": "./dist/pandora2.mjs",
   "types": "./dist/packages/index.d.ts",
   "exports": {
     ".": {
-      "import": "./dist/pandora2.es.js",
-      "require": "./dist/pandora2.umd.js"
+      "import": "./dist/pandora2.mjs",
+      "require": "./dist/pandora2.cjs"
     },
     "./dist/style.css": {
       "import": "./dist/style.css",
