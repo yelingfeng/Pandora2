@@ -21,13 +21,13 @@
     "removeComments": false,
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
-    "types": ["vite/client", "jest"],
+    "types": ["vite/client", "jest", "node"],
     "paths": {
       "@/*": ["./src/*"],
       "@pandora/*": ["./packages/*"],
       "#/*": ["./src/types/*"]
     },
-    "lib": ["esnext", "dom"]
+    "lib": ["esnext", "dom", "dom.iterable"]
   },
   "include": [
     "src/**/*.ts",
@@ -37,7 +37,8 @@
     "packages/**/*.tsx",
     "packages/**/*.vue",
     "src/**/*.md",
-    "volar.d.ts"
+    "volar.d.ts",
+    "global.d.ts"
   ],
   "exclude": ["node_modules", "dist"]
 }
