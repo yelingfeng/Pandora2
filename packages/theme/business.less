@@ -1,0 +1,523 @@
+/**
+ * Pandora2 业务界面默认样式（阿里云控制台风格）
+ * 按需引入：import '@yelingfeng/pandora2/dist/business.css'
+ */
+
+/* 1. 按钮 — 阿里云控制台蓝 #0064c8 */
+.el-button {
+  --el-button-hover-text-color: #0064c8;
+  --el-button-hover-border-color: #0064c8;
+  --el-button-hover-bg-color: #fff;
+  border-radius: 2px;
+  height: 32px;
+  padding: 0 16px;
+  font-size: 12px;
+  font-weight: 400;
+  transition: all 0.2s;
+  color: #333333;
+  border-color: #d9d9d9;
+  background-color: #fff;
+}
+
+.el-button:hover,
+.el-button:focus {
+  color: #0064c8;
+  border-color: #0064c8;
+  background-color: #ffffff;
+}
+
+.el-button--primary {
+  --el-button-bg-color: #0064c8;
+  --el-button-border-color: #0064c8;
+  --el-button-hover-bg-color: #0054a8;
+  --el-button-hover-border-color: #0054a8;
+  --el-button-hover-text-color: #fff;
+  --el-button-active-bg-color: #004a96;
+  --el-button-active-border-color: #004a96;
+  background-color: #0064c8;
+  border-color: #0064c8;
+  color: #ffffff;
+  box-shadow: none !important;
+}
+
+.el-button--primary:hover,
+.el-button--primary:focus {
+  background-color: #0054a8;
+  border-color: #0054a8;
+  color: #ffffff;
+}
+
+.el-button--primary.is-plain {
+  --el-button-bg-color: #e6f0fa;
+  --el-button-border-color: #99c2e8;
+  --el-button-text-color: #0064c8;
+  --el-button-hover-bg-color: #0064c8;
+  --el-button-hover-border-color: #0064c8;
+  --el-button-hover-text-color: #fff;
+  color: #0064c8;
+  background: #e6f0fa;
+  border-color: #99c2e8;
+}
+
+.el-button--primary.is-plain:hover,
+.el-button--primary.is-plain:focus {
+  color: #fff;
+  background: #0064c8;
+  border-color: #0064c8;
+}
+
+.el-button--danger.is-plain {
+  color: #ff4d4f;
+  border-color: #ffccc7;
+  background-color: #ffffff;
+}
+
+.el-button--danger.is-plain:hover,
+.el-button--danger.is-plain:focus {
+  color: #ff4d4f;
+  border-color: #ff4d4f;
+  background-color: #fff1f0;
+}
+
+.el-button.is-link,
+.el-button.is-text {
+  height: auto;
+  padding: 0;
+  color: #0064c8;
+  font-size: 13px;
+  border: none;
+  background: transparent;
+  box-shadow: none !important;
+}
+
+.el-button.is-link:hover,
+.el-button.is-text:hover {
+  text-decoration: underline;
+  background: transparent !important;
+  color: #0054a8;
+}
+
+.el-button--danger.is-link,
+.el-button--danger.is-text {
+  color: #ff4d4f;
+}
+
+.el-button--danger.is-link:hover,
+.el-button--danger.is-text:hover {
+  color: #ff4d4f;
+}
+
+/* 2. 表格 */
+.el-table {
+  --el-table-border-color: #ebeef5;
+  --el-table-header-bg-color: #eff3f8;
+  --el-table-header-text-color: #555555;
+  --el-table-text-color: #333333;
+  --el-table-row-hover-bg-color: #f5f7fa;
+  --el-table-bg-color: #fff;
+  --el-table-tr-bg-color: #fff;
+  color: #333333;
+  background: #fff;
+
+  &::before,
+  &::after {
+    display: none;
+  }
+
+  .el-table__inner-wrapper::before {
+    background-color: #ebeef5;
+  }
+}
+
+.el-table th.el-table__cell {
+  background-color: #eff3f8 !important;
+  color: #555555;
+  font-weight: 500;
+  height: 35px;
+  padding: 0;
+  border-bottom: 1px solid #ebeef5 !important;
+  border-right: none !important;
+}
+
+.el-table td.el-table__cell {
+  height: 35px;
+  padding: 0;
+  background-color: #fff;
+  border-bottom: 1px solid #ebeef5 !important;
+  border-right: none !important;
+}
+
+.el-table .cell {
+  padding: 6px 12px;
+  line-height: 23px;
+  box-sizing: border-box;
+}
+
+.el-table--border {
+  border: 1px solid #ebeef5;
+
+  .el-table__cell {
+    border-right: none !important;
+  }
+
+  &::after,
+  .el-table__inner-wrapper::after,
+  .el-table__border-left-patch {
+    display: none;
+  }
+}
+
+.el-table--striped .el-table__body tr.el-table__row--striped td.el-table__cell {
+  background: #fff;
+}
+
+.el-table--enable-row-hover .el-table__body tr:hover > td.el-table__cell {
+  background-color: #f5f7fa !important;
+}
+
+/* 3. 状态标签 */
+.el-tag {
+  border-radius: 4px;
+  padding: 2px 8px;
+  font-size: 12px;
+  font-weight: 400;
+  border: none !important;
+  height: auto;
+  line-height: normal;
+}
+
+.el-tag--success {
+  background-color: #f6ffed;
+  color: #52c41a;
+}
+
+.el-tag--info {
+  background-color: rgba(0, 0, 0, 0.04);
+  color: #909399;
+}
+
+.el-tag--danger {
+  background-color: #fff2f0;
+  color: #ff4d4f;
+}
+
+.el-tag--warning {
+  background-color: #fffbe6;
+  color: #faad14;
+}
+
+/* 4. 分页器 */
+.el-pagination {
+  --el-pagination-font-size: 12px;
+  --el-pagination-button-width: 28px;
+  --el-pagination-button-height: 28px;
+  --el-pagination-button-bg-color: #fff;
+  margin-top: 12px;
+  font-size: 12px;
+  color: #606266;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4px 0;
+  line-height: 28px;
+  height: auto;
+  min-height: 28px;
+
+  .el-pagination__total,
+  .el-pagination__jump,
+  .el-pagination__sizes {
+    margin: 0 8px 0 0;
+    height: 28px;
+    line-height: 28px;
+    font-size: 12px;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .btn-prev,
+  .btn-next {
+    width: 28px;
+    height: 28px;
+    min-width: 28px;
+    padding: 0;
+    margin: 0 4px;
+    background: #fff;
+    border: 1px solid #d9d9d9;
+    border-radius: 2px;
+    color: #333;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    &:hover:not(:disabled) {
+      color: #0064c8;
+      border-color: #0064c8;
+    }
+
+    &:disabled {
+      background: #fff;
+      color: #c0c4cc;
+      border-color: #e4e7ed;
+    }
+  }
+
+  .el-pager li {
+    padding: 0;
+    margin: 0 4px;
+    min-width: 28px;
+    height: 28px;
+    line-height: 26px;
+    font-size: 12px;
+    font-weight: 400;
+    color: #333333;
+    background-color: #fff;
+    border: 1px solid #d9d9d9;
+    border-radius: 2px;
+    box-sizing: border-box;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    &.is-active {
+      background-color: #fff;
+      color: #0064c8;
+      border-color: #0064c8;
+      font-weight: 500;
+    }
+
+    &:hover:not(.is-active) {
+      color: #0064c8;
+      border-color: #0064c8;
+    }
+  }
+}
+
+/* 5. 表单 / 输入框 */
+.el-form-item__label {
+  font-weight: 400;
+  font-size: 12px;
+  color: #555;
+  line-height: 32px;
+  height: 32px;
+  padding-right: 8px;
+}
+
+.vpandora-form .el-form-item__label,
+.pandora-page-layout .vpandora-form .el-form-item__label {
+  color: #555 !important;
+  font-weight: 500;
+}
+
+.el-form-item {
+  margin-bottom: 16px;
+}
+
+.el-input__wrapper,
+.el-textarea__inner,
+.el-select__wrapper {
+  box-shadow: 0 0 0 1px #d9d9d9 inset;
+  border-radius: 2px;
+  transition: all 0.2s;
+  background-color: #ffffff;
+  min-height: 32px;
+}
+
+.el-input__wrapper {
+  padding: 1px 11px;
+}
+
+.el-input__inner,
+.el-select__placeholder,
+.el-select__selected-item {
+  font-size: 12px;
+  color: #333333;
+}
+
+.el-input__wrapper:hover,
+.el-textarea__inner:hover,
+.el-select__wrapper:hover {
+  box-shadow: 0 0 0 1px #0064c8 inset;
+}
+
+.el-input__wrapper.is-focus,
+.el-textarea__inner:focus,
+.el-select__wrapper.is-focused {
+  box-shadow: 0 0 0 1px #0064c8 inset !important;
+}
+
+.el-checkbox__input.is-checked .el-checkbox__inner {
+  background-color: #0064c8;
+  border-color: #0064c8;
+}
+
+.el-radio__input.is-checked .el-radio__inner {
+  background-color: #0064c8;
+  border-color: #0064c8;
+}
+
+/* 6. Tab 卡片页签（阿里云控制台风格） */
+.pd-tab-crud-page {
+  > .el-tabs__header {
+    margin: 0 0 12px;
+    border-bottom: 1px solid #e5e5e5;
+  }
+
+  > .el-tabs__header .el-tabs__nav-wrap::after {
+    display: none;
+  }
+
+  > .el-tabs__header .el-tabs__active-bar {
+    display: none;
+  }
+
+  > .el-tabs__header .el-tabs__item {
+    height: 36px;
+    line-height: 34px;
+    padding: 0 20px !important;
+    margin: 0 0 -1px;
+    font-size: 14px;
+    font-weight: 400;
+    color: #333333;
+    background: #fff;
+    border: 1px solid #e5e5e5;
+    border-bottom-color: transparent;
+    border-radius: 0;
+    box-sizing: border-box;
+    transition: color 0.15s ease, border-color 0.15s ease;
+
+    & + .el-tabs__item {
+      margin-left: -1px;
+    }
+
+    &:hover {
+      color: #0064c8;
+    }
+
+    &.is-active {
+      color: #0064c8;
+      font-weight: 500;
+      border-top: 2px solid #0064c8;
+      border-bottom-color: #fff;
+      line-height: 32px;
+      z-index: 1;
+    }
+  }
+}
+
+/* 7. 业务 tip 提示条 */
+.pd-biz-hint {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 12px;
+  padding: 8px 16px;
+  background: #f0f7ff;
+  border: 1px solid #d6e9ff;
+  border-radius: 2px;
+  box-sizing: border-box;
+  flex-shrink: 0;
+}
+
+.pd-biz-hint__main {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  min-width: 0;
+  flex: 1;
+}
+
+.pd-biz-hint__icon {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  margin-top: 2px;
+  border-radius: 50%;
+  background: #0064c8;
+  color: #fff;
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 16px;
+  text-align: center;
+}
+
+.pd-biz-hint__content {
+  min-width: 0;
+  font-size: 12px;
+  line-height: 20px;
+  color: #333;
+
+  &.is-collapsed {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    overflow: hidden;
+  }
+}
+
+.pd-biz-hint__toggle {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: #0064c8;
+  font-size: 12px;
+  line-height: 20px;
+  cursor: pointer;
+
+  &:hover {
+    color: #0054a8;
+  }
+}
+
+/* 8. 导入/导出分段图标组 */
+.pd-io-group {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: stretch;
+  border: 1px solid #d9d9d9;
+  border-radius: 4px;
+  overflow: hidden;
+  background: #fff;
+  height: 32px;
+  box-sizing: border-box;
+}
+
+.pd-io-group__btn {
+  width: 36px;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: #606266;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s ease, color 0.15s ease;
+
+  & + & {
+    border-left: 1px solid #d9d9d9;
+  }
+
+  svg {
+    width: 16px;
+    height: 16px;
+    display: block;
+  }
+
+  &:hover:not(:disabled) {
+    background: #e8f3ff;
+    color: #0064c8;
+  }
+
+  &:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+}

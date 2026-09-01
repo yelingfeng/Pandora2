@@ -6,4 +6,6 @@ import type { SFCWithInstall } from '@pandora/shared/_utils/vue/typescript'
 export const PdPageLayout: SFCWithInstall<typeof index> = withInstall(index)
 export const PdPageTreeLayout: SFCWithInstall<typeof tree> = withInstall(tree)
 
+export * from './types'
+
 export default PdPageLayout

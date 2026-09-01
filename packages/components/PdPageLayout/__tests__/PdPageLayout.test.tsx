@@ -23,6 +23,12 @@ describe('PdPageLayout', () => {
       slots: {
         form: '<div class="test-form">Form Content</div>',
         table: '<div class="test-table">Table Content</div>'
+      },
+      global: {
+        stubs: {
+          'el-button': true,
+          'el-icon': true,
+        }
       }
     })
 
@@ -34,6 +40,69 @@ describe('PdPageLayout', () => {
     expect(wrapper.find('.test-table').exists()).toBe(true)
   })
 
+  test('should apply tabs layout class', () => {
+    const wrapper = mount(PdPageLayout, {
+      props: { layout: 'tabs' },
+      global: {
+        stubs: {
+          'el-button': true,
+          'el-icon': true,
+        }
+      }
+    })
+
+    expect(wrapper.find('.pandora-page-layout--tabs').exists()).toBe(true)
+  })
+
+  test('should render toolbar slot', () => {
+    const wrapper = mount(PdPageLayout, {
+      slots: {
+        toolbar: '<div class="test-toolbar">Toolbar</div>'
+      },
+      global: {
+        stubs: {
+          'el-button': true,
+          'el-icon': true,
+        }
+      }
+    })
+
+    expect(wrapper.find('.pandora-table-toolbar').exists()).toBe(true)
+    expect(wrapper.find('.test-toolbar').exists()).toBe(true)
+  })
+
+  test('should emit search and reset from buttonConfig', async () => {
+    const wrapper = mount(PdPageLayout, {
+      props: {
+        buttonConfig: [
+          { key: 'search', label: '查询', type: 'primary' },
+          { key: 'reset', label: '重置', type: 'default' },
+        ],
+      },
+    })
+
+    const buttons = wrapper.findAll('.pandora-button-section .el-button')
+    await buttons[0].trigger('click')
+    await buttons[1].trigger('click')
+
+    expect(wrapper.emitted('search')).toBeTruthy()
+    expect(wrapper.emitted('reset')).toBeTruthy()
+  })
+
+  test('should expose refreshLayout', async () => {
+    const wrapper = mount(PdPageLayout, {
+      global: {
+        stubs: {
+          'el-button': true,
+          'el-icon': true,
+        }
+      }
+    })
+
+    expect(typeof (wrapper.vm as any).refreshLayout).toBe('function')
+    expect(typeof (wrapper.vm as any).syncCrudHeight).toBe('function')
+  })
+
   test('should provide "isInPageLayout"', () => {
     const ChildComp = defineComponent({
       inject: ['isInPageLayout'],
@@ -43,6 +112,12 @@ describe('PdPageLayout', () => {
     const wrapper = mount(PdPageLayout, {
       slots: {
         form: ChildComp
+      },
+      global: {
+        stubs: {
+          'el-button': true,
+          'el-icon': true,
+        }
       }
     })
 
@@ -66,7 +141,8 @@ describe('PdPageTreeLayout', () => {
         stubs: {
           'el-icon': true,
           'ArrowRight': true,
-          'ArrowLeft': true
+          'ArrowLeft': true,
+          'el-button': true,
         }
       }
     })
@@ -92,7 +168,8 @@ describe('PdPageTreeLayout', () => {
         stubs: {
           'el-icon': true,
           'ArrowRight': true,
-          'ArrowLeft': true
+          'ArrowLeft': true,
+          'el-button': true,
         }
       }
     })

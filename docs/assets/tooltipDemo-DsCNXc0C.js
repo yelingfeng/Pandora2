@@ -1,4 +1,4 @@
-<template>
+const t=`<template>
   <div class="demo-charts">
     <div class="demo-ops">
       <span class="ops-label">模式</span>
@@ -43,7 +43,7 @@ function apply() {
         containerClass: 'tt-wrap tt-wrap--row',
         itemClass: 'tt-row',
         rowTemplate: (row, ctx) => {
-          return `<tr class="tt-row "><td class="tt-name"><span class="dot"></span><strong>${row.name}</strong>：</td><td class="tt-value">${row.value}${ctx.unit ? ` <span class="tt-unit tt-unit--row">${ctx.unit}</span>` : ''}</td></tr>`
+          return \`<tr class="tt-row "><td class="tt-name"><span class="dot"></span><strong>\${row.name}</strong>：</td><td class="tt-value">\${row.value}\${ctx.unit ? \` <span class="tt-unit tt-unit--row">\${ctx.unit}</span>\` : ''}</td></tr>\`
         }
       }
       : mode.value === 'value'
@@ -61,9 +61,9 @@ function apply() {
               const title = params?.[0]?.name || ''
               const rows = params.map(p => {
                 const v = p.value ?? '-'
-                return `<tr class="tt-row tt-row--fmt"><td class="tt-name"><span class="dot"></span><strong>${p.seriesName}</strong>：</td><td class="tt-value"><span class="tt-value-text">${v}</span>${ctx.unit ? ` <span class="tt-unit">${ctx.unit}</span>` : ''}</td></tr>`
+                return \`<tr class="tt-row tt-row--fmt"><td class="tt-name"><span class="dot"></span><strong>\${p.seriesName}</strong>：</td><td class="tt-value"><span class="tt-value-text">\${v}</span>\${ctx.unit ? \` <span class="tt-unit">\${ctx.unit}</span>\` : ''}</td></tr>\`
               })
-              return `<div class="chart-tooltip tt-wrap tt-wrap--fmt"><div class="tt-title tt-title--fmt">${title}</div><table class="tt-table">${rows.join('')}</table></div>`
+              return \`<div class="chart-tooltip tt-wrap tt-wrap--fmt"><div class="tt-title tt-title--fmt">\${title}</div><table class="tt-table">\${rows.join('')}</table></div>\`
             }
           }
           : mode.value === 'dom'
@@ -71,11 +71,11 @@ function apply() {
               containerClass: 'tt-wrap tt-wrap--dom',
               itemClass: 'tt-row tt-row--dom',
               rowTemplate: (row, ctx) => {
-                return `
+                return \`
               <tr class="tt-row tt-row--dom">
-                <td class="tt-name"><span class="dot"></span><span class="tt-series">${row.name}</span>：</td>
-                <td class="tt-value"><span class="tt-value-text">${row.value}</span>${ctx.unit ? ` <span class="tt-unit tt-unit--dom">${ctx.unit}</span>` : ''}</td>
-              </tr>`
+                <td class="tt-name"><span class="dot"></span><span class="tt-series">\${row.name}</span>：</td>
+                <td class="tt-value"><span class="tt-value-text">\${row.value}</span>\${ctx.unit ? \` <span class="tt-unit tt-unit--dom">\${ctx.unit}</span>\` : ''}</td>
+              </tr>\`
               }
             }
             : {}
@@ -96,7 +96,7 @@ function apply() {
 
 onMounted(apply)
 watch([mode, themeMode], apply)
-</script>
+<\/script>
 
 <style lang="less">
 .demo-charts {
@@ -217,3 +217,4 @@ watch([mode, themeMode], apply)
   margin-left: 4px;
 }
 </style>
+`;export{t as default};

@@ -4,7 +4,8 @@ import { resolve } from 'path'
 import dts from 'vite-plugin-dts'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
-import { copyFileSync, existsSync } from 'fs'
+import { copyFileSync, existsSync, readFileSync, writeFileSync } from 'fs'
+import less from 'less'
 
 // 打包入口文件夹
 const entryDir = resolve(__dirname, '../packages')
@@ -40,15 +41,26 @@ export default defineConfig({
     dts({
       skipDiagnostics: true,
       include: ['src/**/*.ts', 'src/**/*.tsx', 'packages/**/*.ts', 'packages/**/*.tsx'],
-      exclude: ['**/*.vue', 'src/_docs/**']
+      exclude: ['**/*.vue', 'src/_docs/**', 'packages/theme/**']
     }),
     {
       name: 'pandora2-style-css',
       closeBundle() {
         const from = resolve(outputDir, 'pandora2.css')
         const to = resolve(outputDir, 'style.css')
-        if (!existsSync(from) || existsSync(to)) return
-        copyFileSync(from, to)
+        if (existsSync(from) && !existsSync(to)) {
+          copyFileSync(from, to)
+        }
+      }
+    },
+    {
+      name: 'pandora2-business-theme',
+      async closeBundle() {
+        const themeFile = resolve(entryDir, 'theme/business.less')
+        const outFile = resolve(outputDir, 'business.css')
+        const source = readFileSync(themeFile, 'utf8')
+        const { css } = await less.render(source, { filename: themeFile })
+        writeFileSync(outFile, css)
       }
     }
   ]

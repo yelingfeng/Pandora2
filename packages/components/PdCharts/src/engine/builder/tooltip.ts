@@ -76,7 +76,6 @@ export const buildTooltip = (
       const title = params[0]?.axisValueLabel || params[0]?.name || ''
 
       const rows = params.map(p => {
-
         const value =
           tooltipCfg.valueFormatter
             ? tooltipCfg.valueFormatter(p.value, ctx)

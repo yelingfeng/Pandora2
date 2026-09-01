@@ -324,7 +324,8 @@ export default defineComponent({
   }
 
   .el-form-item__label {
-    color: rgb(119, 119, 119);
+    color: #555;
+    font-weight: 500;
   }
 
 }

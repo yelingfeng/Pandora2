@@ -20,6 +20,10 @@
     "./dist/style.css": {
       "import": "./dist/style.css",
       "require": "./dist/style.css"
+    },
+    "./dist/business.css": {
+      "import": "./dist/business.css",
+      "require": "./dist/business.css"
     }
   },
   "scripts": {

@@ -76,7 +76,6 @@ export const buildTooltip = (
       const title = params[0]?.axisValueLabel || params[0]?.name || ''
 
       const rows = params.map(p => {
-
         const value =
           tooltipCfg.valueFormatter
             ? tooltipCfg.valueFormatter(p.value, ctx)
@@ -106,7 +105,7 @@ export const buildTooltip = (
         `
       })
 
-      return `
+      const result =  `
         <div class="chart-tooltip chart-tooltip--${themeMode} ${tooltipCfg.containerClass || ''}">
           <div class="tt-title">${title}</div>
           <table class="tt-table">
@@ -114,6 +113,8 @@ export const buildTooltip = (
           </table>
         </div>
       `
+      console.log(result)
+      return result
     }
   }
 }
