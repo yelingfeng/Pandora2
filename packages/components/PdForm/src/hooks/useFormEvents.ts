@@ -1,12 +1,12 @@
 import { deepMerge } from '@pandora/shared/_utils'
 import { dateUtil } from '@pandora/shared/_utils/dateUtil'
 import {
-  isArray,
-  isDef,
-  isFunction,
-  isNullOrUnDef,
-  isObject,
-  isString
+    isArray,
+    isDef,
+    isFunction,
+    isNullOrUnDef,
+    isObject,
+    isString
 } from '@pandora/shared/_utils/is'
 import { error } from '@pandora/shared/_utils/log'
 import { FormItemProp } from 'element-plus'
@@ -14,17 +14,17 @@ import { cloneDeep, uniqBy } from 'lodash-es'
 import type { ComputedRef, Ref } from 'vue'
 import { nextTick, toRaw, unref } from 'vue'
 import {
-  dateItemType,
-  defaultValueComponents,
-  handleInputNumberValue
+    dateItemType,
+    defaultValueComponents,
+    handleInputNumberValue
 } from '../helper'
 import type {
-  Callback,
-  EmitType,
-  Fn,
-  IFormActionType,
-  IFormProps,
-  IFormSchema
+    Callback,
+    EmitType,
+    Fn,
+    IFormActionType,
+    IFormProps,
+    IFormSchema
 } from '../types'
 interface UseFormActionContext {
   emit: EmitType
@@ -117,7 +117,7 @@ export function useFormEvents({
       } else {
         nestKeyArray.forEach((nestKey: string) => {
           try {
-            const value = eval('values' + delimiter + nestKey)
+            const value = get(values, nestKey)
             if (isDef(value)) {
               formModel[nestKey] = value
               validKeys.push(nestKey)
