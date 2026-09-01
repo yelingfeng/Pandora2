@@ -6,4 +6,12 @@ declare module '@vue/runtime-core' {
   }
 }
 
+// 全局类型定义（解决 Recordable / Nullable 未定义问题）
+declare global {
+  type Recordable<T = any> = Record<string, T>
+  type Nullable<T> = T | null
+  type NonNullable<T> = T extends null | undefined ? never : T
+  type Arrayable<T> = T | T[]
+}
+
 export {}
