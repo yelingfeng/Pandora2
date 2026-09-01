@@ -22,7 +22,7 @@
 <script lang="tsx">
 import { ElMessage } from 'element-plus';
 import { defineComponent, ref } from 'vue';
-import { useTable } from '../../../../dist/pandora2.es';
+import { useTable } from '../../../../dist/pandora2.mjs';
 
 export default defineComponent({
   setup() {
