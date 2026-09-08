@@ -82,19 +82,19 @@ const tabs4: ITabItem[] = [
   { label: '设置', value: 'settings' }
 ]
 
-const handleChange1 = (value: string) => {
+const handleChange1 = (value: string | number) => {
   console.log('切换标签1:', value)
 }
 
-const handleChange2 = (value: string) => {
+const handleChange2 = (value: string | number) => {
   console.log('切换标签2:', value)
 }
 
-const handleChange3 = (value: string) => {
+const handleChange3 = (value: string | number) => {
   console.log('切换标签3:', value)
 }
 
-const handleChange4 = (value: string) => {
+const handleChange4 = (value: string | number) => {
   console.log('切换标签4:', value)
 }
 </script>

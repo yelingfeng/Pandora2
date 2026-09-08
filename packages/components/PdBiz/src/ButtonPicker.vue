@@ -17,7 +17,7 @@ defineOptions({
 })
 
 const props = withDefaults(defineProps<IButtonPickerProps>(), {
-  value: null,
+  value: undefined,
   options: () => []
 })
 
@@ -49,6 +49,12 @@ const handleChange = (value: string | number | boolean) => {
   emit('input', value)
   emit('change', value)
 }
+
+defineExpose({
+  handleChange,
+  internalValue,
+  segmentedOptions
+})
 </script>
 
 <style lang="scss" scoped>

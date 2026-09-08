@@ -40,5 +40,11 @@
     "volar.d.ts",
     "global.d.ts"
   ],
-  "exclude": ["node_modules", "dist"]
+  "exclude": [
+    "node_modules",
+    "dist",
+    "**/__tests__/**",
+    "packages/**/__tests__/**",
+    "docs/**"
+  ]
 }

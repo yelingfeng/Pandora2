@@ -108,7 +108,7 @@ import type {
 
 defineOptions({ name: 'PdBizAdvancedQuery' })
 
-interface NormalizedField {
+export interface NormalizedField {
   fieldName: string
   label: string
   inputType: string
