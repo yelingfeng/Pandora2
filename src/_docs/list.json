@@ -187,5 +187,60 @@
         ]
       }
     ]
+  },
+  {
+    "title": "Business Components",
+    "children": [
+      {
+        "compName": "ButtonPicker",
+        "compZhName": "按钮选择器",
+        "doc": "_docs/PdBiz/docs/ButtonPicker.md"
+      },
+      {
+        "compName": "CommonCard",
+        "compZhName": "通用卡片",
+        "doc": "_docs/PdBiz/docs/CommonCard.md"
+      },
+      {
+        "compName": "IspStatsCard",
+        "compZhName": "运营商统计卡",
+        "doc": "_docs/PdBiz/docs/IspStatsCard.md"
+      },
+      {
+        "compName": "Stats",
+        "compZhName": "统计数据展示",
+        "doc": "_docs/PdBiz/docs/Stats.md"
+      },
+      {
+        "compName": "TabSwitcher",
+        "compZhName": "标签切换器",
+        "doc": "_docs/PdBiz/docs/TabSwitcher.md"
+      },
+      {
+        "compName": "Loading",
+        "compZhName": "加载状态",
+        "doc": "_docs/PdBiz/docs/Loading.md"
+      },
+      {
+        "compName": "RoomSelector",
+        "compZhName": "机房选择器",
+        "doc": "_docs/PdBiz/docs/RoomSelector.md"
+      },
+      {
+        "compName": "DateFilterDialog",
+        "compZhName": "日期筛选对话框",
+        "doc": "_docs/PdBiz/docs/DateFilterDialog.md"
+      },
+      {
+        "compName": "DynamicCheckboxSelector",
+        "compZhName": "动态多选选择器",
+        "doc": "_docs/PdBiz/docs/DynamicCheckboxSelector.md"
+      },
+      {
+        "compName": "AdvancedQuery",
+        "compZhName": "高级查询",
+        "doc": "_docs/PdBiz/docs/AdvancedQuery.md"
+      }
+    ]
   }
 ]

@@ -14,9 +14,16 @@ export const useTableProps = (props: ExtractPropTypes<typeof tableProps>) => {
   const tableConfig = props.tableConfig as IPandoraTable<AnyObject>
   const columnsProps = ref(props.columns)
 
-  const initColumns = () => {
+  const getSelectionConfig = () => {
+    if (props.selectionConfig !== undefined) {
+      return props.selectionConfig
+    }
     const config = (props.tableConfig || {}) as IPandoraTable<AnyObject>
-    const selectionConfig = config.selection
+    return config.selection
+  }
+
+  const initColumns = () => {
+    const selectionConfig = getSelectionConfig()
 
     // 如果有 selection 配置，则过滤掉 columns 里的 selection，由配置重新生成
     // 否则保留 columns 里的 selection
@@ -48,7 +55,7 @@ export const useTableProps = (props: ExtractPropTypes<typeof tableProps>) => {
   }
 
   watch(
-    [() => props.columns, () => props.tableConfig],
+    [() => props.columns, () => props.tableConfig, () => props.selectionConfig],
     () => {
       initColumns()
     },

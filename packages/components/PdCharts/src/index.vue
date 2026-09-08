@@ -41,7 +41,7 @@ import {
 
 import { defaultProps } from './props'
 
-const wcRegistered = register()
+register()
 
 try {
   // ensure dark theme is available
@@ -261,11 +261,10 @@ export default defineComponent({
     })
 
     onBeforeUnmount(() => {
-      if (wcRegistered && root.value) {
-        root.value.__dispose = cleanup
-      } else {
-        cleanup()
+      if (root.value) {
+        root.value.__dispose = null
       }
+      cleanup()
     })
 
     return {

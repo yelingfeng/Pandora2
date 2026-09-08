@@ -22,17 +22,21 @@ export interface IPageConfig {
   layout?: string
 }
 
+export interface IPaginationConfig extends IPageConfig {}
+
 /**
  * 选择列 类型 单选多选
  */
-export interface ISelectionMode<T> {
+export interface ISelectionConfig<T> {
   // 选择模式 单选还是多选
-  selectionMode?: string
+  selectionMode?: 'single' | 'multi'
   // 复现框的位置 前后 top 和 end
-  selectionPos?: string
+  selectionPos?: 'top' | 'end'
   // 是否可选中的回调
-  selectable?: (row: T, $index: number) => void
+  selectable?: (row: T, $index: number) => boolean
 }
+
+export interface ISelectionMode<T> extends ISelectionConfig<T> {}
 /**
  * 自定义table类型
  */
@@ -41,11 +45,20 @@ export interface IPandoraTable<T> extends IPandoraTableOption<T> {
   rowClick?: (row: T, column: object, event: any) => void
   // 行改变事件
   rowChange?: (row: T, index: number) => void
-  // 选择器 模式是否显示多选
+  /**
+   * @deprecated 请使用顶层 prop `selectionConfig` 替代，将在后续主版本移除。
+   * @migration selectionConfig?: ISelectionConfig<T>
+   */
   selection?: ISelectionMode<T>
-  // 分页
+  /**
+   * @deprecated 请使用顶层 prop `paginationConfig` 替代，将在后续主版本移除。
+   * @migration paginationConfig?: IPaginationConfig | false
+   */
   pagination?: IPageConfig | boolean
-  // 分页属性
+  /**
+   * @deprecated 请使用顶层 prop `paginationConfig` 替代，将在后续主版本移除。
+   * @migration paginationConfig?: IPaginationConfig | false
+   */
   pageOpt?: IPageConfig
 }
 /**
@@ -61,6 +74,10 @@ export interface IPandoraTableProps<T> {
   sortConfig?: IPandoraTableSort<T>
   // table本身配置（element-plus属性）
   tableConfig?: IPandoraTable<T>
+  // 分页配置，新配置优先级高于 tableConfig.pagination / pageOpt
+  paginationConfig?: IPaginationConfig | false
+  // 选择列配置，新配置优先级高于 tableConfig.selection
+  selectionConfig?: ISelectionConfig<T>
 }
 
 // 对外table配置类型 剔除data和column

@@ -7,8 +7,8 @@
         <template v-for="schema in getSchema" :key="schema.field">
           <FormItem :formActionType="formActionType" :schema="schema" :formProps="getProps"
             :allDefaultValues="defaultValueRef" :formModel="formModel" :setFormModel="setFormModel">
-            <template #[item]="data" v-for="item in Object.keys($slots)">
-              <slot :name="item" v-bind="data || {}"></slot>
+            <template #[slotName]="data" v-for="slotName in formSlotNames">
+              <slot :name="slotName" v-bind="data || {}"></slot>
             </template>
           </FormItem>
         </template>
@@ -38,6 +38,7 @@ import {
   ref,
   Ref,
   unref,
+  useSlots,
   watch
 } from 'vue';
 import FormAction from './components/FormAction.vue';
@@ -64,6 +65,7 @@ export default defineComponent({
   },
   emits: ['advanced-change', 'reset', 'submit', 'register', 'field-value-change'],
   setup(props, { emit, attrs }) {
+    const slots = useSlots()
     const isInPageLayout = inject('isInPageLayout', false)
     const formModel = reactive<Recordable>({})
     const formPropsRef = ref<Partial<IFormProps>>({})
@@ -82,8 +84,8 @@ export default defineComponent({
     const getProps = computed(
       (): IFormProps => {
         const _props = {
-          ...props,
-          ...unref(formPropsRef),
+            ...(props as Recordable),
+            ...(unref(formPropsRef) as Recordable),
         } as IFormProps
 
         if (isInPageLayout) {
@@ -136,6 +138,7 @@ export default defineComponent({
         return cloneDeep(schemas as IFormSchema[]);
       }
     })
+    const formSlotNames = computed(() => Object.keys(slots))
 
     // 初始化Form values
     const { initDefault, handleFormValues } = useFormValues({
@@ -286,6 +289,7 @@ export default defineComponent({
       formModel,
       defaultValueRef,
       advanceState,
+      formSlotNames,
       getRow,
       getProps,
       getRules,

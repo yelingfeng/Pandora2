@@ -2,6 +2,7 @@ export * from './propTypes'
 export * from './props'
 export * from './log'
 export * from './is'
+export * from './dateUtil'
 /**
  * @description:  Set ui mount node
  */

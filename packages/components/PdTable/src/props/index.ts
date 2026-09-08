@@ -1,8 +1,10 @@
 import { PropType } from 'vue'
 import {
+  IPaginationConfig,
   IPandoraTableColumn,
-  IPandoraTableSort,
-  IPandoraTableOption
+  IPandoraTable,
+  ISelectionConfig,
+  IPandoraTableSort
 } from '../types'
 export const tableProps = {
   // 数据
@@ -28,9 +30,17 @@ export const tableProps = {
   },
   // table本身配置（element-plus属性）
   tableConfig: {
-    type: Object as PropType<IPandoraTableOption<any>>,
+    type: Object as PropType<IPandoraTable<any>>,
     default() {
       return {}
     }
+  },
+  paginationConfig: {
+    type: [Object, Boolean] as PropType<IPaginationConfig | false>,
+    default: false
+  },
+  selectionConfig: {
+    type: Object as PropType<ISelectionConfig<any>>,
+    default: undefined
   }
 }

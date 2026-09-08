@@ -1,4 +1,24 @@
 import type { ValidateFieldsError } from 'async-validator'
+import {
+  ElAutocomplete,
+  ElButton,
+  ElCascader,
+  ElCheckbox,
+  ElCheckboxGroup,
+  ElDatePicker,
+  ElDivider,
+  ElInput,
+  ElInputNumber,
+  ElOption,
+  ElRadio,
+  ElRadioGroup,
+  ElRate,
+  ElSelect,
+  ElSlider,
+  ElSwitch,
+  ElTimePicker,
+  ElTimeSelect
+} from 'element-plus'
 import type {
   ButtonProps,
   ColProps,
@@ -8,6 +28,7 @@ import type {
   RowProps
 } from 'element-plus'
 import type { ComputedRef, CSSProperties, Ref, VNode } from 'vue'
+import ApiSelect from '../components/ApiSelect.vue'
 
 export type Fn = (...args: any[]) => any
 export type EmitType = (event: string, ...args: any[]) => void
@@ -112,6 +133,41 @@ export type RenderCallbackParams = {
   field: string
 }
 
+type ComponentPropsOf<T> = T extends abstract new (...args: any[]) => any
+  ? Partial<InstanceType<T>['$props']>
+  : Recordable
+
+type LooseComponentProps<T> = ComponentPropsOf<T> & Recordable
+
+export type ComponentPropsMap = {
+  Autocomplete: LooseComponentProps<typeof ElAutocomplete>
+  Button: LooseComponentProps<typeof ElButton>
+  Checkbox: LooseComponentProps<typeof ElCheckbox>
+  Cascader: LooseComponentProps<typeof ElCascader>
+  CheckboxGroup: LooseComponentProps<typeof ElCheckboxGroup>
+  DatePicker: LooseComponentProps<typeof ElDatePicker>
+  Input: LooseComponentProps<typeof ElInput>
+  InputNumber: LooseComponentProps<typeof ElInputNumber>
+  TimePicker: LooseComponentProps<typeof ElTimePicker>
+  TimeSelect: LooseComponentProps<typeof ElTimeSelect>
+  Slider: LooseComponentProps<typeof ElSlider>
+  Select: LooseComponentProps<typeof ElSelect>
+  SelectOption: LooseComponentProps<typeof ElOption>
+  Radio: LooseComponentProps<typeof ElRadio>
+  RadioGroup: LooseComponentProps<typeof ElRadioGroup>
+  Switch: LooseComponentProps<typeof ElSwitch>
+  Rate: LooseComponentProps<typeof ElRate>
+  Divider: LooseComponentProps<typeof ElDivider>
+  ApiSelect: LooseComponentProps<typeof ApiSelect>
+}
+
+type ComponentPropsHandlerParams = Recordable & {
+  schema: Recordable
+  formModel: Recordable
+  tableAction?: Recordable
+  formActionType: IFormActionType
+}
+
 export type HelpComponentProps = {
   maxWidth: string
   // Whether to display the serial number
@@ -131,7 +187,7 @@ export type HelpComponentProps = {
 /**
  * Form Schema
  */
-export type IFormSchema = {
+export type IFormSchema<T extends ComponentType = ComponentType> = {
   // Field
   field: string
   // label
@@ -140,11 +196,11 @@ export type IFormSchema = {
   // Event name triggered by internal value change, default change
   changeEvent?: string
   //  render component
-  component: ComponentType
+  component: T
   // component props
   componentProps?:
-    | ((opt: { schema: IFormSchema; formModel: Recordable }) => Recordable)
-    | any
+    | ((opt: ComponentPropsHandlerParams) => ComponentPropsMap[T])
+    | ComponentPropsMap[T]
 
   // Validation rules
   rules?: FormItemRule | FormItemRule[]
@@ -237,7 +293,7 @@ export type DynamicProps<T> = {
 export type IFormActionType = {
   submit: () => Promise<void>
   resetFields: () => Promise<void>
-  validate: (cb: Callback | undefined) => Promise<void>
+  validate: (cb?: Callback) => Promise<void>
   validateFields: (
     props?: Array<FormItemProp>,
     callback?: Callback

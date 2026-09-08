@@ -1,0 +1,8 @@
+/**
+ * Pandora2 全局样式入口
+ * 导入主题变量、布局样式和 Element Plus 样式覆盖
+ */
+
+@import './theme.css';
+@import './layout.css';
+@import './element-plus.css';

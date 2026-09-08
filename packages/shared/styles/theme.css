@@ -1,0 +1,67 @@
+/**
+ * Pandora2 全局主题变量
+ * 统一管理布局、表单、表格等组件的样式主题
+ */
+
+:root {
+  /* ========== 颜色系统 ========== */
+  --pd-color-primary: #0064c8;
+  --pd-color-primary-hover: #0054a8;
+  --pd-color-primary-light: #ecf5ff;
+
+  --pd-color-text-primary: #333;
+  --pd-color-text-secondary: #666;
+  --pd-color-text-placeholder: #999;
+
+  --pd-color-border: #d9d9d9;
+  --pd-color-border-light: #ebeef5;
+  --pd-color-border-lighter: #f0f2f5;
+
+  --pd-color-bg-page: #f0f2f5;
+  --pd-color-bg-white: #fff;
+  --pd-color-bg-hover: #f5f7fa;
+
+  /* ========== 间距系统 ========== */
+  --pd-spacing-xs: 4px;
+  --pd-spacing-sm: 8px;
+  --pd-spacing-md: 12px;
+  --pd-spacing-lg: 16px;
+  --pd-spacing-xl: 20px;
+
+  /* ========== 圆角 ========== */
+  --pd-radius-xs: 2px;
+  --pd-radius-sm: 4px;
+  --pd-radius-md: 6px;
+  --pd-radius-lg: 8px;
+
+  /* ========== 阴影 ========== */
+  --pd-shadow-card: 0 3px 10px 0 rgba(0, 0, 0, 0.06);
+  --pd-shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.08);
+
+  /* ========== 页面布局 ========== */
+  --pd-layout-padding-x: 16px;
+  --pd-layout-padding-y: 12px;
+  --pd-layout-min-width: 900px;
+  --pd-layout-gap: 12px;
+
+  /* ========== 表单样式 ========== */
+  --pd-form-bg: var(--pd-color-bg-white);
+  --pd-form-padding: 10px 18px;
+  --pd-form-label-width: 120px;
+  --pd-form-item-gap: 15px;
+  --pd-form-min-height: 50px;
+
+  /* ========== 按钮样式 ========== */
+  --pd-button-height: 32px;
+  --pd-button-padding: 0 12px;
+  --pd-button-font-size: 12px;
+  --pd-button-radius: var(--pd-radius-xs);
+  --pd-button-gap: 4px;
+
+  /* ========== 表格样式 ========== */
+  --pd-table-bg: var(--pd-color-bg-white);
+  --pd-table-padding: 12px 16px;
+  --pd-table-min-height: 200px;
+  --pd-table-toolbar-gap: 8px;
+  --pd-table-toolbar-margin: 12px;
+}

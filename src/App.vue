@@ -1,12 +1,19 @@
 <template>
   <div class="my-kit-doc">
     <TopHeader />
-    <aside>
+    <aside class="doc-aside">
       <div class="menu">
         <div v-for="section in menuSections" :key="section.id" class="menu-section">
-          <div class="meauTitle" @click="toggleSection(section.id)">
+          <div class="menu-title" @click="toggleSection(section.id)">
             <span>{{ section.title }}</span>
-            <span class="menu-arrow" :class="{ open: isSectionOpen(section.id) }">›</span>
+            <span class="menu-arrow" :class="{ open: isSectionOpen(section.id) }">
+              <svg viewBox="0 0 1024 1024" width="10" height="10">
+                <path
+                  fill="currentColor"
+                  d="M765.7 486.8L314.9 134.7c-5.3-4.1-12.9-0.4-12.9 6.3v77.3c0 4.9 2.3 9.6 6.1 12.6l360 281.1-360 281.1c-3.9 3-6.1 7.7-6.1 12.6V883c0 6.7 7.7 10.4 12.9 6.3l450.8-352.1c16.4-12.8 16.4-37.6 0-50.4z"
+                />
+              </svg>
+            </span>
           </div>
 
           <div v-show="isSectionOpen(section.id)" class="menu-section-body">
@@ -14,18 +21,36 @@
               <template v-if="group.items.length > 1">
                 <div class="menu-group-title" @click="toggleGroup(group.id)">
                   <span>{{ group.title }}</span>
-                  <span class="menu-arrow" :class="{ open: isGroupOpen(group.id) }">›</span>
+                  <span class="menu-arrow" :class="{ open: isGroupOpen(group.id) }">
+                    <svg viewBox="0 0 1024 1024" width="10" height="10">
+                      <path
+                        fill="currentColor"
+                        d="M765.7 486.8L314.9 134.7c-5.3-4.1-12.9-0.4-12.9 6.3v77.3c0 4.9 2.3 9.6 6.1 12.6l360 281.1-360 281.1c-3.9 3-6.1 7.7-6.1 12.6V883c0 6.7 7.7 10.4 12.9 6.3l450.8-352.1c16.4-12.8 16.4-37.6 0-50.4z"
+                      />
+                    </svg>
+                  </span>
                 </div>
                 <div v-show="isGroupOpen(group.id)" class="menu-group-body">
-                  <router-link v-for="item in group.items" :key="item.path" :to="item.path"
-                    class="menu-item menu-item--lvl3" :class="{ active: item.path === $route.path }" @click="scollTop">
+                  <router-link
+                    v-for="item in group.items"
+                    :key="item.path"
+                    :to="item.path"
+                    class="menu-item menu-item--lvl3"
+                    :class="{ active: item.path === $route.path }"
+                    @click="scrollTop"
+                  >
                     {{ item.name }}
                   </router-link>
                 </div>
               </template>
 
-              <router-link v-else :to="group.items[0].path" class="menu-item menu-item--lvl2"
-                :class="{ active: group.items[0].path === $route.path }" @click="scollTop">
+              <router-link
+                v-else
+                :to="group.items[0].path"
+                class="menu-item menu-item--lvl2"
+                :class="{ active: group.items[0].path === $route.path }"
+                @click="scrollTop"
+              >
                 {{ group.items[0].name }}
               </router-link>
             </div>
@@ -33,19 +58,21 @@
         </div>
       </div>
     </aside>
-    <main id="main">
-      <router-view></router-view>
+    <main id="main" class="doc-main">
+      <div class="doc-content">
+        <router-view></router-view>
+      </div>
     </main>
   </div>
 </template>
 
 <script setup>
-import ComponentList from '@/_docs/list.json';
-import TopHeader from '@/components/layout/TopHeader.vue';
+import ComponentList from '@/_docs/list.json'
+import TopHeader from '@/components/layout/TopHeader.vue'
 
-import { createBreakpointListen } from '@/hooks/event/useBreakpoint';
-import { computed, ref, watch } from 'vue';
-import { useRoute } from 'vue-router';
+import { createBreakpointListen } from '@/hooks/event/useBreakpoint'
+import { computed, ref, watch } from 'vue'
+import { useRoute } from 'vue-router'
 
 const route = useRoute()
 
@@ -53,7 +80,10 @@ function normalizeMenu(list) {
   const sectionsInput = Array.isArray(list) ? list : []
   return sectionsInput
     .map((sec, sIndex) => {
-      const title = sec && (sec.title || sec.compZhName) ? String(sec.title || sec.compZhName) : `分类${sIndex + 1}`
+      const title =
+        sec && (sec.title || sec.compZhName)
+          ? String(sec.title || sec.compZhName)
+          : `分类${sIndex + 1}`
       const groupsInput = sec && Array.isArray(sec.children) ? sec.children : []
       const groups = groupsInput
         .map((group, gIndex) => {
@@ -145,12 +175,12 @@ watch(
   { immediate: true }
 )
 
-function scollTop() {
-  document.getElementById('main').scrollTop = 0
+function scrollTop() {
+  const el = document.getElementById('main')
+  if (el) el.scrollTop = 0
 }
 
-createBreakpointListen();
-
+createBreakpointListen()
 </script>
 
 <style lang="less">
@@ -158,9 +188,6 @@ html,
 body {
   margin: 0;
   padding: 0;
-  font-family: 'Helvetica Neue', Helvetica, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑', Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  background-color: #fff;
 }
 
 .el-input__prefix {
@@ -172,37 +199,38 @@ body {
   min-height: 100vh;
   width: 100%;
   margin: 0 auto;
-  padding-top: 60px;
-  /* Header height */
+  padding-top: var(--pd-header-height, 64px);
   box-sizing: border-box;
+  background: transparent;
 
-  aside {
+  .doc-aside {
     position: fixed;
-    top: 60px;
+    top: var(--pd-header-height, 64px);
     left: 0;
     bottom: 0;
-    width: 240px;
-    padding: 20px 0;
+    width: var(--pd-sidebar-width, 260px);
+    padding: 16px 0 32px;
     display: flex;
     flex-direction: column;
-    border-right: 1px solid #dcdfe6;
-    background: #fff;
+    border-right: 1px solid rgba(240, 240, 240, 0.85);
+    background: var(--pd-bg-sidebar, rgba(255, 255, 255, 0.72));
+    backdrop-filter: saturate(160%) blur(12px);
+    -webkit-backdrop-filter: saturate(160%) blur(12px);
     z-index: 99;
     overflow-y: auto;
-    transition: transform 0.3s ease;
+    box-sizing: border-box;
 
     .menu {
-      padding: 0 10px;
+      padding: 0 12px;
       box-sizing: border-box;
     }
 
-    /* 滚动条美化 */
     &::-webkit-scrollbar {
       width: 6px;
     }
 
     &::-webkit-scrollbar-thumb {
-      background: #e4e7ed;
+      background: rgba(0, 0, 0, 0.12);
       border-radius: 4px;
     }
 
@@ -210,29 +238,41 @@ body {
       background: transparent;
     }
 
-    .meauTitle {
-      font-size: 16px;
-      font-weight: 700;
-      color: #303133;
-      padding-left: 0;
-      margin-top: 10px;
-      margin-bottom: 5px;
-      /* 优化垂直居中，移除固定 line-height */
+    .menu-section + .menu-section {
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid var(--pd-border, #f0f0f0);
+    }
+
+    .menu-title {
       display: flex;
       align-items: center;
-      min-height: 40px;
       justify-content: space-between;
+      min-height: 40px;
+      padding: 0 12px;
+      margin: 0;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--pd-text-tertiary, rgba(0, 0, 0, 0.45));
+      letter-spacing: 0.02em;
+      text-transform: none;
       cursor: pointer;
+      user-select: none;
+      transition: color var(--pd-duration, 0.2s) var(--pd-ease, ease);
+
+      &:hover {
+        color: var(--pd-text, rgba(0, 0, 0, 0.88));
+      }
     }
 
     .menu-arrow {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      width: 20px;
-      height: 20px;
-      color: #a8abb2;
-      transition: transform 0.2s ease;
+      width: 16px;
+      height: 16px;
+      color: var(--pd-text-quaternary, rgba(0, 0, 0, 0.25));
+      transition: transform var(--pd-duration, 0.2s) var(--pd-ease, ease);
       user-select: none;
     }
 
@@ -244,89 +284,111 @@ body {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 2px 10px;
+      min-height: 40px;
+      padding: 0 12px;
       margin: 2px 0;
-      min-height: 36px;
-      border-radius: 4px;
-      color: #303133;
+      border-radius: var(--pd-radius-sm, 6px);
+      color: var(--pd-text, rgba(0, 0, 0, 0.88));
       font-size: 14px;
       cursor: pointer;
-      transition: all 0.2s;
-    }
+      transition: background var(--pd-duration, 0.2s) var(--pd-ease, ease),
+        color var(--pd-duration, 0.2s) var(--pd-ease, ease);
 
-    .menu-group-title:hover {
-      color: #409eff;
-      background-color: #ecf5ff;
+      &:hover {
+        color: var(--pd-primary, #5b8cff);
+        background: var(--pd-primary-bg, rgba(91, 140, 255, 0.08));
+      }
     }
 
     .menu-item {
+      position: relative;
       display: flex;
-      /* 改为 flex 布局 */
       align-items: center;
-      /* 垂直居中 */
-      color: #606266;
-      text-decoration: none;
-      padding: 2px 10px;
-      /* 调整 padding */
-      font-size: 14px;
-      border-radius: 4px;
-      margin: 2px 0;
-      transition: all 0.2s;
-      line-height: 1.5;
       min-height: 40px;
-      /* 确保最小高度 */
+      margin: 2px 0;
+      padding: 0 12px;
+      color: var(--pd-text-secondary, rgba(0, 0, 0, 0.65));
+      font-size: 14px;
+      line-height: 1.5;
+      text-decoration: none;
+      border-radius: var(--pd-radius-sm, 6px);
+      transition: background var(--pd-duration, 0.2s) var(--pd-ease, ease),
+        color var(--pd-duration, 0.2s) var(--pd-ease, ease);
 
       &:hover {
-        color: #409eff;
-        background-color: #ecf5ff;
+        color: var(--pd-primary, #5b8cff);
+        background: var(--pd-primary-bg, rgba(91, 140, 255, 0.08));
       }
 
       &.active {
-        color: #409eff;
-        font-weight: 600;
-        background-color: #ecf5ff;
-        position: relative;
+        color: var(--pd-primary, #5b8cff);
+        font-weight: 500;
+        background: var(--pd-primary-bg, rgba(91, 140, 255, 0.08));
 
-        &::after {
+        &::before {
           content: '';
           position: absolute;
-          right: 0;
-          top: 0;
-          bottom: 0;
+          left: 0;
+          top: 8px;
+          bottom: 8px;
           width: 3px;
-          background-color: #409eff;
-          border-top-right-radius: 4px;
-          border-bottom-right-radius: 4px;
-          display: none;
-          /* 暂时隐藏右侧条，Element Plus 风格通常是整行高亮 */
+          background: var(--pd-primary, #5b8cff);
+          border-radius: 0 2px 2px 0;
         }
       }
     }
 
     .menu-item--lvl2 {
-      padding-left: 10px;
+      padding-left: 12px;
     }
 
     .menu-item--lvl3 {
-      padding-left: 26px;
+      padding-left: 28px;
       min-height: 36px;
     }
   }
 
-  main {
+  .doc-main {
     flex: 1;
-    margin-left: 240px;
-    /* Sidebar width */
-    padding: 30px 40px;
-    min-height: calc(100vh - 60px);
+    margin-left: var(--pd-sidebar-width, 260px);
+    min-height: calc(100vh - var(--pd-header-height, 64px));
+    max-width: calc(100vw - var(--pd-sidebar-width, 260px));
+    padding: 0 20px;
     overflow-x: hidden;
+    overflow-y: auto;
     box-sizing: border-box;
-    max-width: calc(100vw - 240px);
+    background: transparent;
+  }
 
-    /* 限制内容最大宽度，优化阅读体验 */
-    >* {
-      max-width: 1400px;
-      margin: 0 auto;
+  .doc-content {
+    max-width: var(--pd-content-max, 1152px);
+    margin: 16px auto 32px;
+    padding: 28px 40px 64px;
+    box-sizing: border-box;
+    background: rgba(255, 255, 255, 0.78);
+    backdrop-filter: saturate(140%) blur(10px);
+    -webkit-backdrop-filter: saturate(140%) blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    border-radius: var(--pd-radius-lg, 12px);
+    box-shadow: var(--pd-shadow-sm);
+  }
+}
+
+@media (max-width: 900px) {
+  .my-kit-doc {
+    .doc-aside {
+      display: none;
+    }
+
+    .doc-main {
+      margin-left: 0;
+      max-width: 100vw;
+    }
+
+    .doc-content {
+      margin: 8px 12px 24px;
+      padding: 20px 16px 48px;
+      border-radius: var(--pd-radius, 8px);
     }
   }
 }

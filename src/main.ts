@@ -2,13 +2,15 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
 
+import './styles/docs-theme.less'
 import './assets/markdown.css'
 
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 import Preview from './Preview.vue'
-// import locale from 'element-plus/lib/locale/lang/zh-cn'
-// import 'dayjs/locale/zh-cn'
+
+// 引入全局样式主题
+import '../packages/shared/styles/index.css'
 
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 import Pandora2 from '../packages'

@@ -1,3 +1,4 @@
+// @vitest-environment node
 import { describe, expect, test, vi } from 'vitest'
 import { h } from 'vue'
 import { extendSlots, getSlot } from '../helper/tsxHelper'

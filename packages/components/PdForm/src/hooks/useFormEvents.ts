@@ -10,7 +10,7 @@ import {
 } from '@pandora/shared/_utils/is'
 import { error } from '@pandora/shared/_utils/log'
 import { FormItemProp } from 'element-plus'
-import { cloneDeep, uniqBy } from 'lodash-es'
+import { cloneDeep, get, uniqBy } from 'lodash-es'
 import type { ComputedRef, Ref } from 'vue'
 import { nextTick, toRaw, unref } from 'vue'
 import {

@@ -3,7 +3,7 @@ import { transformPieDataToSeries } from '../../transform'
 import type { EChartsOption } from 'echarts'
 import { _merge } from '../../utils/index'
 
-const createSeriesData = (data: any) => {
+const createSeriesData = (data: any[]) => {
   return {
     name: '',
     type: 'pie',
@@ -12,25 +12,38 @@ const createSeriesData = (data: any) => {
     radius: ['45%', '60%'],
     avoidLabelOverlap: true,
     label: {
-      normal: {
-        show: false,
-        position: 'center',
-      },
-      emphasis: {
-        show: true,
-        textStyle: {
-          color: '#333',
-          fontSize: 12,
-        },
-      },
+      show: false,
+      position: 'center'
     },
-    selected: {},
-    data,
+    emphasis: {
+      label: {
+        show: true,
+        color: '#333',
+        fontSize: 12,
+        fontWeight: 700,
+        formatter: (params: any) => {
+          return `{a|${params.percent}%}\n{b|${params.name}}`
+        },
+        rich: {
+          a: {
+            fontWeight: 700,
+            fontSize: 22,
+            lineHeight: 28
+          },
+          b: {
+            fontWeight: 700,
+            fontSize: 14,
+            lineHeight: 22
+          }
+        }
+      }
+    },
+    data
   }
 }
+
 /**
- *
- * @param originData 原始数据
+ * 环形饼图（右侧图例）
  */
 export const build = (originData: any, _config?: Record<string, any>): EChartsOption => {
   const colors = [
@@ -53,41 +66,14 @@ export const build = (originData: any, _config?: Record<string, any>): EChartsOp
     '#6895FF',
     '#B095FF',
     '#D05CFF',
-    '#FF63AD',
+    '#FF63AD'
   ]
-  const { category, series } = transformPieDataToSeries(
-    originData,
-    colors
-  )
-  // console.log(category, series)
 
-  const label = {
-    show: true,
-    position: 'center',
-    rich: {
-      a: {
-        fontWeight: 700,
-        fontSize: 22,
-        lineHeight: 20,
-      },
-      b: {
-        fontWeight: 700,
-        fontSize: 16,
-        lineHeight: 24,
-      },
-    },
-    formatter: function (params: any) {
-      return [
-        '{a|' +
-          params.percent +
-          '}' +
-          '\n' +
-          '{b|' +
-          params.name +
-          '}',
-      ]
-    },
-  }
+  const result = transformPieDataToSeries(originData || [], colors)
+  const category = result?.category || []
+  // buildPieSeries 返回 series: [{ type:'pie', data: [...] }]
+  const pieData = result?.series?.[0]?.data || []
+
   const legend = {
     type: 'scroll',
     orient: 'vertical',
@@ -96,51 +82,48 @@ export const build = (originData: any, _config?: Record<string, any>): EChartsOp
     bottom: 20,
     itemWidth: 8,
     itemHeight: 8,
-    align: 'left',
+    align: 'left' as const,
     textStyle: {
       fontSize: 12,
       padding: [0, 0, 0, 5],
       rich: {
         value: {
           fontSize: 14,
-          fontWeight: 400,
-        },
-      },
+          fontWeight: 400
+        }
+      }
     },
-    formatter: (name: any) => {
-      const item = series.find((i: any) => {
-        return i.name === name
-      })
-      return name + '  {value|' + item.value + '}'
+    formatter: (name: string) => {
+      const item = pieData.find((i: any) => i.name === name)
+      const value = item ? item.value : ''
+      return `${name}  {value|${value}}`
     },
-    data: category,
+    data: category
   }
+
   const title = {
     left: 'center',
     top: 'top',
     textStyle: {
-      fontSize: '16px',
+      fontSize: 16,
       color: '#333',
-      fontWeight: 400,
-    },
+      fontWeight: 400
+    }
   }
-  const tooltip = {
-    trigger: 'item',
-    extraCssText:
-      'box-shadow:  0px 0px 5px 0px rgba(139, 146, 190, 0.2); color:rgba(77, 77, 77, 0.9); fontSize:14px; padding:12px',
-    backgroundColor: 'rgba(236, 242, 255, 0.9)',
-    formatter: '{b}</br>占比：{d}%</br>数量：{c}',
-  }
-  const seriesData = [createSeriesData(series)]
 
-  const opt = _merge(defaultThemeOpt(), {
+  const tooltip = {
+    trigger: 'item' as const,
+    extraCssText:
+      'box-shadow: 0px 0px 5px 0px rgba(139, 146, 190, 0.2); color:rgba(77, 77, 77, 0.9); font-size:14px; padding:12px',
+    backgroundColor: 'rgba(236, 242, 255, 0.9)',
+    formatter: '{b}<br/>占比：{d}%<br/>数量：{c}'
+  }
+
+  return _merge(defaultThemeOpt(), {
+    color: colors,
     tooltip,
     title,
     legend,
-    label,
-    colors,
-    series: seriesData,
-  })
-
-  return opt as EChartsOption
+    series: [createSeriesData(pieData)]
+  }) as EChartsOption
 }

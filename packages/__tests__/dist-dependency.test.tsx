@@ -1,12 +1,15 @@
+// @ts-nocheck
+// @vitest-environment jsdom
 import { mount } from '@vue/test-utils'
 import { execSync } from 'node:child_process'
 import fs from 'node:fs'
+import { createRequire } from 'node:module'
 import path from 'node:path'
-import { pathToFileURL } from 'node:url'
 import { beforeAll, describe, expect, test } from 'vitest'
-import { createApp, defineComponent, nextTick } from 'vue'
+import { createApp, defineComponent, h, nextTick } from 'vue'
 
-let dist: any
+let dist
+const require = createRequire(import.meta.url)
 
 beforeAll(async () => {
   global.ResizeObserver = class ResizeObserver {
@@ -15,7 +18,7 @@ beforeAll(async () => {
     disconnect() {}
   }
 
-  const distEntry = path.resolve(process.cwd(), 'dist/pandora2.mjs')
+  const distEntry = path.resolve(process.cwd(), 'dist/pandora2.cjs')
   if (!fs.existsSync(distEntry)) {
     execSync('pnpm run build:npm', { stdio: 'inherit' })
   }
@@ -23,7 +26,7 @@ beforeAll(async () => {
     fs.existsSync(distEntry),
     `dist entry not found: ${distEntry}. Please run "yarn build:lib" first.`
   ).toBe(true)
-  dist = await import(pathToFileURL(distEntry).href)
+  dist = require(distEntry)
 }, 30000)
 
 describe('dist 产物依赖测试', () => {
@@ -53,7 +56,7 @@ describe('dist 产物依赖测试', () => {
           schemas: [{ field: 'name', component: 'Input', label: 'Name' }],
           showActionButtonGroup: false
         })
-        return () => <dist.PdForm onRegister={register} />
+        return () => h(dist.PdForm, { onRegister: register })
       }
     })
 
@@ -70,7 +73,7 @@ describe('dist 产物依赖测试', () => {
           columns: [{ label: 'Name', prop: 'name' }],
           data: [{ name: 'Alice' }]
         })
-        return () => <dist.PdTable onRegister={register} />
+        return () => h(dist.PdTable, { onRegister: register })
       }
     })
 
@@ -83,16 +86,24 @@ describe('dist 产物依赖测试', () => {
   test('PdPageLayout（对应 _docs/PdPageLayout）可工作', async () => {
     const TestComp = defineComponent({
       setup() {
-        return () => (
-          <dist.PdPageLayout height={300} baseTableHeight={200} tableLoading={false}>
-            {{
-              form: () => <div data-testid="form-slot">form</div>,
-              table: ({ height }: any) => (
-                <div data-testid="table-slot">table:{String(height)}</div>
-              )
-            }}
-          </dist.PdPageLayout>
-        )
+        return () =>
+          h(
+            dist.PdPageLayout,
+            {
+              height: 300,
+              baseTableHeight: 200,
+              tableLoading: false
+            },
+            {
+              form: () => h('div', { 'data-testid': 'form-slot' }, 'form'),
+              table: (slotProps) =>
+                h(
+                  'div',
+                  { 'data-testid': 'table-slot' },
+                  `table:${String(slotProps?.height)}`
+                )
+            }
+          )
       }
     })
 

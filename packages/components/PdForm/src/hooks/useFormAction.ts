@@ -9,7 +9,7 @@ import {
   isString
 } from '@pandora/shared/_utils/is'
 import { FormItemProp } from 'element-plus'
-import { cloneDeep, uniqBy } from 'lodash-es'
+import { cloneDeep, get, uniqBy } from 'lodash-es'
 import { ComputedRef, Ref, toRaw, unref } from 'vue'
 import { dateItemType, handleInputNumberValue } from '../helper'
 import { Callback, EmitType, Fn, IFormActionType, IFormProps, IFormSchema } from '../types'

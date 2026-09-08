@@ -69,8 +69,11 @@ export default defineConfig({
     dts({
       // v4 移除了 skipDiagnostics 选项（默认跳过）
       include: [
+        'global.d.ts',
         'packages/**/*.ts',
-        'packages/**/*.tsx'
+        'packages/**/*.tsx',
+        'src/types/**/*.d.ts',
+        'volar.d.ts'
       ],
       exclude: [
         '**/*.vue',

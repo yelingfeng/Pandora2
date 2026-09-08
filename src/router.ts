@@ -7,6 +7,7 @@ import ComponentList from '@/_docs/list.json'
 import { createRouter, createWebHashHistory, RouterOptions } from 'vue-router'
 
 const docModules = import.meta.glob('./_docs/**/*.md')
+const vueModules = import.meta.glob('./_docs/**/*.vue')
 
 function normalizeDocPages(list: any[]) {
   const sections = Array.isArray(list) ? list : []
@@ -45,7 +46,7 @@ const routes = [
   },
   ...normalizeDocPages(ComponentList as any[]).map((it) => {
     const key = `./${it.doc}`
-    const loader = (docModules as any)[key]
+    const loader = (docModules as any)[key] || (vueModules as any)[key]
     if (!loader) {
       throw new Error(`[docs] 未找到文档：${key}（来自 list.json: ${it.compName}）`)
     }
