@@ -1,3 +1,16 @@
+## [1.1.0](https://github.com/yelingfeng/Pandora2/compare/v1.0.6...v1.1.0) (2026-09-11)
+
+
+### Features
+
+* 发布 PdBiz 业务组件，并完成 docs / 工程化升级（Vite 8、Vue 3.5）
+
+
+### Bug Fixes
+
+* 修复 build:lib 类型检查，确保 npm 打包可通过
+
+
 ## [1.0.6](https://github.com/yelingfeng/Pandora2/compare/v1.0.5...v1.0.6) (2026-03-04)
 
 
