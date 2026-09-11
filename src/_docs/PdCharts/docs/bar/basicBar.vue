@@ -35,11 +35,11 @@ const [register, { setProps }] = useCharts({
   chartType: 'bar',
   subChartType: 'basicBar',
 })
-const [registerNumber, { setProps: setNumberProps }] = useCharts({
+const [, { setProps: setNumberProps }] = useCharts({
   chartType: 'bar',
   subChartType: 'basicBar',
 })
-const [registerRate, { setProps: setRateProps }] = useCharts({
+const [, { setProps: setRateProps }] = useCharts({
   chartType: 'bar',
   subChartType: 'basicBar',
 })

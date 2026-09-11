@@ -60,7 +60,7 @@ export default {
   },
   computed: {
     previewSourceCode() {
-      return this.sourceCode.replace(/'\.\.\/\.\.\/index'/g, "'@yelingfeng/pandora2'")
+      return this.sourceCode.replace(/'\.\.\/\.\.\/index'/g, '\'@yelingfeng/pandora2\'')
     }
   },
   async mounted() {
