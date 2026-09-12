@@ -5,6 +5,7 @@ import { merge } from 'lodash-es'
 import {
   computed,
   defineComponent,
+  getCurrentInstance,
   nextTick,
   onMounted,
   reactive,
@@ -25,9 +26,20 @@ export default defineComponent({
   props: tableProps,
   emits: ['register', 'handleSizePageChange', 'handleCurrentPageChange'],
   setup(props, { attrs, emit }) {
+    const instance = getCurrentInstance()
     const propsRef = ref({})
+    const hasWarnedLegacyConfig = ref(false)
 
     const innerProps = reactive({ ...props })
+
+    const hasVNodeProp = (propName) => {
+      const vnodeProps = instance?.vnode?.props || {}
+      const kebabName = propName.replace(/[A-Z]/g, (match) => `-${match.toLowerCase()}`)
+      return (
+        Object.prototype.hasOwnProperty.call(vnodeProps, propName) ||
+        Object.prototype.hasOwnProperty.call(vnodeProps, kebabName)
+      )
+    }
 
     // update innerProps when props or propsRef changes
     watch(
@@ -39,6 +51,10 @@ export default defineComponent({
           innerProps.columns = merged.columns
         if ('tableConfig' in merged)
           innerProps.tableConfig = merged.tableConfig
+        if ('paginationConfig' in merged)
+          innerProps.paginationConfig = merged.paginationConfig
+        if ('selectionConfig' in merged)
+          innerProps.selectionConfig = merged.selectionConfig
         if ('sortConfig' in merged) {
           const nextSortConfig = merged.sortConfig || {}
           const currentSortConfig = innerProps.sortConfig
@@ -55,6 +71,26 @@ export default defineComponent({
       { deep: true, immediate: true }
     )
 
+    watch(
+      () => props.tableConfig,
+      (tableConfig) => {
+        if (
+          import.meta.env.DEV &&
+          !hasWarnedLegacyConfig.value &&
+          tableConfig &&
+          Object.keys(tableConfig).length > 0
+        ) {
+          console.warn(
+            '[PdTable] `tableConfig` prop is deprecated. ' +
+              'Please migrate to `paginationConfig` and `selectionConfig`. ' +
+              'See: https://github.com/yelingfeng/Pandora2/blob/main/CHANGELOG.md'
+          )
+          hasWarnedLegacyConfig.value = true
+        }
+      },
+      { immediate: true, deep: true }
+    )
+
     const {
       tableInstance,
       currentData,
@@ -63,11 +99,57 @@ export default defineComponent({
       handleHeaderClick
     } = useTableProps(innerProps)
 
-    const getConfig = () => innerProps.tableConfig || {}
-    const pagination = computed(() => getConfig().pagination)
-    const pageOpt = computed(() => getConfig().pageOpt)
+    const effectivePaginationConfig = computed(() => {
+      if (hasVNodeProp('paginationConfig')) {
+        return innerProps.paginationConfig
+      }
+
+      const legacyPagination = innerProps.tableConfig?.pagination
+      const legacyPageOpt = innerProps.tableConfig?.pageOpt || {}
+
+      if (!legacyPagination) {
+        return false
+      }
+
+      if (typeof legacyPagination === 'object') {
+        return merge({}, legacyPageOpt, legacyPagination)
+      }
+
+      return legacyPageOpt
+    })
+    const effectiveSelectionConfig = computed(() => {
+      if (hasVNodeProp('selectionConfig')) {
+        return innerProps.selectionConfig
+      }
+
+      return innerProps.tableConfig?.selection
+    })
+    const getConfig = () => {
+      const config = { ...(innerProps.tableConfig || {}) }
+      const paginationConfig = unref(effectivePaginationConfig)
+      const selectionConfig = unref(effectiveSelectionConfig)
+
+      if (paginationConfig === false) {
+        delete config.pagination
+        delete config.pageOpt
+      } else if (paginationConfig && typeof paginationConfig === 'object') {
+        config.pagination = true
+        config.pageOpt = paginationConfig
+      }
+
+      if (selectionConfig !== undefined) {
+        config.selection = selectionConfig
+      }
+
+      return config
+    }
+    const pagination = computed(() => unref(effectivePaginationConfig))
+    const pageOpt = computed(() => {
+      const paginationConfig = unref(effectivePaginationConfig)
+      return paginationConfig === false ? undefined : paginationConfig
+    })
     const selectionMode = computed(() => {
-      const selection = getConfig().selection
+      const selection = unref(effectiveSelectionConfig)
       if (!selection || typeof selection !== 'object') return ''
       return selection.selectionMode || ''
     })
@@ -192,7 +274,7 @@ export default defineComponent({
       // 创建column
       const columnsVNode = useColumnRender(columnsProps.value, $sortService)
       let pageVNode = null
-      if (unref(pagination)) {
+      if (unref(pagination) !== false) {
         pageVNode = usePagerRender(
           unref(pageOpt),
           handleSizeChange,

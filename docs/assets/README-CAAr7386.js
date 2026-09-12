@@ -1,0 +1,1 @@
+import{I as e,p as t,v as n}from"./runtime-core.esm-bundler-yhW9eEjO.js";import r from"./Home-CBtBdiB4.js";var i={class:`markdown-body`},a={__name:`README`,setup(a,{expose:o}){return o({frontmatter:{}}),(a,o)=>(e(),t(`div`,i,[n(r)]))}};export{a as default};

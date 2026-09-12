@@ -1,0 +1,1 @@
+import{a as e}from"./rolldown-runtime-B0Z9INg1.js";import{t}from"./dayjs.min-DPE4e4Qb.js";var n=e(t());function r(e=2,t=`YYYY-MM-DD HH:mm:00`){return{startTime:(0,n.default)().subtract(e,`day`).format(t),endTime:(0,n.default)().subtract(0,`day`).format(t)}}var i=n.default;export{r as n,i as t};

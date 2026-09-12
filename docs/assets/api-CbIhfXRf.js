@@ -1,0 +1,7 @@
+import{B as e,I as t,Q as n,_ as r,g as i,p as a,u as o,v as s}from"./runtime-core.esm-bundler-yhW9eEjO.js";import c from"./api-L5J5hUKn.js";var l={class:`markdown-body`},u={__name:`api`,setup(u,{expose:d}){return d({frontmatter:{}}),(u,d)=>{let f=e(`Preview`);return t(),a(`div`,l,[d[0]||=o(`h2`,null,`表单实例 API（useForm）`,-1),d[1]||=o(`p`,null,[r(`PdForm 会在 mounted 时通过 `),o(`code`,null,`register`),r(` 事件回传表单实例（`),o(`code`,null,`IFormActionType`),r(`）。推荐使用 `),o(`code`,null,`useForm()`),r(` 统一管理实例并获得类型提示。`)],-1),d[2]||=o(`pre`,null,[o(`code`,{class:`language-ts`},`import { useForm } from '@pandora/components/PdForm'
+
+const [register, methods] = useForm({
+  labelWidth: 120,
+  schemas: []
+})
+`)],-1),d[3]||=o(`h2`,null,`示例：调用实例方法`,-1),s(f,{"comp-name":`PdForm`,"demo-name":`api`},{default:n(()=>[s(c)]),_:1}),d[4]||=i(`<p>示例中演示了这些能力：</p><ul><li><code>validateFields()</code>：手动校验表单</li><li><code>clearValidate()</code>：清空校验信息</li><li><code>getFieldsValue()</code>：获取表单值</li><li><code>setFieldsValue()</code>：设置表单值</li><li><code>resetFields()</code>：重置表单</li></ul><p>完整方法列表以类型定义为准：</p><ul><li>[PdForm types](file:///Users/xiaofanren/ylf/github/Pandora2/packages/components/PdForm/src/types/index.ts)</li></ul>`,4)])}}};export{u as default};

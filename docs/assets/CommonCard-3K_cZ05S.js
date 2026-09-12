@@ -1,0 +1,43 @@
+import{B as e,I as t,Q as n,g as r,p as i,u as a,v as o}from"./runtime-core.esm-bundler-yhW9eEjO.js";import s from"./CommonCard-C43ngMqK.js";var c={class:`markdown-body`},l={__name:`CommonCard`,setup(l,{expose:u}){return u({frontmatter:{}}),(l,u)=>{let d=e(`Preview`);return t(),i(`div`,c,[u[0]||=a(`h1`,null,`CommonCard 通用卡片`,-1),u[1]||=a(`p`,null,`通用的卡片容器组件，支持标题、提示、跳转图标和加载状态。`,-1),o(d,{"comp-name":`PdBiz`,"demo-name":`CommonCard`},{default:n(()=>[o(s)]),_:1}),u[2]||=r(`<h2>基础用法</h2><pre><code class="language-vue">&lt;template&gt;
+  &lt;PdBizCommonCard title=&quot;卡片标题&quot;&gt;
+    &lt;template #content&gt;
+      &lt;p&gt;卡片内容&lt;/p&gt;
+    &lt;/template&gt;
+  &lt;/PdBizCommonCard&gt;
+&lt;/template&gt;
+
+&lt;script setup&gt;
+import { PdBizCommonCard } from &#39;@pandora/components/PdBiz&#39;
+&lt;/script&gt;
+</code></pre><h2>加载状态</h2><p>通过 <code>loading</code> 属性显示加载状态。</p><pre><code class="language-vue">&lt;PdBizCommonCard title=&quot;加载中的卡片&quot; :loading=&quot;true&quot;&gt;
+  &lt;template #content&gt;
+    &lt;p&gt;内容加载中...&lt;/p&gt;
+  &lt;/template&gt;
+&lt;/PdBizCommonCard&gt;
+</code></pre><h2>跳转图标</h2><p>通过 <code>showIcon</code> 属性控制是否显示标题右侧的跳转图标。点击图标触发 <code>clickHeader</code> 事件。</p><pre><code class="language-vue">&lt;PdBizCommonCard 
+  title=&quot;可跳转的卡片&quot; 
+  :showIcon=&quot;true&quot; 
+  @clickHeader=&quot;handleJump&quot;
+&gt;
+  &lt;template #content&gt;
+    &lt;p&gt;点击右上角图标跳转&lt;/p&gt;
+  &lt;/template&gt;
+&lt;/PdBizCommonCard&gt;
+</code></pre><h2>标题提示</h2><p>通过 <code>showTips</code> 和 <code>titleTip</code> 属性显示标题提示信息。</p><pre><code class="language-vue">&lt;PdBizCommonCard 
+  title=&quot;带提示的卡片&quot; 
+  :showTips=&quot;true&quot; 
+  titleTip=&quot;这是一段提示信息&quot;
+&gt;
+  &lt;template #content&gt;
+    &lt;p&gt;鼠标悬停标题图标查看提示&lt;/p&gt;
+  &lt;/template&gt;
+&lt;/PdBizCommonCard&gt;
+</code></pre><h2>自定义标题右侧内容</h2><p>使用 <code>titleRight</code> 插槽自定义标题右侧内容。</p><pre><code class="language-vue">&lt;PdBizCommonCard title=&quot;自定义标题&quot;&gt;
+  &lt;template #titleRight&gt;
+    &lt;el-button size=&quot;small&quot;&gt;操作&lt;/el-button&gt;
+  &lt;/template&gt;
+  &lt;template #content&gt;
+    &lt;p&gt;卡片内容&lt;/p&gt;
+  &lt;/template&gt;
+&lt;/PdBizCommonCard&gt;
+</code></pre><h2>API</h2><h3>Props</h3><table><thead><tr><th>参数</th><th>说明</th><th>类型</th><th>默认值</th></tr></thead><tbody><tr><td>title</td><td>卡片标题</td><td><code>string</code></td><td>-</td></tr><tr><td>loading</td><td>是否显示加载状态</td><td><code>boolean</code></td><td><code>false</code></td></tr><tr><td>showIcon</td><td>是否显示跳转图标</td><td><code>boolean</code></td><td><code>true</code></td></tr><tr><td>showTips</td><td>是否显示标题提示图标</td><td><code>boolean</code></td><td><code>false</code></td></tr><tr><td>titleTip</td><td>标题提示内容</td><td><code>string</code></td><td>-</td></tr></tbody></table><h3>Events</h3><table><thead><tr><th>事件名</th><th>说明</th><th>回调参数</th></tr></thead><tbody><tr><td>clickHeader</td><td>点击跳转图标时触发</td><td><code>()</code></td></tr></tbody></table><h3>Slots</h3><table><thead><tr><th>插槽名</th><th>说明</th></tr></thead><tbody><tr><td>content</td><td>卡片内容区域</td></tr><tr><td>titleRight</td><td>标题右侧自定义内容</td></tr></tbody></table><h2>注意事项</h2><ul><li>使用 <code>content</code> 插槽而非默认插槽来放置卡片内容</li><li>跳转图标默认显示，如不需要可设置 <code>:showIcon=&quot;false&quot;</code></li><li>标题提示需要同时设置 <code>showTips</code> 和 <code>titleTip</code> 才会显示</li></ul>`,23)])}}};export{l as default};

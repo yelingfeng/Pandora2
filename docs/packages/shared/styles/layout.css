@@ -1,0 +1,241 @@
+/**
+ * Pandora2 全局布局工具类
+ * 提供统一的页面布局、表单、表格样式
+ */
+
+/* ========== 页面布局容器 ========== */
+.pd-page-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-width: var(--pd-layout-min-width);
+  box-sizing: border-box;
+  padding: var(--pd-layout-padding-y) var(--pd-layout-padding-x) var(--pd-layout-padding-x);
+  overflow: hidden;
+  background: var(--pd-color-bg-page);
+}
+
+.pd-page-container--tabs {
+  padding: 0;
+  background: transparent;
+  min-width: 0;
+}
+
+/* ========== 表单区域 ========== */
+.pd-form-section {
+  position: relative;
+  flex-shrink: 0;
+  width: 100%;
+  background: var(--pd-form-bg);
+  box-shadow: var(--pd-shadow-card);
+  border-radius: var(--pd-radius-sm);
+  padding: var(--pd-form-padding);
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: var(--pd-form-min-height);
+}
+
+.pd-form-section--expanded {
+  align-items: flex-start;
+}
+
+.pd-form-section--expanded .pd-form-content {
+  align-items: flex-start;
+}
+
+.pd-form-content {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  min-height: inherit;
+  flex-wrap: nowrap;
+}
+
+/* tabs 模式下的表单样式 */
+.pd-page-container--tabs .pd-form-section {
+  padding: 4px 0 8px;
+  box-shadow: none;
+  border-radius: 0;
+  background: transparent;
+  border-bottom: 1px solid var(--pd-color-border-light);
+}
+
+/* ========== 按钮组 ========== */
+.pd-button-group {
+  display: flex;
+  gap: var(--pd-layout-gap);
+  flex-shrink: 0;
+  min-height: var(--pd-form-min-height);
+  align-items: center;
+}
+
+.pd-action-buttons {
+  display: flex;
+  align-items: center;
+  gap: var(--pd-layout-gap);
+  height: 100%;
+}
+
+.pd-button-section {
+  display: flex;
+  gap: var(--pd-button-gap);
+  align-items: center;
+}
+
+/* 统一按钮样式 */
+.pd-button-section .el-button {
+  padding: var(--pd-button-padding);
+  height: var(--pd-button-height);
+  font-size: var(--pd-button-font-size);
+  border-radius: var(--pd-button-radius);
+}
+
+.pd-button-section .el-button:not(.el-button--primary) {
+  background: var(--pd-color-bg-white);
+  border-color: var(--pd-color-border);
+  color: var(--pd-color-text-primary);
+}
+
+.pd-button-section .el-button:not(.el-button--primary):hover {
+  background: var(--pd-color-bg-white);
+  border-color: var(--pd-color-primary);
+  color: var(--pd-color-primary);
+}
+
+.pd-button-section .el-button.el-button--primary {
+  background: var(--pd-color-primary);
+  border-color: var(--pd-color-primary);
+}
+
+.pd-button-section .el-button.el-button--primary:hover {
+  background: var(--pd-color-primary-hover);
+  border-color: var(--pd-color-primary-hover);
+}
+
+/* ========== 表格区域 ========== */
+.pd-table-section {
+  flex: 1;
+  min-height: 0;
+  margin-top: var(--pd-layout-gap);
+  width: 100%;
+  background: var(--pd-table-bg);
+  box-shadow: var(--pd-shadow-card);
+  border-radius: var(--pd-radius-sm);
+  padding: var(--pd-table-padding);
+  box-sizing: border-box;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.pd-table-toolbar {
+  flex-shrink: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--pd-table-toolbar-gap);
+  margin-bottom: var(--pd-table-toolbar-margin);
+}
+
+.pd-table-toolbar .el-button {
+  height: var(--pd-button-height);
+  min-height: var(--pd-button-height);
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.pd-table-body {
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* tabs 模式下的表格样式 */
+.pd-page-container--tabs .pd-table-section {
+  margin-top: 0;
+  padding: 10px 0 0;
+  box-shadow: none;
+  border-radius: 0;
+  background: transparent;
+}
+
+.pd-page-container--tabs .pd-table-toolbar {
+  margin-bottom: var(--pd-spacing-sm);
+}
+
+/* ========== 表单项样式增强 ========== */
+.pd-form-section .el-form-item {
+  margin-bottom: var(--pd-form-item-gap);
+}
+
+.pd-form-section .el-form-item .el-form-item__content .el-input,
+.pd-form-section .el-form-item .el-form-item__content .el-input .el-input__inner {
+  width: 100% !important;
+}
+
+.pd-form-section .el-form-item .el-form-item__content .el-select {
+  width: 100% !important;
+}
+
+/* 收起状态不显示底部间距 */
+.pd-form-section:not(.pd-form-section--expanded) .el-form-item {
+  margin-bottom: 0 !important;
+}
+
+/* ========== 卡片容器 ========== */
+.pd-card {
+  background: var(--pd-color-bg-white);
+  box-shadow: var(--pd-shadow-card);
+  border-radius: var(--pd-radius-sm);
+  padding: var(--pd-spacing-lg);
+  box-sizing: border-box;
+}
+
+.pd-card--no-shadow {
+  box-shadow: none;
+}
+
+.pd-card--bordered {
+  border: 1px solid var(--pd-color-border-light);
+}
+
+/* ========== 工具类 ========== */
+.pd-flex {
+  display: flex;
+}
+
+.pd-flex-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.pd-flex-1 {
+  flex: 1;
+}
+
+.pd-flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pd-gap-xs { gap: var(--pd-spacing-xs); }
+.pd-gap-sm { gap: var(--pd-spacing-sm); }
+.pd-gap-md { gap: var(--pd-spacing-md); }
+.pd-gap-lg { gap: var(--pd-spacing-lg); }
+
+.pd-p-xs { padding: var(--pd-spacing-xs); }
+.pd-p-sm { padding: var(--pd-spacing-sm); }
+.pd-p-md { padding: var(--pd-spacing-md); }
+.pd-p-lg { padding: var(--pd-spacing-lg); }
+
+.pd-m-xs { margin: var(--pd-spacing-xs); }
+.pd-m-sm { margin: var(--pd-spacing-sm); }
+.pd-m-md { margin: var(--pd-spacing-md); }
+.pd-m-lg { margin: var(--pd-spacing-lg); }

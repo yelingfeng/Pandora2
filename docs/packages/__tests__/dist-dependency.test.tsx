@@ -1,4 +1,5 @@
 // @ts-nocheck
+// @vitest-environment jsdom
 import { mount } from '@vue/test-utils'
 import { execSync } from 'node:child_process'
 import fs from 'node:fs'
