@@ -45,6 +45,7 @@
     "dist",
     "**/__tests__/**",
     "packages/**/__tests__/**",
-    "docs/**"
+    "docs/**",
+    "src/_docs/**"
   ]
 }
