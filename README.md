@@ -7,9 +7,9 @@
 <p align="center">
   <a href="https://github.com/yelingfeng/Pandora2"><img src="https://img.shields.io/github/package-json/v/yelingfeng/Pandora2" alt="version" /></a>
   <a href="https://www.npmjs.com/package/@yelingfeng/pandora2"><img src="https://img.shields.io/npm/v/@yelingfeng/pandora2" alt="npm" /></a>
-  <a href="https://github.com/yelingfeng/Pandora2/actions/workflows/node.js.yml"><img src="https://github.com/yelingfeng/Pandora2/actions/workflows/node.js.yml/badge.svg?branch=main" alt="test" /></a>
-  <a href="https://codecov.io/gh/yelingfeng/Pandora2"><img src="https://codecov.io/gh/yelingfeng/Pandora2/branch/main/graph/badge.svg" alt="coverage" /></a>
-  <a href="https://github.com/yelingfeng/Pandora2/blob/main/LICENSE"><img src="https://img.shields.io/npm/l/@yelingfeng/pandora2" alt="license" /></a>
+  <a href="https://github.com/yelingfeng/Pandora2/actions/workflows/node.js.yml"><img src="https://img.shields.io/github/actions/workflow/status/yelingfeng/Pandora2/node.js.yml?branch=main&amp;event=push&amp;label=CI" alt="CI" /></a>
+  <a href="https://codecov.io/gh/yelingfeng/Pandora2"><img src="https://img.shields.io/codecov/c/github/yelingfeng/Pandora2" alt="coverage" /></a>
+  <a href="https://github.com/yelingfeng/Pandora2/blob/main/LICENSE"><img src="https://img.shields.io/github/license/yelingfeng/Pandora2" alt="license" /></a>
 </p>
 
 <p align="center">
