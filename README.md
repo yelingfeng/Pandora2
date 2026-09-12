@@ -1,23 +1,31 @@
 # Pandora2
 
-
-
 <p align="center">
-[![version](https://img.shields.io/github/package-json/v/yelingfeng/Pandora2)](https://github.com/yelingfeng/Pandora2)
-[![npm](https://img.shields.io/npm/v/@yelingfeng/pandora2)](https://www.npmjs.com/package/@yelingfeng/pandora2)
-[![test](https://github.com/yelingfeng/Pandora2/actions/workflows/node.js.yml/badge.svg?branch=main)](https://github.com/yelingfeng/Pandora2/actions/workflows/node.js.yml)
-[![coverage](https://codecov.io/gh/yelingfeng/Pandora2/branch/main/graph/badge.svg)](https://codecov.io/gh/yelingfeng/Pandora2)
-[![license](https://img.shields.io/npm/l/@yelingfeng/pandora2)](https://github.com/yelingfeng/Pandora2/blob/main/LICENSE)
   <img src="https://github.com/yelingfeng/Pandora2/blob/main/src/assets/pandora-logo.png?raw=true" alt="Pandora2 Logo" width="200" />
 </p>
 
 <p align="center">
-  <strong>基于 Vue 3 + TypeScript + Element Plus 的业务组件库</strong>
+  <a href="https://github.com/yelingfeng/Pandora2"><img src="https://img.shields.io/github/package-json/v/yelingfeng/Pandora2" alt="version" /></a>
+  <a href="https://www.npmjs.com/package/@yelingfeng/pandora2"><img src="https://img.shields.io/npm/v/@yelingfeng/pandora2" alt="npm" /></a>
+  <a href="https://github.com/yelingfeng/Pandora2/actions/workflows/node.js.yml"><img src="https://github.com/yelingfeng/Pandora2/actions/workflows/node.js.yml/badge.svg?branch=main" alt="test" /></a>
+  <a href="https://codecov.io/gh/yelingfeng/Pandora2"><img src="https://codecov.io/gh/yelingfeng/Pandora2/branch/main/graph/badge.svg" alt="coverage" /></a>
+  <a href="https://github.com/yelingfeng/Pandora2/blob/main/LICENSE"><img src="https://img.shields.io/npm/l/@yelingfeng/pandora2" alt="license" /></a>
 </p>
 
 <p align="center">
+  <strong>基于 Vue 3 + TypeScript + Element Plus 的业务组件库</strong><br />
   用更少的 View 层代码完成常见的后台管理开发
 </p>
+
+## 永久冠名 · 特别感谢
+
+感谢以下开发团队成员对本项目的长期支持与贡献：
+
+| Avatar | GitHub | 主页 |
+| --- | --- | --- |
+| <img src="https://github.com/niumiaomiao.png" width="48" height="48" alt="niumiaomiao" /> | [@niumiaomiao](https://github.com/niumiaomiao) | [喵喵](https://github.com/niumiaomiao) |
+| <img src="https://github.com/futai.png" width="48" height="48" alt="futai" /> | [@futai](https://github.com/futai) | [futai](https://github.com/futai) |
+| <img src="https://github.com/wangfeng0596.png" width="48" height="48" alt="wangfeng0596" /> | [@wangfeng0596](https://github.com/wangfeng0596) | [wang feng](https://github.com/wangfeng0596) |
 
 ---
 
